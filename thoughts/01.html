@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>What will make students stop breaking the law?!</title>
+</head>
+<script language=javascript src=../layout.js></script>
+<script language=javascript>header("What will make students stop breaking the law?!", 1);</script>
+
+<!--
+<center>
+<h1 style="font-size:150%">What will make students stop breaking the law?!</h1>
+a <a href=../thoughts.html>thought</a> by <a href=../>Eric Rowland</a>
+<br>March 14, 2008
+</center>
+-->
+
+March 14, 2008
+
+<p style="font-size:80%">
+[If you are using Firefox, click <a href=01-tex.html>here</a> to read this thought with math formulas typeset in LaTeX by Avital Oliver's <a href=http://thewe.net/tex/><font color=blue>TeX the World</font></a> add-on.]
+</p>
+
+<p>Today I was grading the quizzes I gave this week to my Calculus I students on implicit differentiation.  The first question asked them to compute <i>dy</i>/<i>dx</i> for the curve ln(<i>xy</i>) + &pi; = <i>y</i>.
+
+<p>There were of course a handful of students who didn't differentiate &pi; correctly, and in a few cases the algebra was too garbled for me to even figure out what they were thinking.  But a certain surprising mistake occurred on a few papers:  Students used the product rule to differentiate ln(<i>xy</i>), which they treated as the product ln &#183; (<i>xy</i>) involving the <i>symbol</i> ln rather than as an application of the <i>function</i> ln to the argument <i>xy</i>.  The results were variations on ln &#183; (<i>y</i>&prime; &#183; 1) + 1/<i>x</i> &#183; (<i>x y</i>).
+
+<p>How does this happen?  Does such a student not understand that the logarithm is a function?  Does the student realize it is a function but thinks that the product rule still applies?  Is it simply a case of blind symbol manipulation?  While we're at it, why is it that some students continually succumb to the temptation of distributing a square root over addition or pulling the 3 out of sin(3<i>x</i>)?  As an instructor I get annoyed when calculus students haven't had these unlawful habits corrected, and while grading I am sometimes tempted to scrawl admonishments in big red letters on their papers.
+
+<p>But what is really going to make this stop?  How can you really get through to these students to make them understand that the things they write sometimes aren't just wrong but aren't even syntactic?
+
+<p>I don't have a complete answer.  Obviously the first step is to help the student to directly confront the mistake they've made, and hopefully drive home the point that it is not valid in general.  Toward this end, one semester I issued a <a href=http://math.rutgers.edu/~erowland/teaching/violation.pdf>violation</a> to students who committed heinous crimes on the midterm exams.  (For this idea I credit my fifth grade teacher, who made students write "Consequences" after misbehaving, and one of my high school English teachers, who had a notorious "ugh list" of forbidden words and phrases (like 'thing' and 'very') that earned an automatic F if used in an essay.)
+
+<p>But let's also take some responsibility.  I propose that several issues contribute to the problem.  (Some are clearly easier to fix than others.)
+
+<p>&bull; Often we abuse notation.  For example, sin<sup>2</sup><i>x</i> and sin<sup>&#150;1</sup><i>x</i> are <i>really bad</i> notations for (sin <i>x</i>)<sup>2</sup> and arcsin <i>x</i>, and we should never use them in lower division courses.  Calculus texts should be cleansed of them as well.  These notations aren't widely used until much later courses (when certain sets of functions become objects of study in their own right), so students do not have the context for dealing with them as general notations.  Of course mathematicians and instructors can (usually!) figure out what is meant from context, but we shouldn't let our students see that we are careless with notation, because then they think they can do the same.
+
+<p>&bull; One issue with undergraduate mathematics is that many identities <i>do</i> hold!  I would like to believe that most people at some point were shown and understood why multiplication distributes over addition (say, for positive integers).  But eventually, employing this rule in computation becomes a reflex.  My guess is that after so many reflexes are acquired, the act of acquiring a reflex becomes a reflex!  Since some students haven't reached the maturity (or willingness) to distinguish the identities that hold from those that do not, perhaps while teaching new identities (even very early on), a substantial emphasis should be placed on the fact that not <i>every</i> nice identity is actually true.  There are standards, after all:  No one chose to prevent square roots from distributing over addition; it comes intrinsically from the definitions.
+
+<p>&bull; Usually we prove (or at least motivate) identities that will figure prominently in computations.  For example, calculus students are shown how to derive the power law (<i>x</i><sup><i>n</i></sup>)&prime; = <i>n</i> <i>x</i><sup><i>n</i> &#150; 1</sup> from the definition of differentiation.  In other cases (for example, the chain rule), proofs may not be given in lecture, but at least they are addressed by the textbook.  However, in some cases we train students to use identities without providing a rigorous explanation.  For example, we tell them that it is okay to use differentials as symbolic quantities that can be manipulated as such, so that e.g. <i>dx</i>/<i>dx</i> = 1.  Students should not be satisfied with this explanation, and indeed a proper theory of differentials is far beyond the scope of Calculus I.  I'm not sure what to do about this; certainly we should emphasize that this notation provides <i>intuition</i>.
+
+<p>&bull; Standard mathematical notation is so "intuitive" that it is heavily ambiguous, and so it requires a lot of extra knowledge/experience/context/guidance in order to figure out what things mean.  Perhaps students wouldn't mistake function application for multiplication if we used more discerning notation, where the syntax is a very tangible element.  To take this to the extreme, we could use a symbolic notation such as the <a href=http://reference.wolfram.com/language/ref/FullForm.html><font color=blue>FullForm</font></a> notation in <i>Mathematica</i>, in which every expression is of the form <i>head</i>[<i>arg</i><sub>1</sub>, <i>arg</i><sub>2</sub>, &hellip;, <i>arg</i><sub>k</sub>].  For example, I could have asked to compute <pre>D[y[x], x]</pre> for the curve <pre>Equal[Plus[Log[Times[x, y[x]]], Pi], y[x]]</pre>.  This is too formal for humans, but perhaps it would not be crazy to write ln[<i>xy</i>] + &pi; = <i>y</i>, where the square brackets really mean something different than round brackets.  And perhaps if students had been given tasks in elementary school to manipulate formal expressions such as <i>h</i>[<i>a</i>,<i>b</i>,<i>c</i>] according to silly make-believe rules, then there wouldn't be so much confusion about which symbols in an expression are functions (heads) and which are arguments.
+
+<p>For that matter, if students were consistently using <i>Mathematica</i>, even simply as a tool for algebra, then they would very quickly discover that it doesn't perform an "obvious" transformation and would hopefully wonder why.
+
+<p><br>Here I have of course assumed that all students care about correcting errors in reasoning, that their future work depends on mastering these concepts, and that they will eventually be in my position, trying to understand why a fraction of students in college mathematics courses are still confused about seemingly basic facts.  And of course this is not the case, which is also something we should remember.
+
+<div style="visibility:hidden">
+<!-- Start of StatCounter Code -->
+<script type="text/javascript">
+sc_project=562599; 
+sc_invisible=1; 
+sc_partition=4; 
+sc_security="bf96014a"; 
+</script>
+<script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js"></script><noscript><div class="statcounter"><a href="http://www.statcounter.com/" target="_blank"><img class="statcounter" src="http://c5.statcounter.com/562599/0/bf96014a/1/" alt="web statistics" width=0 height=0 border=0></a></div></noscript>
+<!-- End of StatCounter Code -->
+</div>
+
+</body>
+</html>
