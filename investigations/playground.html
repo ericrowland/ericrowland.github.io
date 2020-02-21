@@ -1,0 +1,269 @@
+<html><head><title>JavaScript PlayGround</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="A JavaScript-based calculator with forty new functions, including trigonometric and hyperbolic trigonometric functions and their inverses.">
+<meta name=keywords value="JavaScript, program, calculator, trigonometric, hyperbolic, functions, inverse"></head>
+<script language=javascript src=layout.js></script><script language=javascript>header("JavaScript PlayGround<br><font size=1>The Multi-Function JavaScript Calculation Tool</font>");</script>
+
+<p><form method=post name=workspace><table cellspacing=10><tr><td><textarea name=code rows=10 cols=42></textarea><td><input type=button value=Evaluate onClick=run(this.form);><p><b>Result:</b><br><textarea name=result rows=4 cols=30></textarea></table></form></center>
+
+<script language=javascript>
+pi=Math.PI;
+e=Math.E;
+abs=Math.abs;
+pow=Math.pow;
+exp=Math.exp;
+sqrt=Math.sqrt;
+ln=Math.log;
+sin=Math.sin;
+cos=Math.cos;
+tan=Math.tan;
+arsin=Math.asin;
+arccos=Math.acos;
+arctan=Math.atan;
+floor=Math.floor;
+ceil=Math.ceil;
+function sq(x) {return pow(x,2)}
+function csc(x) {return 1/sin(x)}
+function sec(x) {return 1/cos(x)}
+function cot(x) {return 1/tan(x)}
+function arccsc(x) {return arcsin(1/x)}
+function arcsec(x) {return arccos(1/x)}
+function arccot(x) {return arctan(1/x)}
+function sinh(x) {return (exp(x)-exp(-x))/2}
+function cosh(x) {return (exp(x)+exp(-x))/2}
+function tanh(x) {return sinh(x)/cosh(x)}
+function csch(x) {return 1/sinh(x)}
+function sech(x) {return 1/cosh(x)}
+function coth(x) {return 1/tanh(x)}
+function arcsinh(x) {return ln(x+sqrt(x*x+1))}
+function arccosh(x) {if(x>=1) return ln(x+sqrt(x*x-1))}
+function arctanh(x) {if(x>1) return ln((1+x)/(1-x))/2}
+function arccsch(x) {return arcsinh(1/x)}
+function arcsech(x) {return arccosh(1/x)}
+function arccoth(x) {return arctanh(1/x)}
+function base(x,a,b) {
+	if(b==null) {
+		b=a;
+		a=10;
+	}
+	if(typeof(x)=="number") {
+		j=new Array(floor(log(x,10))+1);
+		for(i=j.length;i>0;i--) {
+			j[j.length-i]=floor(x/pow(10,i-1));
+			x%=pow(10,i-1);
+		}
+		x=j;
+	}
+	k=0;
+	for(i=x.length;i>0;i--) k+=x[x.length-i]*pow(a,i-1);
+	x=k;
+	j=new Array(floor(log(x,b))+1);
+	for(i=j.length;i>0;i--) {
+		j[j.length-i]=floor(x/pow(b,i-1));
+		x%=pow(b,i-1);
+	}
+	x=j;
+	k=1;
+	for(i=0;i<x.length;i++) k*=(x[i]<10);
+	if(k) {
+		k=0;
+		for(i=x.length;i>0;i--) k+=x[x.length-i]*pow(10,i-1);
+		x=k;
+	}
+	return x;
+}
+function factor(x) {
+	k=0;
+	d=new Array();
+	for(i=2;i<=sqrt(x);i+=k) {
+		if(k<2) k++;
+		for(j=0;x%i==0;j++)  {
+			x/=i;
+			d[d.length]=i;
+		}
+	}
+	if(x!=1||d.length==0) d[d.length]=x;
+	return d;
+}
+function factorial(x,n) {
+	if(n==null) n=1;
+	for(i=x-n;i>0;i-=n) x*=i;
+	return x;
+}
+function fibonacci(x) {return round((pow((1+sqrt(5))/2,x)-pow((1-sqrt(5))/2,x))/sqrt(5))}
+function gcd(a) {
+	r=a[0];
+	for(i=1;i<a.length;i++) {
+		c=a[i];
+		while(c!=0) {
+			r-=c*floor(r/c);
+			k=c;
+			c=r;
+			r=k;
+		}
+	}
+	return r;
+}
+function isprime(x) {
+	if(x==2) return true;
+	else if(x%2==0) return false;
+	for(i=3;i<=sqrt(x);i+=2) if(x%i==0) return false;
+	return true;
+}
+function lcm(a) {
+	s=a[0];
+	for(j=1;j<a.length;j++) {
+		s*=a[j]/gcd([s,a[j]]);
+	}
+	return s;
+}
+function log(x,b) {
+	if(b==null) b=e;
+	return ln(x)/ln(b);
+}
+function max(a) {return a.sort(function(b,c) {return c-b})[0]}
+function min(a) {return a.sort(function(b,c) {return b-c})[0]}
+function pfactorial(x) {
+	k=1;
+	for(j=3;j<=x;j+=2) if(isprime(j)) k*=j;
+	if(x>2) k*=2;
+	return k;
+}
+function product(a) {
+	k=1;
+	for(i=0;i<a.length;i++) k*=a[i];
+	return k;
+}
+function random(b,c,n) {
+	if(n==null) n=0;
+	return round((c-b)*Math.random()+b,n);
+}
+function round(x,n) {
+	if(n==null) n=0;
+	return Math.round(x*pow(10,n))/pow(10,n);
+}
+function sign(x) {
+	if(x==0) return 0;
+	else return x/abs(x);
+}
+function sum(a) {
+	k=0;
+	for(i=0;i<a.length;i++) k+=a[i];
+	return k;
+}
+function totient(x) {
+	k=1;
+	for(j=2;j<x;j++) if(gcd([x,j])==1) k++;
+	return k;
+}
+function primepi(x) {
+	k=1;
+	if(x%2==0) j++;
+	for(j=3;j<=x;j+=2) if(isprime(j)) k++;
+	return k;
+}
+function run(frm) {if(frm.code.value!="") frm.result.value=eval(frm.code.value)}
+document.workspace.code.focus();
+</script>
+
+<p><b>Documentation.</b>
+<br>Anything placed in the left box above is evaluated as JavaScript, and the result is displayed at the right.  All script is legal, but methods like "document.write" and "return" aren't necessary.  The following tutorial assumes no previous experience with JavaScript.
+<p>Obviously the four main arithmetic functions apply ( + , &#150; , * , / ).  Additionally there is a <a href=modulararithmetic.html>modular arithmetic</a> function, %.  These five functions are <i>binary</i> functions, meaning they operate on two values.  Their syntax is as follows:
+<br>4+2 &nbsp; 4&#150;2 &nbsp; 4*2 &nbsp; 4/2 &nbsp; 4%2
+<br>These five inputs would respectively result in the following five outputs:
+<br>6 &nbsp; 2 &nbsp; 8 &nbsp; 2 &nbsp; 0
+<br>More complex calculations can be done using parentheses. For example, (10%3+2*(6&#150;5.5))/2&#150;1 evaluates to 0.
+<br>Transcendental and other functions are supported too, using the JavaScript Math object.  In PlayGround these functions can also be called without the "Math.", as shown in the last column:
+
+<h2>Basic Functions</h2>
+<table cellspacing=5>
+<tr><td><b>Notation<td><b>JavaScript Syntax<td><b>PlayGround Syntax
+<tr><td>|<i>x</i>|<td>Math.abs(<i>x</i>)<td>abs(<i>x</i>)
+<tr><td><i>x<sup>y</sup><br>e<sup>x</sup></i><br>&#8730;<i>x<br>x</i><sup>2</sup><td>Math.pow(<i>x</i>,<i>y</i>)<br>Math.exp(<i>x</i>)<br>Math.sqrt(<i>x</i>)<br>&nbsp;<td>pow(<i>x</i>,<i>y</i>)<br>exp(<i>x</i>)<br>sqrt(<i>x</i>)<br>sq(<i>x</i>)
+<tr><td>ln <i>x</i><td>Math.log(<i>x</i>)<td>ln(<i>x</i>) <i>or</i> log(<i>x</i>,<i>b</i>)
+<tr><td>sin <i>x</i><br>cos <i>x</i><br>tan <i>x</i><td>Math.sin(<i>x</i>)<br>Math.cos(<i>x</i>)<br>Math.tan(<i>x</i>)<td>sin(<i>x</i>)<br>cos(<i>x</i>)<br>tan(<i>x</i>)
+<tr><td>arcsin <i>x</i><br>arccos <i>x</i><br>arctan <i>x</i><td>Math.asin(<i>x</i>)<br>Math.acos(<i>x</i>)<br>Math.atan(<i>x</i>)<td>arcsin(<i>x</i>)<br>arccos(<i>x</i>)<br>arctan(<i>x</i>)
+<tr><td><img src=images/floor-left.gif width=5 height=20 align=absmiddle><i>x</i><img src=images/floor-right.gif width=5 height=20 align=absmiddle><br><img src=images/ceiling-left.gif width=5 height=20 align=absmiddle><i>x</i><img src=images/ceiling-right.gif width=5 height=20 align=absmiddle><br>&nbsp;<td>Math.floor(<i>x</i>)<br>Math.ceil(<i>x</i>)<br>Math.round(<i>x</i>)<td>floor(<i>x</i>)<br>ceil(<i>x</i>)<br>round(<i>x</i>,<i>n</i>)
+<tr><td><td>Math.min(<i>a</i>,<i>b</i><script language=javascript>if(navigator.appName.charAt(0)=="M") document.write(",<i>c</i>,...");</script>)<br>Math.max(<i>a</i>,<i>b</i><script language=javascript>if(navigator.appName.charAt(0)=="M") document.write(",<i>c</i>,...");</script>)<td>min([<i>a</i>,<i>b</i>,<i>c</i>,...])<br>max([<i>a</i>,<i>b</i>,<i>c</i>,...])
+<tr><td><td>Math.random()<td>random(<i>b</i><sub>1</sub>,<i>b</i><sub>2</sub>,<i>n</i>)
+</table>
+
+<p><h2>Constants</h2>
+<table cellspacing=5>
+<tr><td><b>Notation<td><b>JavaScript Syntax<td><b>PlayGround Syntax
+<tr><td>&pi;<td>Math.PI<td>pi
+<tr><td><i>e</i><td>Math.E<td>e
+</table>
+
+<p><h2>Additional Functions</h2>
+<table cellspacing=5>
+<tr><td><b>PlayGround Syntax<td><b>Input Type(s)<td><b>Description
+<tr><td>base(<i>x</i>,<i>b</i><sub>1</sub>,<i>b</i><sub>2</sub>)<td>Base-10 Integers<td>converts <i>x</i> from base <i>b</i><sub>1</sub> to <i>b</i><sub>2</sub> (<i>x</i> can be an array)
+<tr><td>factor(<i>x</i>)<td>Integer &#62;1<td>returns an array of prime factors of <i>x</i>
+<tr><td>factorial(<i>x</i>,<i>n</i>)<br>pfactorial(<i>x</i>)<td>Integer &#62;0<td>computes the <i>n</i>-factorial of <i>x</i><br>multiplies all primes &#8804; <i>x</i>
+<tr><td>isprime(<i>x</i>)<td>Integer &#62;1<td>tests whether an integer is prime
+<!--serious problems <tr><td>totient(<i>x</i>)<td>Integer &#62;0<td>computes the number of integers <i>n</i> &#60; <i>x</i> such that gcd(<i>n</i>,<i>x</i>) = 1-->
+<!--<tr><td>*zeta(<i>x</i>)<td>Even Integer &#62;0<td>computes the Riemann zeta function-->
+<tr><td>fibonacci(<i>x</i>)<td>Integer &#62;0<td>computes the <i>x</i>th term of the Fibonacci sequence
+<tr><td>gcd([<i>a</i>,<i>b</i>,<i>c</i>,...])<br>lcm([<i>a</i>,<i>b</i>,<i>c</i>,...])<td>Array of Numbers<br>Array of Numbers<td>computes the greatest common factor of <i>a</i>,<i>b</i>,<i>c</i>,...<br>computes the least common multiple of <i>a</i>,<i>b</i>,<i>c</i>,...
+<tr><td>product([<i>a</i>,<i>b</i>,<i>c</i>,...])<br>sum([<i>a</i>,<i>b</i>,<i>c</i>,...])<td>Array of Numbers<br>Array of Numbers<td>computes <i>a</i>*<i>b</i>*<i>c</i>*...<br>sums <i>a</i>+<i>b</i>+<i>c</i>+...
+<tr><td>sign(<i>x</i>)<td>Number<td>returns the sign of <i>x</i>:  either &#150;1, 0, or 1
+<tr><td>csc(<i>x</i>)<br>sec(<i>x</i>)<br>cot(<i>x</i>)<td>Number<br>Number<br>Number<td>computes the cosecant of <i>x</i><br>computes the secant of <i>x</i><br>computes the cotangent of <i>x</i>
+<tr><td>arccsc(<i>x</i>)<br>arcsec(<i>x</i>)<br>arccot(<i>x</i>)<td>Number<br>Number<br>Number<td>computes the inverse cosecant of <i>x</i><br>computes the inverse secant of <i>x</i><br>computes the inverse cotangent of <i>x</i>
+<tr><td>sinh(<i>x</i>)<br>cosh(<i>x</i>)<br>tanh(<i>x</i>)<td>Number<br>Number<br>Number<td>computes the hyperbolic sine of <i>x</i><br>computes the hyperbolic cosine of <i>x</i><br>computes the hyperbolic tangent of <i>x</i>
+<tr><td>csch(<i>x</i>)<br>sech(<i>x</i>)<br>coth(<i>x</i>)<td>Number<br>Number<br>Number<td>computes the hyperbolic cosecant of <i>x</i><br>computes the hyperbolic secant of <i>x</i><br>computes the hyperbolic cotangent of <i>x</i>
+<tr><td>arcsinh(<i>x</i>)<br>arccosh(<i>x</i>)<br>arctanh(<i>x</i>)<td>Number<br>Number<br>Number<td>computes the inverse hyperbolic sine of <i>x</i><br>computes the inverse hyperbolic cosine of <i>x</i><br>computes the inverse hyperbolic tangent of <i>x</i>
+<tr><td>arccsch(<i>x</i>)<br>arcsech(<i>x</i>)<br>arccoth(<i>x</i>)<td>Number<br>Number<br>Number<td>computes the inverse hyperbolic cosecant of <i>x</i><br>computes the inverse hyperbolic secant of <i>x</i><br>computes the inverse hyperbolic cotangent of <i>x</i>
+<!--<tr><td colspan=2>*makearray(<i>f(</i>var<i>)</i>,<i>var</i>,<i>start</i>,<i>end</i>,<i>step</i>)<td>creates an array according to a function of a specified "dummy"<br>variable and its start, end, and step values-->
+</table>
+
+<p><b>Notes.</b>
+<!--<br>* denotes functions that are not yet complete.-->
+<br>All PlayGround functions and constants can be overwritten, but other functions may be adversely affected.
+<br>Several functions use variables i, j, and k, so it is advised that these not be used.
+<br>The following list gives function values that are implied when absent:
+<br>base(<i>x</i>,<i>b</i><sub>2</sub>)=base(<i>x</i>,10,<i>b</i><sub>2</sub>)
+<br>factorial(<i>x</i>)=factorial(<i>x</i>,1)
+<br>log(<i>x</i>)=log(<i>x</i>,e)
+<br>random(<i>b</i><sub>1</sub>,<i>b</i><sub>2</sub>)=random(<i>b</i><sub>1</sub>,<i>b</i><sub>2</sub>,0)
+<br>round(<i>x</i>)=round(<i>x</i>,0)
+
+<p><b>Computation Examples</b>
+<br>abs(&#150;17)=17
+<br>arccos(0)=1.5707963267948965 
+<br>arccosh(1)=0
+<br>base(5,2)=101
+<br>ceil(pi/2)=2
+<br>exp(2)=7.38905609893065
+<br>factor(60)=[2,2,3,5]
+<br>factorial(5)=120
+<br>factorial(5,2)=15
+<br>fibonacci(17)=1597
+<br>floor(pi/2)=1
+<br>gcd(20,25)=5
+<br>lcm(20,25)=100
+<br>log(100,10)=2
+<br>ln(2)=0.6931471805599453
+<br>max([5,65,1105])=1105
+<br>min([5,65,1105])=5
+<br>pow(2,3)=8
+<br>product([1,3,5,7,9])=945
+<br>random(1,4,5) could equal 1.61803, 2.71828, 3.14159, and many other values
+<br>round(pi/2)=2
+<br>round(pi/2,2)=1.57
+<br>sign(3)=1
+<br>sign(&#150;3)=&#150;1
+<br>sin(pi/2)=1
+<br>sinh(ln(2))=.75
+<br>sqrt(289)=17
+<br>sum([1,2,3,4,5,6,7,8,9])=45
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

@@ -1,0 +1,200 @@
+<html><head><title>Regular Polytopes</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="Derivations of the volumes and surface areas of the five Platonic solids.  Counting vertices, edges, and faces in connection with dual polyhedra.">
+<meta name=keywords value="polyhedra, polytope, n-dimensional, hypervolume, cube, tesseract, hypercube, tetrahedron, pentatope, simplex, simplices"></head>
+<script language=javascript src=layout.js></script><script language=javascript>expositions("polytopes"); header("Regular Polytopes");</script>
+
+<table width=100% cellspacing=10><tr><td width=50% valign=top>
+<b>Contents</b><font color=3366ff><ul>
+<li><a href=#sectionI>I.  Hypercubes</a>
+<li><a href=#sectionII>II.  Regular Simplices</a>
+<li><a href=#references>References</a>
+</ul></font>
+<td width=50% valign=top>
+<b>Supplements and Links</b><font color=3366ff><ul>
+<li><a href=polytopes-project.html><font color=11aa00>Regular Polytopes Project</font></a>
+<li><a href=polygons.html>Regular Polygons</a>
+<li><a href=polyhedra.html>Regular Polyhedra</a>
+</ul></font></table>
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<br><a id=sectionI></a><center><b><font size=5>I.  Hypercubes</font></b></center>
+
+<p>As a cube can be created connecting the corresponding vertices of two squares, so can the four-dimensional tesseract be created by connecting corresponding vertices of two cubes, as in the following projection of a tesseract onto the plane.
+
+<p><center><img src=images/construction-tesseract.gif width=618 height=192></center>
+
+<p>A tesseract can then be duplicated to create a 5-cube, etc.  The hypervolume of an <i>n</i>-dimensional hypercube with side length <i>s</i> is <i>s<sup>n</sup></i> because all intersecting line segments intersect perpendicularly.  However, the formula for the surface hyperarea of a hypercube is not so intuitive.  To find this formula, we need to know how many hyperfaces &#151; (<i>n</i> &#150; 1)-dimensional polyhedra that make up the boundary of the hypercube &#151; each hypercube contains.  Moreover, given a hypercube, it would be interesting to know how many vertices, line segments, squares, cubes, tesseracts, etc. it contains.  In this direction, let us record some values that can be easily found by counting.
+
+<p><center><table cellpadding=5 border=1>
+<tr align=center><td>hypercube<td>vertices<td>edges<td>squares<td>cubes<td>tesseracts<td>5-cubes
+<tr align=right><td align=left>0 &#150; point		<td>1<td>0<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>1 &#150; line segment	<td>2<td>1<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>2 &#150; square		<td>4<td>4<td>1<td>0<td>0<td>0
+<tr align=right><td align=left>3 &#150; cube		<td>8<td>12<td>6<td>1<td>0<td>0
+<tr align=right><td align=left>4 &#150; tesseract	<td>16<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>1<td>0
+<tr align=right><td align=left>5-cube			<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>1
+</table></center>
+
+<p>Now we can begin to fill the missing numbers in.  Since the tesseract was created by doubling a cube we know it has twice as many vertices as the cube (since in joining two cubes with line segments we do not create any additional vertices).  Similarly, the five-cube has twice as many vertices as the tesseract.  In general, we can prove by <a href=induction.html><font color=3366ff>induction</font></a> that the <i>n</i>-dimensional hypercube has 2<sup><i>n</i></sup> vertices.
+
+<p>How many edges does a tesseract have?  A cube has 12 edges, and the tesseract is composed of two cubes.  Therefore the tesseract must have at least 24 edges.  However, there are an additional 8 edges that arise as the "connections" between the 8 vertices of each cube.  So the tesseract has 2 &#183; 12 + 8 = 32 edges.  Similarly, the 5-cube inherits 2 &#183; 32 from its constituent tesseracts, and it also has 16 edges connecting the vertices of the two tesseracts.  So the 5-cube has 2 &#183; 32 + 16 = 80 edges.  In general, if <i>V</i><sub><i>n</i></sub> and <i>E</i><sub><i>n</i></sub> are the number of vertices and edges in an <i>n</i>-cube, then <i>E</i><sub><i>n</i></sub> = 2 <i>E</i><sub><i>n</i> &#150; 1</sub> + <i>V</i><sub><i>n</i> &#150; 1</sub> = 2 <i>E</i><sub><i>n</i> &#150; 1</sub> + 2<sup><i>n</i> &#150; 1</sup>.
+
+<p>What about squares?  A tesseract inherits 2 &#183; 6 squares from its constituent cubes.  Each edge of the cube forms a new square, however, for a new line segment is drawn at each endpoint.  Thus the tesseract has 12 additional squares, formed by the cube's 12 edges.  In fact, for every <i>m</i>-cube inside of an <i>n</i>-cube (<i>m</i> &#8804; <i>n</i>), we obtain a new (<i>m</i> + 1)-cube inside the (<i>n</i> + 1)-cube.  Letting <i>b</i><sub><i>n</i>, <i>m</i></sub> denote the entry in the <i>n</i>th row and <i>m</i>th column of the table (starting both <i>n</i> and <i>m</i> at 0) then gives
+
+<p><a id=equation1></a><table width=100%><tr><td><center><img src=images/pn01.gif width=189 height=23></center><td width=10 align=right>(1)</table>
+
+<p>For all <i>n</i>, <i>b</i><sub><i>n</i>, <i>n</i></sub> = 1 because each <i>n</i>-cube contains exactly one <i>n</i>-cube.  This allows us to complete as much of the table as we like.
+
+<p><center><table cellpadding=5 border=1>
+<tr align=center><td>hypercube<td>vertices<td>edges<td>squares<td>cubes<td>tesseracts<td>5-cubes<td>6-cubes<td>7-cubes<td>8-cubes<td>9-cubes<td>10-cubes
+<tr align=right><td align=left>0 &#150; point		<td>1<td>0<td>0<td>0<td>0<td>0<td>0<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>1 &#150; line segment	<td>2<td>1<td>0<td>0<td>0<td>0<td>0<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>2 &#150; square		<td>4<td>4<td>1<td>0<td>0<td>0<td>0<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>3 &#150; cube		<td>8<td>12<td>6<td>1<td>0<td>0<td>0<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>4 &#150; tesseract	<td>16<td>32<td>24<td>8<td>1<td>0<td>0<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>5-cube			<td>32<td>80<td>80<td>40<td>10<td>1<td>0<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>6-cube			<td>64<td>192<td>240<td>160<td>60<td>12<td>1<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>7-cube			<td>128<td>448<td>672<td>560<td>280<td>84<td>14<td>1<td>0<td>0<td>0
+<tr align=right><td align=left>8-cube			<td>256<td>1024<td>1792<td>1792<td>1120<td>448<td>112<td>16<td>1<td>0<td>0
+<tr align=right><td align=left>9-cube			<td>512<td>2304<td>4608<td>5376<td>4032<td>2016<td>672<td>144<td>18<td>1<td>0
+<tr align=right><td align=left>10-cube			<td>1024<td>5120<td>11520<td>15360<td>13440<td>8064<td>3360<td>960<td>180<td>20<td>1
+</table></center>
+
+<p>We have a recursive formula for <i>b</i><sub><i>n</i>, <i>m</i></sub>, but perhaps there is an explicit, closed-form expression.  Finding such an expression amounts to solving the recurrence relation <a href=#equation1>(1)</a> explicitly.  One way to approach this is to handle one column at a time.  Fixing <i>m</i> = 1, we can iteratively substitute <a href=#equation1>(1)</a> into itself and work down to an explicit formula:
+
+<p><center><img src=images/pn02.gif width=385 height=121></center>
+
+<p>Similarly, for <i>m</i> = 2,
+
+<center><img src=images/pn03.gif width=518 height=123></center>
+
+<p>for any 1 &#8804; <i>k</i> &#8804; <i>n</i>.  Here we encounter the triangular numbers &#151; the sequence 1, 3, 6, 10, 15, 21, ..., the <i>k</i>th term of which is the sum of the first <i>k</i> natural numbers.  In general, the <i>k</i>th triangular number is given by the <a href=pascalssimplices-project.html><font color=11aa00>binomial coefficient</font></a> <img src=images/pn04.gif width=131 height=24 align=absmiddle>.  Letting <i>k</i> = <i>n</i> above, we find
+
+<p><center><img src=images/pn05.gif width=477 height=47></center>
+
+<p>(The above results can be proven more directly by <a href=induction.html><font color=3366ff>induction</font></a>.)  At this point we might guess that <img src=images/pn06.gif width=127 height=45 align=absmiddle>.  We prove by induction that this in fact holds, knowing that <i>b</i><sub><i>n</i>, <i>n</i></sub> = 1 for all <i>n</i> and <i>b</i><sub><i>n</i>, <i>m</i></sub> = 0 for <i>m</i> &gt; <i>n</i> (which both agree with the expression for <i>b</i><sub><i>n</i>, <i>m</i></sub>).  Assume that
+
+<p><center><img src=images/pn07.gif width=227 height=46></center>
+
+and
+
+<center><img src=images/pn08.gif width=185 height=48></center>
+
+<p>hold for some <i>m</i> &lt; <i>n</i>.  Our goal is to show that
+
+<p><center><img src=images/pn06.gif width=127 height=45></center>
+
+<p>holds, for then the recurrence relation and the explicit formula "fill in" the table in the same way.  Using equation <a href=#equation1>(1)</a> (and proving the <a href=pascalssimplices-project.html><font color=11aa00>Pascal formula</font></a> along the way), we have
+
+<p><center><img src=images/pn09.gif width=602 height=91></center>
+
+<p>We now return to the question of the surface hyperarea of a regular <i>n</i>-cube of side length <i>s</i>.  Since an <i>n</i>-cube has <img src=images/pn10.gif width=129 height=21 align=absmiddle> hyperfaces, each of hypervolume <i>s</i><sup><i>n</i> &#150; 1</sup>, the surface hyperarea of a regular <i>n</i>-cube is
+
+<p><center><img src=images/pn11.gif width=61 height=22></center>
+
+<!--The radius of the hypersphere circumscribed about an n-cube is \sqrt{n} s / 2.-->
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<br><a id=sectionII></a><center><b><font size=5>II.  Regular Simplices</font></b></center>
+
+<p>An <i>n</i>-simplex is an <i>n</i>-dimensional polytope containing <i>n</i> + 1 vertices, each pair of which is joined by an edge.  The 2-simplex is the triangle, and the 3-simplex is the tetrahedron (while the 0- and 1-simplices are the point and the line segment).
+
+<p>Since each vertex is connected to every other vertex, there are <img src=images/pn12.gif width=130 height=24 align=absmiddle> edges in an <i>n</i>-simplex.  Similarly, any three vertices form a triangle, so there are <img src=images/pn13.gif width=138 height=23 align=absmiddle> triangles, etc.  The following table lists the number of <i>m</i>-simplices contained in an <i>n</i>-simplex.  The entry in the <i>n</i>th row and <i>m</i>th column is
+
+<p><center><img src=images/pn14.gif width=266 height=46 align=absmiddle></center>
+
+<p><center><table cellpadding=5 border=1>
+<tr align=center><td>simplex<td>vertices<td>edges<td>triangles<td>tetrahedrons<td>pentatopes<td>5-simplices<td>6-simplices<td>7-simplices<td>8-simplices
+<tr align=right><td align=left>0 &#150; point		<td>1<td>0<td>0<td>0<td>0<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>1 &#150; line segment	<td>2<td>1<td>0<td>0<td>0<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>2 &#150; triangle	<td>3<td>3<td>1<td>0<td>0<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>3 &#150; tetrahedron	<td>4<td>6<td>4<td>1<td>0<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>4 &#150; pentatope	<td>5<td>10<td>10<td>5<td>1<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>5-simplex		<td>6<td>15<td>20<td>15<td>6<td>1<td>0<td>0<td>0
+<tr align=right><td align=left>6-simplex		<td>7<td>21<td>35<td>35<td>21<td>7<td>1<td>0<td>0
+<tr align=right><td align=left>7-simplex		<td>8<td>28<td>56<td>70<td>56<td>28<td>8<td>1<td>0
+<tr align=right><td align=left>8-simplex		<td>9<td>36<td>84<td>126<td>126<td>84<td>36<td>9<td>1
+</table></center>
+
+<p>This table is simply <a href=pascalssimplices-project.html><font color=11aa00>Pascal's triangle</font></a> (left-justified and missing the leftmost column), as its entries are simple binomial coefficients, illustrating a remarkable connection between simplices and the simplex figurate numbers (which comprise the diagonals of Pascal's triangle).
+
+<p>For any <i>n</i>, there is a regular <i>n</i>-simplex, which we can define inductively:  There is a point (in four-dimensional space) that is distance <i>s</i> from each of the four vertices of a regular tetrahedron.  This point becomes a vertex of the regular pentatope.  There is a point (in 5-space) that is distance <i>s</i> from each of the five vertices of the regular pentatope; this point serves as the sixth vertex for the regular 6-simplex, etc.
+
+<p>What is the hypervolume <i>V</i><sub><i>n</i></sub> of a regular <i>n</i>-simplex with side length <i>s</i>?  It turns out to have a nice formulation in terms of the height <i>h</i><sub><i>n</i></sub> of the regular <i>n</i>-simplex (i.e., the distance from a vertex to the center of the opposite hyperface).  For the equilateral triangle, <i>V</i><sub>2</sub> = <i>h</i><sub>2</sub> &#183; <i>s</i> / 2.  The volume of a regular tetrahedron is <i>V</i><sub>3</sub> = <i>h</i><sub>3</sub> &#183; <i>V</i><sub>2</sub> / 3.  In general, the hypervolume of an <i>n</i>-dimensional pyramid of height <i>h</i> and base hyperarea <i>A</i> is <i>h</i> &#183; <i>A</i> / <i>n</i>.  (This result can be obtained by using calculus.)  For regular simplices, this implies that
+
+<p><a id=equation2></a><table width=100%><tr><td><center><img src=images/pn15.gif width=114 height=23></center><td width=10 align=right>(2)</table>
+
+<p>However, by breaking up the regular <i>n</i>-simplex into <i>n</i> + 1 congruent (smaller) <i>n</i>-simplices (each of height <i>a</i><sub><i>n</i></sub> and the bases of which are the hyperfaces of the <i>n</i>-simplex), we obtain an expression for <i>V</i><sub><i>n</i></sub> in terms of the apothem <i>a</i><sub><i>n</i></sub> (the radius of the hypersphere inscribed in the <i>n</i>-simplex) and the surface hyperarea <i>S</i><sub><i>n</i></sub> = (<i>n</i> + 1) <i>V</i><sub><i>n</i> &#150; 1</sub> of the <i>n</i>-simplex:
+
+<p><center><img src=images/pn16.gif width=271 height=24></center>
+
+<p>Equating this with <a href=#equation2>(2)</a> allows us to solve for <i>h</i><sub><i>n</i></sub>:
+
+<p><center><img src=images/pn17.gif width=116 height=27></center>
+
+<p><img src=images/tetrahedronmesh.gif width=121 height=139 align=right>or <i>a</i><sub><i>n</i></sub> = <i>h</i><sub><i>n</i></sub> / (<i>n</i> + 1).
+
+<p>The task is now to find an explicit formula for <i>h</i><sub><i>n</i></sub>.  For the triangle, <i>h</i><sub>2</sub> = &#8730;3 <i>s</i> / 2.  The height <i>h</i><sub>3</sub> of the tetrahedron is found by first knowing the height of the triangle, for the line segment (of length <i>h</i><sub>3</sub>) from a vertex of the tetrahedron to the center of the opposite face makes a right triangle with the slant height segment of the pyramid (of length <i>h</i><sub>2</sub>) and the apothem segment of the base (of length <i>a</i><sub>2</sub>).  The Pythagorean theorem then gives that <i>h</i><sub>2</sub> = <i>s</i> &#8730;(2/3).  In general,
+
+<p><center><img src=images/pn18.gif width=185 height=25></center>
+
+so
+
+<center><img src=images/pn19.gif width=296 height=43></center>
+
+<p>One way of finding <i>h</i><sub><i>n</i></sub> is to substitute this expression back into itself until we obtain <i>h</i><sub><i>n</i></sub> in terms of <i>h</i><sub>2</sub> = &#8730;3 <i>s</i> / 2.  Another way is to exploit another right triangle:
+
+<p><center><img src=images/pn20.gif width=469 height=50></center>
+
+<p>which gives
+
+<center><img src=images/pn21.gif width=149 height=47></center>
+
+or
+
+<center><img src=images/pn22.gif width=117 height=44></center>
+
+<p>Either way, now that we know <i>h</i><sub><i>n</i></sub> explicitly, we can use <a href=#equation2>(2)</a> to find <i>V</i><sub><i>n</i></sub>.  Again, one way of doing this is by iteratively substituting the expression into itself.  Another (perhaps less computationally intensive) way is by looking carefully at <a href=#equation2>(2)</a>:
+
+<p><a id=equation3></a><table width=100%><tr><td><center><img src=images/pn23.gif width=245 height=45></center><td width=10 align=right>(3)</table>
+
+<p><i>V</i><sub>1</sub> = <i>s</i> is the hypervolume of a line segment of length <i>s</i>.  The expression for <i>V</i><sub><i>n</i></sub> will contain <i>n</i> / 2 powers of 2 in the denominator (from the same number of substitutions of <a href=#equation3>(3)</a>); the 1 / <i>n</i> factor in <a href=#equation3>(3)</a> will contribute 1 / <i>n</i>! to <i>V</i><sub><i>n</i></sub>; and each &#8730;(<i>n</i> + 1) will cancel out the &#8730;<i>n</i> term of the previous iteration.  Thus
+
+<p><a id=equation4></a><table width=100%><tr><td><center><img src=images/pn24.gif width=119 height=42></center><td width=10 align=right>(4)</table>
+
+<p>At this point the surface hyperarea of a regular <i>n</i>-simplex is easy to derive:
+
+<p><a id=equation5></a><table width=100%><tr><td><center><img src=images/pn25.gif width=288 height=44></center><td width=10 align=right>(5)</table>
+
+<p><br>If <i>b</i><sub><i>k</i></sub> is the number of <i>k</i>-dimensional polytopes contained in a given <i>n</i>-dimensional polytope, the generalized Euler formula is that
+
+<p><center><img src=images/pn26.gif width=364 height=24></center>
+
+<p>(Notice that <i>b</i><sub><i>n</i></sub> = 1, so if <i>n</i> is even then <img src=images/pn27.gif width=126 height=25 align=absmiddle> and if <i>n</i> is odd then <img src=images/pn28.gif width=124 height=26 align=absmiddle>.)
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<p><br><a id=references></a><center><b><font size=5>References</font></b></center>
+
+<p>Relevant links:<ul>
+<li><a href=http://mathworld.wolfram.com/Polytope.html><font color=772266>Polytope</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/Tesseract.html><font color=772266>Tesseract</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/Hypercube.html><font color=772266>Hypercube</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/Pentatope.html><font color=772266>Pentatope</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/Simplex.html><font color=772266>Simplex</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/16-Cell.html><font color=772266>16-Cell</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/CrossPolytope.html><font color=772266>Cross Polytope</font></a> on MathWorld
+</ul>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

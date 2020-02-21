@@ -1,0 +1,40 @@
+<html><head><title>Sums of Consecutive Powers Project - Hints</title>
+<meta name=author value="Eric Rowland"></head>
+<script language=javascript src=layout.js></script><script language=javascript>projects("sumsofpowers"); header("none");</script>
+
+<p><a href=sumsofpowers-hints.html><font color=000088>back to Sums of Consecutive Powers Project Hints</font></a>
+<br><a href=sumsofpowers-project.html>back to Sums of Consecutive Powers Project</a>
+
+<p><a id=1></a>Use Gauss's method to find a formula for the sum of the first <i>n</i> natural numbers.
+<br><b>Hint:</b>  The numbers of dots in the triangles are half of the numbers of dots in the following rectangles:
+<center><img src=images/rectangles.gif width=731 height=99></center>
+
+<p><a id=2></a>Assuming that <i>f</i><sub>2</sub>(<i>n</i>) is a polynomial in <i>n</i> of degree 3, find this polynomial by interpolation.
+<br><b>Hint:</b>  Take (<i>x</i><sub><i>i</i></sub>, <i>y</i><sub><i>i</i></sub>) = (<i>i</i>, <i>f</i><sub>2</sub>(<i>i</i>)) for each <i>i</i> = 1, 2, 3.
+
+<p><a id=3></a>Prove that the degree-3 polynomial for <i>f</i><sub>2</sub>(<i>n</i>) holds for all <i>n</i>.
+<br><b>Hint:</b>  For the base case, prove that the polynomial is 1 = <i>f</i><sub>2</sub>(1) for <i>n</i> = 1.  For the induction step, assume that the polynomial gives <i>f</i><sub>2</sub>(<i>n</i>) for <i>n</i> and show that it gives <i>f</i><sub>2</sub>(<i>n</i> + 1) for <i>n</i> + 1.
+
+<p><a id=4></a>What is the difference <i>f</i><sub><i>p</i> &#150; 1</sub>(<i>n</i>) &#150; <i>f</i><sub><i>p</i> &#150; 1</sub>(<i>n</i> &#150; 1)?
+<br><b>Hint:</b>  What is the sum of the first <i>n</i> <i>k</i>th powers without the first <i>n</i> &#150; 1 <i>k</i>th powers?
+
+<p><a id=5></a>Since the <i>p</i>th Bernoulli polynomial is the unique polynomial (up to a constant) satisfying its definition, find a relationship of the function <i>p</i> <i>f</i><sub><i>p</i> &#150; 1</sub>(<i>n</i>) to a Bernoulli polynomial (assuming that <i>f</i><sub><i>p</i> &#150; 1</sub>(<i>n</i>) is a polynomial in <i>n</i> of degree <i>p</i>).
+<br><b>Hint:</b>  Since <i>p</i> <i>f</i><sub><i>p</i> &#150; 1</sub>(<i>n</i> &#150; 1</sub>) also satisfies the definition of <i>B</i><sub><i>p</i></sub>(<i>n</i>), the two must be equal up to an additive constant <i>C</i><sub><i>p</i></sub>.
+
+<p><a id=6></a>Find the constant term of the polynomial <i>f</i><sub><i>p</i></sub>(<i>n</i>).
+<br><b>Hint:</b>  Let <i>n</i> = 0 in the relationship of <i>p</i> <i>f</i><sub><i>p</i> &#150; 1</sub>(<i>n</i>) to <i>B</i><sub><i>p</i></sub>(<i>n</i>).
+
+<p><a id=7></a>Prove the conjectural formula for <i>f</i><sub><i>p</i></sub>(<i>n</i>).
+<br><b>Hint:</b>  For each fixed <i>p</i>, use induction on <i>n</i>.  The base case is that the polynomial is 0 at <i>n</i> = 0.  For the inductive step, make use of the definition of <i>B</i><sub><i>p</i></sub>(<i>n</i>).
+
+<p><br><a href=sumsofpowers-project.html>back to Sums of Consecutive Powers Project</a>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

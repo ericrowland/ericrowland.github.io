@@ -1,0 +1,99 @@
+<html><head><title>Regular Polygon Calculator</title></head>
+<meta name=author value="Eric Rowland">
+<meta name=description value="A JavaScript program which computes various geometric values and combinatorial quantities of regular polygons.">
+<meta name=keywords value="JavaScript, program, calculator, regular polygon, n-gon, diagonals, intersections, regions, segments"></head>
+<script language=javascript src=layout.js></script><script language=javascript>header("Regular <i>n</i>-gon Calculator");</script>
+
+<p>This calculator computes various combinatorial and geometric values of a regular polygon with its diagonals drawn in.  Input the number of sides <i>n</i> (greater than 2) and the radius of the circumscribed circle.  See below for a more detailed description of the calculator.
+
+<script language=javascript>
+function delta(m) {return (1 - ( n % m > 0))};
+function intersections(n) {return (1*n + n*(n - 1)*(n - 2)*(n - 3)/24 + (-5*n*n*n + 45*n*n - 70*n + 24)*delta(2)/24 - 3*n*delta(4)/2 + (-45*n*n + 262*n)*delta(6)/6 + 42*n*delta(12) + 60*n*delta(18) + 35*n*delta(24) - 38*n*delta(30) - 82*n*delta(42) - 330*n*delta(60) - 144*n*delta(84) - 96*n*delta(90) - 144*n*delta(120) - 96*n*delta(210))};
+function regions(n) {return ((n*n*n*n - 6*n*n*n + 23*n*n - 42*n + 24)/24 + (-5*n*n*n + 42*n*n - 40*n - 48)*delta(2)/48 - 3*n*delta(4)/4 + (-53*n*n + 310*n)*delta(6)/12 + 49*n*delta(12)/2 + 32*n*delta(18) + 19*n*delta(24) - 36*n*delta(30) - 50*n*delta(42) - 190*n*delta(60) - 78*n*delta(84) - 48*n*delta(90) - 78*n*delta(120) - 48*n*delta(210))};
+function ngon(s) {
+	n = s.n.value;
+	r = s.r.value;
+	if(n >= 3 && Math.abs(n - Math.round(n)) < .00000001 && r > 0) {
+		inter = intersections(n);
+		reg = regions(n);
+		s.diag.value = n*(n - 3)/2;
+		s.inter.value = inter;
+		s.reg.value = reg;
+		s.seg.value = inter + reg - 1;
+		s.angle.value = 180 - 360/n;
+		s.angleradians.value = Math.PI*(1 - 2/n);
+		s.side.value = 2*r*Math.sin(Math.PI/n);
+		s.perimeter.value = 2*n*r*Math.sin(Math.PI/n);
+		s.apothem.value = r*Math.cos(Math.PI/n);
+		s.median.value = r*(1 + Math.cos(Math.PI/n));
+		s.area.value = n*r*r*Math.sin(2*Math.PI/n)/2;
+	}
+	else clear(s);
+}
+function diagonals(s) {
+	n = s.n.value;
+	r = s.r.value;
+	if(n >= 3 && Math.abs(n - Math.round(n)) < .00000001 && r > 0) {
+		s.list.value = "k  d_k\n";
+		for(i = 1; i < n; i++) s.list.value += i + "  " + 2*r*Math.sin(Math.PI*i/n) + "\n";
+	}
+	else clear(s);
+}
+function clear(s) {
+		s.diag.value = "";
+		s.inter.value = "";
+		s.reg.value = "";
+		s.seg.value = "";
+		s.angle.value = "";
+		s.angleradians.value = "";
+		s.side.value = "";
+		s.perimeter.value = "";
+		s.apothem.value = "";
+		s.median.value = "";
+		s.area.value = "";
+		s.list.value = "n must be an integer greater than 2, and r must be a positive real number."
+}
+</script>
+
+<form method=post name=inputs>
+<center><b>A regular <input type=text name=n size=3>-gon with radius of circumscribed circle <i>r</i> = <input type=text name=r size=2 value=1> has the properties:</b>
+<br><table><tr><td colspan=3 align=center><input type=button value="Evaluate" onClick=ngon(this.form);><td rowspan=15 align=center valign=top><input type=button value="Compute Diagonals" onClick=diagonals(this.form);><br><textarea name=list rows=22 cols=30></textarea>
+<tr><td colspan=2><b>Combinatorial Quantities:</b>
+<tr><td>Diagonals:<td><input type=text name=diag size=7>
+<tr><td>Intersections:<td><input type=text name=inter size=7>
+<tr><td>Regions:<td><input type=text name=reg size=7>
+<tr><td>Segments:<td><input type=text name=seg size=7>
+<tr><td colspan=2><b>Geometric Values:</b>
+<tr><td>Angle <i>&theta;</i> = <td><input type=text name=angle size=20>&deg;
+<tr><td><td><input type=text name=angleradians size=20> radians
+<tr><td>Side length <i>s</i> = <td><input type=text name=side size=20>
+<tr><td>Perimeter <i>p</i> = <td><input type=text name=perimeter size=20>
+<tr><td>Apothem <i>a</i> = <td><input type=text name=apothem size=20>
+<tr><td>Median length <i>m</i> = <i>r</i> + <i>a</i> = <td><input type=text name=median size=20>
+<tr><td>Area <i>A</i> = <td><input type=text name=area size=20>
+</table></form></center>
+
+<p>The calculator gives the following quantities (which are discussed in the <a href=polygons-project.html><font color=11aa00>Regular Polygons Project</font></a>):
+<br><b>Diagonals</b> &#151; the number of proper diagonals in a regular polygon (i.e., excluding the <i>n</i> sides)
+<br><b>Intersections</b> &#151; the number of intersections (including the <i>n</i> vertices) of all the diagonals of a regular polygon
+<br><b>Regions</b> &#151; the number of regions into which the diagonals cut the <i>interior</i> of the polygon
+<br><b>Segments</b> &#151; the number of segments (including the <i>n</i> sides of the polygon) that the diagonals cut each other into
+
+<p>Formulas for the numbers of intersections and regions are taken from:
+<br>B. Poonen and M. Rubinstein, <a href=http://math.berkeley.edu/~poonen/papers/ngon.pdf><font color=772266><i>The Number of Intersection Points Made by the Diagonals of a Regular Polygon</i></font></a>, SIAM J. Discrete Math., v.11 (1998), p. 135–156.
+
+<p>The following regular septagon illustrates the geometric values.  Equations relating these values are given at <a href=polygons.html><font color=ff8c00>Regular Polygons</font></a>.
+
+<p><center><img src=images/7gon.gif width=275 height=275></center>
+
+<script language=javascript>document.inputs.n.focus();</script>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

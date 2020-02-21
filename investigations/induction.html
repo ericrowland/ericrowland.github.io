@@ -1,0 +1,46 @@
+<html><head><title>Mathematical Induction</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="An introduction to mathematical induction and a simple example of an inductive proof.">
+<meta name=keywords value="mathematical induction, proof"></head>
+<script language=javascript src=layout.js></script><script language=javascript>header("Mathematical Induction");</script>
+
+The axioms of mathematics allow us to use a technique called <i>induction</i> in proofs of mathematical statements.  This technique often enables us to prove a statement about infinitely many things.  For example, suppose we want to prove that every natural number (1, 2 = 1 + 1, 3 = 1 + 1 + 1, ...) is greater than 0.  This statement is somewhat obvious to us because of our extensive experience with the system of natural numbers, but we can still ask for a rigorous proof.
+
+<p>An induction argument consists of two parts:<ol>
+<li>The base case.
+<li>The inductive step.
+</ol>
+
+<p>The base case is the "lowest" case that we are interested in, and we prove it for its own sake.  In the example of proving that every natural number is greater than 0, the base case is proving that 1 &#62; 0, since 1 is the lowest case that we are interested in.  Well, it is an axiom of the real number system that 1 &#62; 0, so there is nothing to prove.  (You might argue that the statement "2 &#62; 0" does not require proof either.  However, this is not an axiom of the real numbers; rather, it is derived from the axioms.)
+
+<p>The inductive step is where the "induction" happens, and it is usually more difficult than the base case.  In the inductive step, we assume that the statement we are trying to prove <i>does</i> hold for some number <i>k</i>.  Then, assuming that it holds for <i>k</i>, we show that it also holds for <i>k</i> + 1.  If our base case is 1, then by the inductive step, the statement also holds for 2.  Since it holds for 2, the inductive step implies that it also holds for 3.  Since it holds for 3, it also holds for 4, etc.  So simply by showing that the base case holds and that we can proceed inductively on all numbers, we have set up a domino effect that proves our statement for infinitely many numbers.
+
+<p>In the example above, the inductive step is the following:  Show that if <i>k</i> &#62; 0, then <i>k</i> + 1 &#62; 0.  We use the axiom that if <i>a</i> &#62; <i>b</i> and <i>c</i> &#62; 0, then <i>a</i> + <i>c</i> &#62; <i>b</i> + <i>c</i>.  With <i>a</i> = <i>k</i>, <i>b</i> = 0, <i>c</i> = 1, this gives
+
+<p><center><i>k</i> + 1 &#62; 1 &#62; 0,</center>
+
+<p>completing the proof.
+
+<p>For a slightly less trivial example, let's prove that the <a href=sumsofpowers-project.html><font color=11aa00>sum of the first <i>n</i> natural numbers</font></a> is
+
+<p><a id=equation1></a><table width=100%><tr><td><center><img src=images/mi01.gif width=136 height=53></center><td width=10 align=right>(1)</table>
+
+<p>Clearly for <i>n</i> = 1 we have
+
+<p><center><img src=images/mi02.gif width=162 height=53></center>
+
+<p>For the inductive step, assume that equation <a href=#equation1>(1)</a> holds for <i>n</i>.  We wish to show that it also holds for <i>n</i> + 1.  We have
+
+<p><center><img src=images/mi03.gif width=198 height=136></center>
+
+<p>which is what was to be shown.  By the principle of mathematical induction, equation <a href=#equation1>(1)</a> holds for all natural numbers <i>n</i>.
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

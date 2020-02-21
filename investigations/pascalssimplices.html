@@ -1,0 +1,131 @@
+<html><head><title>Pascal's Simplices</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="Several results on the entries of Pascal's simplices, including an explicit formula for multinomial coefficients.">
+<meta name=keywords value="Pascal's triangle, tetrahedron, pentatope, pyramid, simplex, binomial, expansion, multinomial, coefficient, formula"></head>
+<script language=javascript src=layout.js></script><script language=javascript>expositions("pascalssimplices"); header("Pascal's Simplices");</script>
+
+<table width=100% cellspacing=10><tr><td width=50% valign=top>
+<b>Contents</b><font color=3366ff><ul>
+<li><a href=#sectionI>I.  Pascal's Triangle</a>
+<li><a href=#sectionII>II.  Pascal's Simplices</a>
+<li><a href=#references>References</a>
+</ul></font>
+<td width=50% valign=top>
+<b>Supplements and Links</b><font color=3366ff><ul>
+<li><a href="calculators/Pascal's simplices.nb"><font color=3366ff>Pascal's simplices</font></a> <font color=black><i>Mathematica</i> notebook</font>
+<li><a href=pascalssimplices-project.html><font color=11aa00>Pascal's Simplices Project</font></a>
+</ul></font></table>
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<br><a id=sectionI></a><center><b><font size=5>I.  Pascal's Triangle</font></b></center>
+
+<p>Pascal's triangle, of which the first eleven rows are shown below, gives the coefficients of binomial expansions (<i>a</i> + <i>b</i>)<sup><i>n</i></sup>.
+
+<p><center><a href=images/pascalstriangle-large.gif><img src=images/pascalstriangle.gif width=468 height=251 border=0></a></center>
+
+<p>The <i>m</i>th entry of the <i>n</i>th row of Pascal's triangle is given by
+
+<p><a id=equation1></a><table width=100%><tr><td><center><img src=images/ps06.gif width=142 height=46></center><td width=10 align=right>(1)</table>
+
+<p>for nonnegative <i>n</i> and <i>m</i>, and we have the Pascal formula
+
+<p><a id=equation2></a><table width=100%><tr><td><center><img src=images/ps10.gif width=405 height=178></center><td width=10 align=right>(2)</table>
+
+<p>The sum of the entries in the <i>n</i>th row is
+
+<p><center><img src=images/ps11.gif width=324 height=50></center>
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<br><a id=sectionII></a><center><b><font size=5>II.  Pascal's Simplices</font></b></center>
+
+<img src=images/tetrahedralpacking.gif width=103 height=130 align=right>
+<p>Pascal's triangle is composed of binomial coefficients, each the sum of the two numbers above it to the left and right.  Trinomial coefficients, the coefficients of the expansions (<i>a</i> + <i>b</i> + <i>c</i>)<sup><i>n</i></sup>, also form a geometric pattern.  In this case the shape is a three-dimensional triangular pyramid, or <i>tetrahedron</i>.  Each horizontal cross section ("row") of Pascal's tetrahedron is a triangular array of numbers, and the sum of three adjacent numbers in each row gives a number in the following row.  (Try stacking up tennis balls or oranges to understand the geometry; each entry (or orange) rests on three others, as in the illustration of a tetrahedral packing to the right.)  The first seven rows are shown below in cross section.  Notice that each of the three faces of the tetrahedron is Pascal's triangle itself.
+
+<p><center><img src=images/pascalstetrahedron.gif width=492 height=455></center>
+
+<p>As the sum of the entries in the <i>n</i>th row of Pascal's triangle is 2<sup><i>n</i></sup>, the sum of the entries in the <i>n</i>th row of Pascal's tetrahedron is 3<sup><i>n</i></sup>, since this sum is simply
+
+<p><center><img src=images/ps12.gif width=90 height=25></center>
+
+<p>We can work out an explicit formula for the trinomial coefficients by treating a trinomial <i>a</i> + <i>b</i> + <i>c</i> as two nested binomials; first we expand it as the binomial <i>a</i> + (<i>b</i> + <i>c</i>) and then expand <i>b</i> + <i>c</i> inside:
+
+<p><a id=equation3></a><table width=100%><tr><td><center><img src=images/ps13.gif width=523 height=107></center><td width=10 align=right>(3)</table>
+
+<p>Thus the value of Pascal's tetrahedron located at (<i>n</i> &#150; <i>m</i>, <i>m</i> &#150; <i>k</i>, <i>k</i>) is the coefficient of <i>a</i><sup><i>n</i> &#150; <i>m</i></sup> <i>b</i><sup><i>m</i> &#150; <i>k</i></sup> <i>c</i><sup><i>k</i></sup>:
+
+<p><center><img src=images/ps14.gif width=238 height=49></center>
+
+<p>The trinomial coefficients satisfy the following additive relation:
+
+<p><center><img src=images/ps15.gif width=452 height=219></center>
+
+<p>As binomial coefficients form a triangle and trinomial coefficients form a tetrahedron, higher polynomial coefficients form higher dimensional objects.  Quartic coefficients comprise a <i>pentatope</i>, the four-dimensional analogue of the tetrahedron.  The three-dimensional cross sections of Pascal's pentatope are tetrahedrons, and the first five are given below in cross sections.
+
+<p><center><img src=images/pascalspentatope.gif width=470 height=427></center>
+
+<p>In general, we would like to understand the <i>d</i>-nomial, or <i>multinomial</i>, coefficients in the expansion of <img src=images/ps09.gif width=140 height=17 align=absmiddle>.  They comprise the <i>d</i>-dimensional <a href=polytopes.html#sectionII><i>simplex</i></a> of Pascal-generated numbers.  The sum of all these coefficients, for given <i>d</i> and <i>n</i>, is <i>d</i><sup><i>n</i></sup>.  An explicit form can be found <a href=induction.html>inductively</a>.  Let <img src=images/ps16.gif width=105 height=22 align=absmiddle> denote the coefficient of <img src=images/ps17.gif width=88 height=19 align=absmiddle> in the multinomial expansion of <img src=images/ps09.gif width=140 height=17 align=absmiddle>, where <img src=images/ps18.gif width=159 height=19 align=absmiddle>
+
+<p><a id=theorem1></a><b>Theorem 1</b> &nbsp;<i>Multinomial coefficients have the explicit form</i>
+
+<p><center><img src=images/ps19.gif width=281 height=45></center>
+
+<p><b>Proof.</b>  We have shown above that the statement holds for <i>d</i> = 3.  Inductively, we assume it holds for some <i>d</i> &#8805; 3 and show that it holds for <i>d</i> + 1.  The coefficient <img src=images/ps20.gif width=144 height=21 align=absmiddle> of <img src=images/ps21.gif width=121 height=18 align=absmiddle> in
+
+<p><center><img src=images/ps22.gif width=647 height=126></center>
+
+<p>is (at <i>m</i> = <i>n</i> &#150; <i>n</i><sub><i>d</i> + 1</sub> in the summation)
+
+<p><table width=100%><tr><td><center><img src=images/ps23.gif width=437 height=89></center><td width=10 align=right valign=bottom>&#9632;</table>
+
+<p>We now change variables to obtain the additive relation for multinomial coefficients.  Let <i>m</i><sub>1</sub> = <i>n</i>, and, for each 2 &#8804; <i>j</i> &#8804; <i>d</i> + 1, let <i>m</i><sub><i>j</i></sub> = <i>m</i><sub><i>j</i> &#150; 1</sub> &#150; <i>n</i><sub><i>j</i> &#150; 1</sub>.  In other words,
+
+<p><center><img src=images/ps24.gif width=299 height=143></center>
+
+<p>This enables us to write each multinomial coefficient as a product of binomial coefficients:
+
+<p><center><img src=images/ps25.gif width=640 height=130></center>
+
+<p>Let
+
+<p><center><img src=images/ps26.gif width=231 height=59></center>
+
+<p><a id=theorem2></a><b>Theorem 2</b> &nbsp;<i>The d-nomial coefficients satisfy the additive relation</i>
+
+<p><center><img src=images/ps27.gif width=620 height=134></center>
+
+<p><b>Proof.</b>  The additive relation can be written somewhat more succinctly by defining the function 
+
+<p><center><img src=images/ps28.gif width=158 height=46></center>
+
+<p>We seek to prove that
+
+<p><a id=equation4></a><table width=100%><tr><td><center><img src=images/ps29.gif width=546 height=53></center><td width=10 align=right>(4)</table>
+
+<p>We prove the relation by induction.  We have proved it above for <i>d</i> = 3.  Assume that it holds for some <i>d</i> &#8805; 3.  Then we have
+
+<p><table width=100%><tr><td><center><img src=images/ps30.gif width=570 height=439></center><td width=10 align=right valign=bottom>&#9632;</table>
+
+<p>From the expression of multinomial coefficients as a product of binomial coefficients, we notice, for example, that each linear row in the triangular cross sections of Pascal's tetrahedron is a row of Pascal's triangle, scaled by some integer.  Additionally, each triangular row of the tetrahedral cross sections of Pascal's pentatope is a triangular cross section of Pascal's tetradedron, scaled by some integer.  In general, each (<i>d</i> &#150; 1)-simplicial row of the <i>d</i>-simplicial cross sections of Pascal's (<i>d</i> + 1)-simplex is a (<i>d</i> &#150; 1)-simplicial cross section of Pascal's <i>d</i>-simplex, scaled by some integer.
+
+
+<p><br><a id=references></a><center><b><font size=5>References</font></b></center>
+
+<p>Relevant links:<ul>
+<li><a href=http://mathforum.org/workshops/usi/pascal/pascal_lessons.html><font color=772266>Exploring Pascal's Triangle:  Lessons:</font></a> a plethora of Pascal patterns
+<li><a href=http://mathworld.wolfram.com/PascalsTriangle.html><font color=772266>Pascal's Triangle</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/PascalsFormula.html><font color=772266>Pascal's formula</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/MultinomialCoefficient.html><font color=772266>Multinomial Coefficient</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/MultinomialSeries.html><font color=772266>Multinomial Series</font></a> on MathWorld
+</ul>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

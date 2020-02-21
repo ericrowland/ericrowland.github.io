@@ -1,0 +1,41 @@
+<html><head><title>Primitive Pythagorean Triple Finder</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="A JavaScript program which searches for primitive Pythagorean triples with hypotenuse in a given range.">
+<meta name=keywords value="JavaScript, program, Pythagorean triple, search"></head>
+<script language=javascript src=layout.js></script><script language=javascript>header("Primitive Pythagorean Triple Finder");</script>
+
+<center><table cellpadding=3>
+<tr align=right><td><font size=5><b><i>x</i></b></font><td><font size=5><b><i>y</i></b></font><td><font size=5><b><i>z</i></b></font><td><font size=5><b><i>r</i></b></font><td><font size=5><b><i>s</i></b></font>
+<script language=javascript>
+s=prompt("Input starting hypotenuse value.","1");
+s/=1;
+e=prompt("Input ending hypotenuse value.",s+100);
+e/=1;
+s+=((5-s)%4);
+for(c=s;c<e+1;c+=4) {
+	c+=4*((c%3)==0);
+	for(a=Math.floor(Math.sqrt(2*c-1))+((Math.floor(Math.sqrt(2*c-1))%2)==0);a<c;a+=2) {
+		a+=(a%2==0);
+		if((a%5==0)&&(c%5==0)) a+=2;
+		b=Math.sqrt(c*c-a*a);
+		k=1;
+		for(j=2;j<Math.min(a,b);j++) {
+			if((a%j==0)&&(b%j==0)) {
+				k=0;
+				break;
+			}
+		}
+		if((b==Math.floor(b))&&k) document.write("<tr align=right><td>"+a+"<td>"+b+"<td>"+c+"<td>"+Math.sqrt((c-a)/2)+"<td>"+Math.sqrt(c-b));
+	}
+}
+</script></table></center>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

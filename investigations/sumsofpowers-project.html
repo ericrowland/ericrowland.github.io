@@ -1,0 +1,130 @@
+<html><head><title>Sums of Consecutive Powers Project</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="In this project students investigate sums 1^p + 2^p + ... + n^p of consecutive powers of natural numbers.  They find closed-form expressions for the first few powers and then try to discover the formula for the general case.">
+<meta name=keywords value="high school, undergraduate, math, project, sums of consecutive powers, sums of powers, triangular numbers, Gauss, Bernoulli polynomials, Bernoulli numbers, interpolating polynomial"></head>
+<script language=javascript src=layout.js></script><script language=javascript>projects("sumsofpowers"); header("Sums of Consecutive Powers Project");</script>
+
+<table width=100% cellspacing=10><tr><td width=50% valign=top>
+<b>Contents</b><font color=3366ff><ul>
+<li><a href=#sectionI>I.  The Formula Skeleton</a>
+<li><a href=#sectionII>II.  Bernoulli Polynomials</a>
+<li><a href=#references>References</a>
+</ul></font>
+<td width=50% valign=top>
+<b>Supplements and Links</b><font color=3366ff><ul>
+<li><a href=sumsofpowers-hints.html><font color=000088>Hints</font></a> <font color=black>for this project</font>
+<li><a href=sumsofpowers.html><font color=ff8c00>Solutions</font></a> <font color=black>for this project</font>
+</ul></font></table>
+
+<table width=100% cellpadding=10 cellspacing=5 border=3><tr valign=top><td width=50%>
+<b>Objectives:</b>  To solve the problem of finding the generalization of a few simple results, using a new construction.  To gain experience in computing interpolating polynomials.  To develop an appreciation of <a href=induction.html><font color=3366ff>mathematical induction</font></a> and "infinite" problems.
+<td>
+<b>Necessary Background:</b>  It is assumed that students are familiar with the method of <a href=induction.html><font color=3366ff>mathematical induction</font></a>.
+<tr><td colspan=2>
+<b>Summary:</b>  In Section I, students discover explicit formulas for the sum <img src=images/sumofpowers.gif width=67 height=20 align=absmiddle> for <i>p</i> = 0, 1, 2, 3, and 4.  In Section II, they are led to discover the general formula.
+</table>
+
+
+<p><br><a id=sectionI></a><center><b><font size=5>I.  The Formula Skeleton</font></b></center>
+
+<p>We would like to investigate sums of consecutive like powers <i>p</i>.  Our goal is to arrive at an expression for the function
+
+<p><a id=equation1></a><table width=100%><tr><td><center><img src=images/sp01.gif width=114 height=53></center><td width=10 align=right>(1)</table>
+
+<p>that captures any patterns that might be present in these sums.  In particular, we would like to be able to reduce these sums <i>computationally</i>.  For example, suppose we wished to compute the sum of the first billion square numbers.  Is there any faster way of doing this than by simply adding up 1 + 4 + 9 + 16 + ... ?  The answer is "yes", but first let's start with more simple cases.
+
+<p>Consider the power <i>p</i> = 0.  <font color=000088>What is <i>f</i><sub>0</sub>(<i>n</i>) = 1<sup>0</sup> + 2<sup>0</sup> + 3<sup>0</sup> + ... + <i>n</i><sup>0</sup>, the sum of the first <i>n</i> natural numbers, each raised to the 0th power?</font>
+
+<p><br>For <i>p</i> = 1, the sum <a href=#equation1>(1)</a> becomes the sum
+
+<p><center><img src=images/sp02.gif width=267 height=52></center>
+
+<p>of the first <i>n</i> natural numbers.  <font color=000088>Find <i>f</i><sub>1</sub>(<i>n</i>) for <i>n</i> = 1, 2, 3, ..., 10.</font>
+
+<p><br>This sequence is called the sequence of <i>triangular numbers</i> because its members are the numbers of dots in the following isosceles right "triangles":
+
+<p><center><img src=images/triangles.gif width=731 height=99></center>
+
+<p>There is a story in the mathematical folklore about the great mathematician Gauss (1777&#150;1855), who, while in elementary school, reportedly found the sum of the first hundred natural numbers in a matter of minutes.  Gauss did this by pairing up the numbers into pairs that summed to 101:
+
+<p><center><img src=images/sp03.gif width=68 height=144></center>
+
+<p>Since there are fifty such pairs, the total sum is then 50 &#183; 101 = 5050.
+
+<p><a href=sumsofpowers-hints.html#1><font color=00088>Use Gauss's method to find a general expression for the sum of the first <i>n</i> natural numbers in terms of <i>n</i>.</font></a>
+
+<p><br>Now we move on to the case <i>p</i> = 2.  <font color=000088>Compute the sum of the first <i>n</i> squares for <i>n</i> = 1, 2, 3, 4, 5, and 6.  Is there an obvious trick for computing these sums that works like Gauss's method for <i>p</i> = 1?</font>
+
+<p><br>To find a general formula for <img src=images/sp04.gif width=67 height=22 align=absmiddle>, we will use an "interpolating polynomial".  <i>Interpolation</i> is the process of fitting a curve to a set of data points.  For example, there is a unique line that passes through any two points in the plane.  If the coordinates of the plane are <i>x</i> and <i>y</i> and our two points are (<i>x</i><sub>1</sub>, <i>y</i><sub>1</sub>) and (<i>x</i><sub>2</sub>, <i>y</i><sub>2</sub>), then the line passing through them is given by the equation
+
+<p><center><img src=images/sp05.gif width=386 height=49></center>
+
+<p>We say that this "curve" (in this case, a line) <i>fits</i> the data points (<i>x</i><sub>1</sub>, <i>y</i><sub>1</sub>) and (<i>x</i><sub>2</sub>, <i>y</i><sub>2</sub>).  (Here we assume that <i>x</i><sub>1</sub> &#8800 <i>x</i><sub>2</sub> so that <i>y</i> is actually a function of <i>x</i>.  We need not worry about this in the case of sums of consecutive powers since for every <i>p</i>, <i>f</i><sub><i>p</i></sub>(<i>n</i>) is a function of <i>n</i> by definition.)  For example, let's fit a line to the points (<i>x</i><sub>1</sub>, <i>y</i><sub>1</sub>) = (1, <i>f</i><sub>0</sub>(1)) = (1, 1) and (<i>x</i><sub>2</sub>, <i>y</i><sub>2</sub>) = (2, <i>f</i><sub>0</sub>(2)) = (2, 2).  <font color=000088>Check that the above formula gives the same polynomial for <i>f</i><sub>0</sub>(<i>n</i>) that you determined earlier.</font>
+
+<p><br>Any three points in the plane (with distinct <i>x</i> values) can be fit to a polynomial of degree two; any four points can be fit by a polynomial of degree three; etc.  One formula for the interpolating polynomial of <i>p</i> + 2 points (<i>x</i><sub><i>i</i></sub>, <i>y</i><sub><i>i</i></sub>) is the so-called Lagrange interpolating polynomial,
+
+<p><center><img src=images/sp06.gif width=380 height=217></center>
+
+<p>(The product is over 1 &#8804; <i>j</i> &#8804; <i>i</i> &#150; 1 and <i>i</i> + 1 &#8804; <i>j</i> &#8804; <i>n</i>.)  First note that <i>y</i>(<i>x</i><sub><i>k</i></sub>) = <i>y</i><sub><i>k</i></sub> for each <i>k</i> since the summand is 0 for every <i>i</i> &#8800; <i>k</i> and <i>y</i><sub><i>i</i></sub> for <i>i</i> = <i>k</i>.  Secondly, note that the polynomial has degree at most <i>p</i> + 1.  One computes the polynomial passing through <i>p</i> + 2 points merely by plugging the <i>x</i>- and <i>y</i>-coordinates of the points into the Lagrange interpolating polynomial.  We might be lucky in that <i>f</i><sub>2</sub>(<i>n</i>) is a polynomial in <i>n</i> of degree 3.  <a href=sumsofpowers-hints.html#2><font color=00088>Assuming that it is, find this polynomial using the Lagrange interpolating polynomial.</font></a>  <font color=000088>Check whether this polynomial works for the six data points you found above.</font>
+
+<p><br><a href=induction.html><font color=3366ff>Mathematical induction</font></a> is a method of proof that is often useful for proving identities such as this one.  <a href=sumsofpowers-hints.html#3><font color=00088>Prove that this polynomial for <i>f</i><sub>2</sub>(<i>n</i>) holds for all natural numbers <i>n</i>.</font></a>
+
+<p><br><font color=000088>Possibly by implementing the Lagrange interpolating polynomial on a calculator or computer, use the same method to guess polynomial expressions for <i>f</i><sub>3</sub>(<i>n</i>) and <i>f</i><sub>4</sub>(<i>n</i>).  Prove that these expressions hold for all natural numbers <i>n</i>.</font>
+
+<p><br>Now that we have found <i>f</i><sub><i>p</i></sub>(<i>n</i>) to be a polynomial for several special cases, we may start to look for patterns in the hope of discovering a general polynomial formula.  <font color=000088>What patterns can be observed in the formulas found for <i>p</i> = 0, 1, 2, 3, and 4?</font>
+
+<p><br>At this point the reader is invited to depart from this outline of the project and to work independently toward a general formula for <i>f</i><sub><i>p</i></sub>(<i>n</i>).  It is possible to find this formula empirically; however, you will likely need outside information.  What follows is an approach to the problem that is guided by foreknowledge of the answer.  Certainly this is not how research is conducted in mathematics, but in this case the answer is made simpler by considering additional constructions that are not especially natural unless one knows that they will work.  But that is not to say that they cannot be discovered without foreknowledge; the reader who chooses not to follow the rest of this outline should start by finding the polynomials <i>f</i><sub><i>p</i></sub>(<i>n</i>) for many additional <i>p</i> and looking for patterns in this sequence of polynomials.
+
+
+<p><br><a id=sectionII></a><center><b><font size=5>II.  Bernoulli Polynomials</font></b></center>
+
+<p>For each natural number <i>p</i>, let <i>B</i><sub><i>p</i></sub>(<i>n</i>) be a polynomial in <i>n</i> of degree <i>p</i> satisfying
+
+<p><a id=equation2></a><table width=100%><tr><td><center><img src=images/sp07.gif width=197 height=29></center><td width=10 align=right>(2)</table>
+
+<p>This defines <i>B</i><sub><i>p</i></sub>(<i>n</i>) up to its constant term.  We can see this by writing (for a fixed <i>p</i>) <img src=images/sp08.gif width=280 height=22 align=absmiddle>.  Then
+
+<p><center><img src=images/sp09.gif width=403 height=179></center>
+
+<p>so <i>b</i><sub><i>p</i></sub> = 1.  The coefficient <i>b</i><sub><i>p</i> &#150; 1</sub> is determined by <i>b</i><sub><i>p</i></sub>; <i>b</i><sub><i>p</i> &#150; 2</sub> is determined by <i>b</i><sub><i>p</i></sub> and <i>b</i><sub><i>p</i> &#150; 1</sub>; ...; and <i>b</i><sub>1</sub> = &#150;(<i>b</i><sub><i>p</i></sub> + <i>b</i><sub><i>p</i> &#150; 1</sub> + ... + <i>b</i><sub>2</sub>).  We call <i>B</i><sub><i>p</i></sub>(<i>n</i>) the <i>p</i>th Bernoulli polynomial, after Jakob Bernoulli (1654&#150;1705), who discovered them in his attempt to find the general formula for sums of consecutive powers.
+
+<p>The constant term of <i>B</i><sub><i>p</i></sub>(<i>n</i>) <i>is</i> defined in mathematics, but we need not concern ourselves with it here.  We write <i>B</i><sub><i>p</i></sub> = <i>B</i><sub><i>p</i></sub>(0) for the constant term of the <i>p</i>th Bernoulli polynomial.  (These numbers are called Bernoulli numbers and appear throughout mathematics.)  <font color=000088>Let <i>p</i> &#62; 1.  By substituting <i>n</i> = 0 into the definition of Bernoulli polynomials, find another expression for the Bernoulli number <i>B</i><sub><i>p</i></sub>.</font>
+
+<p><br>The first Bernoulli polynomial is <i>B</i><sub>1</sub>(<i>n</i>) = <i>n</i> + <i>B</i><sub>1</sub>.  <font color=000088>From the definition, find <i>B</i><sub><i>p</i></sub>(<i>n</i>) &#150; <i>B</i><sub><i>p</i></sub> for <i>p</i> = 2, 3, and 4.</font>
+
+<p><br>Now we notice a similarity between <i>f</i><sub><i>p</i></sub>(<i>n</i>) and <i>B</i><sub><i>p</i></sub>(<i>n</i>).  <a href=sumsofpowers-hints.html#4><font color=00088>Using the definition of <i>f</i><sub><i>p</i></sub>(<i>n</i>), find a simple expression for the difference <i>f</i><sub><i>p</i> &#150; 1</sub>(<i>n</i>) &#150; <i>f</i><sub><i>p</i> &#150; 1</sub>(<i>n</i> &#150; 1).</font></a>
+
+<p><br>This statement is very reminiscent of the definition of Bernoulli polynomials.  <font color=000088>Multiply both sides of the equality by <i>p</i>.</font>   <a href=sumsofpowers-hints.html#5><font color=00088>Since the <i>p</i>th Bernoulli polynomial is the unique polynomial (up to a constant) satisfying (2), find a relationship of the function <i>p</i> <i>f</i><sub><i>p</i> &#150; 1</sub>(<i>n</i>) to a Bernoulli polynomial (assuming that <i>f</i><sub><i>p</i> &#150; 1</sub>(<i>n</i>) is a polynomial in <i>n</i> of degree <i>p</i>).</font></a>
+
+<p><br>At this point we have a conjectural formula for <i>f</i><sub><i>p</i></sub>(<i>n</i>) as a polynomial of degree <i>p</i> + 1, <i>assuming that it is a polynomial of this degree</i>.  We would like to show that it in fact <i>is</i> this polynomial.  For each <i>p</i> we will do this by <a href=induction.html><font color=3366ff>induction</font></a> on <i>n</i>.  For <i>p</i> &#62; 0 we may redefine <i>f</i><sub><i>p</i></sub>(<i>n</i>) as
+
+<p><center><img src=images/sp10.gif width=113 height=49></center>
+
+<p>since summing from <i>m</i> = 0 to <i>n</i> gives the same result as summing from <i>m</i> = 1 to <i>n</i>.  <a href=sumsofpowers-hints.html#6><font color=00088>Use this to find the constant term of <i>f</i><sub><i>p</i></sub>(<i>n</i>).</font></a>
+
+<p><br><a href=sumsofpowers-hints.html#7><font color=00088>For each <i>p</i>, prove the conjectural formula for <i>f</i><sub><i>p</i></sub>(<i>n</i>) by induction on <i>n</i>.</font></a>
+
+<p><br>One might object to this "solution" of finding a formula for sums of consecutive powers under the premise that Bernoulli polynomials aren't sufficiently explicit.  After all, we have only changed the problem of computing sums of like powers into one of finding the coefficients of Bernoulli polynomials, and we don't have a closed-form expression for these coefficients.  There are two points to make in response to such an objection.
+
+<p>The first is that not every problem in mathematics has its solution in terms of fundamental constructs such as the integers and &pi;.  While this accounts for much of the difficulty of mathematics, it is responsible for everything interesting and beautiful in mathematics as well.  There is a hierarchy of mathematical objects that appear in nature, and the Bernoulli polynomials (and especially the Bernoulli numbers) happen to lie outside of any "direct" construction from the integers.  This emphasizes their value.
+
+<p>The second is that, in a real sense, we have reduced the problem computationally, as it is much easier (from a computational standpoint) to find the <i>p</i> + 1 coefficients of <i>B</i><sub><i>p</i></sub>(<i>n</i>) and then to evaluate at <i>n</i> = 1000000 than it is to start adding up powers of natural numbers.  Doing both by hand gets the point across, but it is even more appreciated when both methods are implemented on a computer.
+
+
+<p><br><a id=references></a><center><b><font size=5>References</font></b></center>
+
+<p>Relevant links:<ul>
+<li><a href=http://mathworld.wolfram.com/LagrangeInterpolatingPolynomial.html><font color=772266>Lagrange Interpolating Polynomial</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/BernoulliPolynomial.html><font color=772266>Bernoulli Polynomial</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/PowerSum.html><font color=772266>Power Sum</font></a> on MathWorld
+</ul>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

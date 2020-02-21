@@ -1,0 +1,56 @@
+<html><head><title>Change of Base</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="A JavaScript program which changes the base representation of an integer from one base to another.">
+<meta name=keywords value="Javascript, program, base changer"></head>
+<script language=javascript src=layout.js></script><script language=javascript>header("Change of Base");</script>
+
+<script language=javascript>
+function change(s) {
+	a=s.a.value/1;
+	b=s.b.value/1;
+	if(a!=""&&b!=""&&s.n.value!="") {
+		if(s.n.value.charAt(0)!="[") {
+			n=s.n.value/1;
+			j=new Array(Math.floor(Math.LOG10E*Math.log(n))+1);
+			for(i=j.length;i>0;i--) {
+				j[j.length-i]=Math.floor(n/Math.pow(10,i-1));
+				n%=Math.pow(10,i-1);
+			}
+			n=j;
+		}
+		else n=eval(s.n.value);
+		k=0;
+		for(i=n.length;i>0;i--) k+=n[n.length-i]*Math.pow(a,i-1);
+		n=k;
+		j=new Array(Math.floor(Math.log(n)/Math.log(b))+1);
+		for(i=j.length;i>0;i--) {
+			j[j.length-i]=Math.floor(n/Math.pow(b,i-1));
+			n%=Math.pow(b,i-1);
+		}
+		n=j;
+		k=1;
+		for(i=0;i<n.length;i++) k*=(n[i]<10);
+		if(k) {
+			k=0;
+			for(i=n.length;i>0;i--) k+=n[n.length-i]*Math.pow(10,i-1);
+			n=k;
+		}
+		if(typeof n=="object") n="["+n+"]";
+		s.r.value=n;
+	}
+}
+</script><form method=post>
+(Express bases in base 10.)
+<br>Positive integer (<a href="javascript:alert('Examples of correct formats:\n2179                     (All place values are <10 in base 10.)\n[2,17,9]            (Some place values are >10 in base 10.)')">examples</a>) <input type=text name=n size=10> in base <input type=text name=a size=4>, converted to base <input type=text name=b size=4> is <input type=text name=r size=10>.
+<br><input type=button value=Convert onClick=change(this.form);>
+</form>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

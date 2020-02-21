@@ -1,0 +1,47 @@
+<html><head><title>solution</title>
+<meta name=author value="Eric Rowland">
+<script language=javascript src=layout.js></script>
+
+First let's determine which residues modulo 7 are congruent to cubes of integers:
+<center>
+0<sup>3</sup> &#8801; 0 mod 7
+<br> 1<sup>3</sup> &#8801; 1 mod 7
+<br> 2<sup>3</sup> &#8801; 1 mod 7
+<br> 3<sup>3</sup> &#8801; 6 mod 7
+<br> 4<sup>3</sup> &#8801; 1 mod 7
+<br> 5<sup>3</sup> &#8801; 6 mod 7
+<br> 6<sup>3</sup> &#8801; 6 mod 7.
+</center>
+Therefore the <i>cubic residues</i> modulo 7 are 0, 1, and 6.
+These are the only possible values for <i>x</i><sup>3</sup>, <i>y</i><sup>3</sup>, and <i>z</i><sup>3</sup> modulo 7.
+Letting <i>X</i> = <i>x</i><sup>3</sup>, <i>Y</i> = <i>y</i><sup>3</sup>, and <i>Z</i> = <i>z</i><sup>3</sup>, we are looking for solutions to the congruence
+<center>
+<i>X</i> + <i>Y</i> &#8801; <i>Z</i> mod 7
+</center>
+with these values.
+There are seven solutions:
+<center>
+0 + 0 &#8801; 0 mod 7
+<br> 0 + 1 &#8801; 1 mod 7
+<br> 0 + 6 &#8801; 6 mod 7
+<br> 1 + 0 &#8801; 1 mod 7
+<br> 1 + 6 &#8801; 0 mod 7
+<br> 6 + 0 &#8801; 6 mod 7
+<br> 6 + 1 &#8801; 0 mod 7.
+</center>
+Each solution contains a 0, which corresponds to <i>x</i>, <i>y</i>, or <i>z</i> being divisible by 7.
+
+<p>
+Of course, Fermat's last theorem implies that if <i>x</i><sup>3</sup> + <i>y</i><sup>3</sup> = <i>z</i><sup>3</sup> then at least one of <i>x</i>, <i>y</i>, <i>z</i> is not just divisible by 0 but is <i>equal</i> to 0.
+That's a stronger claim than what we've shown.
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+</body>
+</html>

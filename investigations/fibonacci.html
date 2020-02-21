@@ -1,0 +1,60 @@
+<html><head><title>Fibonacci Sequence Calculator</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="A JavaScript program which computes terms of the Fibonacci sequence.">
+<meta name=keywords value="JavaScript, program, Fibonacci, sequence, terms"></head>
+<script language=javascript src=layout.js></script><script language=javascript>header("Fibonacci Sequence Calculator");</script>
+
+<script language=javascript>
+function term(s) {
+  n=s.n.value;
+  if(n!="") {
+    if(n.charAt(n.length-1)%1!=0) n=n.slice(0,-2);
+    p="th";
+    if((n%10==1)&&(n!=11)) p="st";
+    if((n%10==2)&&(n!=12)) p="nd";
+    if((n%10==3)&&(n!=13)) p="rd";
+    f=Math.round((Math.pow((1+Math.sqrt(5))/2,n)-Math.pow((1-Math.sqrt(5))/2,n))/Math.sqrt(5));
+    if(f=="Infinity") t="too big for JavaScript";
+    else t=f;
+    s.n.value=n+p;
+    s.t.value=t;
+  }
+}
+function prev(s) {
+  n=s.n.value;
+  if(n.charAt(n.length-1)%1!=0) n=n.slice(0,-2);
+  s.n.value=n-1;
+  term(s);
+}
+function next(s) {
+  n=s.n.value;
+  if(n.charAt(n.length-1)%1!=0) n=n.slice(0,-2);
+  s.n.value=n-0+1;
+  term(s);
+}
+</script><form method=post>
+The <input type=text name=n size=5> term of the Fibonacci sequence is <input type=text name=t size=23>.
+<br><input type=button value=Compute onClick=term(this.form);> &nbsp;<input type=button value="Previous Term" onClick=prev(this.form);> <input type=button value="Next Term" onClick=next(this.form);>
+</form>
+
+<p>The Fibonacci sequence is the sequence of integers 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987,...  It is defined by
+
+<p><center><img src=images/fb01.gif width=201 height=49></center>
+
+<p>For example, 1 + 1 = 2, 1 + 2 = 3, 2 + 3 = 5, 3 + 5 = 8, etc.
+
+<p>The above calculator computes the <i>n</i>th term of the Fibonacci sequence for <i>n</i> &#8804; 1474 and will subsequently compute the previous and next terms.  It uses <a href=http://mathworld.wolfram.com/BinetsFibonacciNumberFormula.html><font color=772266>Binet's formula</font></a>,
+
+<p><center><img src=images/fb02.gif width=207 height=52></center>
+
+<p>which is an explicit formula for the <i>n</i>th term of the Fibonacci sequence.
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

@@ -1,0 +1,135 @@
+<html><head><title>Solutions to Polynomial Equations</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="Solutions to the quadratic and cubic equations.">
+<meta name=keywords value="solution, polynomial, linear, quadratic, cubic, equation"></head>
+<script language=javascript src=layout.js></script><script language=javascript>header("Solutions to Polynomial Equations");</script>
+
+<p><b>Contents</b><font color=3366ff><ul>
+<li><a href=#sectionI>I.  Linear and Quadratic Equations</a>
+<li><a href=#sectionII>II.  The Cubic Equation</a>
+<li><a href=#references>References</a>
+</ul></font>
+
+<p><br><a id=sectionI></a><center><b><font size=5>I.  Linear and Quadratic Equations</font></b></center>
+
+<p>What are the solutions for the variable <i>x</i> in the polynomial equation
+
+<p><center><img src=images/pe01.gif></center>
+
+<p>of degree <i>n</i>, given the (real or complex) coefficients <i>a</i><sub>0</sub>, ..., <i>a</i><sub><i>n</i></sub>?  For <i>n</i> = 1 the equation is
+
+<p><center><img src=images/pe02.gif></center>
+
+<p>This equation is linear in <i>x</i>, and its solution is
+
+<p><a id=equation1></a><table width=100%><tr><td><center><img src=images/pe03.gif></center><td width=10 align=right>(1)</table>
+
+<p>For the degree <i>n</i> = 2, we obtain a <i>quadratic</i> equation:
+
+<p><center><img src=images/pe04.gif></center>
+
+<p>The <i>quadratic formula</i> tells us the solutions of this equation.  To derive the quadratic formula, we "complete the square" as follows.  Multiply both sides by 4<i>a</i><sub>0</sub>, and then add <i>a</i><sub>1</sub><sup>2</sup> to both sides to obtain
+
+<p><center><img src=images/pe05.gif></center>
+
+<p>The left side of this equation is now a square, so it becomes
+
+<p><center><img src=images/pe06.gif></center>
+
+<p>Next, raise both sides to the power 1 / 2 and solve for <i>x</i>.  The quadratic formula is
+
+<p><a id=equation2></a><table width=100%><tr><td><center><img src=images/pe07.gif></center><td width=10 align=right>(2)</table>
+
+<p>Here, the exponent 1 / 2 means to take <i>both</i> square roots (as complex numbers); each gives rise to a solution.  The quadratic formula is frequently written in the following form, as "plus or minus" a square root sign:
+
+<p><center><img src=images/pe08.gif></center>
+
+<p>While the latter form is perhaps more explicit, the former lends itself better to generalization.  In the case of the cubic equation below, we will need to extract cube roots, so our notation will be more like that of <a href=#equation2>(2)</a>.
+
+
+<p><br><a id=sectionII></a><center><b><font size=5>II.  The Cubic Equation</font></b></center>
+
+<p>The cubic equation
+
+<p><center><img src=images/pe09.gif></center>
+
+<p>is significantly more difficult to solve than the quadratic equation, and its general solution was not found until the sixteenth century.  The cubic formula is more complicated than the quadratic formula and cannot reasonably be written without a change of variables.
+
+<p>Analogously to the quadratic case, we "complete the cube" by first multiplying the equation by 27<i>a</i><sub>0</sub><sup>2</sup>.  Adding and subtracting a certain quantity lets us write
+
+<p><center><img src=images/pe10.gif></center>
+
+<p>We simplify this by defining
+
+<p><center><img src=images/pe11.gif></center>
+
+<p>We now seek a solution for <i>y</i> in
+
+<p><center><img src=images/pe12.gif></center>
+
+<p>or
+
+<p><center><img src=images/pe13.gif></center>
+
+<p>In this form, the identity
+
+<p><center><img src=images/pe14.gif></center>
+
+<p>with <i>a</i> = <i>y</i> and <i>b</i> = <i>y</i><sup>2</sup> + 4<i>b</i><sub>2</sub> implies that
+
+<p><center><img src=images/pe15.gif></center>
+
+<p>Now define the variable
+
+<p><center><img src=images/pe16.gif></center>
+
+<p>We have
+
+<p><center><img src=images/pe17.gif></center>
+
+<p>or
+
+<p><center><img src=images/pe18.gif></center>
+
+<p>This equation is quadratic in <i>z</i><sup>3</sup>, so using the quadratic formula <a href=#equation2>(2)</a> we find
+
+<p><center><img src=images/pe19.gif></center>
+
+<p>Defining the constant <i>c</i> by
+
+<p><center><img src=images/pe20.gif></center>
+
+<p>gives
+
+<p><center><img src=images/pe21.gif></center>
+
+<p>or
+
+<p><center><img src=images/pe22.gif></center>
+
+<p>Re-introducing <i>x</i> from the definition of <i>y</i> gives the final expression
+
+<p><a id=equation3></a><table width=100%><tr><td><center><img src=images/pe23.gif></center><td width=10 align=right>(3)</table>
+
+<p>for the three solutions of the cubic equation, obtained by taking the three cube roots of <i>c</i><sup>3</sup>.  (It appears that we might get six distinct solutions, since we also have a choice of one of two square roots in the definition of <i>c</i>, but one checks that in fact selecting either value gives the same solution for <i>x</i>.)  In the case that <i>c</i><sup>3</sup> is real, we can write this somewhat more explicitly by selecting as <i>c</i> the real cube root and letting <i>&zeta;</i><sub>3</sub> be a cube root of unity (i.e. 1, (&#150;1 + <i>i</i>&#8730;3)/2, or (&#150;1 &#150; <i>i</i>&#8730;3)/2).  The cubic formula is then
+
+<p><center><img src=images/pe24.gif></center>
+
+
+<p><br><a id=references></a><center><b><font size=5>References</font></b></center>
+
+<p>Relevant links:<ul>
+<li><a href=http://mathworld.wolfram.com/CubicFormula.html><font color=772266>Cubic Formula</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/QuarticEquation.html><font color=772266>Quartic Equation</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/QuinticEquation.html><font color=772266>Quintic Equation</font></a> on MathWorld
+</ul>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

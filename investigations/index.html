@@ -1,0 +1,165 @@
+<html><head><title>Investigations in Mathematics</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="This site is designed to communicate the flavor of doing mathematics research to high school/college students and other nonspecialists through several investigational projects to be worked through at one's own pace.">
+<meta name=keywords value="mathematics, education, high school, undergraduate, projects, investigational mathematics, geometry, number theory, regular polygons, polyhedra, polytopes, Pythagorean triples, Euler line, consecutive powers, Pascal's triangle, Pascal's tetrahedron, pentatope, tesseract, hypersphere, hypervolume"></head>
+
+<script language=javascript>
+images = new Array(11);
+for(i = 0; i <= 9; i++) {
+  images[i] = new Image();
+  images[i].src = "images/collage" + i + ".gif";
+}
+function display(num) {
+  document.collage.src = "images/collage" + num + ".gif";
+  switch(num) {
+    case 1:
+      status = "Regular Polygons Project";
+      break;
+    case 2:
+      status = "Regular Polyhedra Project";
+      break;
+    case 3:
+      status = "Regular Polytopes Project";
+      break;
+    case 4:
+      status = "Pythagorean Triples Project";
+      break;
+    case 5:
+      status = "Pascal's Simplices Project";
+      break;
+    case 6:
+      status = "The Euler Line Project";
+      break;
+    case 7:
+      status = "Sums of Consecutive Powers Project";
+      break;
+    case 8:
+      status = "Hyperspheres Project";
+      break;
+    case 9:
+      status = "Solutions to Polynomial Equations";
+      break;
+    default:
+      status = "";
+      break;
+  }
+}
+</script><script language=javascript src=layout.js></script><script language=javascript>header("Investigations in Mathematics");</script>
+
+<script language=javascript>
+if(navigator.appName != "Microsoft Internet Explorer") document.write("<map name=collagemap>");
+else document.write("<map name=unusedmap>");
+</script>
+<area shape=polygon coords="552,82 612,104 632,164 598,217 534,224 490,179 498,115" href=polygons-project.html onMouseOver="display(1); return true;" onMouseOut="display(0);" alt="Regular Polygons Project">
+<area shape=polygon coords="193,22 217,34 232,55 229,85 212,100 185,109 162,92 147,75 154,45 166,29" href=polyhedra-project.html onMouseOver="display(2); return true;" onMouseOut="display(0);" alt="Regular Polyhedra Project">
+<area shape=polygon coords="247,119 286,119 313,146 313,185 286,212 247,212 220,185 220,146" href=polytopes-project.html onMouseOver="display(3); return true;" onMouseOut="display(0);" alt="Regular Polytopes Project">
+<area shape=polygon coords="148,119 230,119 230,134 148,134" href=pythagoreantriples-project.html onMouseOver="display(4); return true;" onMouseOut="display(0);" alt="Pythagorean Triples Project">
+<area shape=polygon coords="401,1 532,156 271,156" href=pascalssimplices-project.html onMouseOver="display(5); return true;" onMouseOut="display(0);" alt="Pascal's Simplices Project">
+<area shape=polygon coords="447,23 623,23 623,69 447,69" href=sumsofpowers-project.html onMouseOver="display(7); return true;" onMouseOut="display(0);" alt="Sums of Consecutive Powers Project">
+<!--
+<area shape=polygon coords="1,199 189,218 124,101" href=eulerline-project.html onMouseOver="display(6); return true;" onMouseOut="display(0);" alt="The Euler Line Project">
+<area shape=polygon coords="253,202 522,202 522,238 253,238" href=hyperspheres-project.html onMouseOver="display(8); return true;" onMouseOut="display(0);" alt="Hyperspheres Project">
+-->
+<area shape=polygon coords="12,13 173,13 173,26 12,26" href=polynomialequations.html onMouseOver="display(9); return true;" onMouseOut="display(0);" alt="Solutions to Polynomial Equations">
+</map>
+
+<script language=javascript>
+if(navigator.appName == "Microsoft Internet Explorer") document.write("<map name=collagemap>");
+else document.write("<map name=unusedmap>");
+</script>
+<area shape=polygon coords="552,82 612,104 632,164 598,217 534,224 490,179 498,115" onClick="this.href='polygons-project.html';" onMouseOver="display(1); return true;" onMouseOut="display(0);" alt="Regular Polygons Project">
+<area shape=polygon coords="193,22 217,34 232,55 229,85 212,100 185,109 162,92 147,75 154,45 166,29" onClick="this.href='polyhedra-project.html';" onMouseOver="display(2); return true;" onMouseOut="display(0);" alt="Regular Polyhedra Project">
+<area shape=polygon coords="247,119 286,119 313,146 313,185 286,212 247,212 220,185 220,146" onClick="this.href='polytopes-project.html';" onMouseOver="display(3); return true;" onMouseOut="display(0);" alt="Regular Polytopes Project">
+<area shape=polygon coords="148,119 230,119 230,134 148,134" onClick="this.href='pythagoreantriples-project.html';" onMouseOver="display(4); return true;" onMouseOut="display(0);" alt="Pythagorean Triples Project">
+<area shape=polygon coords="401,1 532,156 271,156" onClick="this.href='pascalssimplices-project.html';" onMouseOver="display(5); return true;" onMouseOut="display(0);" alt="Pascal's Simplices Project">
+<area shape=polygon coords="447,23 623,23 623,69 447,69" onClick="this.href='sumsofpowers-project.html';" onMouseOver="display(7); return true;" onMouseOut="display(0);" alt="Sums of Consecutive Powers Project">
+<!--
+<area shape=polygon coords="1,199 189,218 124,101" onClick="this.href='eulerline-project.html';" onMouseOver="display(6); return true;" onMouseOut="display(0);" alt="The Euler Line Project">
+<area shape=polygon coords="253,202 522,202 522,238 253,238" onClick="this.href='hyperspheres-project.html';" onMouseOver="display(8); return true;" onMouseOut="display(0);" alt="Hyperspheres Project">
+-->
+<area shape=polygon coords="12,13 173,13 173,26 12,26" onClick="this.href='polynomialequations.html';" onMouseOver="display(9); return true;" onMouseOut="display(0);" alt="Solutions to Polynomial Equations">
+</map>
+
+<center><img src=images/collage0.gif width=635 height=241 name=collage usemap=#collagemap border=0>
+
+<p><img src=images/quote.gif width=433 height=39></center>
+
+<p>On this site I present a collection of investigational projects in mathematics.  The purpose is to provide open-ended problems (and some guidance) that high school and college-level students can approach creatively and in their own way.  I believe that these kinds of investigations are important in one's education (mathematical and otherwise), and they can be a lot of fun.  Most of the projects are investigations that I worked through as "research" problems.  Students are encouraged to ask their own questions and formulate their own ideas and hypotheses about the structures they explore.
+
+<p>I hope that these projects are able to inspire, enlighten, and delight other students of mathematics, as they have certainly done for me.<img src=images/whitespace-horizontal.gif width=48 height=1><script language=javascript>document.write("<img src=images/eric" + Math.ceil(4*Math.random()) + ".gif border=0 align=absmiddle>");</script>
+
+<noscript>
+<p>JavaScript is currently <font color=red>DEACTIVATED</font>.  The web pages on this site use JavaScript to dynamically generate page titles and links.  (Also, the image at the top of this page does cool things on mouse rollovers!)  Please activate JavaScript to view these features.  If you choose not to activate JavaScript, you may navigate to any page on this site from this page (although you may have to use the 'back' button to return here, as links will not appear on other pages).
+<p><a href=books.html>Popular Math Books</a>
+<br><a href=calculators.html>Math Programs</a> in JavaScript, <i>Mathematica</i>, and for TI calculators
+</noscript>
+
+<p><a id=projects></a><font color=3366ff size=4><b>Projects in Mathematics</b></font>
+<br><font size=2>More about <a href=projects.html><font color=11aa00>how these projects work.</font></a></font>
+<font color=3366ff><ul> 
+<!--
+<li><a href=eulerline-project.html><font color=11aa00>Triangle Centers and the Euler Line Project</font></a> <font color=black>(geometry):  The Euler line of a triangle passes through three very well known triangle centers.</font><p>
+<li><a href=hyperspheres-project.html><font color=11aa00>Hyperspheres Project</font></a> <font color=black>(calculus, number theory):  What are the formulas for the volume and surface area of an <i>n</i>-dimensional hypersphere?</font><p>
+-->
+<li><a href=pascalssimplices-project.html><font color=11aa00>Pascal's Simplices Project</font></a> <font color=black>(combinatorics, number theory):  Pascal's triangle gives the coefficients of binomial expansions (<i>a</i> + <i>b</i>)<sup><i>n</i></sup>.  What is the generalization of Pascal's triangle?  What are the coefficients of general multinomial expansions <img src=images/ps09.gif width=140 height=17 align=absmiddle>?</font><p>
+<li><a href=pythagoreantriples-project.html><font color=11aa00>Pythagorean Triples Project</font></a> <font color=black>(number theory):  What are all the integer solutions to the equation <i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> = <i>z</i><sup>2</sup>?  To how many such solutions does a given number belong?</font><p>
+<li><a href=polygons-project.html><font color=11aa00>Regular Polygons Project</font></a> <font color=black>(geometry, trigonometry, graph theory):  What is the area of a regular polygon with <i>n</i> sides?  What is the angle between each side?  What is the radius of the circumscribed circle?  How many intersection points do the diagonals of a regular polygon form?</font><p>
+<li><a href=polyhedra-project.html><font color=11aa00>Regular Polyhedra Project</font></a> <font color=black>(geometry):  There are only five convex regular solids.  What are their volumes and surface areas?</font><p>
+<li><a href=polytopes-project.html><font color=11aa00>Regular Polytopes Project</font></a> <font color=black>(geometry, combinatorics):  Both the cube and the regular tetrahedron have generalizations in <i>n</i> dimensions.  What are the volumes of these <i>n</i>-dimensional objects?  How many vertices/sides/faces/etc. does each have?</font><p>
+<li><a href=sumsofpowers-project.html><font color=11aa00>Sums of Consecutive Powers Project</font></a> <font color=black>(number theory):  Is there a way to expediently calculate the sum <img src=images/sumofpowers.gif width=67 height=20 align=absmiddle> of consecutive natural numbers raised to a constant power <i>p</i>?  Bernoulli gave the answer, and along the way we meet an interesting family of polynomials.</font><p>
+</ul></font>
+
+</table><table width=100% cellspacing=10><tr><td width=50% valign=top>
+<a id=topics></a><font color=3366ff size=4><b>Supplementary Topics</b></font>
+<font color=3366ff><ul>
+<li><a href=induction.html>Mathematical Induction:</a>  <font color=black>Induction is a method of proof by which a statement can be proven for infinitely many cases.</font>
+<li><a href=modulararithmetic.html>Modular Arithmetic:</a>  <font color=black>Modular arithmetic is a powerful tool in the theory of numbers.</font>
+<li><a href=polynomialequations.html>Solutions to Polynomial Equations:</a>  <font color=black>Here are derivations of the quadratic and cubic formulas.</font>
+</ul></font>
+
+<td width=50% valign=top>
+<a id=expositions></a><font color=3366ff size=4><b>Expository Solutions to the Projects</b></font>
+<font color=3366ff><ul>
+<!--
+<li><a href=eulerline.html><font color=ff8c00>Triangle Centers and the Euler Line</font></a>
+<li><a href=hyperspheres.html><font color=ff8c00>Hyperspheres</font></a>
+-->
+<li><a href=pascalssimplices.html><font color=ff8c00>Pascal's Simplices</font></a>
+<li><a href=pythagoreantriples.html><font color=ff8c00>Pythagorean Triples</font></a>
+<li><a href=polygons.html><font color=ff8c00>Regular Polygons</font></a>
+<li><a href=polyhedra.html><font color=ff8c00>Regular Polyhedra</font></a>
+<li><a href=polytopes.html><font color=ff8c00>Regular Polytopes</font></a>
+<li><a href=sumsofpowers.html><font color=ff8c00>Sums of Consecutive Powers</font></a>
+</ul></font>
+
+</table><table width=100% cellspacing=10><tr><td width=50% valign=top>
+<a id=references></a><font color=3366ff size=4><b>Mathematics Reference Sites</b></font>
+<font color=3366ff><ul>
+<li><a href=https://oeis.org><font color=772266>The On-Line Encyclopedia of Integer Sequences:</font></a> <font color=black>A searchable database of integer sequences.</font>
+<li><a href=http://mathworld.wolfram.com><font color=772266>MathWorld:</font></a> <font color=black>An extensive encyclopedia-style reference site containing research information of interest.</font>
+<li><a href=http://planetmath.org><font color=772266>PlanetMath.org:</font></a> <font color=black>A contributed encyclopedia of mathematics definitions and theorems.</font>
+<!--
+<li><a href=http://pi.lacim.uqam.ca/eng><font color=772266>Plouffe's Inverter:</font></a> <font color=black>Searchable database of decimal numbers.</font>
+-->
+</ul></font>
+
+<td width=50% valign=top>
+<a id=miscellany></a><font color=3366ff size=4><b>Math Miscellany</b></font>
+<a href=http://www.mersenne.org><img src=images/2p-1.gif width=100 height=70 border=0 alt="Join the search!" align=right></a>
+<font color=3366ff><ul>
+<li><a href=http://www.mersenne.org><font color=772266>The Great Internet Mersenne Prime Search:</font></a> <font color=black>A distributed computing project that searches for large primes.</font>
+<li><a href=http://primes.utm.edu><font color=772266>The Prime Pages:</font></a> <font color=black>A large collection of facts about prime numbers.</font>
+<li><a href=http://www.mathacademy.com><font color=772266>Platonic Realms:</font></a> <font color=black>A math variety site for students.</font>
+</ul></font>
+
+<!-- Start of StatCounter Code --><!-- Initiated 10/03/04 -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<noscript><p><center><table bgcolor=black><tr><td><font size=2 color=3366ff><b>Eric S Rowland,</b></font> <img src=images/email.gif width=156 height=15 align=absmiddle></table></center></noscript>
+
+<script language=javascript>footer();</script></body></html>

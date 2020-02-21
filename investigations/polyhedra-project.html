@@ -1,0 +1,97 @@
+<html><head><title>Regular Polyhedra Project</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="In this project students derive formulas for the volume and surface area of the five (regular) Platonic solids and find their duals.">
+<meta name=keywords value="high school, undergraduate, math, project, regular, polyhedron, polyhedra, Platonic solid, dual, Euler's formula, tetrahedron, cube, octahedron, dodecahedron, icosahedron, volume, surface area"></head>
+<script language=javascript src=layout.js></script><script language=javascript>projects("polyhedra"); header("Regular Polyhedra Project");</script>
+
+<table width=100% cellspacing=10><tr><td width=50% valign=top>
+<b>Contents</b><font color=3366ff><ul>
+<li><a href=#sectionI>I.  Geometric Properties</a>
+<li><a href=#sectionII>II.  Dual Polyhedra</a>
+<li><a href=#references>References</a>
+</ul></font>
+<td width=50% valign=top>
+<b>Supplements and Links</b><font color=3366ff><ul>
+<li><a href="calculators/Regular polyhedra.nb"><font color=3366ff>Regular polyhedra</font></a> <font color=black><i>Mathematica</i> notebook</font>
+<li><a href=polyhedra-hints.html><font color=000088>Hints</font></a> <font color=black>for this project</font>
+<li><a href=polyhedra.html><font color=ff8c00>Solutions</font></a> <font color=black>for this project</font>
+<li><a href=polygons-project.html>Regular Polygons Project</a>
+<li><a href=polytopes-project.html>Regular Polytopes Project</a>
+</ul></font></table>
+
+<table width=100% cellpadding=10 cellspacing=5 border=3><tr valign=top><td width=50%>
+<b>Objectives:</b>  To develop spatial reasoning, specifically by applying techniques of planar geometry to three-dimensional solids.
+<td>
+<b>Necessary Background:</b>  Experience with plane geometry is required, but no trigonometry is necessary.  Section II assumes the knowledge of <a href=polygons-project.html#sectionII>Euler's formula</a>.
+<tr><td colspan=2>
+<b>Summary:</b>  In Section I, students derive the volumes and surface areas of the five Platonic solids in terms of side length.  In Section II, students apply Euler's formula to polyhedra, count the number of diagonals in each of the Platonic solids, and find the dual polyhedra of the Platonic solids.
+</table>
+
+
+<p><br><a id=sectionI></a><center><b><font size=5>I.  Geometric Properties</font></b></center>
+
+<p>As we can consider <a href=polygons-project.html>polygons</a> in the plane, we can consider <i>polyhedra</i> in space.  A polyhedron is a closed, three-dimensional figure whose faces are polygons.  For example, any closed box is a polyhedron, for its faces are rectangles.  A polyhedron is called <i>convex</i> if the line segment joining any two points in the interior of the figure lies completely within the figure.  (Stellated ("star"-like) polyhedra such as <a href=http://mathworld.wolfram.com/DodecahedronStellations.html><font color=772266>these</font></a> are not convex.)  A polyhedron is called <i>regular</i> if all its faces are congruent and if all its vertices are identical (i.e. share the same number of faces and the angles between the faces are the same).  You may find it surprising that, although there are infinitely many regular polygons, there are only <i>five</i> convex regular polyhedra, known as the Platonic solids after Plato, who equated them with the elements of nature.  <font color=000088>See if you can find three of them before moving on.</font>  (There are four non-convex regular polyhedra, known as the <a href=http://mathworld.wolfram.com/Kepler-PoinsotSolid.html><font color=772266>Kepler-Poinsot solids</font></a>.)
+
+<p><br><font color=000088>Show that the cube is a regular polyhedron.  What is the volume of a cube with side length <i>s</i>?  What is the surface area of such a cube?</font>
+
+<p><br><font color=000088>What is the radius <i>a</i> of a sphere inscribed in a cube?</font>  We'll call <i>a</i> the apothem.  <a href=polyhedra-hints.html#1><font color=000088>What is the radius <i>r</i> of a sphere circumscribed around a cube?</font></a>
+
+<p><br>A <i>tetrahedron</i> is a polyhedron with four faces.  <font color=000088>Draw a regular tetrahedron, and show that it is a regular polyhedron.  What is its surface area?</font>
+
+<p><br><a href=polyhedra-hints.html#2><font color=000088>What is the height <i>h</i> of a regular tetrahedron with side length <i>s</i>?</font></a>  <a href=polyhedra-hints.html#3><font color=000088>What is its volume?</font></a>
+
+<p><br>The five Platonic solids are pictured below.  <a href=http://library.wolfram.com/webMathematica/Graphics/Polyhedron.jsp><font color=772266>Rotatable visualizations</font></a> of the Platonic solids are provided on the Wolfram Research web site.  From the top left they are the regular tetrahedron (four faces), the cube (six), the regular octahedron (eight), the regular dodecahedron (twelve), and the regular icosahedron (twenty).
+<p><center><img src=images/platonicsolids.gif width=636 height=284></center>
+
+<p><br><font color=000088>What is the surface area of a regular octahedron of side length <i>s</i>?</font>  <a href=polyhedra-hints.html#4><font color=000088>What is its volume?</font></a>
+
+<p><br><font color=000088>What are the surface areas of the regular dodecahedron and the regular icosahedron?</font>
+
+<p><br><a href=polyhedra-hints.html#5><font color=000088>What is the volume of the regular icosahedron?</font></a>  (Hint:  How do we find the areas of <a href=polygons-project.html>regular polygons</a>?)
+
+<p><br><a href=polyhedra-hints.html#6><font color=000088>What is the volume of the regular dodecahedron?</font></a>  (Hint:  Break up the dodecahedron into smaller components.)
+
+
+<p><br><a id=sectionII></a><center><b><font size=5>II.  Dual Polyhedra</font></b></center>
+
+<p><br>We can "squash" any polyhedron down into a two-dimensional plane without forcing any of the edges to intersect.  The process is illustrated for the cube below and works similarly for any polyhedron.  In the case of the cube, the result of the transformation is the <i>cube graph</i>, shown at the right.
+
+<p><center><table><tr><td><img src=images/cubesquash.gif width=151 height=163><td> <img src=images/whitespace-horizontal.gif width=48 height=1> <img src=images/whitespace-horizontal.gif width=48 height=1> <img src=images/whitespace-horizontal.gif width=48 height=1><td><img src=images/cubegraph.gif width=123 height=123 align=absmiddle><br><br></table></center>
+
+<p>After this transformation, the vertices of the polyhedron correspond to intersection points in the plane, edges correspond to segments, and faces correspond to regions (including the <i>exterior</i> "region", which also began as one of the faces of the polyhedron).  We have obtained a <a href=polygons-project.html#sectionII><i>planar graph</i></a>, i.e. a graph in which no two edges cross each other.  Therefore, we can apply <a href=polygons-project.html#sectionII>Euler's formula</a> for planar graphs to the polyhedron.  For a polyhedron with <i>V</i> vertices, <i>E</i> edges, and <i>F</i> faces, Euler's formula states that <i>V</i>, <i>E</i>, and <i>F</i> are related by the equation <i>V</i> &#150; <i>E</i> + <i>F</i> = 2.
+
+<p><font color=000088>Verify that Euler's formula holds for the cube and the tetrahedron.</font>
+
+<p><br><font color=000088>Verify that Euler's formula holds for octahedra, dodecahedra, and icosahedra.</font>
+
+<p><br>Given any polyhedron, we can find its <i>dual</i> polyhedron by the following process:  From the center of each face of the polyhedron, draw a line segment to the center of every other face adjacent to that face.  These line segments are the edges of the dual polyhedron.  For example, the dual polyhedron of the cube is the regular octahedron:
+
+<p><center><img src=images/cubedual.gif width=151 height=163></center>
+
+<p><br><font color=000088>What is the dual of the regular octahedron?</font>
+
+<p><br><font color=000088>What is the dual of the tetrahedron?</font>
+
+<p><br><font color=000088>What are the duals of the dodecahedron and the icosahedron?</font>
+
+<p><br>A <i>diagonal</i> is a line segment drawn between two vertices of a polyhedron that are not adjacent to a common face.  <font color=000088>How many diagonals are there in each of the five Platonic solids?  In how many points do the diagonals intersect in each?</font>
+
+
+<p><br><a id=references></a><center><b><font size=5>References</font></b></center>
+
+<p>Relevant links:<ul>
+<li><a href=http://mathworld.wolfram.com/RegularPolyhedron.html><font color=772266>Regular Polyhedron</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/PlatonicSolid.html><font color=772266>Platonic Solid</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/Kepler-PoinsotSolid.html><font color=772266>Kepler-Poinsot Solid</font></a> on MathWorld
+<li><a href=http://mathforum.org/dr.math/faq/formulas/faq.polyhedron.html><font color=772266>Math Forum:  Regular Polyhedra Formulas:</font></a> geometric and combinatorial data on the Platonic solids (with illustrations)
+</ul>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

@@ -1,0 +1,164 @@
+<html><head><title>Sums of Consecutive Powers</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="A process by which one may experimentally discover Bernoulli's formula for sums of consecutive powers of natural numbers.  A simple inductive proof is also provided.">
+<meta name=keywords value="sums of consecutive powers, sums of powers, Bernoulli polynomials, Bernoulli numbers"></head>
+<script language=javascript src=layout.js></script><script language=javascript>expositions("sumsofpowers"); header("Sums of Consecutive Powers");</script>
+
+<table width=100% cellspacing=10><tr><td width=50% valign=top>
+<b>Contents</b><font color=3366ff><ul>
+<li><a href=#sectionI>I.  The Formula Skeleton</a>
+<li><a href=#sectionII>II.  Bernoulli Polynomials</a>
+<li><a href=#references>References</a>
+</ul></font>
+<td width=50% valign=top>
+<b>Supplements and Links</b><font color=3366ff><ul>
+<li><a href=sumsofpowers-project.html><font color=11aa00>Sums of Consecutive Powers Project</font></a>
+</ul></font></table>
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<br><a id=sectionI></a><center><b><font size=5>I.  The Formula Skeleton</font></b></center>
+
+<p>We would like to arrive at a computationally simpler formula for the function
+
+<p><a id=equation1></a><table width=100%><tr><td><center><img src=images/sp01.gif width=114 height=53></center><td width=10 align=right>(1)</table>
+
+<p>that computes the sum of the first <i>n</i> consecutive like <i>p</i>th powers.  Clearly for zeroth powers,
+
+<p><center><img src=images/sp11.gif width=392 height=25></center>
+
+<p>For <i>p</i> = 1, we desire a formula for the sum
+
+<p><center><img src=images/sp02.gif width=267 height=52></center>
+
+<p>of the first <i>n</i> natural numbers.  The first few sums are
+
+<p><center><img src=images/sp12.gif width=164 height=115></center>
+
+<p>These numbers are known as the <i>triangular numbers</i> because they are the number of dots in the following isosceles right "triangles":
+
+<p><center><img src=images/triangles.gif width=731 height=99></center>
+
+<p>The explicit formula can be obtained by a simple geometric interpetation:  The numbers of dots in the triangles are half of the numbers of dots in the following rectangles:
+
+<p><center><img src=images/rectangles.gif width=731 height=99></center>
+
+<p>So the <i>n</i>th triangular number is <i>n</i> (<i>n</i> + 1) / 2, and we have the identity
+
+<p><center><img src=images/sp13.gif width=136 height=53></center>
+
+<p>For second powers, there is no obvious geometric interpretation.  The sequence begins:
+
+<p><center><img src=images/sp14.gif width=198 height=124></center>
+
+<p>It's not too difficult to guess the correct formula, especially if we suspect that it is given by a polynomial in <i>n</i>, as in the <i>p</i> = 1 case:
+
+<p><center><img src=images/sp15.gif width=200 height=53></center>
+
+<p>In general, we may suspect that the sum of the first natural numbers raised to the <i>p</i>th power is a polynomial in <i>n</i> of degree <i>p</i> + 1.  If this is true, then on a case by case basis it is possible to find this polynomial for a given <i>p</i> (for example, by finding an <a href=http://mathworld.wolfram.com/LagrangeInterpolatingPolynomial.html><font color=772266>interpolating polynomial</font></a> to the first <i>p</i> + 2 points).  However, it would be more enlightening to find a closed-form expression for the sum <i>f</i><sub><i>p</i></sub>(<i>n</i>).
+
+<p>Without foresight, one approach to this is the following:  Record the expressions for several low values of <i>p</i> and look for patterns.  By interpolation, we find:
+
+<p><center><img src=images/sp16.gif width=294 height=308></center>
+
+<p>There are no obvious patterns in the larger factors, and the irreducible quartic factor in the formula for <i>p</i> = 6 is somewhat foreboding.  Let us change our view of these slightly and look instead at the fully expanded polynomials:
+
+<p><center><img src=images/sp17.gif width=253 height=306></center>
+
+<p>Immediately we notice some patterns:  The leading coefficient appears to be 1 / (<i>p</i> + 1), and the coefficient of <i>n</i><sup><i>p</i></sup> seems to always be 1 / 2.  By clearing away the variables and putting the coefficients in a table to line them up (ignoring the zero constant term 0<i>n</i><sup>0</sup> in each case), we see some more structure:
+
+<p><center><img src=images/sp18.gif width=386 height=294></center>
+
+<p>Several columns are simply 0.  The coefficient of <i>n</i><sup><i>p</i> &#150; 1</sup> is evidently linear:  <i>p</i> / 12.  It turns out that the coefficient of <i>n</i><sup><i>p</i> &#150; 3</sup> is given by a cubic in <i>p</i>:  &#150;<i>p</i> (<i>p</i> &#150; 1) (<i>p</i> &#150; 2) / 720.  In fact, for even <i>k</i> the coefficients of <i>n</i><sup><i>p</i> + 1 &#150; <i>k</i></sup> are given by a fairly simple polynomial of degree <i>k</i> &#150; 1:
+
+<p><center><img src=images/sp19.gif width=384 height=152></center>
+
+<p>The product <img src=images/sp20.gif width=204 height=18 align=absmiddle> can be written more succinctly as <img src=images/sp21.gif width=84 height=26 align=absmiddle>, suggesting that we rewrite the above polynomials as binomial coefficients:
+
+<p><center><img src=images/sp22.gif width=184 height=155></center>
+
+<p>Let <i>B</i><sub><i>k</i></sub> be the (signed) constant appearing in the expression for the coefficient of <i>n</i><sup><i>p</i> + 1 &#150; <i>k</i></sup>.  Note that the zero columns in the table of coefficients imply that for odd <i>k</i> &#62; 1, <i>B</i><sub><i>k</i></sub> = 0.  With the exception of understanding <i>B</i><sub><i>k</i></sub>, we have arrived at the following conjectural formula for <i>f</i><sub><i>p</i></sub>(<i>n</i>):
+
+<p><center><img src=images/sp23.gif width=409 height=51></center>
+
+<p>It turns out that the coefficients <i>B</i><sub><i>k</i></sub> are simply the <a href=http://mathworld.wolfram.com/BernoulliNumber.html><font color=772266>Bernoulli numbers</font></a>:
+
+<p><center><img src=images/sp24.gif width=400 height=68></center>
+
+<p>Furthermore, we can even bring the first two terms into the sum if we include a factor of (&#150;1)<sup><i>k</i></sup> to take care of the fact that <i>B</i><sub>1</sub> = &#150; 1 / 2 while the coefficient of <i>n</i><sup><i>p</i></sup> is 1 / 2:
+
+<p><a id=equation2></a><table width=100%><tr><td><center><img src=images/sp25.gif width=313 height=55></center><td width=10 align=right>(2)</table>
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<br><a id=sectionII></a><center><b><font size=5>II.  Bernoulli Polynomials</font></b></center>
+
+<p>To write the expression <a href=#equation2>(2)</a> more concisely, we now define Bernoulli polynomials and explore some of their properties.  For <i>p</i> &#8805; 1, let <i>B</i><sub><i>p</i></sub>(<i>n</i>) be a polynomial in <i>n</i> of degree <i>p</i> satisfying
+
+<p><a id=equation3></a><table width=100%><tr><td><center><img src=images/sp07.gif width=197 height=29></center><td width=10 align=right>(3)</table>
+
+<p>This defines <i>B</i><sub><i>p</i></sub>(<i>n</i>) up to its constant term; we define its constant term <i>B</i><sub><i>p</i></sub>(0) to be the Bernoulli number <i>B</i><sub><i>p</i></sub>.  We call <i>B</i><sub><i>p</i></sub>(<i>n</i>) the <i>p</i>th Bernoulli polynomial, after Jakob Bernoulli (1654&#150;1705), who discovered them in his attempt to find the general formula for sums of consecutive powers.  The first few Bernoulli polynomials are
+
+<p><center><img src=images/sp26.gif width=226 height=194></center>
+
+<p>One property of the Bernoulli polynomials is that
+
+<p><center><img src=images/sp27.gif width=260 height=50></center>
+
+<p>where "<i>B</i><sup><i>k</i></sup>" is to be interpreted as <i>B</i><sub><i>k</i></sub>.  (We do not prove this here but simply take it from the literature.)  Then considering <i>f</i><sub><i>p</i></sub>(<i>n</i> &#150; 1) rather than <i>f</i><sub><i>p</i></sub>(<i>n</i>) puts <a href=#equation2>(2)</a> in this form:
+
+<p><center><img src=images/sp28.gif width=374 height=187></center>
+
+<p>or Bernoulli's form,
+
+<p><a id=equation4></a><table width=100%><tr><td><center><img src=images/sp29.gif width=199 height=53></center><td width=10 align=right>(4)</table>
+
+<p>Of course, this wasn't Bernoulli's approach.  Bernoulli noted that since the Bernoulli polynomials are defined by <a href=#equation3>(3)</a> up to a constant and
+
+<p><center><img src=images/sp30.gif width=241 height=27></center>
+
+<p>then we must have
+
+<p><center><img src=images/sp31.gif width=195 height=25></center>
+
+<p>for some constant <i>C</i><sub><i>p</i></sub> if <i>f</i><sub><i>p</i></sub>(<i>n</i>) is a polynomial of degree <i>p</i> + 1.  For <i>p</i> &#8800; 0 we may redefine <i>f</i><sub><i>p</i></sub>(<i>n</i>) as
+
+<p><center><img src=images/sp10.gif width=113 height=49></center>
+
+<p>so that <i>f</i><sub><i>p</i></sub>(0) = 0.  Putting <i>n</i> = 0 in <a href=#equation3>(3)</a> gives <i>B</i><sub><i>p</i></sub> = <i>B</i><sub><i>p</i></sub>(1) for <i>p</i> &#62; 1, so for <i>p</i> &#62; 1
+
+<p><center><img src=images/sp32.gif width=216 height=26></center>
+
+<p>This again gives <a href=#equation4>(4)</a>.
+
+<p><br>At last we will actually prove that <a href=#equation4>(4)</a> holds.  We do this for every <i>p</i> &#8805; 2 by <a href=induction.html><font color=3366ff>induction</font></a> on <i>n</i>.  (The cases <i>p</i> = 0 and <i>p</i> = 1 were proven in <a href=#sectionI>Section I</a>.)  Clearly for <i>n</i> = 0
+
+<p><center><img src=images/sp33.gif width=226 height=53></center>
+
+<p>Assume that <a href=#equation4>(4)</a> holds for <i>n</i>.  Then
+
+<p><center><img src=images/sp34.gif width=259 height=135></center>
+
+<p>by the definition <a href=#equation3>(3)</a> of <i>B</i><sub><i>p</i></sub>(<i>n</i>), so <a href=#equation4>(4)</a> holds for <i>n</i> + 1, completing the induction.
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<p><br><a id=references></a><center><b><font size=5>References</font></b></center>
+
+<p>Relevant links:<ul>
+<li><a href=http://mathworld.wolfram.com/PowerSum.html><font color=772266>Power Sum</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/BernoulliNumber.html><font color=772266>Bernoulli Number</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/BernoulliPolynomial.html><font color=772266>Bernoulli Polynomial</font></a> on MathWorld
+<li><a href=http://numbers.computation.free.fr/Constants/Miscellaneous/bernoulli.html><font color=772266>Introduction on Bernoulli's Numbers:</font></a> Bernoulli numbers in sums of powers, power series, and the Riemann zeta function
+<li><a href=http://www.bernoulli.org><font color=772266>The Bernoulli Number Page:</font></a> a program that computes Bernoulli numbers and some advanced topics
+</ul>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

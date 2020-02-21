@@ -1,0 +1,117 @@
+<!--discuss triangular numbers, tetrahedral numbers, etc.-->
+
+<html><head><title>Pascal's Simplices Project</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="In this project students investigate the properties of Pascal's triangle in relation to probability and binomial expansion.  Additionally, they explore the analogous properties of the d-dimensional simplices composed of Pascal-generated numbers.">
+<meta name=keywords value="high school, undergraduate, math, project, Pascal's triangle, tetrahedron, pentatope, pyramid, simplex, binomial, expansion, multinomial, coefficient, formula"></head>
+<script language=javascript src=layout.js></script><script language=javascript>projects("pascalssimplices"); header("Pascal's Simplices Project");</script>
+
+<table width=100% cellspacing=10><tr><td width=50% valign=top>
+<b>Contents</b><font color=3366ff><ul>
+<li><a href=#sectionI>I.  Pascal's Triangle</a>
+<li><a href=#sectionII>II.  Pascal's Simplices</a>
+<li><a href=#references>References</a>
+</ul></font>
+<td width=50% valign=top>
+<b>Supplements and Links</b><font color=3366ff><ul>
+<li><a href="calculators/Pascal's simplices.nb"><font color=3366ff>Pascal's simplices</font></a> <font color=black><i>Mathematica</i> notebook</font>
+<li><a href=pascalssimplices-hints.html><font color=000088>Hints</font></a> <font color=black>for this project</font>
+<li><a href=pascalssimplices.html><font color=ff8c00>Solutions</font></a> <font color=black>for this project</font>
+</ul></font></table>
+
+<table width=100% cellpadding=10 cellspacing=5 border=3><tr valign=top><td width=50%>
+<b>Objectives:</b>  To understand the main combinatorial properties of Pascal's triangle and generalize this understanding to the <i>d</i>-dimensional case.
+<td>
+<b>Necessary Background:</b>  Only basic facts about probability and knowledge of how to expand powers of polynomials are necessary.  Section II considers arrays of numbers which reside in higher dimensional space, so it may be helpful to be familiar with <a href=polytopes-project.html#sectionII>simplices</a> as geometric objects.
+<tr><td colspan=2>
+<b>Summary:</b>  Students are introduced to Pascal's triangle and to its applications in probability and binomial expansion.  In Section II, the analogous properties of <i>d</i>-dimensional Pascal simplices are investigated, and students arrive at an explicit formula for the entries.
+</table>
+
+
+<p><br><a id=sectionI></a><center><b><font size=5>I.  Pascal's Triangle</font></b></center>
+
+<p>Early on in our mathematics education we are taught the formula for expanding the square of a sum of two terms:
+
+<p><center><img src=images/ps01.gif width=174 height=25></center>
+
+<p>A similar formula applies to the cube of a sum:
+
+<p><center><img src=images/ps02.gif width=225 height=22></center>
+
+<p>These <i>binomial expansions</i> can be completely specified by their coefficients, since the determination of the exponents is straightforward:  In the expansion of (<i>a</i> + <i>b</i>)<sup><i>n</i></sup>, the exponents of <i>a</i> begin at <i>n</i> and decrease to 0, and the exponents of <i>b</i> begin at 0 and increase to <i>n</i>.  Therefore we can think of the square expansion simply as the coefficients "1 2 1" and the cube expansion as "1 3 3 1".
+
+<p>It turns out that binomial coefficients display some very interesting relationships.  These relationships can be seen effectively by arranging the coefficients into a triangular array, where the <i>n</i>th row consists of the coefficients of the expansion of (<i>a</i> + <i>b</i>)<sup><i>n</i></sup>.  The first eleven rows of this array are shown below.  (Click the table for a larger version.)
+
+<p><center><a href=images/pascalstriangle-large.gif><img src=images/pascalstriangle.gif width=468 height=251 border=0></a></center>
+
+<p>This triangle is called Pascal's triangle.  The top row (which corresponds to <i>n</i> = 0) signifies that (<i>a</i> + <i>b</i>)<sup>0</sup> = 1 for all <i>a</i> and <i>b</i>, and the next row says that (<i>a</i> + <i>b</i>)<sup>1</sup> = 1<i>a</i> + 1<i>b</i>.
+
+<p>The first property to notice about Pascal's triangle is that we can compute its entries without actually working out binomial expansions, for each number in Pascal's triangle is the sum of the two numbers that lie above it to the left and right.  For example, the 2 is the sum of the two 1s above it to the left and to the right, and each 10 in the "1 5 10 10 5 1" row is the sum of the 4 and 6 above it.  (The space surrounding the triangle is considered to be filled with zeros, so each of the 1s (after the first) comes from the 0 + 1 above it.)  <a href=pascalssimplices-hints.html#1><font color=000088>Find the coefficients in the expansions of (<i>a</i> + <i>b</i>)<sup>11</sup> and (<i>a</i> + <i>b</i>)<sup>12</sup>.</font></a>
+
+<p><br>Not only does Pascal's triangle appear in binomial expansions, but it also appears in probability.  Consider the following question:  If we have <i>n</i> objects, in how many different ways can we select just <i>m</i> of them?  For example, if we have 4 marbles, we can pick 1 of them in four different ways.  If we want to choose 2 marbles of the 4, there are six different ways to do it.  <font color=000088>How many ways are there to choose 1 marble from a set of 5?  How many ways are there to choose 2 marbles from a set of 5?  3 from 5?  4 from 5?  5 from 5?  0 from 5?</font>
+
+<p><br>Let <img src=images/ps03.gif width=22 height=20 align=absmiddle> denote the <i>m</i>th entry of the <i>n</i>th row of Pascal's triangle (where the top row is row 0 and the leftmost "1" of each row is entry 0).  It turns out that the number of ways of choosing <i>m</i> objects from <i>n</i> is exactly <img src=images/ps03.gif width=22 height=20 align=absmiddle>.  The reason for this is not too difficult to see:  The number of times that the term <i>a</i><sup><i>n</i> &#150; <i>m</i></sup><i>b</i><sup><i>m</i></sup> appears in the expansion of (<i>a</i> + <i>b</i>)<sup><i>n</i></sup> = (<i>a</i> + <i>b</i>) (<i>a</i> + <i>b</i>) &#183;&#183;&#183; (<i>a</i> + <i>b</i>) is exactly the number of ways to "choose" <i>m</i> powers of <i>b</i> from the <i>n</i> available factors (<i>a</i> + <i>b</i>).
+
+<p>We will next obtain an explicit formula for the binomial coefficient <img src=images/ps03.gif width=22 height=20 align=absmiddle>.  To do this we will need the <i>factorial</i> function, which multiplies a natural number <i>n</i> by all natural numbers less than <i>n</i>.  It is denoted by <i>n</i>! (read "<i>n</i> factorial").  Thus
+
+<p><center><img src=images/ps04.gif width=244 height=21></center>
+
+<p>(By definition, 0! = 1.)  For example, 4! = 4 &#183; 3 &#183; 2 &#183; 1 = 24 and 2! = 2 &#183; 1 = 2.  <font color=000088>Compute <i>n</i>! for <i>n</i> = 3, 5, 6, 7, 8, 9, 10.</font>
+
+<p><br>To derive the explicit formula for <img src=images/ps03.gif width=22 height=20 align=absmiddle> in terms of the factorial function, we work through the possibilities of choosing <i>m</i> objects from <i>n</i> objects.  First let us choose the objects one at a time.  For the first, we have <i>n</i> objects from which to choose.  Once we have selected one, we have <i>n</i> &#150; 1 objects from which to choose a second.  After that, we have <i>n</i> &#150; 2 objects from which to choose a third, etc.  The total number of ways to choose <i>m</i> objects <i>in order</i> is therefore
+
+<p><center><img src=images/ps05.gif width=327 height=40></center>
+
+<p>However, we are interested in the number of ways to choose <i>m</i> objects from <i>n</i> objects <i>without</i> respect to order.  Therefore we divide this number by <i>m</i>!, the number of different orders in which we can select the same <i>m</i> objects.  So we have the identity
+
+<p><a id=equation1></a><table width=100%><tr><td><center><img src=images/ps06.gif width=142 height=46></center><td width=10 align=right>(1)</table>
+
+<p>for any nonnegative integers <i>n</i> and <i>m</i> with <i>m</i> &#8804; <i>n</i>.  Thus, for example, <img src=images/ps07.gif width=133 height=23 align=absmiddle>  For <i>m</i> &#62; <i>n</i>, <img src=images/ps03.gif width=22 height=20 align=absmiddle> is defined to be 0.
+
+<p><font color=000088>Prove the Pascal relation, that for 0 &#8804; <i>m</i> &#8804; <i>n</i>,</font>
+
+<br><a id=equation2></a><table width=100%><tr><td><center><img src=images/ps08.gif width=212 height=49></center><td width=10 align=right>(2)</table>
+
+<p><br><font color=000088>What is the sum of the numbers in the <i>n</i>th row of Pascal's triangle?</font>  <a href=pascalssimplices-hints.html#2><font color=000088>Write this statement as an algebraic identity</font></a>, and <a href=pascalssimplices-hints.html#3><font color=000088>prove it</font></a>.
+
+
+<p><br><a id=sectionII></a><center><b><font size=5>II.  Pascal's Simplices</font></b></center>
+
+<p>We now turn to the generalizations of Pascal's triangle and to discover what forms they take.  Our motivation will be in trying to understand <i>trinomial</i> expansions (<i>a</i> + <i>b</i> + <i>c</i>)<sup><i>n</i></sup>.  <font color=000088>What are the trinomial coefficients for <i>n</i> = 1, 2, and 3?</font>
+
+<p><br><a href=pascalssimplices-hints.html#4><font color=000088>Try to arrange these numbers geometrically so that there is an additive relation, as in Pascal's triangle.</font></a>
+
+<p><br><font color=000088>Verify that the geometric relationship is correct by comparing the predicted trinomial coefficients with the actual coefficients for the case <i>n</i> = 4.</font>
+
+<p><br><font color=000088>What is the sum of the <i>n</i>th trinomial coefficients?  Prove it.</font>
+
+<p><br><a href=pascalssimplices-hints.html#5><font color=000088>Find an explicit formula for trinomial coefficients, and prove that it satisfies the additive relation.</font></a>
+
+<p><br>Generally, we desire to find the <i>multinomial coefficients</i> of the expansion <img src=images/ps09.gif width=140 height=17 align=absmiddle>.  <a href=pascalssimplices-hints.html#6><font color=000088>Find an additive relation for <i>d</i>-nomial coefficients.</font></a>  It may be helpful to invent some new notation to represent <i>d</i>-nomial coefficients.
+
+<p><br><font color=000088>What is the sum of the <i>n</i>th <i>d</i>-nomial coefficients?</font>
+
+<p><br><a href=pascalssimplices-hints.html#7><font color=000088>Find an explicit formula for <i>d</i>-nomial coefficients, and prove that it satisfies the additive relation.</font></a>
+
+<p><br><a href=pascalssimplices-hints.html#8><font color=000088>Find a relationship between the rows of <i>d</i>-nomial coefficients and the rows of (<i>d</i> + 1)-nomial coefficients.</font></a>
+
+
+<p><br><a id=references></a><center><b><font size=5>References</font></b></center>
+
+<p>Relevant links:<ul>
+<li><a href=http://mathforum.org/workshops/usi/pascal/pascal_lessons.html><font color=772266>Exploring Pascal's Triangle:  Lessons:</font></a> a plethora of Pascal patterns
+<li><a href=http://mathworld.wolfram.com/PascalsTriangle.html><font color=772266>Pascal's Triangle</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/PascalsFormula.html><font color=772266>Pascal's formula</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/MultinomialCoefficient.html><font color=772266>Multinomial Coefficient</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/MultinomialSeries.html><font color=772266>Multinomial Series</font></a> on MathWorld
+</ul>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

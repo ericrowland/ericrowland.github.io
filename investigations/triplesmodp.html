@@ -1,0 +1,55 @@
+<html><head><title>Pythagorean Triples Modulo p</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="A JavaScript program which computes all solutions to x^2 + y^2 = z^2 mod p.">
+<meta name=keywords value="JavaScript, program, Pythagorean triple, mod p"></head>
+<script language=javascript src=layout.js></script>
+<script language=javascript>header("Pythagorean Triples Modulo <i>p</i>");</script>
+
+<script language=javascript>
+
+p=prompt("Enter a prime modulus p for which to find possible solutions to x^2 + y^2 = z^2 mod p.","");
+
+p/=1;
+
+n=new Array();
+for(i=0;i<(p+1)/2;i++) n[i]=i*i%p;
+
+n=n.sort(function(a,b) {return a-b;});
+d=n.length;
+for(i=0;i<d;i++) {
+  if(n[i]==n[i+1]) {
+
+    for(j=i+1;j<d;j++) n[j]=n[j+1];
+
+    d--;
+
+  }
+}
+n=n.slice(0,d);
+
+document.write("<br>Set of quadratic residues modulo "+p+": {"+n+"}<br>Solutions to <i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> = <i>z</i><sup>2</sup>:<center><table cellpadding=2>");
+
+for(i=0;i<d;i++) {
+
+  for(j=i;j<=d;j++) {
+
+    for(k=0;k<=d;k++) {
+
+      if((n[i]+n[j])%p==n[k]%p) document.write("<tr><td>"+n[i]+" + "+n[j]+" = "+n[k]);
+
+    }
+  }
+}
+</script>
+</table></center>
+
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

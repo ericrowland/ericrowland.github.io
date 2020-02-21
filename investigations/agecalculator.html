@@ -1,0 +1,38 @@
+<html><head><title>Age Calculator</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="A JavaScript program which computes the number of days elapsed between two dates.">
+<meta name=keywords value="JavaScript, program, age calculator, days"></head>
+<script language=javascript src=layout.js></script><script language=javascript>header("Age Calculator");</script>
+
+<script language=javascript>
+months=[0,31,59,90,120,141,181,212,243,273,304,334];
+function leap_yearQ(year) {
+  if(year>4 && ((year%4==0 && year%100!=0) || year%400==0)) return true;
+  else return false;
+}
+function age(s) {
+  if(s.m1.value!="" && s.d1.value!="" && s.y1.value!="" && s.m1.value!="" && s.d1.value!="" && s.y1.value!="") {
+    days=365-s.d1.value-months[s.m1.value-1];
+    if(leap_yearQ(s.y1.value) && days>304) days++;
+    for(i=s.y1.value/1+1; i<s.y2.value; i++) days+=365+leap_yearQ(i);
+    days+=s.d2.value/1+months[s.m2.value-1]-365*(s.y1.value==s.y2.value);
+    s.t.value=days;
+  }
+}
+</script><form method=post name=inputs>
+The time between <input type=text name=m1 size=1>/<input type=text name=d1 size=1>/<input type=text name=y1 size=3> and <script language=javascript>
+document.inputs.m1.focus();
+today=new Date();
+document.write("<input type=text name=m2 size=1 value="+(today.getMonth()+1)+">/<input type=text name=d2 size=1 value="+today.getDate()+">/<input type=text name=y2 size=3 value="+today.getFullYear()+">");
+</script> is <input type=text name=t size=4> days.
+<br><input type=button value=Calculate onClick=age(this.form);></form>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

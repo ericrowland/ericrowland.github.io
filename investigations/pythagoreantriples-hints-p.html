@@ -1,0 +1,67 @@
+<html><head><title>Pythagorean Triples Project - Hints</title>
+<meta name=author value="Eric Rowland"></head>
+<script language=javascript src=layout.js></script><script language=javascript>projects("pythagoreantriples"); header("none");</script>
+
+<p><a href=pythagoreantriples-hints.html><font color=000088>back to Pythagorean Triples Project Hints</font></a>
+<br><a href=pythagoreantriples-project.html>back to Pythagorean Triples Project</a>
+
+<p><a id=1></a>What can we say about <i>x</i> and <i>y</i>?
+<br><b>Hint:</b>  Is it possible to distinguish the "<i>x</i>" from the "<i>y</i>" in each primitive triple somehow, or are the two completely interchangeable?
+
+<p><a id=2></a>Can you prove that <i>x</i>, <i>y</i>, and <i>z</i> have specific parities?
+<br><b>Hint:</b>  The methods of <a href=modulararithmetic.html><font color=3366ff>modular arithmetic</font></a> may be useful.  In particular, consider just two possible values for the variables, 0 and 1, where 1 + 1 = 0.  (This is arithmetic where we only care whether a number is odd or even.)
+
+<p><a id=3></a>Find generators for Pythagorean triples.
+<br><b>Hint:</b>  Natural choices are the simplest numbers that can represent a triple entirely.  Use the regularities of <i>z</i> &#150; <i>x</i> and <i>z</i> &#150; <i>y</i> to define the generators <i>r</i> and <i>s</i>.
+
+<p><a id=4></a>What conditions on <i>r</i> and <i>s</i> guarantee a primitive triple?
+<br><b>Hint:</b>  Look at pairs (<i>r</i>, <i>s</i>) that result in nonprimitive triples.
+
+<p><a id=5></a>How many primitive Pythagorean triples exist?
+<br><b>Hint:</b>  Count the number of viable pairs of generators.
+
+<p><a id=6></a>In a primitive triple (<i>x</i>, <i>y</i>, <i>z</i>), are any of the sides always divisible by 3, 4, or 5?
+<br><b>Hint:</b>  One of these numbers always divides some side; one of these numbers always divides one of the two legs; and one of these numbers always divides a specific side.
+
+<p><a id=7></a>Can you prove these divisibility claims?
+<br><b>Hint:</b>  Use the methods of <a href=modulararithmetic.html><font color=3366ff>modular arithmetic</font></a>.
+
+<p><a id=8></a>Are there two different primitive triples that share a hypotenuse?
+<br><b>Hint:</b>  Find triples with hypotenuse <i>z</i> = 65.
+
+<p><a id=9></a>Determine whether there is a number <i>z</i> that is the hypotenuse of exactly three/four/five triples.
+<br><b>Hint:</b>  A computer program (or examination of <a href=tripleslist.html><font color=3366ff>data</font></a>) will tell you this.  Look at the case <i>z</i> = 1105.
+
+<p><a id=10></a>How many primitive triples have as the hypotenuse some given <i>z</i>?
+<br><b>Hint:</b>  Look at the prime factors of <i>z</i>.
+
+<p><a id=11></a>How many (not necessarily primitive) Pythagorean triples have a given number <i>z</i> as a hypotenuse?
+<br><b>Hint:</b>  In how many ways can <i>z</i> be reduced (by dividing) to the hypotenuse of a primitive triple, and how many primitive triples have each reduction as a hypotenuse?
+
+<p><a id=12></a>What is the <i>n</i>th triple satisfying <i>z</i> &#150; <i>y</i> = 1?
+<br><b>Hint:</b>  Substitute <i>y</i> = <i>z</i> &#150; 1 into
+<center><img src=images/pt01.gif width=98 height=23></center>
+
+<p><a id=13></a>What is the <i>n</i>th triple that satisfies |<i>x</i> – <i>y</i>| = 1? 
+<br><b>Hint:</b>  First find several examples.  Then find some simple recurrence relations in the generators of these triples.  Solve the recurrence relations explicitly to find the <i>n</i>th generators <i>r</i><sub><i>n</i></sub> and <i>s</i><sub><i>n</i></sub>, and then from these find explicit formulas for <i>x</i><sub><i>n</i></sub>, <i>y</i><sub><i>n</i></sub>, and <i>z</i><sub><i>n</i></sub>.
+
+<p><a id=14></a>What is the <i>n</i>th triple that satisfies |<i>x</i> – <i>y</i>| = 7? 
+<br><b>Hint:</b>  The same procedure works as for the case |<i>x</i> – <i>y</i>| = 1, but there are two independent "threads" of the recurrence relation in the triples instead of one.
+
+<p><a id=15></a>Which values are possible for |<i>x</i> – <i>y</i>|?
+<br><b>Hint:</b>  Look at the prime factors of the values that occur.
+
+<p><a id=16></a>Find all triples with a given <i>d</i> = |<i>x</i> – <i>y</i>|.
+<br><b>Hint:</b>  Count the number of threads by factorind <i>d</i> over <b>Z</b>[&#8730;2].  Solve the recurrence relation generally.
+
+<p><br><a href=pythagoreantriples-project.html>back to Pythagorean Triples Project</a>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

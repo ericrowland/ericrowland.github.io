@@ -1,0 +1,159 @@
+<html><head><title>Regular Polygons</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="A derivation of general formulas for certain angles, lengths, and areas of regular polygons.  Formulas for the number of diagonals of a regular polygon and the number of intersections, regions, and segments made by the diagonals.">
+<meta name=keywords value="regular, polygon, n-gon, radius, apothem, number, diagonals, intersections, regions, segments, graph theory, complete graph, Euler's formula"></head>
+<script language=javascript src=layout.js></script><script language=javascript>expositions("polygons"); header("Regular Polygons");</script>
+
+<table width=100% cellspacing=10><tr><td width=50% valign=top>
+<b>Contents</b><font color=3366ff><ul>
+<li><a href=#sectionI>I.  Geometric Properties</a>
+<li><a href=#sectionII>II.  Diagonals, Graphs, and Euler's Formula</a>
+<li><a href=#references>References</a>
+</ul></font>
+<td width=50% valign=top>
+<b>Supplements and Links</b><font color=3366ff><ul>
+<li><a href=ngoncalculator.html><font color=3366ff>Regular <i>n</i>-gon Calculator:</font></a>  <font color=black>Contains implementations of many of the formulas derived below.</font>
+<li><a href="calculators/Regular polygons.nb"><font color=3366ff>Regular polygons</font></a> <font color=black><i>Mathematica</i> notebook</font>
+<li><a href=polygons-project.html><font color=11aa00>Regular Polygons Project</font></a>
+<li><a href=polyhedra.html>Regular Polyhedra</a>
+<li><a href=polytopes.html>Regular Polytopes</a>
+</ul></font></table>
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<br><a id=sectionI></a><center><b><font size=5>I.  Geometric Properties</font></b></center>
+
+<p>Below is a table and diagram summarizing the variables used in the explanation.  Angles are measured in degrees throughout so that this information will be accessible to students who have not worked in radians.  The results can be converted to radians using the conversion 180&deg; = &pi; radians.
+
+<center><table width=100% cellspacing=5>
+<tr><td rowspan=13><center><img src=images/7gon.gif width=275 height=275>&nbsp;<td><i>A<td>area enclosed by polygon
+<tr><td><i>a</i><td>apothem (radius of inscribed circle)
+<tr><td><i>d<sub>k</sub></i><td>length of <i>k</i>th diagonal
+<tr><td><i>d</i><td>diameter of circumscribed circle
+<tr><td><i>m</i><td>length of median
+<tr><td><i>n</i><td>number of sides
+<tr><td><i>p</i><td>perimeter
+<tr><td><i>r</i><td>radius of circumscribed circle
+<tr><td><i>s</i><td>length of side
+<tr><td><i>&alpha;</i><td>smallest angle formed by a diagonal and a side
+<tr><td><i>&theta;</i><td>angle formed by consecutive sides
+<tr><td><i>&phi;</i><td>angle formed by consecutive radii (the central angle)
+</table></center>
+
+<img src=images/septagon.gif width=102 height=102 align=right><p>The perimeter of a regular <i>n</i>-gon with side length <i>s</i> is <i>p</i> = <i>ns</i>.  To find the area, we divide the polygon into <i>n</i> congruent triangles by drawing segments from the center to each vertex, as illustrated for the septagon to the right.
+
+<p>The sum of the central angles is 360&deg; since it represents the interior angle of a circle, so <i>&phi;</i> = 360/<i>n</i>.  The area of each triangle is <i>as</i>/2 and there are <i>n</i> triangles, so <i>A</i> = <i>nas</i>/2 is the area of a regular <i>n</i>-gon with side length <i>s</i> and apothem <i>a</i>.  This can be simplified to <i>A</i> = <i>ap</i>/2; this formulation provides a basis for generalization to higher dimensions.
+
+<p>The sum of the interior angles of a triangle equals 180&deg;, so 180 = <i>&phi;</i> + <i>&theta;</i>; this gives
+
+<p><center><img src=images/pg05.gif width=136 height=50></center>
+
+<p>after substition for <i>&phi;</i>.  Then the sum of the angles of a (regular) polygon is <i>n&theta;</i> = 180(<i>n</i> &#150; 2).
+
+<p>In the same triangles used above, the law of sines gives
+
+<center><img src=images/pg06.gif width=103 height=43></center>
+
+<p>which we can use to find <i>s</i> in terms of the radius <i>r</i>:
+
+<a id=equation1></a><table width=100%><tr><td><center><img src=images/pg07.gif width=350 height=74></center><td width=10 align=right valign=bottom>(1)</table>
+
+<p>where <i>d</i> = 2<i>r</i> is the diameter of the circumscribed circle.
+
+<p>By the <a href=pythagoreantriples-project.html#theorem1><font color=11aa00>Pythagorean theorem</font></a>,
+
+<center><img src=images/pg08.gif width=122 height=25></center>
+
+<p>Substituting from equation (1) gives
+
+<center><img src=images/pg09.gif width=190 height=53></center>
+
+<p>which we solve for <i>a</i> to obtain
+
+<a id=equation2></a><table width=100%><tr><td><center><img src=images/pg10.gif width=477 height=64></center><td width=10 align=right>(2)</table>
+
+(This expression can also be found using the law of sines as for <a href=#equation1>(1)</a>.)  Substituting this into <i>A</i> = <i>nas</i>/2 for <i>a</i>, we find
+
+<p><a id=equation3></a><table width=100%><tr><td><center><img src=images/pg11.gif width=359 height=42></center><td width=10 align=right>(3)</table>
+
+<p>When <i>n</i> is odd, <i>m</i> = <i>r</i> + <i>a</i>.  Substituting for <i>a</i> and <i>r</i> yields
+
+<p><a id=equation4></a><table width=100%><tr><td><center><img src=images/pg12.gif width=545 height=81></center><td width=10 align=right><br><br>(4)</table>
+
+<p>Finally we will find the lengths of diagonals in a regular polygon.  From a given vertex, draw a segment to each of the <i>n</i> &#150; 1 other vertices, and call the lengths of these segments (in order) <i>d</i><sub>1</sub>, <i>d</i><sub>2</sub>, ..., <i>d</i><sub><i>n</i> &#150; 1</sub>, as illustrated below.
+
+<p><center><img src=images/diagonals.gif width=574 height=106></center>
+
+<p><i>d</i><sub>1</sub> = <i>d</i><sub><i>n</i> &#150; 1</sub> = <i>s</i> because these lengths correspond to sides of the polygon.  Define <i>&alpha;</i> as the angle between any two consecutive segments <i>d</i><sub><i>i</i></sub> and <i>d</i><sub><i>i</i> + 1</sub>.  All these angles are the same because they subtend the same arc length of the circle.  Specifically, by the <a href="javascript:alert('1.  The measure of a central angle is equal to the measure of the arc that it subtends.\n2.  The measure of an angle whose vertex lies on the circle is equal to half of the measure of the arc that it subtends.')"><font color=3366ff>angle in circle theorems</font></a>, <i>&alpha;</i> = <i>&phi;</i>/2 = 180/<i>n</i>.  (This can also be obtained from the equation 180 = <i>&theta;</i> + 2<i>&alpha;</i>, which is the sum of the angles in the triangle formed by two consecutive sides and a <i>d</i><sub>2</sub> diagonal.)
+
+<p>For <i>k</i> = 2, 3, ..., <i>n</i> &#150 2, let <i>&theta;</i><sub><i>k</i></sub> be the angle opposite of diagonal <i>k</i> in the triangle formed a side, diagonal <i>k</i>, and diagonal <i>k</i> &#150; 1.  Then <i>&theta;</i><sub>2</sub> = <i>&theta;</i> and <i>&theta;</i><sub><i>n</i> &#150; 1</sub> = <i>&alpha;</i>, and in general
+
+<center><img src=images/pg13.gif width=390 height=23></center>
+
+<p>By the law of sines in the <i>k</i>th triangle,
+
+<p><center><img src=images/pg14.gif width=108 height=40></center>
+
+<p>Solving for <i>d</i><sub><i>k</i></sub>, we find
+
+<a id=equation5></a><table width=100%><tr><td><center><img src=images/pg15.gif width=394 height=52></center><td width=10 align=right>(5)</table>
+
+<p>To summarize, the following equations hold for regular polygons (<i>n</i> &#8805; 3).
+
+<table cellpadding=10 width=100%><tr><td width=50%><center><img src=images/pg16.gif width=232 height=190></td><td><img src=images/7gon.gif width=275 height=275></td></tr></table>
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<br><a id=sectionII></a><center><b><font size=5>II.  Diagonals, Graphs, and Euler's Formula</font></b></center>
+
+<p>A diagonal is defined to be a line connecting two nonconsecutive vertices of a polygon.  All polygons with the same number of sides have the same number of diagonals, so the number of diagonals of a regular <i>n</i>-gon will be the number of diagonals of <i>any</i> polygon with <i>n</i> sides.
+
+<p>To derive an expression for the number <i>D</i>(<i>n</i>) of diagonals in an <i>n-</i>gon, we will count the total number of line segments that connect two vertices, <i>including</i> the sides, and then subtract <i>n</i> from the result to take care of the sides.  Starting at a given vertex, there are <i>n</i> &#150; 1 lines to be drawn to other vertices.  The next vertex already has a line drawn to the first vertex, so only <i>n</i> &#150; 2 line segments can be drawn.  The third vertex can be connected to only <i>n</i> &#150; 3 vertices, and so on, until we reach the last vertex, which already has a line segment to every other vertex.  The total number of line segments drawn is
+
+<p><center><img src=images/pg17.gif width=427 height=56></center>
+
+<p>Subtracting <i>n</i> gives a count of
+
+<p><a id=equation6></a><table width=100%><tr><td><center><img src=images/pg18.gif width=244 height=40></center><td width=10 align=right>(6)</table>
+
+<p>diagonals.
+
+<p><br>If <i>V</i> is the number of intersection points ("vertices"), <i>E</i> is the number of segments ("edges"), and <i>F</i> is the number of regions ("faces") <i>including</i> the region that is the exterior of the polygon, then Euler's formula is
+
+<p><center><img src=images/pg19.gif width=119 height=21></center>
+
+<p>Using Euler's formula, then, if we know the number of intersection points and the number of segments, then the number of regions is <i>F</i> = <i>E</i> &#150; <i>V</i> + 2 (or <i>E</i> &#150; <i>V</i> + 1 if we only want to count <i>interior</i> regions).
+
+<p>Let
+
+<p><center><img src=images/pg01.gif width=208 height=47></center>
+
+<p>From Poonen and Rubinstein's paper, the number of interior intersections made by the diagonals of a regular <i>n</i>-gon is 
+
+<p><center><img src=images/pg02.gif width=473 height=116></center>
+
+<p>and the number of regions is
+
+<p><center><img src=images/pg04.gif width=482 height=117></center>
+
+<p><br>For a regular 24-sided polygon, these formulas tell us that the diagonals make 7321 interior intersections, 9024 regions, and 16344 segments.
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<br><a id=references></a><center><b><font size=5>References</font></b></center>
+
+<p>B. Poonen and M. Rubinstein, <a href=http://math.berkeley.edu/~poonen/papers/ngon.pdf><font color=772266><i>The Number of Intersection Points Made by the Diagonals of a Regular Polygon</i></font></a>, SIAM J. Discrete Math., v.11 (1998), p. 135–156.
+
+<p>Relevant links:<ul>
+<li><a href=http://mathworld.wolfram.com/RegularPolygon.html><font color=772266>Regular Polygon</font></a> on MathWorld
+</ul>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

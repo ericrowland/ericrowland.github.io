@@ -1,0 +1,180 @@
+<html><head><title>Regular Polyhedra</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="A derivation of formulas for the volume and surface area of the five convex regular polyhedra (the Platonic solids).  The dual polyhedra are also discussed.">
+<meta name=keywords value="regular, polyhedron, polyhedra, Platonic solid, dual, Euler's formula, tetrahedron, cube, octahedron, dodecahedron, icosahedron, volume, surface area"></head>
+<script language=javascript src=layout.js></script><script language=javascript>expositions("polyhedra"); header("Regular Polyhedra");</script>
+
+<table width=100% cellspacing=10><tr><td width=50% valign=top>
+<b>Contents</b><font color=3366ff><ul>
+<li><a href=#sectionI>I.  Geometric Properties</a>
+<li><a href=#sectionII>II.  Dual Polyhedra</a>
+<li><a href=#references>References</a>
+</ul></font>
+<td width=50% valign=top>
+<b>Supplements and Links</b><font color=3366ff><ul>
+<li><a href="calculators/Regular polyhedra.nb"><font color=3366ff>Regular polyhedra</font></a> <font color=black><i>Mathematica</i> notebook</font>
+<li><a href=polyhedra-project.html><font color=11aa00>Regular Polyhedra Project</font></a>
+<li><a href=polygons.html>Regular Polygons</a>
+<li><a href=polytopes.html>Regular Polytopes</a>
+</ul></font></table>
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<br><a id=sectionI></a><center><b><font size=5>I.  Geometric Properties</font></b></center>
+
+<p>Regular polyhedra generalize the notion of a regular polygon to three dimensions.  A regular polyhedron is a polyhedron with congruent faces and identical vertices.  There are only five convex regular polyhedra, and they are known collectively as the Platonic solids, shown below.  From the top left they are the regular tetrahedron (four faces), cube (six), octahedron (eight), dodecahedron (twelve), and icosahedron (twenty).
+
+<p><center><img src=images/platonicsolids.gif width=636 height=284></center>
+
+<p>We will be interested in calculating the volume and surface areas of these solids.  The situation is much different than with regular polygons because there are only five Platonic solids, so we will treat each of them separately.  The notation is a bit more cumbersome, but we will always use the same variables.  Let <i>n</i> denote the number of faces of the polyhedron.  Let <i>s</i> be the length of an edge, <i>S</i><sub><i>n</i></sub> the total surface area, <i>V</i><sub><i>n</i></sub> the volume, <i>r</i> the distance from the center of the polyhedron to a vertex, and <i>a</i> the distance from the center of the polyhedron to the center of one of its faces.  The definitions of the radius <i>r</i> and the apothem <i>a</i> make sense, for they are the radii of the circumscribed sphere and inscribed sphere, respectively.  Let <i>A</i><sub><i>k</i></sub>(<i>s</i>) be the area of a regular polygon with <i>k</i> sides and side length <i>s</i>.
+
+<p>The surface area of the polyhedron is simply
+
+<p><center><img src=images/ph01.gif width=99 height=25></center>
+
+<p>where each face of the polyhedron has <i>k</i> sides.
+
+<p>As the area of a regular polygon can be found by breaking it up into congruent triangles, the volume of a regular polyhedron can be found by breaking it up into <i>n</i> congruent pyramids, where each face of the polyhedron is the base of one pyramid and the edges of the pyramids are the line segments from the center of the polyhedron to the vertices.  The volume of the polyhedron is the sum of the volumes of its constituent pyramids (and the volume of a pyramid of height <i>h</i> and area of base <i>A</i> is <i>h</i> &#183; <i>A</i> / 3):
+
+<p><a id=equation1></a><table width=100%><tr><td><center><img src=images/ph02.gif width=191 height=24></center><td width=10 align=right>(1)</table>
+
+<p>(Notice the resemblance of this equation to the analogous equation for the area of a regular polygon:  <i>A</i> = <i>a p</i> / 2.  A similar relation exists for any number of dimensions.)  Whereas it is fairly straightforward to find the volume of the first three Platonic solids without splitting them up into pyramids, computing that of the icosahedron is much easier by splitting it up.
+
+
+<p><br><a id=cube></a><center><b><font size=4>Cube</font></b></center>
+
+<p>For the cube, <i>V</i><sub>6</sub> = <i>s</i><sup>3</sup> and <i>S</i><sub>6</sub> = 6 <i>s</i><sup>2</sup>.  The apothem is <i>a</i> = <i>s</i> / 2.  To find the radius <i>r</i>, we form a segment from the center of the cube to a vertex and another from the center of the cube to the center of a face touching that vertex.  By the Pythagorean theorem,
+
+<p><center><img src=images/ph03.gif width=135 height=25></center>
+
+<p>so
+
+<center><img src=images/ph04.gif width=89 height=24></center>
+
+
+<p><br><a id=tetrahedron></a><center><b><font size=4>Tetrahedron</font></b></center>
+
+<p><img src=images/tetrahedronmesh.gif width=121 height=139 align=right>The surface area of the regular tetrahedron is
+
+<center><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/ph05.gif width=156 height=26></center>
+
+<p>A segment drawn from a vertex to the midpoint of the opposite side has length <i>h</i>, the height of the tetrahedron.  This segment forms a right triangle with a side length and the segment drawn from the midpoint of the base triangle to a vertex of that triangle.  By the Pythagorean theorem,
+
+<center><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/ph06.gif width=141 height=27></center>
+
+<p>so
+
+<center><img src=images/ph07.gif width=92 height=25></center>
+
+<p>Thus the volume is
+
+<center><img src=images/ph08.gif width=199 height=27></center>
+
+
+<p><br><a id=octahedron></a><center><b><font size=4>Octahedron</font></b></center>
+
+<p>The regular octahedron has surface area
+
+<center><img src=images/ph09.gif width=161 height=23></center>
+
+<p><img src=images/octahedronsplit.gif width=115 height=127 align=left>We find the volume of the regular octahedron by slicing it into two square pyramids (that have a common base).  If <i>h</i> is the height of each of these pyramids, by the Pythagorean theorem we have
+
+<p><center><img src=images/ph10.gif width=137 height=24><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1></center>
+
+<p>Thus <i>h</i> = <i>s</i> / &#8730;2, and the volume is
+
+<p><center><img src=images/ph11.gif width=208 height=27></center>
+
+
+<p><br><a id=icosahedron></a><center><b><font size=4>Icosahedron</font></b></center>
+
+<p>The surface area of the regular icosahedron is
+
+<p><center><img src=images/ph12.gif width=175 height=23></center>
+
+<img src=images/icosahedronsection.gif width=129 height=137 align=right><p>We compute the volume of the regular icosahedron by finding the apothem <i>a</i> and by finally employing <a href=#equation1>(1)</a>.  In the cross section to the right, the two edges of length <i>s</i> are opposite each other on the icosahedron and form a rectangle with the diagonals (of length <i>d</i>) of two regular pentagons.  These pentagons have side length <i>s</i> and can be seen as the two-dimensional "border" of the icosahedron when looking at it.  (In the drawing, these two pentagons lie in planes perpendicular to the page.)  The four segments of length <i>h</i> are altitudes of triangular faces of the icosahedron.  Again we use the Pythagorean theorem, obtaining two equations:
+
+<p><center><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/ph13.gif width=150 height=48></center>
+
+<p>We have <i>d</i> = (1 + &#8730;5) <i>s</i> / 2 and <i>h</i> = &#8730;3 <i>s</i> / 2, so eliminating <i>r</i> and solving for <i>a</i> gives
+
+<p><center><img src=images/ph14.gif width=428 height=53></center>
+
+<p>By equation <a href=#equation1>(1)</a>, the volume of the icosahedron is
+
+<p><center><img src=images/ph15.gif width=208 height=45></center>
+
+
+<p><br><a id=dodecahedron></a><center><b><font size=4>Dodecahedron</font></b></center>
+
+<p>The regular dodecahedron has total surface area
+
+<p><center><img src=images/ph16.gif width=246 height=37></center>
+
+<img src=images/dodecahedronsplit.gif width=125 height=135 align=right><p>We will need more ingenuity in finding the volume of the dodecahedron, for the geometry is not as simple.  However, there is an easier way than by finding the apothem.  We can break the dodecahedron into a cube of side length <i>c</i> = (1 + &#8730;5) <i>s</i> / 2 and six pyramid-like solids as shown.  We then find the volume of each pyramid, which can be done by treating the middle section as a triangular prism and the end pieces together as a genuine pyramid, as shown below.  But first we need two relations involving the slant height <i>l</i> of the trapezoidal sides and the perpendicular height <i>h</i> of the solids.  These come from the Pythagorean theorem:
+
+<p><img src=images/dodecahedronpartmesh.gif width=212 height=270 align=left><center><img src=images/ph17.gif width=154 height=50><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1></center>
+
+<p>(In the diagrams to the left, <i>x</i> = (<i>c</i> &#150; <i>s</i>) / 2.)  Combining these equations gives
+
+<p><center><img src=images/ph18.gif width=224 height=23><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1></center>
+
+<p>We solve for the height <i>h</i> to find
+
+<p><center><img src=images/ph19.gif width=272 height=25><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1><img src=images/whitespace-horizontal.gif width=48 height=1></center>
+
+<p>or <i>h</i> = <i>s</i> / 2.
+
+<p><br>Now we can calculate the volume <i>V</i><sub><i>P</i></sub> of each of the six pyrimidal objects:
+
+<p><center><img src=images/ph20.gif width=282 height=44></center>
+
+<p>Then the volume of the dodecahedron is
+
+<p><center><img src=images/ph21.gif width=365 height=58></center>
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<br><a id=sectionII></a><center><b><font size=5>II.  Dual Polyhedra</font></b></center>
+
+<p>The following table gives the number <i>V</i> of vertices, the number <i>E</i> of edges, and the number <i>F</i> of faces in each of the five Platonic solids.  As polyhedra, these values satisfy Euler's formula, <i>V</i> &#150; <i>E</i> + <i>F</i> = 2.
+
+<p><center><table cellpadding=5 border=1>
+<tr><td align=center><b>polyhedron</b>	<td align=center><b><i>V</i></b><td align=center><b><i>E</i></b><td align=center><b><i>F</i></b>
+<tr><td>regular tetrahedron	<td align=right>4<td align=right>6<td align=right>4
+<tr><td>cube			<td align=right>8<td align=right>12<td align=right>6
+<tr><td>regular octahedron	<td align=right>6<td align=right>12<td align=right>8
+<tr><td>regular dodecahedron	<td align=right>20<td align=right>30<td align=right>12
+<tr><td>regular icosahedron	<td align=right>12<td align=right>30<td align=right>20
+</table></center>
+
+<p>The tetrahedron is its own dual.  The dual of the regular octahedron is the cube, and the dual of the cube is the regular octahedron.  The dodecahedron and icosahedron are dual.  Polyhedra that are dual to each other have their <i>V</i> and <i>F</i> values swapped in the table above.
+
+<p><br>A regular tetrahedron has no interior diagonals because its edges already connect each vertex to every other vertex.  For each vertex of the cube, there is only one other vertex that does not share any faces with the first.  Thus there are 4 interior diagonals in the cube, joining each pair of opposite vertices, and they intersect at the center.
+
+<p>In a regular octahedron, each vertex is connected to every other vertex except one.  Again the vertices pair up, and there are 3 interior diagonals, which intersect at the center of the octahedron.
+
+<p>The dodecahedron and icosahedron are slightly more complicated.  The dodecahedron has 20 vertices.  The number of ways to choose two vertices among them is <img src=images/ph22.gif width=71 height=24 align=absmiddle>, so the number of line segments connecting two distinct vertices is 190.  Among these, 30 are edges of the dodecahedron, and an additional 5 &#183; 12 = 60 lie on the faces of the dodecahedron.  This leaves 100 interior diagonals.
+
+<p>The regular icosahedron has 12 vertices and thus <img src=images/ph23.gif width=63 height=23 align=absmiddle> line segments joining each pair.  The triangular faces contribute no diagonals, but 30 of these are edges.  Therefore the icosahedron has 36 interior diagonals.
+
+
+</table><table width=100% cellspacing=10><tr><td>
+<p><br><a id=references></a><center><b><font size=5>References</font></b></center>
+
+<p>Relevant links:<ul>
+<li><a href=http://mathworld.wolfram.com/RegularPolyhedron.html><font color=772266>Regular Polyhedron</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/PlatonicSolid.html><font color=772266>Platonic Solid</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/Kepler-PoinsotSolid.html><font color=772266>Kepler-Poinsot Solid</font></a> on MathWorld
+<li><a href=http://mathforum.org/dr.math/faq/formulas/faq.polyhedron.html><font color=772266>Math Forum:  Regular Polyhedra Formulas:</font></a> geometric and combinatorial data on the Platonic solids (with illustrations)
+</ul>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

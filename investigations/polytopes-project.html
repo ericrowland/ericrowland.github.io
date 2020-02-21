@@ -1,0 +1,118 @@
+<html><head><title>Regular Polytopes Project</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="In this project students derive formulas for the volumes and surface areas of the five Platonic solids.  They also investigate the properties of dual polyhedra.">
+<meta name=keywords value="high school, undergraduate, math, project, polyhedra, polytope, n-dimensional, hypervolume, cube, tesseract, hypercube, tetrahedron, pentatope, simplex, simplices"></head>
+<script language=javascript src=layout.js></script><script language=javascript>projects("polytopes"); header("Regular Polytopes Project");</script>
+
+<table width=100% cellspacing=10><tr><td width=50% valign=top>
+<b>Contents</b><font color=3366ff><ul>
+<li><a href=#sectionI>I.  Hypercubes</a>
+<li><a href=#sectionII>II.  Regular Simplices</a>
+<li><a href=#references>References</a>
+</ul></font>
+<td width=50% valign=top>
+<b>Supplements and Links</b><font color=3366ff><ul>
+<li><a href=polytopes-hints.html><font color=000088>Hints</font></a> <font color=black>for this project</font>
+<li><a href=polytopes.html><font color=ff8c00>Solutions</font></a> <font color=black>for this project</font>
+<li><a href=polygons-project.html>Regular Polygons Project</a>
+<li><a href=polyhedra-project.html>Regular Polyhedra Project</a>
+</ul></font></table>
+
+<table width=100% cellpadding=10 cellspacing=5 border=3><tr valign=top><td width=50%>
+<b>Objectives:</b>  To work with geometric objects that cannot be visualized because they exist in higher dimensions.  To find patterns in lower dimensional objects that suggest properties of higher dimensional objects.
+<td>
+<b>Necessary Background:</b>  The geometry of Section I is much simpler than that of Section II, but the combinatorics of Section II is considerably simpler than that of Section I.  Experience with <a href=polyhedra-project.html>polyhedra</a> is recommended.
+<tr><td colspan=2>
+<b>Summary:</b>  Students derive formulas for the hypervolumes and surface hyperareas of two classes of <i>n</i>-dimensional polytopes which are always regular.  Additionally, they count the number of <i>m</i>-dimensional sub-polytopes in each for all <i>m</i> &#60; <i>n</i>.
+</table>
+
+<p><br><a id=sectionI></a><center><b><font size=5>I.  Hypercubes</font></b></center>
+
+<p>Although we live in a three-dimensional world, it makes mathematical sense to talk about shapes and figures in higher dimensions, even if we cannot ever completely visualize them.  <i>Polytopes</i> are the generalizations of <a href=polygons-project.html>polygons</a> and <a href=polyhedra-project.html>polyhedra</a> to higher dimensions.  We'll see two classes of polytopes that are always regular.
+
+<p>Why would we ever think that there may be polytopes in higher dimensions?  In fact, they come quite naturally from the following progression.  In "zero dimensions" all we can have is a single point; a point is said to be zero-dimensional because there are no coordinates to specify where in the zero dimensional space a particular point is &#151; there's only one!  If we add a dimension to a zero-dimensional space, we obtain a straight line.  We can think about this in another way:  Take a (zero-dimensional) point.  Make a copy of that point somewhere else and connect the two points by a line segment.  Then we have a one-dimensional line segment.
+
+<p><center><img src=images/construction-line.gif width=134 height=97></center>
+
+<p>Given a one-dimensional line, we can copy <i>it</i> and join the endpoints by two more line segments.  This gives a two-dimensional square.  We can then duplicate the square and join the vertices to obtain a cube.
+
+<p><center><img src=images/construction-cube.gif width=321 height=294></center>
+
+<p>The point, the line segment, the square, and the cube seem to form a fairly nice progression.  What happens if we try to duplicate a cube in this way?  Well, we are already working in three dimensions, so we cannot visualize what happens exactly.  Rather, we can <i>project</i> the cube and its copy back into three-dimensional space (just as, in order to represent to squares, we have projected, or flattened, down the cube in order to represent it on a two-dimensional page).  What we obtain when we join the vertices of the two cubes is a called a <i>tesseract</i>:
+
+<p><center><img src=images/construction-tesseract.gif width=618 height=192></center>
+
+<p>The above picture is a projection of a tesseract into the two-dimensional plane.  (If you want to get a better feel for the geometry, you can make two cubes out of pipe cleaners or long matches and connect the vertices.)
+
+<p>And we need not stop here.  A tesseract is the fourth-dimensional analogue of a cube.  In general, the <i>n</i>-dimensional cubes are called <i>hypercubes</i> or, to specify the dimension, <i>n</i>-cubes.  We can take two tesseracts and join their vertices with additional line segments to obtain a five-dimensional hypercube, etc.  It turns out that all of these <i>n</i>-dimensional hypercubes are regular &#151; they are composed of congruent (<i>n</i> &#150; 1)-dimensional hypercubes and their vertices are identical.
+
+<p>As a polygon has an area and a polyhedron has a volume, a four-dimensional polytope has a <i>hypervolume</i> &#151; a four-dimensional measurement of the "content" of the polytope.  In general, an <i>n</i>-dimensional polytope is said to have a hypervolume, which is always the <i>n</i>-dimensional content measurement.  <a href=polytopes-hints.html#1><font color=000088>What is the hypervolume of an <i>n</i>-dimensional hypercube of side length <i>s</i>?</font></a>
+
+<p><br>We can also ask about the surface "hyperarea" of a polytope.  As the boundary of a polygon is composed of line segments and the boundary of a polyhedron is composed of polygons, the boundary of an <i>n</i>-dimensional polytope is composed of (<i>n</i> &#150; 1)-dimensional polytopes, which we could call the <i>hyperfaces</i> of the polytope.  The surface hyperarea is the sum of the hypervolumes of the (<i>n</i> &#150; 1)-dimensional hyperfaces.  <font color=000088>By examining some low dimensional cases, make a conjecture about how many (<i>n</i> &#150; 1)-dimensional hypercubes are contained in an <i>n</i>-dimensional hypercube.</font>  (All of these are hyperfaces of the hypercube).
+
+<p><br><a href=polytopes-hints.html#2><font color=000088>How many vertices are there in an <i>n</i>-dimensional hypercube?  Prove your answer.</font></a>
+
+<p><br>The following table lists some <i>n</i>-dimensional hypercubes and the number of various lower-dimensional hypercubes that each contains.  <font color=000088>Fill in the blank entries.</font>
+
+<p><center><table cellpadding=5 border=1>
+<tr><td align=center>hypercube<td>vertices<td>edges<td>squares<td>cubes<td>tesseracts
+<tr align=right><td align=left>0 &#150; point		<td>1<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>1 &#150; line segment	<td>2<td>1<td>0<td>0<td>0
+<tr align=right><td align=left>2 &#150; square		<td>4<td>4<td>1<td>0<td>0
+<tr align=right><td align=left>3 &#150; cube		<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>1<td>0
+<tr align=right><td align=left>4 &#150; tesseract	<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>1
+</table></center>
+
+<p><br><a href=polytopes-hints.html#3><font color=000088>What is the number of edges contained in an <i>n</i>-dimensional hypercube in terms of the numbers of vertices and edges in an (<i>n</i> &#150; 1)-dimensional hypercube?</font></a>
+
+<p><br><a href=polytopes-hints.html#4><font color=000088>If <i>b</i><sub><i>n</i>, <i>m</i></sub> denotes the entry in the <i>n</i>th row and <i>m</i>th column of the table, what is <i>b</i><sub><i>n</i>, <i>m</i></sub> in terms of previous entries in the table?</font></a>
+
+<p><br><a href=polytopes-hints.html#5><font color=000088>What is <i>b</i><sub><i>n</i>, <i>m</i></sub> in terms of <i>n</i> and <i>m</i>?</font></a>
+
+<p><br><a href=polytopes-hints.html#6><font color=000088>What is the surface hyperarea of an <i>n</i>-dimensional hypercube?</font></a>
+
+
+<p><br><a id=sectionII></a><center><b><font size=5>II.  Regular Simplices</font></b></center>
+
+<p>Another class of polytopes which are regular for all <i>n</i> generalize from the triangle and the tetrahedron.  (We can even consider the zero- and one-dimensional cases to be a point and a line segment again.)  Members of this class are called <i>n</i>-dimensional simplices or <i>n</i>-simplices.  The 4-simplex is called a pentatope, for it has five vertices, each one connected to every other.  <a href=polytopes-hints.html#7><font color=000088>How many vertices does an <i>n</i>-simplex have?</font></a>
+
+<p><br><font color=000088>Fill in the blank entries in the following table.</font>
+<p><center><table cellpadding=5 border=1>
+<tr valign=middle><td align=center>simplex<td>vertices<td>edges<td>triangles<td>tetrahedrons<td>pentatopes
+<tr align=right><td align=left>0 &#150; point		<td>1<td>0<td>0<td>0<td>0
+<tr align=right><td align=left>1 &#150; line segment	<td>2<td>1<td>0<td>0<td>0
+<tr align=right><td align=left>2 &#150; triangle	<td>3<td>3<td>1<td>0<td>0
+<tr align=right><td align=left>3 &#150; tetrahedron	<td>4<td>&nbsp;<td>&nbsp;<td>1<td>0
+<tr align=right><td align=left>4 &#150; pentatope	<td>5<td>&nbsp;<td>&nbsp;<td>&nbsp;<td>1
+</table></center>
+
+<p><br><a href=polytopes-hints.html#8><font color=000088>If <i>b</i><sub><i>n</i>, <i>m</i></sub> denotes the entry in the <i>n</i>th row and <i>m</i>th column of the table, what is <i>b</i><sub><i>n</i>, <i>m</i></sub> in terms of <i>n</i> and <i>m</i>?</font></a>
+
+<p><br>The height <i>h</i><sub><i>n</i></sub> of a regular <i>n</i>-simplex is the distance from a vertex of the <i>n</i>-simplex to the center of the opposite hyperface.  <a href=polytopes-hints.html#9><font color=000088>What is <i>h</i><sub><i>n</i></sub> in terms of the side length <i>s</i>?</font></a>  (It might help to find a relationship between <i>h</i><sub><i>n</i></sub> and the apothem <i>a</i><sub><i>n</i></sub>, the radius of the inscribed <i>n</i>-dimensional <!--<a href=hyperspheres-project.html>-->hypersphere<!--</a>-->.  (In other words, <i>a</i><sub><i>n</i></sub> is the distance from the center of the <i>n</i>-simplex to the center of a hyperface.))
+
+<p><br><a href=polytopes-hints.html#10><font color=000088>What is the hypervolume of a regular <i>n</i>-simplex of side length <i>s</i>?</font></a>
+
+<p><br><br><font color=000088>Based on the values for hypercubes and <i>n</i>-simplices, try to guess the generalization of <a href=polygons-project.html#sectionII>Euler's formula</a> to <i>n</i> dimensions.</font></a>
+
+
+<p><br><a id=references></a><center><b><font size=5>References</font></b></center>
+
+<p>Relevant links:<ul>
+<li><a href=http://mathworld.wolfram.com/Polytope.html><font color=772266>Polytope</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/Tesseract.html><font color=772266>Tesseract</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/Hypercube.html><font color=772266>Hypercube</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/Pentatope.html><font color=772266>Pentatope</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/Simplex.html><font color=772266>Simplex</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/16-Cell.html><font color=772266>16-Cell</font></a> on MathWorld
+<li><a href=http://mathworld.wolfram.com/CrossPolytope.html><font color=772266>Cross Polytope</font></a> on MathWorld
+</ul>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

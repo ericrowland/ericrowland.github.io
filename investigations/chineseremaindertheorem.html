@@ -1,0 +1,43 @@
+<html><head><title>Chinese Remainder Theorem</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="A JavaScript implementation of the Chinese Remainder Theorem for integers.">
+<meta name=keywords value="JavaScript, program, Chinese remainder theorem"></head>
+<script language=javascript src=layout.js></script><script language=javascript>header("Chinese Remainder Theorem");</script>
+
+<form method=post>
+Solve the following system of linear congruences <i>x</i> &#8801; <i>a</i><sub><i>i</i></sub> mod <i>m</i><sub><i>i</i></sub>.  The moduli <i>m</i><sub><i>i</i></sub> must be relatively prime.
+<br><script language=javascript>
+function solve(s) {
+	a=new Array(n);
+	b=new Array(n);
+	m=new Array(n);
+	M=1;
+	for(i=0;i<n;i++) {
+		a[i]=eval("s.a"+i+".value");
+		m[i]=eval("s.m"+i+".value");
+		M*=m[i];
+	}
+	for(i=0;i<n;i++) {
+		for(j=0;j<=m[i];j++) if(M*j/m[i]%m[i]==1) break;
+		b[i]=j;
+	}
+	x=0;
+	for(i=0;i<n;i++) x+=a[i]*b[i]*M/m[i];
+	s.x.value=x%M;
+}
+n=prompt("How many simultaneous linear congruences would you like to solve?","");
+n/=1;
+for(i=0;i<n;i++) document.write("<br><i>x</i> &#8801; <input type=text name=a"+i+" size=3> mod <input type=text name=m"+i+" size=3>");
+</script>
+<br><input type=button value=Solve onClick=solve(this.form);> <i>x</i> = <input type=text name=x size=5>
+</form>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

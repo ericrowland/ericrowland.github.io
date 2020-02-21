@@ -1,0 +1,121 @@
+<html><head><title>Regular Polygons Project</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="In this project students derive general formulas for certain angles, lengths, and areas of regular polygons.  In the second section students are introducted to graph theory and lead to derive Euler's formula in an effort to count the intersections made by the diagonals of a regular polygon.">
+<meta name=keywords value="high school, undergraduate, math, project, regular, polygon, n-gon, radius, apothem, number, diagonals, intersections, regions, segments, graph theory, complete graph, Euler's formula"></head>
+<script language=javascript src=layout.js></script><script language=javascript>projects("polygons"); header("Regular Polygons Project");</script>
+
+<table width=100% cellspacing=10><tr><td width=50% valign=top>
+<b>Contents</b><font color=3366ff><ul>
+<li><a href=#sectionI>I.  Geometric Properties</a>
+<li><a href=#sectionII>II.  Diagonals, Graphs, and Euler's Formula</a>
+<li><a href=#references>References</a>
+</ul></font>
+<td width=50% valign=top>
+<b>Supplements and Links</b><font color=3366ff><ul>
+<li><a href=ngoncalculator.html><font color=3366ff>Regular <i>n</i>-gon Calculator:</font></a>  <font color=black>Contains implementations of many of the formulas derived below.</font>
+<li><a href="calculators/Regular polygons.nb"><font color=3366ff>Regular polygons</font></a> <font color=black><i>Mathematica</i> notebook</font>
+<li><a href=polygons-hints.html><font color=000088>Hints</font></a> <font color=black>for this project</font>
+<li><a href=polygons.html><font color=ff8c00>Solutions</font></a> <font color=black>for this project</font>
+<li><a href=polyhedra-project.html>Regular Polyhedra Project</a>
+<li><a href=polytopes-project.html>Regular Polytopes Project</a>
+</ul></font></table>
+
+<table width=100% cellpadding=10 cellspacing=5 border=3><tr valign=top><td width=50%>
+<b>Objectives:</b>  To successfully identify and work with common features of an infinite class of objects, namely regular polygons.  To learn about a new mathematical structure &#151; <i>graphs</i> &#151; and apply concepts of graph theory to regular polygons.
+<td>
+<b>Necessary Background:</b>  Some experience with plane geometry is required.  In Section I, familiarity with the basic trigonometric functions is also required, as are their applications to computing side lengths and angles of triangles.  Specifically, the law of sines is needed.  Section II requires no background.
+<tr><td colspan=2>
+<b>Summary:</b>  In Section I, students derive formulas for the angles, perimeter, radius, apothem, area, median length, and diagonal lengths of a regular polygon with <i>n</i> sides.  Section II provides an introduction to graph theory.  Students count the number of diagonals in a polygon.  The concepts from graph theory lead to Euler's formula.  Formulas for the number of intersections and the number of regions made by the diagonals of a regular polygon are given, and students are asked to evaluate these for specific <i>n</i>.
+</table>
+
+
+<p><br><a id=sectionI></a><center><b><font size=5>I.  Geometric Properties</font></b></center>
+
+<p>A <i>polygon</i> is a geometric object with straight sides.  A <i>regular</i> polygon is a polygon in which every side has the same length and every angle is the same.  For any natural number <i>n</i> &#8805; 3, we can draw a regular polygon with <i>n</i> sides; sometimes we'll call this polygon a "regular <i>n</i>-gon" to emphasize that it has <i>n</i> sides.  Below are the regular <i>n</i>-gons for <i>n</i> = 3, 4, ..., 12.  As <i>n</i> gets larger, the regular <i>n</i>-gons look more like a perfect circle.
+
+<p><center><img src=images/polygons.gif width=649 height=218></center>
+
+<p>We can ask various questions about a regular <i>n</i>-gon.  What angle do two adjacent sides make?  If length of each side of the polygon is <i>s</i>, what is the perimeter?  What is the area?  If we <i>circumscribe</i> the polygon in a circle, what is the radius of that circle?  Some of these questions are simple, and some are more difficult.  Let's start with the perimeter.  <font color=000088>If a regular polygon has <i>n</i> sides, and each of the sides has length <i>s</i>, what is its perimeter <i>p</i>?</font>
+
+<p><br>A regular polygon has a point in its interior that is its center.  We can draw a line segment from the center to one of the vertices.  The length of this segment is called the <i>radius</i> of the polygon, and we will denote it by <i>r</i>.  If we draw a circle around the polygon so that each vertex lies on the circle, then the center of the regular polygon will also be the center of the circle.  Moreover, the radius <i>r</i> of the polygon will be the radius of the circle.  The angle between two consecutive radii will be denoted by <i>&phi;</i>.  <font color=000088>What is the measurement of <i>&phi;</i> in terms of <i>n</i>?</font>
+
+<p><br>We can also draw a line segment from the center of the regular polygon to the <i>center</i> of a side.  This segment is called the <i>apothem</i>, and its length is denoted by <i>a</i>.  If we <i>inscribe</i> a circle inside the regular polygon &#151; so that the center of each side lies on the circle &#151; then the radius of the circle will be the length <i>a</i> of the apothem.  It turns out that the area of a regular polygon can be calculated in terms of <i>n</i>, the side length <i>s</i>, and the length <i>a</i> of the apothem.  <a href=polygons-hints.html#1><font color=000088>What is the area of a regular polygon fitting these descriptions?</font></a>
+
+<p><br><a href=polygons-hints.html#2><font color=000088>What is the angle <i>&theta;</i> made between two consecutive sides of a regular <i>n</i>-gon?</font></a>
+
+<p><br><a href=polygons-hints.html#3><font color=000088>What is the radius <i>r</i> in terms of <i>s</i>?</font></a>
+
+<p><br><a href=polygons-hints.html#4><font color=000088>What is the apothem <i>a</i> in terms of <i>s</i>?</a>  What is <i>a</i> in terms of <i>r</i>?</font>
+
+<p><br><font color=000088>What is the area in terms of <i>n</i> and <i>s</i>?  in terms of <i>n</i> and <i>r</i>?</font>
+
+<p><br>For odd <i>n</i>, the <i>median</i> of a regular <i>n</i>-gon is the segment from a vertex to the center of the opposite side.  <font color=000088>What is the length <i>m</i> of the median in terms of <i>s</i>?  in terms of <i>r</i>?</font>
+
+<p><br>From every vertex we can draw segments to the other <i>n</i> &#150; 1 vertices.  Let <i>d</i><sub>1</sub>, <i>d</i><sub>2</sub>, ..., <i>d</i><sub><i>n</i> &#150; 1</sub> be the lengths of these segments, in order.  Then <i>d</i><sub>1</sub> = <i>d</i><sub><i>n</i> &#150; 1</sub> = <i>s</i>.  <a href=polygons-hints.html#5><font color=000088>What is the value of <i>d</i><sub><i>k</i></sub> in general?</font></a>
+
+
+
+<p><br><a id=sectionII></a><center><b><font size=5>II.  Diagonals, Graphs, and Euler's Formula</font></b></center>
+
+<p>A <i>diagonal</i> is a line segment connecting two nonconsecutive vertices of a polygon.  <a href=polygons-hints.html#6><font color=000088>How many diagonals does an <i>n</i>-sided polygon have?</font></a>  (Notice that the polygon does not need to be regular.)
+
+<p><br>We will be interested in the number of intersection points formed by the diagonals of a regular polygon.  We'll also try to count the number of regions that the interior of the polygon is cut into and the number of segments that the diagonals cut each other into.  These are difficult questions that were only answered completely in 1998 (after mathematics having been studied for several thousand years)!  You might try some examples to get a sense of why counting such things is tricky.
+
+<p><br>It turns out that if we know two of these numbers (say, the number of intersections and the number of segments) then we can find the third (the number of regions).  We can do this by using a result known as Euler's formula, which we will discover experimentally.  But first let us discuss graphs.
+
+<p>A <i>graph</i> is a set of <i>vertices</i> along with a set of <i>edges</i>; the vertices are simply points, and each edge is drawn from one vertex to another.  Some examples of graphs are drawn below.  (The two rightmost illustrations are actually different drawings of the <i>same</i> graph, a very interesting graph known as the <i>Petersen graph</i>.)
+
+<p><center><img src=images/graphs.gif width=652 height=253></center>
+
+<p>All of the above graphs are <i>connected</i> &#151; any vertex can be reached from any other vertex by traveling along edges.  (Deleting an edge in the first example, the <i>path</i> on seventeen vertices, would result in a <i>disconnected</i> graph.)  The <i>degree</i> of a vertex is the number of edges that connect to it.  In the Petersen graph, each vertex has degree 3.  In the 17-path, each vertex has degree 2, except for the end vertices, which each have degree 1.
+
+<p>A graph is called <i>planar</i> if it can be drawn in the plane without any two edges crossing.  A famous theorem of Kuratowski says that a graph is planar if and only if it does not "contain" any copies of the following two graphs &#151; <i>K</i><sub>5</sub> (the <i>complete graph</i> on five vertices, in which each vertex is connected to every other vertex) and <i>K</i><sub>3, 3</sub> (the <i>complete bipartite graph</i> with three vertices in each of the two sets, in which an edge is drawn between each pair of vertices that lie in different sets):
+
+<p><center><img src=images/kuratowskigraphs.gif width=400 height=153></center>
+
+<p>You can fairly quickly convince yourself that <i>K</i><sub>5</sub> is nonplanar by trying to draw it without edge crossings.  Trying to draw <i>K</i><sub>3, 3</sub> without edge crossings will result in similar difficulties, but in this case it is less obvious that there is <i>no way</i> of drawing it without crossings.
+
+<p>We will be concerned with connected graphs that are planar.  The following are some examples of connected, planar graphs.  <font color=000088>Draw three more.</font>
+
+<p><center><img src=images/planargraphs.gif width=653 height=318></center>
+
+<p><br>For the graphs you found and some of the above examples, count the number of vertices, edges, and regions.  <font color=000088>Make a conjecture about the relationship between these three numbers.</font>  This equation is sometimes known as Euler's formula.
+
+<p><br>Regular polygons with their diagonals drawn in can be viewed as graphs (with a vertex at each intersection), and it is helpful to reformulate our initial questions in terms of graph theory rather than simple plane geometry.  Here are the regular <i>n</i>-gons with their diagonals for <i>n</i> = 3, 4, ..., 12.
+
+<p><center><img src=images/polygons-diagonals.gif width=649 height=218></center>
+
+<p>If we make every intersection point a vertex, then these pictures automatically become connected, planar graphs.  If we know the number of intersection points and the number of segments, we can then use Euler's formula to find the number of regions.  (For example, drawing the two diagonals of a square results in 5 intersections, 4 regions, and 8 segments.  The five diagonals of a regular pentagon make 10 intersections, 11 regions, and 20 segments.)  In their 1998 paper, Bjorn Poonen and Michael Rubinstein used this equation to find the number of regions after they had found formulas for the number of intersections and the number of segments.  (They computed the number of intersections by finding the number of points where exactly <i>k</i> lines intersect for <i>k</i> = 2, 3, ..., 7.  It turns out that, except for the center, the maximum number of lines which can intersect at a single (interior) point is 7.)  Define the function <i>&delta;</i><sub><i>m</i></sub>(<i>n</i>) to be 1 if <i>n</i> is divisible by <i>m</i> and 0 if <i>n</i> is not divisible by <i>m</i>:
+
+<center><img src=images/pg01.gif width=208 height=47></center>
+
+<p>If <i>I</i>(<i>n</i>) is the number of intersections made by the diagonals of a regular <i>n</i>-gon and <i>R</i>(<i>n</i>) is the number of (interior) regions, then for <i>n</i> &#8805; 3
+
+<p><center><img src=images/pg02.gif width=473 height=116></center>
+
+<p>where <img src=images/pg03.gif width=221 height=46 align=absmiddle> is a <a href=pascalssimplices-project.html>binomial coefficient</a>, and
+
+<p><center><img src=images/pg04.gif width=482 height=117></center>
+
+<p>Notice that if <i>n</i> is odd, then <i>I</i>(<i>n</i>) = (<i>n</i><sup>4</sup> &#150; 6<i>n</i><sup>3</sup> + 11<i>n</i><sup>2</sup> &#150; 6<i>n</i>) / 24 and <i>R</i>(<i>n</i>) = (<i>n</i><sup>4</sup> &#150; 6<i>n</i><sup>3</sup> + 23<i>n</i><sup>2</sup> &#150; 42<i>n</i> + 24) / 24 are simply polynomials.
+
+<p><br><font color=000088>How many total intersections do the diagonals of a regular 24-gon make?  How many interior regions do they make?  How many segments?</font>
+
+
+<p><br><a id=references></a><center><b><font size=5>References</font></b></center>
+
+<p>B. Poonen and M. Rubinstein, <a href=http://math.berkeley.edu/~poonen/papers/ngon.pdf><font color=772266><i>The Number of Intersection Points Made by the Diagonals of a Regular Polygon</i></font></a>, SIAM J. Discrete Math., v.11 (1998), p. 135–156.
+
+<p>Relevant links:<ul>
+<li><a href=http://mathworld.wolfram.com/RegularPolygon.html><font color=772266>Regular Polygon</font></a> on MathWorld
+</ul>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

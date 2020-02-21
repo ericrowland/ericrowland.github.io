@@ -1,0 +1,43 @@
+<html><head><title>Integer Factorer</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="A JavaScript program which factors integers.">
+<meta name=keywords value="JavaScript, program, integer factorer"></head>
+<script language=javascript src=layout.js></script><script language=javascript>header("Integer Factorer");</script>
+
+<script language=javascript>
+function factor(s) {
+	n=s.n.value;
+	if(n!="") {
+		c=0;
+		d="";
+		for(i=2;i<=Math.sqrt(n);i+=c) {
+			if(c<2) c++;
+			if(n%i==0) {
+				for(j=0;n%i==0;j++) n/=i;
+				if(d.length>0) d+="*";
+				d+=i;
+				if(j>1) d+="^"+j;
+			}
+		}
+		if(n!=1||d.length==0) {
+			if(d.length>0) d+="*";
+			d+=n;
+		}
+		s.d.value=d;
+	}
+}
+</script>
+<form method=post>
+The prime decomposition of positive integer <input type=text name=n size=24> is <input type=text name=d size=38>.
+<br><input type=button value=Factor onClick=factor(this.form);>
+</form>
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>

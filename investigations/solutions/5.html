@@ -1,0 +1,98 @@
+<html><head><title>solution</title>
+<meta name=author value="Eric Rowland">
+<script language=javascript src=layout.js></script>
+
+<b>Modulo 2</b>, there are two possibilities for <i>x</i>, two possibilities for <i>y</i>, and two possibilities for <i>z</i>.
+If none of <i>x</i>, <i>y</i>, <i>z</i> are divisible by 2, then they are all congruent to 1 modulo 2.
+But
+<center>
+1<sup>2</sup> + 1<sup>2</sup> &#8802; 1<sup>2</sup> mod 2,
+</center>
+so this is not a solution.
+Therefore at least one of them is divisible by 2.
+
+<p>
+A second way to show this is to let <i>X</i> = <i>x</i><sup>2</sup>, <i>Y</i> = <i>y</i><sup>2</sup>, and <i>Z</i> = <i>z</i><sup>2</sup>.
+Then let's consider the congruence
+<center>
+<i>X</i> + <i>Y</i> &#8801; <i>Z</i> mod 2.
+</center>
+Since 0<sup>2</sup> &#8801; 0 mod 2 and 1<sup>2</sup> &#8801; 1 mod 2, the possibilities for <i>X</i>, <i>Y</i>, and <i>Z</i> modulo 2 are also 0 and 1.
+Then test all eight possible combinations:
+<center>
+0 + 0 &#8801; 0 mod 2
+<br> 0 + 0 &#8802; 1 mod 2
+<br> 0 + 1 &#8802; 0 mod 2
+<br> 0 + 1 &#8801; 1 mod 2
+<br> 1 + 0 &#8802; 0 mod 2
+<br> 1 + 0 &#8801; 1 mod 2
+<br> 1 + 1 &#8801; 0 mod 2
+<br> 1 + 1 &#8802; 1 mod 2
+</center>
+There are four non-solutions.
+The four solutions are
+<center>
+0 + 0 &#8801; 0 mod 2
+<br> 0 + 1 &#8801; 1 mod 2
+<br> 1 + 0 &#8801; 1 mod 2
+<br> 1 + 1 &#8801; 0 mod 2.
+</center>
+Each solution contains at least one 0, which corresponds to one of <i>X</i>, <i>Y</i>, <i>Z</i> being divisible by 2, which corresponds to one of <i>x</i>, <i>y</i>, <i>z</i> being divisible by 2.
+
+<p>
+The second method is a little longer than the first but it generalizes more easily.
+<b>Modulo 3</b>, the possibilities for <i>X</i> (and also <i>Y</i> and <i>Z</i>) are
+<center>
+0<sup>2</sup> &#8801; 0 mod 3,
+<br> 1<sup>2</sup> &#8801; 1 mod 3,
+<br> 2<sup>2</sup> &#8801; 1 mod 3.
+</center>
+So there are only two possibilies &#151; 0 and 1 modulo 3.
+(The values 0 and 1 are called <i>quadratic residues</i> modulo 3, whereas 2 is a <i>quadratic nonresidue</i> modulo 3 because the square of an integer is never 2 modulo 3.)
+The only solutions to <i>X</i> + <i>Y</i> &#8801; <i>Z</i> mod 3 are
+<center>
+0 + 0 &#8801; 0 mod 3
+<br> 0 + 1 &#8801; 1 mod 3
+<br> 1 + 0 &#8801; 1 mod 3.
+</center>
+Each solution contains a 0, which corresponds to <i>x</i>, <i>y</i>, or <i>z</i> being divisible by 3.
+
+<p>
+<b>Modulo 5</b> we play the same game:
+<center>
+0<sup>2</sup> &#8801; 0 mod 5
+<br> 1<sup>2</sup> &#8801; 1 mod 5
+<br> 2<sup>2</sup> &#8801; 4 mod 5
+<br> 3<sup>2</sup> &#8801; 4 mod 5
+<br> 4<sup>2</sup> &#8801; 1 mod 5.
+</center>
+So there are only three possibilities for <i>X</i> (and also <i>Y</i> and <i>Z</i>) modulo 5.
+(The quadratic residues modulo 5 are 0, 1, and 4.)
+There are seven solutions to <i>X</i> + <i>Y</i> &#8801; <i>Z</i> mod 5 with these values:
+<center>
+0 + 0 &#8801; 0 mod 5
+<br> 0 + 1 &#8801; 1 mod 5
+<br> 0 + 4 &#8801; 4 mod 5
+<br> 1 + 0 &#8801; 1 mod 5
+<br> 1 + 4 &#8801; 0 mod 5
+<br> 4 + 0 &#8801; 4 mod 5
+<br> 4 + 1 &#8801; 0 mod 5.
+</center>
+(You can determine these solutions by hand, but it's more fun to write a short program to do it.)
+Each solution contains a 0, which corresponds to <i>x</i>, <i>y</i>, or <i>z</i> being divisible by 5.
+
+<p>
+Incidentally, you can use the same approach to show that if <i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> = <i>z</i><sup>2</sup> then one of <i>x</i>, <i>y</i> is divisible by 4.
+And if <i>x</i>, <i>y</i>, <i>z</i> are relatively prime then <i>z</i> &#8801; 1 mod 4.
+See the <a href=../pythagoreantriples-project.html><font color=11aa00>Pythagorean Triples Project</font></a> for more.
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+</body>
+</html>

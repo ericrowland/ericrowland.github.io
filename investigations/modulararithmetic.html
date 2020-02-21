@@ -1,0 +1,261 @@
+<html><head><title>Modular Arithmetic &#151; An Introduction</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="An introduction to modular arithmetic.">
+<meta name=keywords value="modular arithmetic, integers"></head>
+<script language=javascript src=layout.js></script><script language=javascript>header("Modular Arithmetic");</script>
+
+<p>Modular arithmetic is quite a useful tool in number theory.  In particular, it can be used to obtain information about the solutions (or lack thereof) of a specific equation.  This page gives a fairly detailed introduction.  Another good introduction, in the form of an interactive tutorial, can be found in Part 2 of <a href=http://web.math.princeton.edu/math_alive/Crypto/><font color=772266>Math Alive:  Cryptography</font></a>.
+
+<p><b>Contents</b><font color=3366ff><ul>
+<li><a href=#sectionI>I.  An Introductory Example</a>
+<li><a href=#sectionII>II.  Definition and Further Examples</a>
+<li><a href=#sectionIII>III.  Properties of Congruence</a>
+<li><a href=#sectionIV>IV.  Exercises</a>
+</ul></font>
+
+<p><br><a id=sectionI></a><center><b><font size=5>I.  An Introductory Example</font></b></center>
+
+<p>Everyone knows that set of integers can be broken up into the following two classes:
+<br><ul>
+<li>the even numbers (..., &#150;6, &#150;4, &#150;2, 0, 2, 4, 6,...); and
+<li>the odd numbers (..., &#150;5, &#150;3, &#150;1, 1, 3, 5,...).
+</ul>
+
+<p>There are certain generalizations we can make about the arithmetic of numbers based on which of these two classes they come from.  For example, we know that the sum of two even numbers is even.  The sum of an even number and an odd number is odd.  The sum of two odd numbers is even.  The product of two even numbers is even, etc.
+
+<p>Modular arithmetic lets us state these results quite precisely, and it also provides a convenient language for similar but slightly more complex statements.  In the above example, our <i>modulus</i> is the number 2.  The modulus can be thought of as the number of classes that we have broken the integers up into.  It is also the difference between any two "consecutive" numbers in a given class.
+
+<p>Now we represent each of our two classes by a single symbol.  We let the symbol "0" mean "the class of all even numbers" and the symbol "1" mean "the class of all odd numbers".  There is no great reason why we have chosen the symbols 0 and 1; we could have chosen 2 and 1, or &#150;32 and 177, but 0 and 1 are the conventional choices.
+
+<p>The statement "the sum of two even numbers is even" can be expressed by the following:
+
+<p><center>0 + 0 &#8801; 0 mod 2.</center>
+
+<p>Here, the "&#8801;" symbol is not equality but <i>congruence</i>, and the "mod 2" just signifies that our modulus is 2.  The above statement is read "Zero plus zero is congruent to zero, modulo two."  The statement "the sum of an even number and an odd number is odd" is represented by
+
+<p><center>0 + 1 &#8801; 1 mod 2.</center>
+
+<p>Those examples are natural enough.  But how do we write "the sum of two odd numbers is even"?  It is the (at first strange looking) expression
+
+<p><center>1 + 1 &#8801; 0 mod 2.</center>
+
+<p>Here the symbols "&#8801;" and "mod 2" are suddenly very important!  We have analogous statements for multiplication:
+
+<p><center>
+0 &#215; 0 &#8801; 0 mod 2,
+<br>0 &#215; 1 &#8801; 0 mod 2,
+<br>1 &#215; 1 &#8801; 1 mod 2.
+</center>
+
+<p>In a sense, we have created a number system with addition and multiplication but in which the only numbers that exist are 0 and 1.  You may ask what use this has.  Well, our number system is the system of <i>integers modulo 2</i>, and because of the previous six properties, <b>any arithmetic done in the integers translates to arithmetic done in the integers modulo 2</b>.  This means that if we take any equality involving addition and multiplication of integers, say
+
+<p><center>12 &#215; 43 + 65 &#215; 78 = 5586,</center>
+
+<p>then reducing each integer <i>modulo 2</i> (i.e. replacing each integer by its class "representative" 0 or 1), then we will obtain a valid congruence.  The above example reduces to
+
+<p><center>0 &#215; 1 + 1 &#215; 0 &#8801; 0 mod 2,</center>
+
+<p>or 0 + 0 &#8801; 0 mod 2.
+
+<p>More useful applications of reduction modulo 2 are found in solving equations.  Suppose we want to know which integers might solve the equation
+
+<p><center>3<i>a</i> &#150; 3 = 12.</center>
+
+<p>Of course, we could solve for <i>a</i>, but if we didn't need to know what <i>a</i> is exactly and only cared about, say, whether it was even or odd, we could do the following.  Reducing modulo 2 gives the congruence
+
+<p><center>1<i>a</i> + 1 &#8801; 0 mod 2,</center>
+
+<p>or
+
+<p><center><i>a</i> &#8801; &#150;1 &#8801; 1 mod 2,</center>
+
+<p>so any integer <i>a</i> satisfying the equation 3<i>a</i> &#150; 3 = 12 must be odd.
+
+<p>Since any integer solution of an equation reduces to a solution modulo 2, it follows that <b>if there is no solution modulo 2, then there is no solution in integers</b>.  For example, assume that <i>a</i> is an integer solution to
+
+<p><center>2<i>a</i> &#150; 3 = 12,</center>
+
+<p>which reduces to
+
+<p><center>0 &#183; <i>a</i> + 1 &#8801; 0 mod 2,</center>
+
+<p>or 1 &#8801; 0 mod 2.  This is a contradiction because 0 and 1 are different numbers modulo 2 (no even number is an odd number, and vice versa).  Therefore the above congruence has no solution, so <i>a</i> couldn't have been an integer.  This proves that the equation 2<i>a</i> &#150; 3 = 12 has no integer solution.
+
+<p>Less trivially, consider the system of equations
+
+<p><center>
+6<i>a</i> &#150; 5<i>b</i> = 4,
+<br>2<i>a</i> + 3<i>b</i> = 3.
+</center>
+
+<p>Modulo 2, these equations reduce to
+
+<p><center>
+0 + 1<i>b</i> &#8801; 0 mod 2,
+<br>0 + 1<i>b</i> &#8801; 1 mod 2.
+</center>
+
+<p>This says that <i>b</i> is both even and odd, which is a contradiction.  Therefore we know that the original system of equations has no integer solutions, and to prove this we didn't even need to know anything about <i>a</i>.
+
+<p>As shown by the preceding examples, one of the powers of modular arithmetic is the ability to show, often very simply, that certain equations and systems of equations have no integer solutions.  Without modular arithmetic, we would have to find all of the solutions and then see if any turned out to be integers.
+
+
+<p><br><a id=sectionII></a><center><b><font size=5>II.  Definition and Further Examples</font></b></center>
+
+<p>Of course, there is nothing special about the number 2.  Any integer (except 0) will work for the modulus <i>m</i>.  We now give the mathematical definition of congruence.
+
+<p><b>Definition.</b>  Let <i>m</i> &#8800; 0 be an integer.  We say that two integers <i>a</i> and <i>b</i> are <i>congruent modulo m</i> if there is an integer <i>k</i> such that <i>a</i> &#150; <i>b</i> = <i>km</i>, and in this case we write
+
+<p><center><i>a</i> &#8801; <i>b</i> mod <i>m</i>.</center>
+
+<p>Notice that the condition "<i>a</i> &#150; <i>b</i> = <i>km</i> for some integer <i>k</i>" is equivalent to the condition "<i>m</i> divides <i>a</i> &#150; <i>b</i>".
+
+<p>In the previous section we used the modulus <i>m</i> = 2.  Although we wrote congruences using only 0 and 1, really any integers are valid.  Modulo 2, all of the even numbers are congruent to each other since the difference of any two even numbers is divisible by 2:
+
+<p><center> ... &#8801; &#150;6 &#8801; &#150;4 &#8801; &#150;2 &#8801; 0 &#8801; 2 &#8801; 4 &#8801; 6 &#8801; ... &nbsp; mod 2.</center>
+
+<p>Also, every odd number is congruent to every other odd number modulo 2 since the difference of any two odd numbers is even:
+
+<p><center> ... &#8801; &#150;5 &#8801; &#150;3 &#8801; &#150;1 &#8801; 1 &#8801; 3 &#8801; 5 &#8801; ... &nbsp; mod 2.</center>
+
+<p>Therefore, anywhere we wrote "0" we could have written any other even number, and similarly "1" could have been replaced by any odd number.  For example, instead of writing 0 &#215; 1 + 1 &#215; 0 &#8801; 0 mod 2, an equally valid statement would have been
+
+<p><center>10 &#215; (&#150;13) + 27 &#215; 6 &#8801; &#150;122 mod 2.</center>
+
+
+<p><br>Let's now look at other values for the modulus <i>m</i>.  For example, let <i>m</i> = 3.  All multiples of 3 are congruent to each other modulo 3 since the difference of any two is divisible by 3.  Similarly, all numbers of the form 3<i>n</i> + 1 are congruent to each other, and all numbers of the form 3<i>n</i> + 2 are congruent to each other.
+
+<p><center>
+... &#8801; &#150;9 &#8801; &#150;6 &#8801; &#150;3 &#8801; 0 &#8801; 3 &#8801; 6 &#8801; 9 &#8801; ... &nbsp; mod 3.
+<br>... &#8801; &#150;8 &#8801; &#150;5 &#8801; &#150;2 &#8801; 1 &#8801; 4 &#8801; 7 &#8801; ... &nbsp; mod 3.
+<br>... &#8801; &#150;7 &#8801; &#150;4 &#8801; &#150;1 &#8801; 2 &#8801; 5 &#8801; 8 &#8801; ... &nbsp; mod 3.
+</center>
+
+
+<p><br>How about when <i>m</i> = 1?  The difference of <i>any</i> two integers is divisible by 1, so all integers are congruent to each other modulo 1:
+
+<p><center> ... &#8801; &#150;3 &#8801; &#150;2 &#8801; &#150;1 &#8801; 0 &#8801; 1 &#8801; 2 &#8801; 3 &#8801; ... &nbsp; mod 1.</center>
+
+<p>For this reason, <i>m</i> = 1 is not very interesting, and reducing an equation modulo 1 doesn't give any information about its solutions.
+
+
+<p><br>The modulus <i>m</i> = 12 comes up quite frequently in everyday life, and its application illustrates a good way to think about modular arithmetic &#151; the "clock arithmetic" analogy.  If it's 7:00, what time will it be in 25 hours?  Since 25 &#8801; 1 mod 12, we simply add 1 to 7:
+
+<p><center>7 + 25 &#8801; 7 + 1 &#8801; 8 mod 12.</center>
+
+<p>So the clock will read 8:00.  Of course, we don't need the formality of modular arithmetic in order to compute this, but when we do this kind of computation in our heads, this is really what we are doing.
+
+<p>With <i>m</i> = 12, there are only 12 numbers ("hours") we ever need to think about.  We count them 1, 2, 3, ..., 10, 11, 12, 1, 2, ... , starting over after 12.  The numbers 1, 2, ..., 12 represent the twelve equivalence classes modulo 12:  Every integer is congruent to exactly one of the numbers 1, 2, ..., 12, just as the hour on the clock always reads exactly one of 1, 2, ..., 12.  These classes are given by
+
+<p><center>12<i>n</i> + 1, 12<i>n</i> + 2, 12<i>n</i> + 3, ..., 12<i>n</i> + 11, 12<i>n</i></center>
+
+<p>as <i>n</i> ranges over the integers.
+
+
+<p><br>Of course, the minutes and seconds on a clock are also modular.  In these cases the modulus is <i>m</i> = 60.  If we think of the days of the week as labeled by the numbers 0, 1, 2, 3, 4, 5, 6, then the modulus is <i>m</i> = 7.  The point is that we measure many things, both in mathematics and in real life, in periodicity, and this can usually be thought of as an application of modular arithmetic.
+
+
+<p><br><a id=sectionIII></a><center><b><font size=5>III.  Properties of Congruence</font></b></center>
+
+<p>It is fairly easy to show that for any integers <i>a</i>, <i>b</i>, <i>c</i>, and <i>m</i> &#8800; 0, the following properties hold:
+
+<p><center><table><tr><td>
+reflexivity: &nbsp; <i>a</i> &#8801; <i>a</i> mod <i>m</i>.
+<br>symmetry: &nbsp; If &nbsp; <i>a</i> &#8801; <i>b</i> mod <i>m</i>, &nbsp; then &nbsp; <i>b</i> &#8801; <i>a</i> mod <i>m</i>.
+<br>transitivity: &nbsp; If &nbsp; <i>a</i> &#8801; <i>b</i> mod <i>m</i> &nbsp; and &nbsp; <i>b</i> &#8801; <i>c</i> mod <i>m</i>, &nbsp; then &nbsp; <i>a</i> &#8801; <i>c</i> mod <i>m</i>.
+</table></center>
+
+<p>Therefore congruence modulo <i>m</i> is an equivalence relation, and this relation partitions the integers into <i>m</i> equivalence classes:
+
+<p><center><i>mn</i> + 0, <i>mn</i> + 1, <i>mn</i> + 2, ..., <i>mn</i> + (<i>m</i> &#150; 1).</center>
+
+<p>(Since 0 &#8801; <i>m</i> mod <i>m</i>, we can either choose 0 or <i>m</i> as a representative for the first class.  It is conventional to choose 0.)  To be a little more formal than we were above, we can write the equivalence class of an integer <i>a</i> as [<i>a</i>].  The brackets signify that this is an equivalence <i>class</i> and not simply a number.  In this way we can write
+
+<p><center>
+... = [&#150;3<i>m</i>] = [&#150;2<i>m</i>] = [&#150;<i>m</i>] = [0] = [<i>m</i>] = [2<i>m</i>] = [3<i>m</i>] = ...,
+<br>... = [&#150;3<i>m</i> + 1] = [&#150;2<i>m</i> + 1] = [&#150;<i>m</i> + 1] = [1] = [<i>m</i> + 1] = [2<i>m</i> + 1] = [3<i>m</i> + 1] = ...,
+<br>... = [&#150;3<i>m</i> + 2] = [&#150;2<i>m</i> + 2] = [&#150;<i>m</i> + 2] = [2] = [<i>m</i> + 2] = [2<i>m</i> + 2] = [3<i>m</i> + 2] = ...,
+<br>... = [&#150;3<i>m</i> + 3] = [&#150;2<i>m</i> + 3] = [&#150;<i>m</i> + 3] = [3] = [<i>m</i> + 3] = [2<i>m</i> + 3] = [3<i>m</i> + 3] = ...,
+<br>:
+<br>... = [&#150;2<i>m</i> &#150; 1] = [&#150;<i>m</i> &#150; 1] = [&#150;1] = [<i>m</i> &#150; 1] = [2<i>m</i> &#150; 1] = [3<i>m</i> &#150; 1] = [4<i>m</i> &#150; 1] = ... .
+</center>
+
+<p>(Notice that each congruence symbol "&#8801;" has been replaced by equality "=".)  With this notation, we have the following property for any integers <i>a</i> and <i>b</i>, which justifies "reduction under addition":
+
+<p><center>[<i>a</i> + <i>b</i>] = [<i>a</i>] + [<i>b</i>].</center>
+
+<p>Similarly, for any integers <i>a</i> and <i>b</i> we have
+
+<p><center>[<i>a</i> &#183; <i>b</i>] = [<i>a</i>] &#183; [<i>b</i>],</center>
+
+<p>justifying "reduction under multiplication".  (In the fancy language of abstract algebra, these two properties can be summarized by saying that reduction modulo <i>m</i> is a homomorphism of rings.  In this case the two rings are the ring of integers and the ring of integers modulo <i>m</i>.)
+
+
+<p><br><a id=sectionIV></a><center><b><font size=5>IV.  Exercises</font></b></center>
+
+<p>
+1. Show that there is no integer <i>x</i> satisfying
+<center>
+2<i>x</i> + 1 = 5<i>x</i> &#150; 4.
+</center>
+
+<p>
+2. Show that there is no integer <i>x</i> satisfying
+<center>
+18<i>x</i><sup>2</sup> + 39<i>x</i> &#150; 7 = 0.
+</center>
+
+<p>
+3. Show that the system of equations
+<center>
+11<i>x</i> &#150; 5<i>y</i> = 7,
+<br><font color=white>+</font>9<i>x</i> + 10<i>y</i> = &#150;3.
+</center>
+has no integer solutions.
+
+<p>
+4. Show that the system of equations
+<center>
+24<i>x</i> &#150; 5<i>y</i> = 10,
+<br>11<i>x</i> &#150; 9<i>y</i> = 13.
+</center>
+has no integer solutions.
+
+<p>
+5. Show that if <i>x</i>, <i>y</i>, <i>z</i> are integers such that <i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> = <i>z</i><sup>2</sup>, then at least one of them is divisible by 2, at least one is divisible by 3, and at least one is divisible by 5.
+
+<p>
+6. Show that if <i>x</i>, <i>y</i>, <i>z</i> are integers such that <i>x</i><sup>3</sup> + <i>y</i><sup>3</sup> = <i>z</i><sup>3</sup>, then at least one of them is divisible by 7.
+
+<br><br><br>
+<p style="font-size:60%">
+Hints (for after you've tried lots of things &#151; no cheating!): &nbsp;
+<a href=hints/1.html>1</a> &nbsp;
+<a href=hints/2.html>2</a> &nbsp;
+<a href=hints/3.html>3</a> &nbsp;
+<a href=hints/4.html>4</a> &nbsp;
+<a href=hints/5.html>5</a> &nbsp;
+<a href=hints/6.html>6</a>
+
+<br>
+Solutions (for when you're completely dehydrated from sweating over one of the problems with no success): &nbsp;
+<a href=solutions/1.html>1</a> &nbsp;
+<a href=solutions/2.html>2</a> &nbsp;
+<a href=solutions/3.html>3</a> &nbsp;
+<a href=solutions/4.html>4</a> &nbsp;
+<a href=solutions/5.html>5</a> &nbsp;
+<a href=solutions/6.html>6</a>
+</p>
+
+
+<!-- V.  Further Topics.  chinese remainder theorem, modular inverses and coprimality, powers and (quadratic) residues, fermat's little theorem, euler's theorem, wilson's theorem -->
+
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=371526;
+var sc_partition=1;
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/free_web_stats.html" target="_blank"><img src="http://c2.statcounter.com/counter.php?sc_project=371526&amp;java=0" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+
+<script language=javascript>footer();</script></body></html>
