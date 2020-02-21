@@ -1,0 +1,3690 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    138333,       3682]
+NotebookOptionsPosition[    127316,       3520]
+NotebookOutlinePosition[    128041,       3545]
+CellTagsIndexPosition[    127998,       3542]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ "IntegerSequences: a package for computing with ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "8b78ec9f-3086-4015-bc86-e944eb0d8ac2"],
+ "-regular sequences"
+}], "Title",ExpressionUUID->"40ecfd06-6472-4d81-9563-c15d372e0367"],
+
+Cell[CellGroupData[{
+
+Cell["Eric Rowland", "Author",ExpressionUUID->"d90169c5-a133-4278-a4f7-49d8f4bd0dfe"],
+
+Cell["\<\
+Department of Mathematics
+Hofstra University
+Hempstead, NY 11549, USA\
+\>", "Institution",ExpressionUUID->"9303c606-07ad-497c-836b-9fdbe3ac649b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Abstract", "AbstractSection",ExpressionUUID->"739c6a1d-10ae-406c-8420-767acb3a87c1"],
+
+Cell[TextData[{
+ "IntegerSequences is a ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " package for computing with integer sequences. Its support for ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],ExpressionUUID->
+  "f4b94fe7-9b89-4e6b-be74-ff61af17040d"],
+ "-regular sequences includes basic closure properties, guessing recurrences, \
+and computing automata. Recent applications have included establishing the \
+structure of extremal ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"a", "/", "b"}], TraditionalForm]],ExpressionUUID->
+  "1d537a09-2fd5-47f9-a321-b9814e852156"],
+ "-power-free words, obtaining a product formula for the generating function \
+enumerating binomial coefficients by their ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],ExpressionUUID->
+  "d63cb798-3f35-4832-820d-740334c3b688"],
+ "-adic valuations, and proving congruences for combinatorial sequences \
+modulo prime powers."
+}], "Abstract",ExpressionUUID->"db790559-d94e-48b1-936a-2ae9b016d883"],
+
+Cell["May 28, 2018", "Date",ExpressionUUID->"1b7a73c2-00f6-4596-bbca-32571d7109fb"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",ExpressionUUID->"664e7c49-1120-4e0d-b9ec-2b7387109617"],
+
+Cell[TextData[{
+ "IntegerSequences [9] is a ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " package for identifying and computing with integer sequences from a \
+variety of classes. It has a particular emphasis on the class of ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],ExpressionUUID->
+  "3c3eee9c-fc01-4192-a555-35fc54772a88"],
+ "-regular sequences, which arise widely in combinatorics, number theory, and \
+theoretical computer science. The following code loads the package, assuming \
+it is downloaded to one of the directories listed in ",
+ StyleBox["$Path", "Input"],
+ " (the recommended location being the Applications subdirectory of ",
+ StyleBox["$UserBaseDirectory", "Input"],
+ ")."
+}], "Text",ExpressionUUID->"c5615a97-28c1-40ab-9589-49fc86697a6f"],
+
+Cell[BoxData[
+ RowBox[{"<<", "IntegerSequences`"}]], "Input",
+ CellLabel->"In[1]:=",ExpressionUUID->"33e8b01b-6336-4903-8229-3d0d178db6d3"],
+
+Cell[TextData[{
+ "(A pdf version of this extended abstract without executable code is \
+available ",
+ ButtonBox["from the author\[CloseCurlyQuote]s web site",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://people.hofstra.edu/Eric_Rowland/papers/IntegerSequences--_a_\
+package_for_computing_with_k-regular_sequences.pdf"], None},
+  ButtonNote->
+   "https://people.hofstra.edu/Eric_Rowland/papers/IntegerSequences--_a_\
+package_for_computing_with_k-regular_sequences.pdf"],
+ ".)"
+}], "Text",ExpressionUUID->"0a7167f3-b495-4692-b96f-420a92a03b5c"],
+
+Cell[TextData[{
+ "The following set of subsequences is central to the definition of a ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "952d2af0-0c2f-4092-9be4-aa1cacb6b32c"],
+ "-regular sequence."
+}], "Text",ExpressionUUID->"820ff152-1178-4d42-b8fc-40e600757d73"],
+
+Cell[TextData[{
+ StyleBox["Definition\[MediumSpace]", "DefinitionLabel"],
+ StyleBox[
+ CounterBox["Definition"], "DefinitionLabel"],
+ StyleBox[". ", "DefinitionLabel"],
+ "Let ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"k", "\[GreaterEqual]", "2"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "b93f488b-1c1d-4b91-8353-83e09e9fc7f3"],
+ " be an integer. The ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSlant->"Plain",ExpressionUUID->"aed07942-294a-4e82-b718-c41348770a73"],
+ StyleBox["-kernel",
+  FontSlant->"Plain"],
+ " of a sequence ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"s", "(", "n", ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "01ece2ee-b603-4c55-ae51-fc854557fdb5"],
+ " is the set"
+}], "Definition",ExpressionUUID->"d8e831ed-51e8-4112-9752-388da9236a98"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     SubscriptBox[
+      RowBox[{"s", "(", 
+       RowBox[{
+        RowBox[{
+         SuperscriptBox["k", "e"], "n"}], "+", "i"}], ")"}], 
+      RowBox[{"n", "\[GreaterEqual]", "0"}]], " ", ":", " ", 
+     RowBox[{"e", "\[GreaterEqual]", 
+      RowBox[{"0", " ", "and", " ", "0"}], "\[LessEqual]", "i", 
+      "\[LessEqual]", 
+      RowBox[{
+       SuperscriptBox["k", "e"], "-", "1"}]}]}], "}"}], "."}], 
+  TraditionalForm]], "Equation",ExpressionUUID->"41e37c03-a0bf-4474-b1fc-\
+621817be8708"],
+
+Cell[TextData[{
+ "The ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "7335b1de-1651-4943-81f9-377c52022e03"],
+ "-kernel is the base-",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "0af07582-c046-4453-8b8e-78e977afe460"],
+ " analogue of the set of shifts ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"s", "(", 
+      RowBox[{"n", "+", "i"}], ")"}], " ", ":", " ", 
+     RowBox[{"i", "\[GreaterEqual]", "0"}]}], "}"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "707f330e-5748-466b-bd1a-820ef871cea0"],
+ ". A sequence ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"s", "(", "n", ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "7c8cce55-a9ed-42e4-9156-a1b773d6c456"],
+ " (such as the Fibonacci sequence) is ",
+ StyleBox["constant-recursive",
+  FontSlant->"Italic"],
+ " if ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"s", "(", 
+      RowBox[{"n", "+", "i"}], ")"}], " ", ":", " ", 
+     RowBox[{"i", "\[GreaterEqual]", "0"}]}], "}"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "5aed6991-b571-4ad3-a2f6-b29145415ea4"],
+ " is contained in a finite-dimensional vector space. We define ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "e2bc3938-4eb1-447b-9474-826377416df3"],
+ "-regular (or ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "09eccb02-222c-4668-9284-c3bcf1bb0e10"],
+ "-constant-recursive) sequences analogously."
+}], "Text",ExpressionUUID->"655e14cf-7612-46b0-b468-7bffebbe0034"],
+
+Cell[TextData[{
+ StyleBox["Definition\[MediumSpace]", "DefinitionLabel"],
+ StyleBox[
+ CounterBox["Definition"], "DefinitionLabel"],
+ StyleBox[". ", "DefinitionLabel"],
+ "Let ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"k", "\[GreaterEqual]", "2"}], TraditionalForm]],ExpressionUUID->
+  "092034eb-52f3-411f-883e-a235b27985e6"],
+ " be an integer. A sequence ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"s", "(", "n", ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],ExpressionUUID->
+  "2d955ad0-2550-42ac-8c42-427f9a9181b1"],
+ " with entries in a field ",
+ Cell[BoxData[
+  FormBox["F", TraditionalForm]],ExpressionUUID->
+  "0d14ae61-02d9-4e1f-b33e-4f0779b6cf34"],
+ " is ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FontSlant->"Plain",ExpressionUUID->"569561a2-5d2d-40b2-ae03-92cfe0d99ee3"],
+ StyleBox["-regular",
+  FontSlant->"Plain"],
+ " if its ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],ExpressionUUID->
+  "5a68aae0-42cb-495c-aaf5-6486f66be938"],
+ "-kernel is contained in a finite-dimensional ",
+ Cell[BoxData[
+  FormBox["F", TraditionalForm]],ExpressionUUID->
+  "cf0e82de-b1b4-46ce-944a-2f0ac9556d7c"],
+ "-vector space."
+}], "Definition",ExpressionUUID->"8a4f7135-f851-40d1-bfba-e600599d1326"],
+
+Cell[TextData[{
+ "For example, consider the ",
+ StyleBox["ruler sequence",
+  FontSlant->"Italic"],
+ " [6, ",
+ ButtonBox["A007814",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://oeis.org/A007814"], None},
+  ButtonNote->"https://oeis.org/A007814"],
+ "]"
+}], "Text",ExpressionUUID->"aa8b9099-26e3-4021-b1af-0b9fc85dfc0a"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+  "0", ",", "1", ",", "0", ",", "2", ",", "0", ",", "1", ",", "0", ",", "3", 
+   ",", "0", ",", "1", ",", "0", ",", "2", ",", "0", ",", "1", ",", "0", ",", 
+   "4", ",", "\[Ellipsis]"}], TraditionalForm]], "Equation",ExpressionUUID->\
+"873f00ee-f95a-4af1-aeed-95df9a2e9beb"],
+
+Cell[TextData[{
+ "whose ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "1e5a6835-25e1-4cb4-adea-c2b92162ec4a"],
+ "th term ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"s", "(", "n", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "67471113-1a4f-4c90-9f93-f889ff1d9d2e"],
+ " is the exponent of ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "d8611cc6-aef5-43ba-873c-32db51166a64"],
+ " in the prime factorization of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "+", "1"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "2d97d6aa-0d34-41b9-a7a2-f992aa5b1afb"],
+ ". The ruler sequence is ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "60bc17fb-5ba2-4e53-815f-4cfa3186820f"],
+ "-regular, since the recurrence"
+}], "Text",ExpressionUUID->"1df17137-99cc-462e-a09b-3a75fc25cf77"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"s", "(", 
+    RowBox[{"2", "n"}], ")"}], "\[Equal]", "0"}], 
+  TraditionalForm]], "Equation",ExpressionUUID->"542d526b-982b-4b3d-b486-\
+7c5da66b0429"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"s", "(", 
+    RowBox[{
+     RowBox[{"4", "n"}], "+", "1"}], ")"}], "\[Equal]", 
+   RowBox[{
+    RowBox[{"-", 
+     RowBox[{"s", "(", "n", ")"}]}], "+", 
+    RowBox[{"s", "(", 
+     RowBox[{
+      RowBox[{"2", "n"}], "+", "1"}], ")"}]}]}], TraditionalForm]], "Equation",\
+ExpressionUUID->"9e5d4b97-40ef-4cfb-9e16-d998869280f8"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"s", "(", 
+    RowBox[{
+     RowBox[{"4", "n"}], "+", "3"}], ")"}], "\[Equal]", 
+   RowBox[{
+    RowBox[{"-", 
+     RowBox[{"s", "(", "n", ")"}]}], "+", 
+    RowBox[{"2", 
+     RowBox[{"s", "(", 
+      RowBox[{
+       RowBox[{"2", "n"}], "+", "1"}], ")"}]}]}]}], 
+  TraditionalForm]], "Equation",ExpressionUUID->"40a322eb-6d69-43d6-9a60-\
+800bec6d2d12"],
+
+Cell[TextData[{
+ "establishes that the ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "05efa7ff-5eb7-40f8-8aa7-9626a45bce86"],
+ "-kernel is contained in the ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[{},
+    "Rationals"], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "6d532d91-d384-46bf-a147-74c661478820"],
+ "-vector space generated by ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"s", "(", "n", ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "234bffcf-235e-4a5c-8e18-443a73809ba9"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"s", "(", 
+     RowBox[{
+      RowBox[{"2", "n"}], "+", "1"}], ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "1e523723-6800-4dcb-9695-37ab8a3bda59"],
+ "."
+}], "Text",ExpressionUUID->"0e77c657-20ca-4878-a442-7472a5d66467"],
+
+Cell[TextData[{
+ "The class of ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "41d57e7a-cfd6-4126-85e1-b4395dfb71cd"],
+ "-regular sequences was introduced by Allouche and Shallit [1], who \
+established several equivalent characterizations and a number of fundamental \
+properties. In particular, ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"s", "(", "n", ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "cdf57db2-e472-4978-b814-3b635daee5eb"],
+ " is ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "63ae7a98-f301-4134-a7e5-fd12da42560c"],
+ "-regular if and only if there exists some integer ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "\[GreaterEqual]", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "e6f14057-ac4c-46d9-90e7-2c661643ff3e"],
+ " (the dimension of the associated vector space), ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "\[Times]", "r"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "c61e2f31-56a0-4f43-bce2-d5de9f9ec754"],
+ " matrices ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"M", "(", "0", ")"}], ",", 
+    RowBox[{"M", "(", "1", ")"}], ",", "\[Ellipsis]", ",", 
+    RowBox[{"M", "(", 
+     RowBox[{"k", "-", "1"}], ")"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "1419b112-9de9-4682-8db5-a7e28a1f081b"],
+ ", a ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", "\[Times]", "r"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "901408a0-b9b1-4b98-a3bd-2fe5944d0d3a"],
+ " vector ",
+ Cell[BoxData[
+  FormBox["u", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "e1b18cb6-ab61-418c-9f1c-ea64deb744a4"],
+ ", and an ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "\[Times]", "1"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "36b86fd8-71dd-4a18-83b6-a89b219669da"],
+ " vector ",
+ Cell[BoxData[
+  FormBox["v", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "a7419ae9-acb5-4707-932d-c30ffdd24f03"],
+ " such that"
+}], "Text",ExpressionUUID->"aa01b3af-ae51-421b-b984-4cfd7886af7d"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"s", "(", "n", ")"}], "\[Equal]", 
+   RowBox[{"u", " ", 
+    RowBox[{"M", "(", 
+     SubscriptBox["n", "0"], ")"}], 
+    RowBox[{"M", "(", 
+     SubscriptBox["n", "1"], ")"}], "\[CenterEllipsis]", " ", 
+    RowBox[{"M", "(", 
+     SubscriptBox["n", "\[ScriptL]"], ")"}], "v"}]}], 
+  TraditionalForm]], "Equation",ExpressionUUID->"827fc181-7951-4886-8cf2-\
+3a26d219ae90"],
+
+Cell[TextData[{
+ "for all ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "\[GreaterEqual]", "0"}], TraditionalForm]],ExpressionUUID->
+  "16e1a0ff-6d89-47eb-84c2-f09769f6f8e4"],
+ ", where ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["n", "\[ScriptL]"], "\[CenterEllipsis]", " ", 
+    SubscriptBox["n", "1"], 
+    SubscriptBox["n", "0"]}], TraditionalForm]],ExpressionUUID->
+  "cd0ef23e-8b4d-4dd6-aab4-dbb90cca20fd"],
+ " is the standard base-",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],ExpressionUUID->
+  "c6187944-bf8f-437b-84dd-daf3f354ad7b"],
+ " representation of ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "f6a6546e-5f07-4464-8759-7d4224a9c7be"],
+ " [1, Lemma 4.1]. For example, the ruler sequence can be represented by"
+}], "Text",ExpressionUUID->"f680cf6f-6662-4a4e-8bc4-eda61da90d14"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"u", "\[Equal]", 
+   RowBox[{
+    RowBox[{"(", "\[NoBreak]", GridBox[{
+       {"1", "0"}
+      }], "\[NoBreak]", ")"}], "    ", 
+    RowBox[{"M", "(", "0", ")"}]}], "\[Equal]", 
+   RowBox[{
+    RowBox[{"(", "\[NoBreak]", GridBox[{
+       {"0", "0"},
+       {
+        RowBox[{"-", "1"}], "1"}
+      }], "\[NoBreak]", ")"}], "    ", 
+    RowBox[{"M", "(", "1", ")"}]}], "\[Equal]", 
+   RowBox[{
+    RowBox[{"(", "\[NoBreak]", GridBox[{
+       {"0", "1"},
+       {
+        RowBox[{"-", "1"}], "2"}
+      }], "\[NoBreak]", ")"}], "    ", "v"}], "\[Equal]", 
+   RowBox[{
+    RowBox[{"(", "\[NoBreak]", GridBox[{
+       {"0"},
+       {"1"}
+      }], "\[NoBreak]", ")"}], "."}]}], TraditionalForm]], "Equation",Expressi\
+onUUID->"e99a0f37-6092-4bb3-be27-a690a5bf02f8"],
+
+Cell[TextData[{
+ "The matrices ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"M", "(", "0", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "f5c3c34e-2dc1-4fcb-8272-8dbc89ab5cd9"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"M", "(", "1", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "48e5df47-815c-40fe-8895-814fa4b29ef1"],
+ " encode the recurrence above. The vector ",
+ Cell[BoxData[
+  FormBox["v", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "00bbb464-6731-47a3-919d-0b52ee93c73e"],
+ " contains the ",
+ Cell[BoxData[
+  FormBox["0", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "69748cd7-704b-48f8-8675-47e874d06603"],
+ "th term of each generator sequence, namely ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"s", "(", "0", ")"}], "\[Equal]", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "d64875ce-c48a-41bb-bdd8-952ea4cf731e"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"s", "(", 
+     RowBox[{
+      RowBox[{"2", "\[CenterDot]", "0"}], "+", "1"}], ")"}], "\[Equal]", 
+    RowBox[{"s", "(", "1", ")"}], "\[Equal]", "1"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "d0b58f4c-4138-4e31-9630-5a37085e3aff"],
+ ". The vector ",
+ Cell[BoxData[
+  FormBox["u", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "c19bae82-8b1d-42b0-b03f-acb836315eee"],
+ " specifies which linear combination of the generators we are interested in, \
+namely ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox[
+     RowBox[{"s", "(", "n", ")"}], 
+     RowBox[{"n", "\[GreaterEqual]", "0"}]], "\[Equal]", 
+    RowBox[{
+     RowBox[{"1", "\[CenterDot]", 
+      SubscriptBox[
+       RowBox[{"s", "(", "n", ")"}], 
+       RowBox[{"n", "\[GreaterEqual]", "0"}]]}], "+", 
+     RowBox[{"0", "\[CenterDot]", 
+      SubscriptBox[
+       RowBox[{"s", "(", 
+        RowBox[{
+         RowBox[{"2", "n"}], "+", "1"}], ")"}], 
+       RowBox[{"n", "\[GreaterEqual]", "0"}]]}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "46c455cc-bebb-45ce-a543-b91d3350e2ef"],
+ ". IntegerSequences uses the matrices ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"M", "(", "d", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "d733deaa-4839-4a0e-85b7-96fdc7c847bc"],
+ " and the vectors ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"u", ",", "v"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "947024bf-fce8-4be4-bd17-226b1373b7e2"],
+ " to represent a ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "76e090da-a400-43a2-aab5-3ab14c975b30"],
+ "-regular sequence. The syntax is as follows."
+}], "Text",ExpressionUUID->"4d78f0f2-16d3-4dd3-8739-8969c3920bd8"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"s", "=", 
+   RowBox[{"RegularSequence", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "1"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "1"}], ",", "2"}], "}"}]}], "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "1"}], "}"}]}], "]"}]}], ";"}]], "Input",
+ CellLabel->"In[2]:=",ExpressionUUID->"819a5e42-3223-4e0c-b585-17fbce6cdbb5"],
+
+Cell[TextData[{
+ "The design of ",
+ StyleBox["RegularSequence", "Input"],
+ " parallels the built-in ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " symbol for representing a holonomic sequence, ",
+ StyleBox[ButtonBox["DifferenceRoot",
+  BaseStyle->"Link",
+  ButtonData->"paclet:ref/DifferenceRoot"], "Input"],
+ ". Passing an argument to a ",
+ StyleBox["RegularSequence", "Input"],
+ " object computes a term of the sequence."
+}], "Text",ExpressionUUID->"be76b1f6-1481-4d98-920a-b6b406698fea"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Table", "[", 
+  RowBox[{
+   RowBox[{"s", "[", "n", "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"n", ",", "0", ",", "15"}], "}"}]}], "]"}]], "Input",
+ CellLabel->"In[3]:=",ExpressionUUID->"091bb03d-84a6-4515-a842-7ff693805462"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0", ",", "1", ",", "0", ",", "2", ",", "0", ",", "1", ",", "0", ",", "3", 
+   ",", "0", ",", "1", ",", "0", ",", "2", ",", "0", ",", "1", ",", "0", ",", 
+   "4"}], "}"}]], "Output",
+ CellLabel->"Out[3]=",ExpressionUUID->"2d3b5ddb-37ec-4f1a-a6f6-a7cca0a59a56"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Clear", "[", "s", "]"}]], "Input",
+ CellLabel->"In[4]:=",ExpressionUUID->"f64d3ae3-d8db-4896-b167-ad1fd8c9b33e"],
+
+Cell[TextData[{
+ "Basic closure properties for ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "06009795-5116-4c32-9791-231ba421f8a6"],
+ "-regular sequences established in [1] are implemented in the function ",
+ StyleBox["RegularSequenceReduce", "Input"],
+ ", which attempts to reduce an expression to a single ",
+ StyleBox["RegularSequence", "Input"],
+ " object. The following writes the Stern\[Dash]Brocot and Thue\[Dash]Morse \
+sequences as ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "84537c24-5936-40ed-b436-230dbf021a05"],
+ "-regular sequences and then computes their sum."
+}], "Text",ExpressionUUID->"caaa7ddc-0301-47ef-80d6-9b86c1a3eccb"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"RegularSequenceReduce", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"SternBrocot", "[", "n", "]"}], "+", 
+     RowBox[{"ThueMorse", "[", "n", "]"}]}], ",", "n"}], "]"}], "//", 
+  "RegularSequenceMatrixForm"}]], "Input",
+ CellLabel->"In[5]:=",ExpressionUUID->"84086e3c-4264-4d64-8877-08df01587013"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"RegularSequence", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"1", ",", "0", ",", "1", ",", "0"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      TagBox[
+       RowBox[{"(", "\[NoBreak]", GridBox[{
+          {"1", "0", "0", "0"},
+          {"0", "1", "0", "0"},
+          {"0", "0", "1", "0"},
+          {"0", "0", "1", "1"}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.7]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+       Function[BoxForm`e$, 
+        MatrixForm[BoxForm`e$]]], ",", 
+      TagBox[
+       RowBox[{"(", "\[NoBreak]", GridBox[{
+          {"0", "1", "0", "0"},
+          {"1", "0", "0", "0"},
+          {"0", "0", "0", "1"},
+          {"0", "0", 
+           RowBox[{"-", "1"}], "2"}
+         },
+         GridBoxAlignment->{
+          "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+           "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.7]}, 
+             Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+       Function[BoxForm`e$, 
+        MatrixForm[BoxForm`e$]]]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "1", ",", "0", ",", "1"}], "}"}], ",", "2"}], "]"}], 
+  "[", "n", "]"}]], "Output",
+ CellLabel->"Out[5]=",ExpressionUUID->"bc57ed06-c44b-4122-b373-f881b5dc4dd1"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Guessing a ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "e413fc0c-c2b4-45b0-8ff8-72df23cc083c"],
+ "-regular sequence"
+}], "Section",ExpressionUUID->"88982fc7-c408-47ea-9ca6-45f50bf4b91c"],
+
+Cell[TextData[{
+ "Given the first ",
+ Cell[BoxData[
+  FormBox["N", TraditionalForm]],ExpressionUUID->
+  "e03980bb-d95f-4240-87ad-c1256da8afe3"],
+ " terms of a sequence, one is frequently interested in guessing a general \
+form for the sequence. A procedure for guessing ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],ExpressionUUID->
+  "81f58419-9fb2-4a13-ad54-43ba2b18dc75"],
+ "-regular sequences was described by Shallit [14]. The implementation in \
+IntegerSequences works by maintaining a set ",
+ Cell[BoxData[
+  FormBox["B", TraditionalForm]],ExpressionUUID->
+  "70236c80-6f1b-4930-8f91-d993cfc5eccc"],
+ " of generators, a set ",
+ Cell[BoxData[
+  FormBox["R", TraditionalForm]],ExpressionUUID->
+  "ac740875-1ad1-4069-877c-64fa92ccdf6c"],
+ " of relations, and a set of ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],ExpressionUUID->
+  "5271c2df-de66-48f1-a0ec-5bb9c7327161"],
+ "-kernel sequences ",
+ Cell[BoxData[
+  FormBox["S", TraditionalForm]],ExpressionUUID->
+  "dcf21aca-b81b-4a98-9aa3-5a028712c64c"],
+ " which have not yet been written as a linear combination of elements of ",
+ Cell[BoxData[
+  FormBox["B", TraditionalForm]],ExpressionUUID->
+  "81a791fc-d92c-4dae-a693-bc5e0216ab3a"],
+ ". Initialize ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"B", "=", 
+    RowBox[{"{", "}"}]}], TraditionalForm]],ExpressionUUID->
+  "379432c1-a053-4de6-800e-7734e31cd6ce"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"R", "=", 
+    RowBox[{"{", "}"}]}], TraditionalForm]],ExpressionUUID->
+  "79867a7e-3966-4a22-b23e-1d98b0569dd1"],
+ ", and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"S", "=", 
+    RowBox[{"{", 
+     SubscriptBox[
+      RowBox[{"s", "(", "n", ")"}], 
+      RowBox[{"n", "\[GreaterEqual]", "0"}]], "}"}]}], TraditionalForm]],
+  ExpressionUUID->"202a19b3-258e-4015-8ad2-f4db46333f59"],
+ ". While ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"S", "\[NotEqual]", 
+    RowBox[{"{", "}"}]}], TraditionalForm]],ExpressionUUID->
+  "aaab3dfe-50d7-416e-9dfe-b7ab6fbd4415"],
+ ", remove a sequence ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"t", "(", "n", ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],ExpressionUUID->
+  "a3f4163a-2dd8-4e2b-8236-81c2b1f4d4b5"],
+ " from ",
+ Cell[BoxData[
+  FormBox["S", TraditionalForm]],ExpressionUUID->
+  "292dae20-ec13-4d85-b1f8-f03f0e555741"],
+ " and determine, using the known terms, whether it is a linear combination \
+of elements of ",
+ Cell[BoxData[
+  FormBox["B", TraditionalForm]],ExpressionUUID->
+  "a8a01f5b-4e8c-4446-8462-621c398e297f"],
+ "; if it is, add the linear relation to ",
+ Cell[BoxData[
+  FormBox["R", TraditionalForm]],ExpressionUUID->
+  "a07801cc-ec34-43b4-9209-50ad6d8230cd"],
+ "; if it is not, add ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"t", "(", "n", ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],ExpressionUUID->
+  "20a23f19-c6d5-4020-8dd6-6429a8ceeb68"],
+ " to ",
+ Cell[BoxData[
+  FormBox["B", TraditionalForm]],ExpressionUUID->
+  "e01b98b6-7e08-4636-b261-5bbd00f275d7"],
+ " as a new generator and add its ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],ExpressionUUID->
+  "b204a27e-5633-4297-b6cb-c56866f8d79d"],
+ " subdivisions ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox[
+     RowBox[{"t", "(", 
+      RowBox[{
+       RowBox[{"k", " ", "n"}], "+", "0"}], ")"}], 
+     RowBox[{"n", "\[GreaterEqual]", "0"}]], ",", "\[Ellipsis]", ",", 
+    SubscriptBox[
+     RowBox[{"t", "(", 
+      RowBox[{
+       RowBox[{"k", " ", "n"}], "+", 
+       RowBox[{"(", 
+        RowBox[{"k", "-", "1"}], ")"}]}], ")"}], 
+     RowBox[{"n", "\[GreaterEqual]", "0"}]]}], TraditionalForm]],
+  ExpressionUUID->"78599d76-0ae2-4b26-9ac6-862d43491e6e"],
+ " to ",
+ Cell[BoxData[
+  FormBox["S", TraditionalForm]],ExpressionUUID->
+  "fc85c905-f2f9-46e9-9619-4019b418344f"],
+ ". When ",
+ Cell[BoxData[
+  FormBox["S", TraditionalForm]],ExpressionUUID->
+  "610800f4-3af7-448b-9ba2-4a2136e3556d"],
+ " becomes empty, we have determined a conjectural basis ",
+ Cell[BoxData[
+  FormBox["B", TraditionalForm]],ExpressionUUID->
+  "f17d5973-a982-4b81-8ac9-025566fe158f"],
+ " such that every element of the ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],ExpressionUUID->
+  "b8187f55-711c-4e5e-8515-7f7fb164f77e"],
+ "-kernel can be written as a linear combination of the elements of ",
+ Cell[BoxData[
+  FormBox["B", TraditionalForm]],ExpressionUUID->
+  "d26a5636-2205-4fb6-acb1-d87f36d2946e"],
+ ". The set of relations ",
+ Cell[BoxData[
+  FormBox["R", TraditionalForm]],ExpressionUUID->
+  "dd95921f-d0d8-436e-9e2a-b16b85ab1ea3"],
+ ", along with the initial term of each element of ",
+ Cell[BoxData[
+  FormBox["B", TraditionalForm]],ExpressionUUID->
+  "11e92d2c-e668-4ac3-a693-111dcbd7ce7b"],
+ ", uniquely determines a sequence that agrees with ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"s", "(", "n", ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],ExpressionUUID->
+  "8d5fafa5-494e-40d2-ac4a-d93c4ed640bf"],
+ " on the known terms."
+}], "Text",ExpressionUUID->"3813798f-1a34-4e91-87ab-667431d96970"],
+
+Cell[TextData[{
+ "Since only finitely many terms of ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"s", "(", "n", ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],ExpressionUUID->
+  "f9ead688-3f0c-48e9-a04f-f4dfd978e7f6"],
+ " are known, it is possible that as we consider additional sequences from \
+the ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "38296c9d-3782-469e-bac9-841f2618fd7e"],
+ "-kernel we will exhaust the known terms. If elements of ",
+ Cell[BoxData[
+  FormBox["B", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "77cf90d5-fd47-42ab-a926-7d36563c6c73"],
+ " which were previously known to be linearly independent become linearly \
+dependent due to truncating terms, then we do not have enough terms to \
+confidently guess a recurrence."
+}], "Text",ExpressionUUID->"ebd51ebf-d421-467d-82a8-e097399af89b"],
+
+Cell[TextData[{
+ "This algorithm is implemented in ",
+ StyleBox["FindRegularSequenceFunction", "Input"],
+ ". To our knowledge, this is the only publicly available guesser for ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "1b68eb22-c04a-4eb6-ba79-e594245f74b0"],
+ "-regular sequences. The first argument is the list of terms, and the second \
+argument is ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "2e9f3549-512d-4e1b-b914-4000e1e51411"],
+ ". The following guesses a ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "29b121fd-35cf-4b36-9d18-6a02702c68fb"],
+ "-regular representation for the number of ",
+ Cell[BoxData[
+  FormBox["1", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "e4056c72-acad-4f2a-a78b-387f075beb56"],
+ "s in the binary representation of ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "8ffc3c7e-77a7-400d-92f7-1c51dd9abf16"],
+ "."
+}], "Text",ExpressionUUID->"d8162705-ce4c-440f-bcb5-cd9b466d038c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"terms", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"DigitCount", "[", 
+      RowBox[{"n", ",", "2", ",", "1"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", "0", ",", "100"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"FindRegularSequenceFunction", "[", 
+   RowBox[{"terms", ",", "2"}], "]"}], "//", 
+  "RegularSequenceMatrixForm"}]}], "Input",
+ CellLabel->"In[6]:=",ExpressionUUID->"5c5be9a3-767c-457e-bb0c-6999e12eecad"],
+
+Cell[BoxData[
+ RowBox[{"RegularSequence", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"1", "0"},
+         {"0", "1"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]], ",", 
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", "1"},
+         {
+          RowBox[{"-", "1"}], "2"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "1"}], "}"}], ",", "2"}], "]"}]], "Output",
+ CellLabel->"Out[7]=",ExpressionUUID->"e494ef68-fa59-405a-a095-94f233639be4"]
+}, Open  ]],
+
+Cell[TextData[{
+ "A variant, ",
+ StyleBox["FindRegularSequenceRecurrence", "Input"],
+ ", uses the same algorithm but outputs a recurrence rather than a ",
+ StyleBox["RegularSequence", "Input"],
+ " object."
+}], "Text",ExpressionUUID->"1717f263-1351-45a9-9faa-ac96ea282040"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Column", "[", 
+  RowBox[{"FindRegularSequenceRecurrence", "[", 
+   RowBox[{"terms", ",", "2", ",", 
+    RowBox[{"s", "[", "n", "]"}]}], "]"}], "]"}]], "Input",
+ CellLabel->"In[8]:=",ExpressionUUID->"bc1e5aff-769f-4aa1-ab8b-b307520564a4"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     RowBox[{
+      RowBox[{"s", "[", 
+       RowBox[{"2", " ", "n"}], "]"}], "\[Equal]", 
+      RowBox[{"s", "[", "n", "]"}]}]},
+    {
+     RowBox[{
+      RowBox[{"s", "[", 
+       RowBox[{"1", "+", 
+        RowBox[{"4", " ", "n"}]}], "]"}], "\[Equal]", 
+      RowBox[{"s", "[", 
+       RowBox[{"1", "+", 
+        RowBox[{"2", " ", "n"}]}], "]"}]}]},
+    {
+     RowBox[{
+      RowBox[{"s", "[", 
+       RowBox[{"3", "+", 
+        RowBox[{"4", " ", "n"}]}], "]"}], "\[Equal]", 
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"s", "[", "n", "]"}]}], "+", 
+       RowBox[{"2", " ", 
+        RowBox[{"s", "[", 
+         RowBox[{"1", "+", 
+          RowBox[{"2", " ", "n"}]}], "]"}]}]}]}]},
+    {
+     RowBox[{
+      RowBox[{"s", "[", "0", "]"}], "\[Equal]", "0"}]},
+    {
+     RowBox[{
+      RowBox[{"s", "[", "1", "]"}], "\[Equal]", "1"}]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output",
+ CellLabel->"Out[8]=",ExpressionUUID->"3778d792-e6fd-42bc-8d8c-d53566df0c5c"]
+}, Open  ]],
+
+Cell[TextData[{
+ "More generally, ",
+ StyleBox["FindRegularSequenceFunction", "Input"],
+ " supports guessing multidimensional ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     SubscriptBox["k", "1"], ",", "\[Ellipsis]", ",", 
+     SubscriptBox["k", "d"]}], ")"}], TraditionalForm]],ExpressionUUID->
+  "ac600aec-5ab9-4f83-938b-5727c389cc10"],
+ "-regular sequences ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"s", "(", 
+     RowBox[{
+      SubscriptBox["n", "1"], ",", "\[Ellipsis]", ",", 
+      SubscriptBox["n", "d"]}], ")"}], 
+    RowBox[{
+     RowBox[{
+      SubscriptBox["n", "1"], "\[GreaterEqual]", "0"}], ",", "\[Ellipsis]", 
+     ",", 
+     RowBox[{
+      SubscriptBox["n", "d"], "\[GreaterEqual]", "0"}]}]], TraditionalForm]],
+  ExpressionUUID->"4bec63bf-e9cc-459a-b3a5-4f05656ad094"],
+ ". Let ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["\[Nu]", "p"], "(", "n", ")"}], TraditionalForm]],
+  ExpressionUUID->"445b50d7-23de-4632-86fb-49f71348c1d8"],
+ " be the ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],ExpressionUUID->
+  "f38a6782-83d4-43b0-bc89-8984ce533ff0"],
+ "-adic valuation of ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "e2619979-d82b-491a-9609-1daa1ee99205"],
+ ", that is, the exponent of the highest power of ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],ExpressionUUID->
+  "47d055c1-dc14-498d-8637-62ed473fdfad"],
+ " dividing ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "85df9d5b-13d5-4a95-bf0c-80ee70a5cbed"],
+ ". The ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],ExpressionUUID->
+  "6ac1835b-6a82-429d-bbd2-4255b5622e3a"],
+ "-dimensional sequence consisting of the ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],ExpressionUUID->
+  "2c964dfd-f314-4c29-912f-6920bf627d62"],
+ "-adic valuations of ",
+ Cell[BoxData[
+  FormBox[
+   TemplateBox[{"n","m"},
+    "Binomial"], TraditionalForm]],ExpressionUUID->
+  "62141e3b-0968-45d2-83c7-4f5501965885"],
+ " (where we treat ",
+ Cell[BoxData[
+  FormBox["\[Infinity]", TraditionalForm]],ExpressionUUID->
+  "4a534c36-0ecb-4ce3-a642-1307c0a661bd"],
+ " as a formal symbol) is ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],ExpressionUUID->
+  "80a1f01e-9355-4b98-b9dd-d616715f2d67"],
+ "-regular:"
+}], "Text",ExpressionUUID->"1316612f-b46b-4347-9b03-aa10d4ede961"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"array", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{"IntegerExponent", "[", 
+      RowBox[{
+       RowBox[{"Binomial", "[", 
+        RowBox[{"n", ",", "m"}], "]"}], ",", "2"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", "0", ",", "100"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"m", ",", "0", ",", "100"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"FindRegularSequenceFunction", "[", 
+   RowBox[{
+    RowBox[{"array", "/.", "\[VeryThinSpace]", 
+     RowBox[{"\[Infinity]", "\[Rule]", "infinity"}]}], ",", "2"}], "]"}], "//",
+   "RegularSequenceMatrixForm"}]}], "Input",
+ CellLabel->"In[9]:=",ExpressionUUID->"ec6ddbb4-2680-4b56-bf31-93bdc4053145"],
+
+Cell[BoxData[
+ RowBox[{"RegularSequence", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       TagBox[
+        RowBox[{"(", "\[NoBreak]", GridBox[{
+           {"1", "0", "0", "0"},
+           {"0", "0", "1", "0"},
+           {"0", 
+            RowBox[{"-", "1"}], "2", "0"},
+           {"0", "0", "0", "1"}
+          },
+          
+          GridBoxAlignment->{
+           "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+            "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+          GridBoxSpacings->{"Columns" -> {
+              Offset[0.27999999999999997`], {
+               Offset[0.7]}, 
+              Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+              Offset[0.2], {
+               Offset[0.4]}, 
+              Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+        Function[BoxForm`e$, 
+         MatrixForm[BoxForm`e$]]], ",", 
+       TagBox[
+        RowBox[{"(", "\[NoBreak]", GridBox[{
+           {"0", "1", "0", "0"},
+           {"0", "0", "1", "0"},
+           {"0", 
+            RowBox[{"-", "1"}], "2", "0"},
+           {"0", "0", "1", "0"}
+          },
+          
+          GridBoxAlignment->{
+           "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+            "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+          GridBoxSpacings->{"Columns" -> {
+              Offset[0.27999999999999997`], {
+               Offset[0.7]}, 
+              Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+              Offset[0.2], {
+               Offset[0.4]}, 
+              Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+        Function[BoxForm`e$, 
+         MatrixForm[BoxForm`e$]]]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       TagBox[
+        RowBox[{"(", "\[NoBreak]", GridBox[{
+           {"1", "0", "0", "0"},
+           {"0", "0", "0", "1"},
+           {
+            RowBox[{"-", "1"}], "0", "0", "2"},
+           {"0", "0", "0", "1"}
+          },
+          
+          GridBoxAlignment->{
+           "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+            "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+          GridBoxSpacings->{"Columns" -> {
+              Offset[0.27999999999999997`], {
+               Offset[0.7]}, 
+              Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+              Offset[0.2], {
+               Offset[0.4]}, 
+              Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+        Function[BoxForm`e$, 
+         MatrixForm[BoxForm`e$]]], ",", 
+       TagBox[
+        RowBox[{"(", "\[NoBreak]", GridBox[{
+           {"1", "0", "0", "0"},
+           {"0", "0", "1", "0"},
+           {"0", 
+            RowBox[{"-", "1"}], "2", "0"},
+           {"0", "0", "0", "1"}
+          },
+          
+          GridBoxAlignment->{
+           "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+            "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+          GridBoxSpacings->{"Columns" -> {
+              Offset[0.27999999999999997`], {
+               Offset[0.7]}, 
+              Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, "Rows" -> {
+              Offset[0.2], {
+               Offset[0.4]}, 
+              Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+        Function[BoxForm`e$, 
+         MatrixForm[BoxForm`e$]]]}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "infinity", ",", "infinity", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "2"}], "}"}]}], "]"}]], "Output",
+ CellLabel->"Out[10]=",ExpressionUUID->"1cbddbc0-2643-4e84-bfef-260ab7aed4d9"]
+}, Open  ]],
+
+Cell[TextData[{
+ "We mention several applications where ",
+ StyleBox["FindRegularSequenceFunction", "Input"],
+ " has been used to guess a sequence or family of sequences."
+}], "Text",ExpressionUUID->"bb1255b4-2f10-45ef-bd2f-0185171fe1bb"],
+
+Cell[TextData[{
+ "For a rational number ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox["a", "b"], ">", "1"}], TraditionalForm]],ExpressionUUID->
+  "6fdedd87-e3a4-4ca4-bc90-3505ca792f84"],
+ ", a word ",
+ Cell[BoxData[
+  FormBox["w", TraditionalForm]],ExpressionUUID->
+  "ea3f1e2d-1e56-4a34-b8b8-1b036142ba3f"],
+ " is an ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["a", "b"], TraditionalForm]],
+  FontSlant->"Italic",ExpressionUUID->
+  "40734dc5-94db-4400-984c-216c09efd558"],
+ StyleBox["-power",
+  FontSlant->"Italic"],
+ " if it can be written ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["v", "e"], "x"}], TraditionalForm]],ExpressionUUID->
+  "62446b55-eb8b-43d2-a4e1-80d953d0c417"],
+ " where ",
+ Cell[BoxData[
+  FormBox["e", TraditionalForm]],ExpressionUUID->
+  "1cc6a634-424c-41d0-af46-08b62f0b464e"],
+ " is a non-negative integer, ",
+ Cell[BoxData[
+  FormBox["x", TraditionalForm]],ExpressionUUID->
+  "1e5070d4-790d-44f0-9a79-a58ef6409b04"],
+ " is a prefix of ",
+ Cell[BoxData[
+  FormBox["v", TraditionalForm]],ExpressionUUID->
+  "342cca07-6f1e-4e20-80a0-1cb557e9c01c"],
+ ", and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox[
+     RowBox[{"|", "w", "|"}], 
+     RowBox[{"|", "v", "|"}]], "\[Equal]", 
+    FractionBox["a", "b"]}], TraditionalForm]],ExpressionUUID->
+  "865b2cc8-2975-4d85-b4f1-1da92548f0c1"],
+ ". For example, ",
+ Cell[BoxData[
+  FormBox["011101", TraditionalForm]],ExpressionUUID->
+  "1d8a362f-8c95-4f1f-b9a1-1e4465e9dbf9"],
+ " is the ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["3", "2"], TraditionalForm]],ExpressionUUID->
+  "1c2937ca-538f-4861-b757-22a415ca30fe"],
+ "-power ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox[
+    RowBox[{"(", "0111", ")"}], 
+    RowBox[{"3", "/", "2"}]], TraditionalForm]],ExpressionUUID->
+  "10374226-406b-45b6-aae3-65b276372d9e"],
+ " with ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"v", "=", "0111"}], TraditionalForm]],ExpressionUUID->
+  "603fe20c-a151-4e6e-84a9-df529bf34044"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "=", "01"}], TraditionalForm]],ExpressionUUID->
+  "6025d1a7-110b-4aa3-8cfb-bbd6cae05df3"],
+ ". The lexicographically least ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["3", "2"], TraditionalForm]],ExpressionUUID->
+  "e2fd4cb7-89d0-42cd-a49f-dc8c66e27da9"],
+ "-power-free infinite word on the non-negative integers [6, ",
+ ButtonBox["A269518",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://oeis.org/A269518"], None},
+  ButtonNote->"https://oeis.org/A269518"],
+ "] is"
+}], "Text",ExpressionUUID->"b74b7d0e-484f-4492-b10f-385cbe96f512"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"00110210011200110310011300110210", "\[CenterEllipsis]"}], 
+  TraditionalForm]], "Equation",ExpressionUUID->"74be0601-bc9b-4ab6-8f8f-\
+0f7577d2498c"],
+
+Cell[TextData[{
+ "It is difficult ",
+ StyleBox["a priori",
+  FontSlant->"Italic"],
+ " to guess whether the sequence of letters in such a word is ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],ExpressionUUID->
+  "1fe39afc-9f32-4360-85f3-00f57bacd470"],
+ "-regular and, if so, to guess the correct value of ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],ExpressionUUID->
+  "a4b84c5c-a826-4fd8-a7f7-8f89d30a22d8"],
+ ". However, through experimentation, ",
+ StyleBox["FindRegularSequenceFunction", "Input"],
+ " revealed that the letters in the lexicographically least ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["3", "2"], TraditionalForm]],ExpressionUUID->
+  "1133d651-3124-4b8a-81e3-292598de2118"],
+ "-power-free word form a ",
+ Cell[BoxData[
+  FormBox["6", TraditionalForm]],ExpressionUUID->
+  "19ac8c99-8918-46f8-9862-f149b73c4ea3"],
+ "-regular sequence [11]."
+}], "Text",ExpressionUUID->"7e59945a-ee11-4730-9880-dfcac89d9659"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"FindRegularSequenceFunction", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "0", ",", "0", ",", "1", ",", "1", ",", "0", ",", "2", ",", "1", ",", 
+      "0", ",", "0", ",", "1", ",", "1", ",", "2", ",", "0", ",", "0", ",", 
+      "1", ",", "1", ",", "0", ",", "3", ",", "1", ",", "0", ",", "0", ",", 
+      "1", ",", "1", ",", "3", ",", "0", ",", "0", ",", "1", ",", "1", ",", 
+      "0", ",", "2", ",", "1", ",", "0", ",", "0", ",", "1", ",", "1", ",", 
+      "4", ",", "0", ",", "0", ",", "1", ",", "1", ",", "0", ",", "3", ",", 
+      "1", ",", "0", ",", "0", ",", "1", ",", "1", ",", "2", ",", "0", ",", 
+      "0", ",", "1", ",", "1", ",", "0", ",", "2", ",", "1", ",", "0", ",", 
+      "0", ",", "1", ",", "1", ",", "3", ",", "0", ",", "0", ",", "1", ",", 
+      "1", ",", "0", ",", "3", ",", "1", ",", "0", ",", "0", ",", "1"}], 
+     "}"}], ",", "6"}], "]"}], "//", "RegularSequenceMatrixForm"}]], "Input",
+ CellLabel->"In[11]:=",ExpressionUUID->"ae930542-7f52-4ff2-8931-0b6239308075"],
+
+Cell[BoxData[
+ RowBox[{"RegularSequence", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", "1", "0"},
+         {"0", "0", "0"},
+         {"0", "1", "1"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]], ",", 
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", "0", "0"},
+         {"0", "1", "1"},
+         {"0", "0", "0"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]], ",", 
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", "0", "1"},
+         {"0", "0", "0"},
+         {"0", "1", "1"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]], ",", 
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", "1", "1"},
+         {"0", "1", "1"},
+         {"0", "0", "0"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]], ",", 
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", "1", "0"},
+         {"0", "0", "0"},
+         {"0", "1", "1"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]], ",", 
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"1", "2", "2"},
+         {"0", "1", "1"},
+         {"0", "0", "0"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "1"}], "}"}], ",", "6"}], "]"}]], "Output",
+ CellLabel->"Out[11]=",ExpressionUUID->"2df3c113-4a96-42c7-b642-f3cbb2743fa5"]
+}, Open  ]],
+
+Cell[TextData[{
+ "This discovery led to a large systematic study of the value of ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "eba90143-05f9-4d26-a39a-f5c0acf933a4"],
+ " for which the lexicographically least ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["a", "b"], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "8498b48b-290b-414b-9853-3c2596cb98cf"],
+ "-power-free word is ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "d92ea8f8-09ab-4e95-b9e2-d93e33f6616d"],
+ "-regular, although it is an open question whether a ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "a34d2408-be8d-4de0-8408-4e9b54bf47d0"],
+ " always exists [8]."
+}], "Text",ExpressionUUID->"a374002e-c7fe-4d16-9acb-c1ab3c4dcee4"],
+
+Cell[TextData[{
+ "Enumeration questions in combinatorics on words often turn out to have \
+answers given by ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "a091b49e-3abb-4c44-b17b-4ece7da358ac"],
+ "-regular sequences for appropriate values of ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "2df52ae1-2fd9-4ab8-b77d-08f3774472b1"],
+ ". An explanation of this phenomenon in many cases was given by Charlier, \
+Rampersad, and Shallit [2]. However, ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "771a3149-9773-4da2-a649-6a426a9f368f"],
+ "-regular sequences also appear in enumeration questions not covered by \
+their framework. For example, the ",
+ Cell[BoxData[
+  FormBox["\[ScriptL]", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "3ac6f8ca-3fc8-4086-a9a5-b3f36e3f0cdf"],
+ "-abelian complexity for many infinite words appears to be ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "f63b7abe-7d30-44d6-a6fe-3e1aa3d15f6a"],
+ "-regular. The ",
+ Cell[BoxData[
+  FormBox["\[ScriptL]", TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSlant->"Italic",ExpressionUUID->
+  "4166f463-6174-424d-bd1e-17ddd90df915"],
+ StyleBox["-abelian complexity",
+  FontSlant->"Italic"],
+ " of an infinite word counts factors up to ",
+ Cell[BoxData[
+  FormBox["\[ScriptL]", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "7269446e-7fdf-4530-b88f-f78d7e66c11a"],
+ "-abelian equivalence \[LongDash] that is, two factors ",
+ Cell[BoxData[
+  FormBox["x", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "abeae597-84ae-49a1-b273-f17337f51d41"],
+ " and ",
+ Cell[BoxData[
+  FormBox["y", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "e794c69a-6b43-4f89-ad80-c555022aa661"],
+ " are considered the same if ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"|", "x", 
+    SubscriptBox["|", "v"], 
+    RowBox[{"\[Equal]", 
+     RowBox[{"|", "y", 
+      SubscriptBox["|", "v"]}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "5fd48791-0765-4b31-82d7-f33fef9349f9"],
+ " for each word ",
+ Cell[BoxData[
+  FormBox["v", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "d89238df-f48d-4396-b549-3332bff2721d"],
+ " of length ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[LessEqual]", "\[ScriptL]"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "d8484e3b-77e5-4112-a55f-3fa644f67dec"],
+ ". The ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "202e2af7-8cc5-453c-8e2c-cf3e0144b500"],
+ "-regularity of the ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "2de5c97a-d735-40eb-8403-24751aa1829d"],
+ "-abelian complexities of two well-known words, the Thue\[Dash]Morse word \
+and the period-doubling word, were established by proving the ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "a5c8cebb-a891-4f1f-8e35-d1d9634e63b5"],
+ "-regularity of sequences satisfying a general reflection recurrence [7]. \
+The  ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "3dd8d028-5322-4967-b225-f605bc61ee26"],
+ "-regular recurrences for such sequences were guessed by ",
+ StyleBox["FindRegularSequenceFunction", "Input"],
+ "."
+}], "Text",ExpressionUUID->"f1c3abcf-f252-4597-95e2-fd54228b4df6"],
+
+Cell[TextData[{
+ "The intended use case of ",
+ StyleBox["FindRegularSequenceFunction", "Input"],
+ " is a sequence of integers. However, the code is sufficiently general to \
+support sequences of polynomials. Again, let ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["\[Nu]", "p"], "(", "n", ")"}], TraditionalForm]],
+  ExpressionUUID->"ca8ccc60-7580-4bb3-9d11-566ee61645d3"],
+ " denote the ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],ExpressionUUID->
+  "3720c98b-0f83-4c16-ba42-444e69c8b969"],
+ "-adic valuation of ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "d7e93e11-fca6-4c45-86e2-446065fa5434"],
+ ". Spiegelhofer and Wallner [15] considered the generating function counting \
+binomial coefficients by their ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],ExpressionUUID->
+  "448fc289-a709-4b0c-a661-231f3320bcf7"],
+ "-adic valuations ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["\[Nu]", "p"], "(", 
+    TemplateBox[{"n","m"},
+     "Binomial"], ")"}], TraditionalForm]],ExpressionUUID->
+  "09660b59-e41c-4bbc-bc74-69a9e5a82d4a"],
+ ". For each prime ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],ExpressionUUID->
+  "858cfb01-c6b9-4556-8b70-49235d44f564"],
+ ", ",
+ StyleBox["FindRegularSequenceFunction", "Input"],
+ " is able to guess a ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],ExpressionUUID->
+  "4c884500-344d-484e-9ae7-6518785654cf"],
+ "-regular recurrence for this generating function. For ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"p", "\[Equal]", "2"}], TraditionalForm]],ExpressionUUID->
+  "d4194770-a57e-4148-ac2e-09942ff5d8f8"],
+ " we obtain the following. Note that the matrix entries are now polynomials \
+in the formal variable ",
+ Cell[BoxData[
+  FormBox["x", TraditionalForm]],ExpressionUUID->
+  "1cf6f74f-5391-4fe2-9380-878d54f03ae6"],
+ "."
+}], "Text",ExpressionUUID->"86435c24-a3e8-4860-95fb-a56ca20bf93a"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"polynomials", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{
+      UnderoverscriptBox["\[Sum]", 
+       RowBox[{"m", "=", "0"}], "n"], 
+      SuperscriptBox["x", 
+       RowBox[{"IntegerExponent", "[", 
+        RowBox[{
+         RowBox[{"Binomial", "[", 
+          RowBox[{"n", ",", "m"}], "]"}], ",", "2"}], "]"}]]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", "0", ",", "100"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"FindRegularSequenceFunction", "[", 
+   RowBox[{"polynomials", ",", "2"}], "]"}], "//", 
+  "RegularSequenceMatrixForm"}]}], "Input",
+ CellLabel->"In[12]:=",ExpressionUUID->"365f8bc6-6ca4-4bb1-aee3-546a07161bcb"],
+
+Cell[BoxData[
+ RowBox[{"RegularSequence", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"0", "1"},
+         {
+          RowBox[{
+           RowBox[{"-", "2"}], " ", "x"}], 
+          RowBox[{"1", "+", 
+           RowBox[{"2", " ", "x"}]}]}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]], ",", 
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"2", "0"},
+         {"2", "x"}
+        },
+        GridBoxAlignment->{
+         "Columns" -> {{Center}}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "ColumnsIndexed" -> {}, 
+          "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}, "RowsIndexed" -> {}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}], ",", "2"}], "]"}]], "Output",
+ CellLabel->"Out[13]=",ExpressionUUID->"8e6bc923-c9ff-4b49-93b2-134cf54bae8f"]
+}, Open  ]],
+
+Cell[TextData[{
+ "The basis chosen by ",
+ StyleBox["FindRegularSequenceFunction", "Input"],
+ " may not be the most natural basis, since it (a) necessarily consists of ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "4a4dfa5d-2142-4c05-a3b7-58dd7c205a2a"],
+ "-kernel elements and (b) depends on the order in which the ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "1c8a4dea-a93f-4df0-b899-26381face06c"],
+ "-kernel is traversed. By performing a suitable change of basis for each \
+prime ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "f64b2d57-c053-43de-b93c-2b8239540a25"],
+ ", the author conjectured the following, which can be proved by a bijective \
+argument [10]."
+}], "Text",ExpressionUUID->"b1c00358-846a-41bb-b318-97450fe049ed"],
+
+Cell[TextData[{
+ StyleBox["Theorem\[MediumSpace]\[ThinSpace]", "TheoremLabel"],
+ StyleBox[
+ CounterBox["Theorem"], "TheoremLabel"],
+ StyleBox[". ", "TheoremLabel"],
+ "Let ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "afd0b694-a0ad-40e6-8dc5-7f91c375b2f2"],
+ " be a prime. For each ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"d", "\[Element]", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", "1", ",", "\[Ellipsis]", ",", 
+      RowBox[{"p", "-", "1"}]}], "}"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "6c8536c7-c93a-4dc7-8f81-a1c4edb8183a"],
+ ", let ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["M", "p"], "(", "d", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "fc216005-ef10-45b6-a7a2-e85217d41028"],
+ " be the ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"2", "\[Times]", "2"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "bf7fbe66-253c-45cb-8d56-22d42ab91f97"],
+ " matrix"
+}], "Theorem",ExpressionUUID->"7c743a90-3751-4f29-9eff-f349591a6ce4"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    SubscriptBox["M", "p"], "(", "d", ")"}], "=", 
+   RowBox[{
+    RowBox[{"(", "\[NoBreak]", GridBox[{
+       {
+        RowBox[{"d", "+", "1"}], 
+        RowBox[{"p", "-", "d", "-", "1"}]},
+       {
+        RowBox[{"d", " ", "x"}], 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"p", "-", "d"}], ")"}], "x"}]}
+      }], "\[NoBreak]", ")"}], "."}]}], TraditionalForm]], "Equation",Expressi\
+onUUID->"f7fa5ab0-9f5b-44b1-a05d-321d0b37e27f"],
+
+Cell[TextData[{
+ "Let ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "\[GreaterEqual]", "0"}], TraditionalForm]],ExpressionUUID->
+  "40ab834d-b61a-4fbf-adbf-e399c1ae4f38"],
+ ", and let ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["n", "\[ScriptL]"], "\[CenterEllipsis]", "  ", 
+    SubscriptBox["n", "1"], 
+    SubscriptBox["n", "0"]}], TraditionalForm]],ExpressionUUID->
+  "3bf1e772-b998-4464-b7c7-1bd50efecb2e"],
+ " be the standard base-",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],ExpressionUUID->
+  "9a5e5703-1b8f-4826-bbca-744b12168b5c"],
+ " representation of ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],ExpressionUUID->
+  "74b845a5-ad63-49fa-a028-2e928fcef668"],
+ ". Then"
+}], "TheoremContinuation",ExpressionUUID->"b9abb1bc-f317-482b-933f-\
+45029b1e4d43"],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{
+    UnderoverscriptBox["\[Sum]", 
+     RowBox[{"m", "=", "0"}], "n"], 
+    SuperscriptBox["x", 
+     RowBox[{
+      SubscriptBox["\[Nu]", "p"], "(", 
+      TemplateBox[{"n","m"},
+       "Binomial"], ")"}]]}], "\[Equal]", 
+   RowBox[{
+    RowBox[{"(", "\[NoBreak]", GridBox[{
+       {"1", "0"}
+      }], "\[NoBreak]", ")"}], 
+    RowBox[{
+     SubscriptBox["M", "p"], "(", 
+     SubscriptBox["n", "0"], ")"}], 
+    RowBox[{
+     SubscriptBox["M", "p"], "(", 
+     SubscriptBox["n", "1"], ")"}], "\[CenterEllipsis]", 
+    RowBox[{
+     SubscriptBox["M", "p"], "(", 
+     SubscriptBox["n", "\[ScriptL]"], ")"}], 
+    RowBox[{
+     RowBox[{"(", "\[NoBreak]", GridBox[{
+        {"1"},
+        {"0"}
+       }], "\[NoBreak]", ")"}], "."}]}]}], TraditionalForm]], "Equation",Expre\
+ssionUUID->"781e0022-965e-4ebb-bae0-25d56a06ae5d"],
+
+Cell[TextData[{
+ "This theorem generalizes a well-known result of Fine [5] on the number of \
+binomial coefficients not divisible by ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "f769e642-86d8-451d-a1f9-3072fece2246"],
+ ". More generally, the analogous sequence of generating functions \
+enumerating multinomial coefficients by their ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "b10e10d1-91f8-40a6-97f8-e8fed5dde3b3"],
+ "-adic valuations is ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "133874dd-9458-48eb-b78b-cd84e56f31c0"],
+ "-regular [10]."
+}], "Text",ExpressionUUID->"81b64e19-4840-4047-a18e-61c00f823bbc"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Computing automata for sequences modulo ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["p", "\[Alpha]"], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "e7681dd0-27dc-46d0-9be3-6c5575aebb46"]
+}], "Section",ExpressionUUID->"d41b3701-fbb4-4f24-a7f6-f2ef3e1f42c6"],
+
+Cell[TextData[{
+ "A ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "8b6cbd57-dd98-4d7b-baed-0b3ae0b30417"],
+ "-regular sequence whose terms take on finitely many distinct values is \
+called ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",
+  FontSlant->"Italic",ExpressionUUID->
+  "1bcf6a58-38aa-4a01-b736-1b8d1553e0ed"],
+ StyleBox["-automatic",
+  FontSlant->"Italic"],
+ ". This name derives from the characterization of ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "e1faeb61-8c13-40c4-884b-bb202e72a42a"],
+ "-automatic sequences as sequences whose ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "28fffc6f-b94e-4e97-884c-52d36cebf3f6"],
+ "th term is the output of an automaton when fed the base-",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "8d0352cd-26f1-4ea9-949a-12884279c73f"],
+ " digits of ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "59f54b29-3aba-410b-b9dc-d39234fb2954"],
+ "."
+}], "Text",ExpressionUUID->"39a4f826-09bf-40f4-9268-86daadd212f6"],
+
+Cell[TextData[{
+ "Many integer sequences that arise in combinatorics have the property that \
+reducing each term modulo ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["p", "\[Alpha]"], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "301de2a6-2fac-4ef3-98d8-d8e7156e02f6"],
+ " produces a ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "75754fd7-cf6d-4494-82da-14c9fc42f71b"],
+ "-automatic sequence. For algebraic sequences modulo ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "e3ba3a6d-5151-4616-9792-0fd1189864cc"],
+ ", this is explained by Christol\[CloseCurlyQuote]s theorem, which states \
+that a sequence over a finite field of characteristic ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "5700f8b7-7db3-4ed8-a9ee-1e2c070ee242"],
+ " is ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "f4cb93da-499e-44d5-a527-77887c3efbf8"],
+ "-automatic if and only if its generating function is algebraic [3]. \
+Therefore, if ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     UnderscriptBox["\[Sum]", 
+      RowBox[{"n", "\[GreaterEqual]", "0"}]], 
+     RowBox[{
+      RowBox[{"s", "(", "n", ")"}], 
+      SuperscriptBox["x", "n"]}]}], "\[Element]", 
+    RowBox[{
+     TemplateBox[{},
+      "Integers"], "\[LeftDoubleBracket]", "x", "\[RightDoubleBracket]"}]}], 
+   TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "72c3d4d7-6d81-4fcb-bd5d-70655a8eb515"],
+ " is algebraic (as it is for the Catalan numbers, for example), then ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     UnderscriptBox["\[Sum]", 
+      RowBox[{"n", "\[GreaterEqual]", "0"}]], 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"s", "(", "n", ")"}], " ", "mod", " ", "p"}], ")"}], 
+      SuperscriptBox["x", "n"]}]}], "\[Element]", 
+    RowBox[{
+     SubscriptBox["\[DoubleStruckCapitalF]", "p"], "\[LeftDoubleBracket]", 
+     "x", "\[RightDoubleBracket]"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "0251769c-7002-4b01-8078-34e49c03a61d"],
+ " is algebraic, so ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"s", "(", "n", ")"}], " ", "mod", " ", "p"}], ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "03a3f02c-7f12-46bd-b249-5b04b95afd0e"],
+ " is ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "8f302a1e-6533-43b6-96f3-029bc0f64da0"],
+ "-automatic. In IntegerSequences this is implemented in ",
+ StyleBox["AutomaticSequenceReduce", "Input"],
+ ". The following computes a ",
+ Cell[BoxData[
+  FormBox["3", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "c5f07fb1-0acd-4917-a71b-5fd8dd198622"],
+ "-automatic sequence, represented by an automaton, for the ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "6db6dcd9-6d16-4781-8142-a07eab2b5efa"],
+ "th Catalan number modulo ",
+ Cell[BoxData[
+  FormBox["3", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "6a158cb8-0604-4b02-8be7-9c497a134cf2"],
+ "."
+}], "Text",ExpressionUUID->"b3771a83-c93e-4995-b2ab-e145e95275ea"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"AutomaticSequenceReduce", "[", 
+  RowBox[{
+   RowBox[{"Mod", "[", 
+    RowBox[{
+     RowBox[{"CatalanNumber", "[", "n", "]"}], ",", "3"}], "]"}], ",", "n"}], 
+  "]"}]], "Input",
+ CellLabel->"In[14]:=",ExpressionUUID->"2769cab4-22b8-44b9-bbb5-7adb255b7a2c"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"AutomaticSequence", "[", 
+   RowBox[{"Automaton", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"1", "\[Rule]", "2"}], ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"1", "\[Rule]", "2"}], ",", "1"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"1", "\[Rule]", "3"}], ",", "2"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"2", "\[Rule]", "2"}], ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"2", "\[Rule]", "4"}], ",", "1"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"2", "\[Rule]", "5"}], ",", "2"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"3", "\[Rule]", "4"}], ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"3", "\[Rule]", "5"}], ",", "1"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"3", "\[Rule]", "3"}], ",", "2"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"4", "\[Rule]", "4"}], ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"4", "\[Rule]", "2"}], ",", "1"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"4", "\[Rule]", "5"}], ",", "2"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"5", "\[Rule]", "5"}], ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"5", "\[Rule]", "5"}], ",", "1"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"5", "\[Rule]", "5"}], ",", "2"}], "}"}]}], "}"}], ",", "1", 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"1", "\[Rule]", "1"}], ",", 
+       RowBox[{"2", "\[Rule]", "1"}], ",", 
+       RowBox[{"3", "\[Rule]", "2"}], ",", 
+       RowBox[{"4", "\[Rule]", "2"}], ",", 
+       RowBox[{"5", "\[Rule]", "0"}]}], "}"}], ",", 
+     RowBox[{"InputAlphabet", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "1", ",", "2"}], "}"}]}]}], "]"}], "]"}], "[", "n", 
+  "]"}]], "Output",
+ CellLabel->"Out[14]=",ExpressionUUID->"e541f994-91e9-4733-8aa7-f5166c5044c9"]
+}, Open  ]],
+
+Cell[TextData[{
+ "The function ",
+ StyleBox["AutomatonGraph", "Input"],
+ " produces the ",
+ StyleBox["Graph", "Input"],
+ " object corresponding to an automaton."
+}], "Text",ExpressionUUID->"dbcea505-0d50-4576-aed0-6e24fd7cd369"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"AutomatonGraph", "[", 
+  RowBox[{"AutomaticSequenceAutomaton", "[", "%", "]"}], "]"}]], "Input",
+ CellLabel->"In[15]:=",ExpressionUUID->"19958561-b9b5-450f-bea8-d021dae41e26"],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["NetworkGraphics",
+   DynamicModuleBox[{Typeset`graph = HoldComplete[
+     Graph[{Null, 
+       Interpretation[1, 1], 
+       Interpretation[1, 2], 
+       Interpretation[2, 3], 
+       Interpretation[2, 4], 
+       Interpretation[0, 5]}, {{{1, 2}, {2, 3}, {2, 4}, {3, 3}, {3, 5}, {3, 
+       6}, {4, 5}, {4, 6}, {4, 4}, {5, 5}, {5, 3}, {5, 6}, {6, 6}}, Null}, {
+      EdgeLabels -> {DirectedEdge[
+           Interpretation[1, 2], 
+           Interpretation[1, 2]] -> 0, DirectedEdge[
+           Interpretation[2, 4], 
+           Interpretation[0, 5]] -> 2, DirectedEdge[
+           Interpretation[2, 4], 
+           Interpretation[2, 4]] -> 0, DirectedEdge[
+           Interpretation[2, 3], 
+           Interpretation[2, 4]] -> 0, DirectedEdge[
+           Interpretation[1, 1], 
+           Interpretation[2, 3]] -> 2, DirectedEdge[
+           Interpretation[1, 2], 
+           Interpretation[2, 4]] -> 1, DirectedEdge[
+           Interpretation[1, 2], 
+           Interpretation[0, 5]] -> 2, DirectedEdge[
+           Interpretation[2, 3], 
+           Interpretation[0, 5]] -> 1, DirectedEdge[
+           Interpretation[1, 1], 
+           Interpretation[1, 2]] -> Row[{0, ",", 1}], DirectedEdge[
+           Interpretation[2, 4], 
+           Interpretation[1, 2]] -> 1, DirectedEdge[
+           Interpretation[2, 3], 
+           Interpretation[2, 3]] -> 2, DirectedEdge[
+           Interpretation[0, 5], 
+           Interpretation[0, 5]] -> Row[{0, ",", 1, ",", 2}]}, 
+       EdgeShapeFunction -> {{
+         "CorporateShortCarvedArrow", "ArrowSize" -> 0.04, "ArrowPositions" -> 
+          1}}, EdgeStyle -> {
+         Directive[
+          GrayLevel[0.5], 
+          Opacity[1]]}, PerformanceGoal -> "Quality", 
+       VertexLabels -> {Interpretation[1, 1] -> Placed[
+           Interpretation[1, 1], {
+            Rational[1, 2], 
+            Rational[1, 2]}], Interpretation[0, 5] -> Placed[
+           Interpretation[0, 5], {
+            Rational[1, 2], 
+            Rational[1, 2]}], Interpretation[2, 4] -> Placed[
+           Interpretation[2, 4], {
+            Rational[1, 2], 
+            Rational[1, 2]}], Interpretation[1, 2] -> Placed[
+           Interpretation[1, 2], {
+            Rational[1, 2], 
+            Rational[1, 2]}], Interpretation[2, 3] -> Placed[
+           Interpretation[2, 3], {
+            Rational[1, 2], 
+            Rational[1, 2]}], Null -> Placed[Null, {
+            Rational[1, 2], 
+            Rational[1, 2]}]}, 
+       VertexShapeFunction -> {
+        Interpretation[1, 2] -> "Circle", Interpretation[1, 1] -> "Circle", 
+         Null -> None, Interpretation[2, 3] -> "Circle", Interpretation[0, 5] -> 
+         "Circle", Interpretation[2, 4] -> "Circle"}, VertexSize -> {0.2}, 
+       VertexStyle -> {
+         Hue[0.6, 0.3, 0.8]}}]], Typeset`boxes, Typeset`boxes$s2d = 
+    GraphicsGroupBox[{{
+       Directive[
+        Opacity[0.7], 
+        Hue[0.6, 0.7, 0.5]], 
+       Directive[
+        GrayLevel[0.5], 
+        Opacity[1]], {
+        Arrowheads[{{0.04, 1, {
+            GraphicsBox[
+             
+             FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 0}, {
+               0, 1, 0}}}, {{{-0.12347775660674376`, 
+               0.}, {-0.5614144091900695, 
+               0.21895451909535257`}, {-0.4738215557948804, 
+               0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+               0.}}}]], 0.533327810340424}}}], 
+        ArrowBox[{
+          DynamicLocation["VertexID$1", Automatic, Center], 
+          DynamicLocation["VertexID$2", Automatic, Center]}]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[{
+            DynamicLocation["VertexID$2", Automatic, Center], 
+            DynamicLocation["VertexID$3", Automatic, Center]}]}, 
+         "DynamicName", BoxID -> "EdgeLabelID$2"], 
+        InsetBox[
+         FormBox[
+          TemplateBox[{"0", "\",\"", "1"}, "RowDefault"], TraditionalForm], 
+         DynamicLocation["EdgeLabelID$2", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[{
+            DynamicLocation["VertexID$2", Automatic, Center], 
+            DynamicLocation["VertexID$4", Automatic, Center]}]}, 
+         "DynamicName", BoxID -> "EdgeLabelID$3"], 
+        InsetBox[
+         FormBox["2", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$3", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[
+           BezierCurveBox[{
+             DynamicLocation["VertexID$3", Automatic, Center], {
+             1.963050646476233, 0.877216967020947}, {1.895375522922142, 
+             1.0639575598709257`}, {1.9397709428308783`, 
+             1.1909357045362028`}, {2.300467328787069, 1.2417692902828887`}, {
+             2.378227045026594, 1.1320066870800785`}, {2.3647981608775166`, 
+             0.9338359616019353}, 
+             DynamicLocation["VertexID$3", Automatic, Center]}, SplineDegree -> 
+            7]]}, "DynamicName", BoxID -> "EdgeLabelID$4"], 
+        InsetBox[
+         FormBox["0", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$4", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[
+           BezierCurveBox[{
+             DynamicLocation["VertexID$3", Automatic, Center], {
+             2.697712546629254, 0.5660982869451939}, 
+             DynamicLocation["VertexID$5", Automatic, Center]}]]}, 
+         "DynamicName", BoxID -> "EdgeLabelID$5"], 
+        InsetBox[
+         FormBox["1", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$5", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[{
+            DynamicLocation["VertexID$3", Automatic, Center], 
+            DynamicLocation["VertexID$6", Automatic, Center]}]}, 
+         "DynamicName", BoxID -> "EdgeLabelID$6"], 
+        InsetBox[
+         FormBox["2", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$6", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[
+           BezierCurveBox[{
+             DynamicLocation["VertexID$4", Automatic, Center], {
+             2.3647297772745346`, -0.13415029279959156`}, {
+             2.3781308845357136`, -0.3323148260463709}, {
+             2.3003619876374786`, -0.4420640543841279}, {
+             1.9396817257787613`, -0.3912053830974969}, {
+             1.895292672768222, -0.26423095095334825`}, {
+             1.9629671663812482`, -0.07749869657034136}, 
+             DynamicLocation["VertexID$4", Automatic, Center]}, SplineDegree -> 
+            7]]}, "DynamicName", BoxID -> "EdgeLabelID$7"], 
+        InsetBox[
+         FormBox["2", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$7", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[{
+            DynamicLocation["VertexID$4", Automatic, Center], 
+            DynamicLocation["VertexID$5", Automatic, Center]}]}, 
+         "DynamicName", BoxID -> "EdgeLabelID$8"], 
+        InsetBox[
+         FormBox["0", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$8", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[{
+            DynamicLocation["VertexID$4", Automatic, Center], 
+            DynamicLocation["VertexID$6", Automatic, Center]}]}, 
+         "DynamicName", BoxID -> "EdgeLabelID$9"], 
+        InsetBox[
+         FormBox["1", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$9", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[
+           BezierCurveBox[{
+             DynamicLocation["VertexID$5", Automatic, Center], {
+             2.4577535182307853`, 0.303718587980648}, 
+             DynamicLocation["VertexID$3", Automatic, Center]}]]}, 
+         "DynamicName", BoxID -> "EdgeLabelID$10"], 
+        InsetBox[
+         FormBox["1", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$10", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[
+           BezierCurveBox[{
+             DynamicLocation["VertexID$5", Automatic, Center], {
+             3.1707538515324623`, 0.1509857737016429}, {3.355484848261415, 
+             0.05820838508312329}, {
+             3.4094163480806476`, -0.07117360050273082}, {
+             3.1550984732919973`, -0.34872278862613953`}, {
+             3.0215068724819942`, -0.3062776586356351}, {
+             2.912975892159308, -0.1303395692361509}, 
+             DynamicLocation["VertexID$5", Automatic, Center]}, SplineDegree -> 
+            7]]}, "DynamicName", BoxID -> "EdgeLabelID$11"], 
+        InsetBox[
+         FormBox["0", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$11", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[{
+            DynamicLocation["VertexID$5", Automatic, Center], 
+            DynamicLocation["VertexID$6", Automatic, Center]}]}, 
+         "DynamicName", BoxID -> "EdgeLabelID$12"], 
+        InsetBox[
+         FormBox["2", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$12", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[
+           BezierCurveBox[{
+             DynamicLocation["VertexID$6", Automatic, Center], {
+             2.913280471230355, 0.9299059521156128}, {3.0218877815441645`, 
+             1.105796932946763}, {3.155497786882095, 1.148184093036679}, {
+             3.4096952080792176`, 0.870524581545155}, {3.355707574000029, 
+             0.7411660092222445}, {3.17093633819829, 0.6484687848212827}, 
+             DynamicLocation["VertexID$6", Automatic, Center]}, SplineDegree -> 
+            7]]}, "DynamicName", BoxID -> "EdgeLabelID$13"], 
+        InsetBox[
+         FormBox[
+          TemplateBox[{"0", "\",\"", "1", "\",\"", "2"}, "RowDefault"], 
+          TraditionalForm], 
+         DynamicLocation["EdgeLabelID$13", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}}, {
+       Directive[
+        Hue[0.6, 0.2, 0.8], 
+        EdgeForm[
+         Directive[
+          GrayLevel[0], 
+          Opacity[0.7]]]], 
+       Hue[0.6, 0.3, 0.8], 
+       TagBox[{
+         TagBox[
+          StyleBox[
+           
+           DiskBox[{0., 0.3998291562063398}, {0.06593435011932153, 
+            0.06593435011932153}], ShowContents -> False, StripOnInput -> 
+           False], "DynamicName", BoxID -> "VertexID$1"], 
+         InsetBox["", 
+          Dynamic[
+          DynamicLocation[
+            "VertexID$1", Automatic, {Left, Bottom}] + (
+             DynamicLocation["VertexID$1", Automatic, {Right, Top}] - 
+             DynamicLocation["VertexID$1", Automatic, {Left, Bottom}]) {
+              Rational[1, 2], 
+              Rational[1, 2]}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$1"], 
+       TagBox[{
+         TagBox[
+          
+          DiskBox[{1.1412001556141325`, 0.3998118353969534}, {
+           0.06593435011932153, 0.06593435011932153}], "DynamicName", BoxID -> 
+          "VertexID$2"], 
+         InsetBox[
+          FormBox[
+           InterpretationBox["1", 1], TraditionalForm], 
+          Dynamic[
+          DynamicLocation[
+            "VertexID$2", Automatic, {Left, Bottom}] + (
+             DynamicLocation["VertexID$2", Automatic, {Right, Top}] - 
+             DynamicLocation["VertexID$2", Automatic, {Left, Bottom}]) {
+              Rational[1, 2], 
+              Rational[1, 2]}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$2"], 
+       TagBox[{
+         TagBox[
+          
+          DiskBox[{2.1788360080323494`, 0.7997192165868598}, {
+           0.06593435011932153, 0.06593435011932153}], "DynamicName", BoxID -> 
+          "VertexID$3"], 
+         InsetBox[
+          FormBox[
+           InterpretationBox["1", 2], TraditionalForm], 
+          Dynamic[
+          DynamicLocation[
+            "VertexID$3", Automatic, {Left, Bottom}] + (
+             DynamicLocation["VertexID$3", Automatic, {Right, Top}] - 
+             DynamicLocation["VertexID$3", Automatic, {Left, Bottom}]) {
+              Rational[1, 2], 
+              Rational[1, 2]}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$3"], 
+       TagBox[{
+         TagBox[
+          
+          DiskBox[{2.178770533715949, 0.}, {0.06593435011932153, 
+           0.06593435011932153}], "DynamicName", BoxID -> "VertexID$4"], 
+         InsetBox[
+          FormBox[
+           InterpretationBox["2", 3], TraditionalForm], 
+          Dynamic[
+          DynamicLocation[
+            "VertexID$4", Automatic, {Left, Bottom}] + (
+             DynamicLocation["VertexID$4", Automatic, {Right, Top}] - 
+             DynamicLocation["VertexID$4", Automatic, {Left, Bottom}]) {
+              Rational[1, 2], 
+              Rational[1, 2]}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$4"], 
+       TagBox[{
+         TagBox[
+          
+          DiskBox[{2.976630056827684, 0.07009765833875403}, {
+           0.06593435011932153, 0.06593435011932153}], "DynamicName", BoxID -> 
+          "VertexID$5"], 
+         InsetBox[
+          FormBox[
+           InterpretationBox["2", 4], TraditionalForm], 
+          Dynamic[
+          DynamicLocation[
+            "VertexID$5", Automatic, {Left, Bottom}] + (
+             DynamicLocation["VertexID$5", Automatic, {Right, Top}] - 
+             DynamicLocation["VertexID$5", Automatic, {Left, Bottom}]) {
+              Rational[1, 2], 
+              Rational[1, 2]}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$5"], 
+       TagBox[{
+         TagBox[
+          
+          DiskBox[{2.9768476594292745`, 0.7294411236243632}, {
+           0.06593435011932153, 0.06593435011932153}], "DynamicName", BoxID -> 
+          "VertexID$6"], 
+         InsetBox[
+          FormBox[
+           InterpretationBox["0", 5], TraditionalForm], 
+          Dynamic[
+          DynamicLocation[
+            "VertexID$6", Automatic, {Left, Bottom}] + (
+             DynamicLocation["VertexID$6", Automatic, {Right, Top}] - 
+             DynamicLocation["VertexID$6", Automatic, {Left, Bottom}]) {
+              Rational[1, 2], 
+              Rational[1, 2]}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$6"]}}], $CellContext`flag}, 
+    TagBox[
+     DynamicBox[GraphComputation`NetworkGraphicsBox[
+      3, Typeset`graph, Typeset`boxes, $CellContext`flag], {
+      CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+       SynchronousUpdating -> False, TrackedSymbols :> {$CellContext`flag}},
+      ImageSizeCache->{{3.9406933090100935`, 
+       355.2393066909899}, {-89.2393066909899, 84.2393066909899}}],
+     MouseAppearanceTag["NetworkGraphics"]],
+    AllowKernelInitialization->False,
+    UnsavedVariables:>{$CellContext`flag}]],
+  DefaultBaseStyle->{
+   "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+  FormatType->TraditionalForm,
+  FrameTicks->None]], "Output",
+ CellLabel->"Out[15]=",ExpressionUUID->"28f6b97c-aa82-4132-aef9-28b70246cd74"]
+}, Open  ]],
+
+Cell[TextData[{
+ "More generally, if ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"s", "(", "n", ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],ExpressionUUID->
+  "c1e4c7af-c28e-4725-aa3f-24fdf3becef6"],
+ " is the diagonal of the power series of a multivariate rational expression ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["f", "g"], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "5dda60ee-ac60-4a95-8637-d27ed97e3611"],
+ " whose denominator\[CloseCurlyQuote]s constant term ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"g", "(", 
+    RowBox[{"0", ",", "\[Ellipsis]", ",", "0"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "0118d0b7-b81a-4de9-9b78-0961333caf4e"],
+ " is nonzero modulo ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "a4616350-817e-4273-b5b8-50ea6bf2a70f"],
+ ", then ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"s", "(", "n", ")"}], " ", "mod", " ", 
+      SuperscriptBox["p", "\[Alpha]"]}], ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],ExpressionUUID->
+  "8431cf87-a106-4858-9e25-9ca676c059f4"],
+ " is ",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "9762530a-83e4-4f6c-be8f-9ecafb706d39"],
+ "-automatic. An automaton for this sequence can be computed by embedding the \
+",
+ Cell[BoxData[
+  FormBox["p", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "3654db30-481d-43a9-8985-fbb78aa02d2d"],
+ "-kernel into the space of rational expressions with a certain fixed \
+denominator [12]. The diagonal of a rational power series is represented in \
+IntegerSequences by ",
+ StyleBox["DiagonalSequence", "Input"],
+ "."
+}], "Text",ExpressionUUID->"baa99613-d23f-4915-985b-1f1c88b7a41b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"AutomaticSequenceReduce", "[", 
+  RowBox[{
+   RowBox[{"Mod", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"DiagonalSequence", "[", 
+       RowBox[{
+        FractionBox[
+         RowBox[{"1", "-", "x"}], 
+         RowBox[{"1", "-", 
+          RowBox[{
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{"1", "+", "x"}], ")"}], "2"], " ", "y"}]}]], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", "y"}], "}"}]}], "]"}], "[", "n", "]"}], ",", "4"}],
+     "]"}], ",", "n"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"AutomatonGraph", "[", 
+  RowBox[{"AutomaticSequenceAutomaton", "[", "%", "]"}], "]"}]}], "Input",
+ CellLabel->"In[16]:=",ExpressionUUID->"dd67902b-06d3-44e0-9c4a-620879428a2f"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"AutomaticSequence", "[", 
+   RowBox[{"Automaton", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"1", "\[Rule]", "2"}], ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"1", "\[Rule]", "1"}], ",", "1"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"2", "\[Rule]", "2"}], ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"2", "\[Rule]", "3"}], ",", "1"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"3", "\[Rule]", "3"}], ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"3", "\[Rule]", "4"}], ",", "1"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"4", "\[Rule]", "4"}], ",", "0"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"4", "\[Rule]", "4"}], ",", "1"}], "}"}]}], "}"}], ",", "1", 
+     ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"1", "\[Rule]", "1"}], ",", 
+       RowBox[{"2", "\[Rule]", "1"}], ",", 
+       RowBox[{"3", "\[Rule]", "2"}], ",", 
+       RowBox[{"4", "\[Rule]", "0"}]}], "}"}], ",", 
+     RowBox[{"InputAlphabet", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "1"}], "}"}]}]}], "]"}], "]"}], "[", "n", 
+  "]"}]], "Output",
+ CellLabel->"Out[16]=",ExpressionUUID->"ec10aca0-d8a7-4ea2-9677-61ad11393a91"],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["NetworkGraphics",
+   DynamicModuleBox[{Typeset`graph = HoldComplete[
+     Graph[{Null, 
+       Interpretation[1, 1], 
+       Interpretation[1, 2], 
+       Interpretation[2, 3], 
+       Interpretation[0, 4]}, {{{1, 2}, {2, 3}, {2, 2}, {3, 3}, {3, 4}, {4, 
+       4}, {4, 5}, {5, 5}}, Null}, {EdgeLabels -> {DirectedEdge[
+           Interpretation[1, 2], 
+           Interpretation[1, 2]] -> 0, DirectedEdge[
+           Interpretation[0, 4], 
+           Interpretation[0, 4]] -> Row[{0, ",", 1}], DirectedEdge[
+           Interpretation[1, 2], 
+           Interpretation[2, 3]] -> 1, DirectedEdge[
+           Interpretation[1, 1], 
+           Interpretation[1, 2]] -> 0, DirectedEdge[
+           Interpretation[1, 1], 
+           Interpretation[1, 1]] -> 1, DirectedEdge[
+           Interpretation[2, 3], 
+           Interpretation[2, 3]] -> 0, DirectedEdge[
+           Interpretation[2, 3], 
+           Interpretation[0, 4]] -> 1}, 
+       EdgeShapeFunction -> {{
+         "CorporateShortCarvedArrow", "ArrowSize" -> 0.04, "ArrowPositions" -> 
+          1}}, EdgeStyle -> {
+         Directive[
+          GrayLevel[0.5], 
+          Opacity[1]]}, PerformanceGoal -> "Quality", 
+       VertexLabels -> {Interpretation[1, 1] -> Placed[
+           Interpretation[1, 1], {
+            Rational[1, 2], 
+            Rational[1, 2]}], Interpretation[1, 2] -> Placed[
+           Interpretation[1, 2], {
+            Rational[1, 2], 
+            Rational[1, 2]}], Interpretation[2, 3] -> Placed[
+           Interpretation[2, 3], {
+            Rational[1, 2], 
+            Rational[1, 2]}], Interpretation[0, 4] -> Placed[
+           Interpretation[0, 4], {
+            Rational[1, 2], 
+            Rational[1, 2]}], Null -> Placed[Null, {
+            Rational[1, 2], 
+            Rational[1, 2]}]}, 
+       VertexShapeFunction -> {
+        Interpretation[1, 2] -> "Circle", Interpretation[0, 4] -> "Circle", 
+         Interpretation[1, 1] -> "Circle", Null -> None, Interpretation[2, 3] -> 
+         "Circle"}, VertexSize -> {0.2}, VertexStyle -> {
+         Hue[0.6, 0.3, 0.8]}}]], Typeset`boxes, Typeset`boxes$s2d = 
+    GraphicsGroupBox[{{
+       Directive[
+        Opacity[0.7], 
+        Hue[0.6, 0.7, 0.5]], 
+       Directive[
+        GrayLevel[0.5], 
+        Opacity[1]], {
+        Arrowheads[{{0.04, 1, {
+            GraphicsBox[
+             
+             FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 0}, {
+               0, 1, 0}}}, {{{-0.12347775660674376`, 
+               0.}, {-0.5614144091900695, 
+               0.21895451909535257`}, {-0.4738215557948804, 
+               0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+               0.}}}]], 0.533327810340424}}}], 
+        ArrowBox[{
+          DynamicLocation["VertexID$1", Automatic, Center], 
+          DynamicLocation["VertexID$2", Automatic, Center]}]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[
+           BezierCurveBox[{
+             DynamicLocation["VertexID$2", Automatic, Center], {
+             1.2155615932255868`, -0.142531237988}, {
+             1.2338558717479595`, -0.32493768720862665`}, {
+             1.1698636125054835`, -0.4310569329771424}, {
+             0.8301363874945166, -0.43105693297714254`}, {
+             0.7661441282520404, -0.32493768720862665`}, {
+             0.7844384067744133, -0.142531237988}, 
+             DynamicLocation["VertexID$2", Automatic, Center]}, SplineDegree -> 
+            7]]}, "DynamicName", BoxID -> "EdgeLabelID$2"], 
+        InsetBox[
+         FormBox["1", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$2", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[{
+            DynamicLocation["VertexID$2", Automatic, Center], 
+            DynamicLocation["VertexID$3", Automatic, Center]}]}, 
+         "DynamicName", BoxID -> "EdgeLabelID$3"], 
+        InsetBox[
+         FormBox["0", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$3", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[
+           BezierCurveBox[{
+             DynamicLocation["VertexID$3", Automatic, Center], {
+             2.2155615932255865`, -0.1425312379880001}, {
+             2.2338558717479597`, -0.32493768720862676`}, {
+             2.1698636125054835`, -0.43105693297714254`}, {
+             1.8301363874945167`, -0.43105693297714265`}, {
+             1.7661441282520405`, -0.32493768720862676`}, {
+             1.7844384067744132`, -0.1425312379880001}, 
+             DynamicLocation["VertexID$3", Automatic, Center]}, SplineDegree -> 
+            7]]}, "DynamicName", BoxID -> "EdgeLabelID$4"], 
+        InsetBox[
+         FormBox["0", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$4", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[{
+            DynamicLocation["VertexID$3", Automatic, Center], 
+            DynamicLocation["VertexID$4", Automatic, Center]}]}, 
+         "DynamicName", BoxID -> "EdgeLabelID$5"], 
+        InsetBox[
+         FormBox["1", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$5", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[
+           BezierCurveBox[{
+             DynamicLocation["VertexID$4", Automatic, Center], {
+             3.2155615932255865`, -0.14253123798800038`}, {
+             3.2338558717479597`, -0.32493768720862704`}, {
+             3.1698636125054835`, -0.43105693297714276`}, {
+             2.8301363874945165`, -0.43105693297714287`}, {
+             2.7661441282520403`, -0.32493768720862704`}, {
+             2.7844384067744135`, -0.14253123798800038`}, 
+             DynamicLocation["VertexID$4", Automatic, Center]}, SplineDegree -> 
+            7]]}, "DynamicName", BoxID -> "EdgeLabelID$6"], 
+        InsetBox[
+         FormBox["0", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$6", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[{
+            DynamicLocation["VertexID$4", Automatic, Center], 
+            DynamicLocation["VertexID$5", Automatic, Center]}]}, 
+         "DynamicName", BoxID -> "EdgeLabelID$7"], 
+        InsetBox[
+         FormBox["1", TraditionalForm], 
+         DynamicLocation["EdgeLabelID$7", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}, {
+        TagBox[{
+          Arrowheads[{{0.04, 1, {
+              GraphicsBox[
+               
+               FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}}, {{0, 2, 0}, {0, 1, 
+                 0}, {0, 1, 0}}}, {{{-0.12347775660674376`, 
+                 0.}, {-0.5614144091900695, 
+                 0.21895451909535257`}, {-0.4738215557948804, 
+                 0.}}, {{-0.6666390522740446, -0.3333333333333333}, \
+{-0.5333167646977603, 0.}, {-0.6666390522740446, 0.3333333333333333}, {0., 
+                 0.}}}]], 0.533327810340424}}}], 
+          ArrowBox[
+           BezierCurveBox[{
+             DynamicLocation["VertexID$5", Automatic, Center], {
+             4.08847925546776, 0.1907835323853024}, {4.287357733005351, 
+             0.24717977484589673`}, {4.414528357479808, 0.1882226960710236}, {
+             4.414528357479809, -0.18822269607102265`}, {
+             4.287357733005352, -0.2471797748458961}, {
+             4.08847925546776, -0.19078353238530207`}, 
+             DynamicLocation["VertexID$5", Automatic, Center]}, SplineDegree -> 
+            7]]}, "DynamicName", BoxID -> "EdgeLabelID$8"], 
+        InsetBox[
+         FormBox[
+          TemplateBox[{"0", "\",\"", "1"}, "RowDefault"], TraditionalForm], 
+         DynamicLocation["EdgeLabelID$8", Automatic, 
+          Scaled[0.5]], 
+         ImageScaled[{0.5, 0.5}], BaseStyle -> "Graphics"]}}, {
+       Directive[
+        Hue[0.6, 0.2, 0.8], 
+        EdgeForm[
+         Directive[
+          GrayLevel[0], 
+          Opacity[0.7]]]], 
+       Hue[0.6, 0.3, 0.8], 
+       TagBox[{
+         TagBox[
+          StyleBox[
+           DiskBox[{0., 7.347880794884119*^-16}, {0.1, 0.1}], ShowContents -> 
+           False, StripOnInput -> False], "DynamicName", BoxID -> 
+          "VertexID$1"], 
+         InsetBox["", 
+          Dynamic[
+          DynamicLocation[
+            "VertexID$1", Automatic, {Left, Bottom}] + (
+             DynamicLocation["VertexID$1", Automatic, {Right, Top}] - 
+             DynamicLocation["VertexID$1", Automatic, {Left, Bottom}]) {
+              Rational[1, 2], 
+              Rational[1, 2]}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$1"], 
+       TagBox[{
+         TagBox[
+          DiskBox[{1., 6.123233995736766*^-16}, {0.1, 0.1}], "DynamicName", 
+          BoxID -> "VertexID$2"], 
+         InsetBox[
+          FormBox[
+           InterpretationBox["1", 1], TraditionalForm], 
+          Dynamic[
+          DynamicLocation[
+            "VertexID$2", Automatic, {Left, Bottom}] + (
+             DynamicLocation["VertexID$2", Automatic, {Right, Top}] - 
+             DynamicLocation["VertexID$2", Automatic, {Left, Bottom}]) {
+              Rational[1, 2], 
+              Rational[1, 2]}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$2"], 
+       TagBox[{
+         TagBox[
+          DiskBox[{2., 4.898587196589413*^-16}, {0.1, 0.1}], "DynamicName", 
+          BoxID -> "VertexID$3"], 
+         InsetBox[
+          FormBox[
+           InterpretationBox["1", 2], TraditionalForm], 
+          Dynamic[
+          DynamicLocation[
+            "VertexID$3", Automatic, {Left, Bottom}] + (
+             DynamicLocation["VertexID$3", Automatic, {Right, Top}] - 
+             DynamicLocation["VertexID$3", Automatic, {Left, Bottom}]) {
+              Rational[1, 2], 
+              Rational[1, 2]}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$3"], 
+       TagBox[{
+         TagBox[
+          DiskBox[{3., 2.4492935982947064`*^-16}, {0.1, 0.1}], "DynamicName", 
+          BoxID -> "VertexID$4"], 
+         InsetBox[
+          FormBox[
+           InterpretationBox["2", 3], TraditionalForm], 
+          Dynamic[
+          DynamicLocation[
+            "VertexID$4", Automatic, {Left, Bottom}] + (
+             DynamicLocation["VertexID$4", Automatic, {Right, Top}] - 
+             DynamicLocation["VertexID$4", Automatic, {Left, Bottom}]) {
+              Rational[1, 2], 
+              Rational[1, 2]}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$4"], 
+       TagBox[{
+         TagBox[
+          DiskBox[{4., 0.}, {0.1, 0.1}], "DynamicName", BoxID -> 
+          "VertexID$5"], 
+         InsetBox[
+          FormBox[
+           InterpretationBox["0", 4], TraditionalForm], 
+          Dynamic[
+          DynamicLocation[
+            "VertexID$5", Automatic, {Left, Bottom}] + (
+             DynamicLocation["VertexID$5", Automatic, {Right, Top}] - 
+             DynamicLocation["VertexID$5", Automatic, {Left, Bottom}]) {
+              Rational[1, 2], 
+              Rational[1, 2]}], BaseStyle -> "Graphics"]}, "DynamicName", 
+        BoxID -> "VertexLabelID$5"]}}], $CellContext`flag}, 
+    TagBox[
+     DynamicBox[GraphComputation`NetworkGraphicsBox[
+      3, Typeset`graph, Typeset`boxes, $CellContext`flag], {
+      CachedValue :> Typeset`boxes, SingleEvaluation -> True, 
+       SynchronousUpdating -> False, TrackedSymbols :> {$CellContext`flag}},
+      ImageSizeCache->{{3.9406933090100917`, 
+       355.2393066909899}, {-32.239306690989906`, 26.239306690989906`}}],
+     MouseAppearanceTag["NetworkGraphics"]],
+    AllowKernelInitialization->False,
+    UnsavedVariables:>{$CellContext`flag}]],
+  DefaultBaseStyle->{
+   "NetworkGraphics", FrontEnd`GraphicsHighlightColor -> Hue[0.8, 1., 0.6]},
+  FormatType->TraditionalForm,
+  FrameTicks->None]], "Output",
+ CellLabel->"Out[17]=",ExpressionUUID->"f15c4ca0-ff8f-42fa-a5e5-7fc3666a494d"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Computing automata for sequences modulo ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["p", "\[Alpha]"], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "6ebf092f-81b1-4c27-9ae6-071ede6bf4ec"],
+ " provides routine proofs of many congruences that were established in the \
+literature by nontrivial case analyses. For example, Eu, Liu, and Yeh [4] \
+proved that no Motzkin number is divisible by ",
+ Cell[BoxData[
+  FormBox["8", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "b6ecf80a-09d7-45f4-94d0-15322b6d61a3"],
+ ". The following computation proves this in less than a second. The \
+resulting automaton has ",
+ Cell[BoxData[
+  FormBox["24", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "785c0bf7-7169-4461-9e46-dc32211d2eed"],
+ " states."
+}], "Text",ExpressionUUID->"1f75801a-864f-4ccc-aa39-c47d8bb6dcbc"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"automaton", "=", 
+   RowBox[{"AutomaticSequenceAutomaton", "[", 
+    RowBox[{"AutomaticSequenceReduce", "[", 
+     RowBox[{
+      RowBox[{"Mod", "[", 
+       RowBox[{
+        RowBox[{"MotzkinNumber", "[", "n", "]"}], ",", "8"}], "]"}], ",", 
+      "n"}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"AutomatonStateCount", "[", "automaton", 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Sort", "[", 
+  RowBox[{"AutomatonOutputAlphabet", "[", "automaton", "]"}], "]"}]}], "Input",\
+
+ CellLabel->"In[18]:=",ExpressionUUID->"e5814d01-a34f-425a-a719-44c546ab5bbf"],
+
+Cell[BoxData["24"], "Output",
+ CellLabel->"Out[19]=",ExpressionUUID->"90fc45e3-c29c-4f14-8302-7282cbd1586e"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "2", ",", "3", ",", "4", ",", "5", ",", "6", ",", "7"}], 
+  "}"}]], "Output",
+ CellLabel->"Out[20]=",ExpressionUUID->"aa080100-876b-4bef-945a-d914bacc6d16"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Closely related to diagonal sequences are ",
+ StyleBox["constant-term sequences",
+  FontSlant->"Italic"],
+ ". Let ",
+ Cell[BoxData[
+  FormBox["f", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "f8580c81-82ea-4522-b881-c89fa0a21891"],
+ " and ",
+ Cell[BoxData[
+  FormBox["g", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "8cbd036c-d812-42a3-99e3-94653fd00bbd"],
+ " be (possibly multivariate) Laurent polynomials, and let ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"s", "(", "n", ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "ece1f909-56e1-4e66-ae37-79e97199ea9c"],
+ " be the constant term of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["f", "n"], "g"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "88c43c11-c2b6-4771-816e-aa33af53849e"],
+ ". An automaton for ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"s", "(", "n", ")"}], " ", "mod", " ", 
+      SuperscriptBox["p", "\[Alpha]"]}], ")"}], 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]], TraditionalForm]],ExpressionUUID->
+  "fb623578-a99f-41ef-b42f-071c83441e9d"],
+ " can be computed similarly [13]. ",
+ StyleBox["AutomaticSequenceReduce", "Input"],
+ " also implements this algorithm. Constant-term sequences are represented by \
+",
+ StyleBox["ConstantTermSequence", "Input"],
+ ", where the first argument is ",
+ Cell[BoxData[
+  FormBox["f", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "6d796b13-52d1-40a4-9cf9-07841bb53c93"],
+ " and the second argument is ",
+ Cell[BoxData[
+  FormBox["g", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "d87e15cf-4d67-41b6-b9bf-9aedd9b2e28c"],
+ "."
+}], "Text",ExpressionUUID->"4f834073-8b7d-4ab4-a2b4-ac279bff54cf"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"automaton", "=", 
+   RowBox[{"AutomaticSequenceAutomaton", "[", 
+    RowBox[{"AutomaticSequenceReduce", "[", 
+     RowBox[{
+      RowBox[{"Mod", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"ConstantTermSequence", "[", 
+          RowBox[{
+           RowBox[{"1", "+", 
+            FractionBox["1", "x"], "+", "x"}], ",", 
+           RowBox[{"1", "-", 
+            SuperscriptBox["x", "2"]}], ",", "x"}], "]"}], "[", "n", "]"}], 
+        ",", "25"}], "]"}], ",", "n"}], "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"AutomatonStateCount", "[", "automaton", 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Complement", "[", 
+  RowBox[{
+   RowBox[{"Range", "[", 
+    RowBox[{"0", ",", "24"}], "]"}], ",", 
+   RowBox[{"AutomatonOutputAlphabet", "[", "automaton", "]"}]}], 
+  "]"}]}], "Input",
+ CellLabel->"In[21]:=",ExpressionUUID->"7199d2a0-f05d-4ddf-9fa1-906b4a90768a"],
+
+Cell[BoxData["136"], "Output",
+ CellLabel->"Out[22]=",ExpressionUUID->"26525772-2f3a-4bd7-8a58-dfe6738c86fc"],
+
+Cell[BoxData[
+ RowBox[{"{", "0", "}"}]], "Output",
+ CellLabel->"Out[23]=",ExpressionUUID->"b52c4354-c116-4461-9bbf-c587dcb87b63"]
+}, Open  ]],
+
+Cell[TextData[{
+ "In fact that constant-term sequence is the sequence of Motzkin numbers, so \
+we have established that no Motzkin number is divisible by ",
+ Cell[BoxData[
+  FormBox["25", TraditionalForm]],ExpressionUUID->
+  "c62e0bdb-cf68-4192-beae-174ccc3fb44d"],
+ "."
+}], "Text",ExpressionUUID->"776245e2-bdbb-4592-8b6f-85afd72e453e"],
+
+Cell["\<\
+For many sequences, including the sequences of Catalan and Motzkin numbers, \
+the constant-term representation is preferable to the diagonal representation \
+since it uses polynomials in a single variable, whereas the diagonal \
+representation requires at least two variables.\
+\>", "Text",ExpressionUUID->"1eb18d54-5078-4be4-ab6e-f18658a1c0e4"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["References", "ReferenceSection",ExpressionUUID->"c6ce51a1-af34-470c-bb2a-ffa1dac91904"],
+
+Cell[TextData[{
+ "1. Jean-Paul Allouche and Jeffrey Shallit, The ring of ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "e12bb85e-4a02-4cec-902b-1cf835786375"],
+ "-regular sequences, ",
+ StyleBox["Theoretical Computer Science",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["98",
+  FontWeight->"Bold"],
+ " (1992) 163\[Dash]197."
+}], "Text",ExpressionUUID->"881a3113-b3de-453e-b95d-ec89cc8e02a5"],
+
+Cell[TextData[{
+ "2. \[CapitalEAcute]milie Charlier, Narad Rampersad, and Jeffrey Shallit, \
+Enumeration and decidable properties of automatic sequences, ",
+ StyleBox["International Journal of Foundations of Computer Science",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["23",
+  FontWeight->"Bold"],
+ " (2012) 1035\[Dash]1066."
+}], "Text",ExpressionUUID->"645bbea8-1364-4325-9708-847fd387e5c1"],
+
+Cell[TextData[{
+ "3. Gilles Christol, Teturo Kamae, Michel Mend\[EGrave]s France, and G\
+\[EAcute]rard Rauzy, Suites alg\[EAcute]briques, automates et substitutions, ",
+ StyleBox["Bulletin de la Soci\[EAcute]t\[EAcute] Math\[EAcute]matique de \
+France",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["108",
+  FontWeight->"Bold"],
+ " (1980) 401\[Dash]419."
+}], "Text",ExpressionUUID->"c9c620e4-79d9-4727-976d-a4a6f28c7bdb"],
+
+Cell[TextData[{
+ "4. Sen-Peng Eu, Shu-Chung Liu, and Yeong-Nan Yeh, Catalan and Motzkin \
+numbers modulo ",
+ Cell[BoxData[
+  FormBox["4", TraditionalForm]],ExpressionUUID->
+  "d8383881-943a-4d96-aa58-878bbb2b55c4"],
+ " and ",
+ Cell[BoxData[
+  FormBox["8", TraditionalForm]],ExpressionUUID->
+  "f7d78882-611a-44a1-9ce2-6dae95bdc810"],
+ ", ",
+ StyleBox["European Journal of Combinatorics",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["29",
+  FontWeight->"Bold"],
+ " (2008) 1449\[Dash]1466."
+}], "Text",ExpressionUUID->"37c64897-bc6e-45cc-a7b6-474ba0349074"],
+
+Cell[TextData[{
+ "5. Nathan Fine, Binomial coefficients modulo a prime, ",
+ StyleBox["The American Mathematical Monthly",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["54",
+  FontWeight->"Bold"],
+ " (1947) 589\[Dash]592."
+}], "Text",ExpressionUUID->"14860d31-e90c-483a-a77b-56ae11e3927b"],
+
+Cell[TextData[{
+ "6. The On-Line Encyclopedia of Integer Sequences, ",
+ ButtonBox["http://oeis.org",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://oeis.org"], None},
+  ButtonNote->"http://oeis.org"],
+ "."
+}], "Text",ExpressionUUID->"d8384ab3-76c7-458f-a662-fa511ba3b18c"],
+
+Cell[TextData[{
+ "7. Aline Parreau, Michel Rigo, Eric Rowland, and \[CapitalEAcute]lise \
+Vandomme, A new approach to the ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],ExpressionUUID->
+  "4c0d4076-1014-4a8e-bbbb-de982714aec0"],
+ "-regularity of the ",
+ Cell[BoxData[
+  FormBox["\[ScriptL]", TraditionalForm]],ExpressionUUID->
+  "432e1f85-5af4-4a3c-970a-caa6df6e9d55"],
+ "-abelian complexity of ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],ExpressionUUID->
+  "cb8f6fa8-f4b5-4233-9455-8c9fb877fa38"],
+ "-automatic sequences, ",
+ StyleBox["The Electronic Journal of Combinatorics",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["22",
+  FontWeight->"Bold"],
+ " (2015) #P1.27."
+}], "Text",ExpressionUUID->"a5fdefcd-d812-434f-bc26-5b79de466485"],
+
+Cell[TextData[{
+ "8. Lara Pudwell and Eric Rowland, Avoiding fractional powers over the \
+natural numbers, ",
+ StyleBox["The Electronic Journal of Combinatorics",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["25",
+  FontWeight->"Bold"],
+ " (2018) #P2.27."
+}], "Text",ExpressionUUID->"2e164b3c-94ee-483f-8e92-faea7afca649"],
+
+Cell[TextData[{
+ "9. Eric Rowland, IntegerSequences, ",
+ ButtonBox["https://people.hofstra.edu/Eric_Rowland/packages.html#\
+IntegerSequences",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://people.hofstra.edu/Eric_Rowland/packages.html#\
+IntegerSequences"], None},
+  ButtonNote->
+   "https://people.hofstra.edu/Eric_Rowland/packages.html#IntegerSequences"],
+ "."
+}], "Text",ExpressionUUID->"1bf10b0c-48a5-49cb-a17e-9f46e8970706"],
+
+Cell[TextData[{
+ "10. Eric Rowland, A matrix generalization of a theorem of Fine, ",
+ StyleBox["Integers",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["18A",
+  FontWeight->"Bold"],
+ " (2018) A18."
+}], "Text",ExpressionUUID->"08894d59-e90d-4646-b73b-18bdbceb3a22"],
+
+Cell[TextData[{
+ "11. Eric Rowland and Jeffrey Shallit, Avoiding ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"3", "/", "2"}], TraditionalForm]],
+  FormatType->"TraditionalForm",ExpressionUUID->
+  "2473929d-a42e-4dcd-8b18-9312737a1b34"],
+ "-powers over the natural numbers, ",
+ StyleBox["Discrete Mathematics",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["312",
+  FontWeight->"Bold"],
+ " (2012) 1282\[Dash]1288."
+}], "Text",ExpressionUUID->"b8597271-15f5-468a-ae00-3f6c762faee2"],
+
+Cell[TextData[{
+ "12. Eric Rowland and Reem Yassawi, Automatic congruences for diagonals of \
+rational functions, ",
+ StyleBox["Journal de Th\[EAcute]orie des Nombres de Bordeaux",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["27",
+  FontWeight->"Bold"],
+ " (2015) 245\[Dash]288."
+}], "Text",ExpressionUUID->"550c8326-c85a-458a-b357-70328e633946"],
+
+Cell[TextData[{
+ "13. Eric Rowland and Doron Zeilberger, A case study in meta-automation: \
+automatic generation of congruence automata for combinatorial sequences, ",
+ StyleBox["Journal of Difference Equations and Applications",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["20",
+  FontWeight->"Bold"],
+ " (2014) 973\[Dash]988."
+}], "Text",ExpressionUUID->"bbd5d52c-efc9-42c3-8c3b-ffad53601597"],
+
+Cell[TextData[{
+ "14. Jeffrey Shallit, Remarks on inferring integer sequences, ",
+ ButtonBox["https://cs.uwaterloo.ca/~shallit/Talks/infer.ps",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://cs.uwaterloo.ca/~shallit/Talks/infer.ps"], None},
+  ButtonNote->"https://cs.uwaterloo.ca/~shallit/Talks/infer.ps"],
+ "."
+}], "Text",ExpressionUUID->"9328c105-aa1a-4c67-bfd8-c25bf65fc8e5"],
+
+Cell[TextData[{
+ "15. Lukas Spiegelhofer and Michael Wallner, An explicit generating function \
+arising in counting binomial coefficients divisible by powers of primes, ",
+ StyleBox["Acta Arithmetica",
+  FontSlant->"Italic"],
+ " ",
+ StyleBox["181",
+  FontWeight->"Bold"],
+ " (2017) 27\[Dash]55."
+}], "Text",ExpressionUUID->"d374e90e-fd2a-4a99-a569-7bc06dcb48d0"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{686, 759},
+WindowMargins->{{48, Automatic}, {Automatic, 16}},
+PrivateNotebookOptions->{"NoteStyle"->"NumberedNote"},
+TrackCellChangeTimes->False,
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->FrontEnd`FileName[{"Article"}, "JournalArticle.nb", 
+  CharacterEncoding -> "UTF-8"],
+Current2DTool -> "Select",
+IsPersistent2DTool -> False,
+Current3DTool -> "RotateView",
+IsPersistent3DTool -> False,
+CellLabelExpiredPlaceholder -> "\:f759\:f363",
+PrivateNotebookOptions -> {"NotebookAuthor" -> ""}
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 298, 7, 106, "Title",ExpressionUUID->"40ecfd06-6472-4d81-9563-c15d372e0367"],
+Cell[CellGroupData[{
+Cell[903, 33, 85, 0, 41, "Author",ExpressionUUID->"d90169c5-a133-4278-a4f7-49d8f4bd0dfe"],
+Cell[991, 35, 155, 4, 38, "Institution",ExpressionUUID->"9303c606-07ad-497c-836b-9fdbe3ac649b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1183, 44, 90, 0, 46, "AbstractSection",ExpressionUUID->"739c6a1d-10ae-406c-8420-767acb3a87c1"],
+Cell[1276, 46, 981, 22, 103, "Abstract",ExpressionUUID->"db790559-d94e-48b1-936a-2ae9b016d883"],
+Cell[2260, 70, 83, 0, 28, "Date",ExpressionUUID->"1b7a73c2-00f6-4596-bbca-32571d7109fb"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2380, 75, 86, 0, 47, "Section",ExpressionUUID->"664e7c49-1120-4e0d-b9ec-2b7387109617"],
+Cell[2469, 77, 774, 16, 69, "Text",ExpressionUUID->"c5615a97-28c1-40ab-9589-49fc86697a6f"],
+Cell[3246, 95, 139, 2, 31, "Input",ExpressionUUID->"33e8b01b-6336-4903-8229-3d0d178db6d3"],
+Cell[3388, 99, 556, 12, 20, "Text",ExpressionUUID->"0a7167f3-b495-4692-b96f-420a92a03b5c"],
+Cell[3947, 113, 318, 7, 20, "Text",ExpressionUUID->"820ff152-1178-4d42-b8fc-40e600757d73"],
+Cell[4268, 122, 925, 27, 20, "Definition",ExpressionUUID->"d8e831ed-51e8-4112-9752-388da9236a98"],
+Cell[5196, 151, 560, 17, 26, "Equation",ExpressionUUID->"41e37c03-a0bf-4474-b1fc-621817be8708"],
+Cell[5759, 170, 1802, 53, 50, "Text",ExpressionUUID->"655e14cf-7612-46b0-b468-7bffebbe0034"],
+Cell[7564, 225, 1243, 36, 35, "Definition",ExpressionUUID->"8a4f7135-f851-40d1-bfba-e600599d1326"],
+Cell[8810, 263, 331, 11, 20, "Text",ExpressionUUID->"aa8b9099-26e3-4021-b1af-0b9fc85dfc0a"],
+Cell[9144, 276, 309, 6, 26, "Equation",ExpressionUUID->"873f00ee-f95a-4af1-aeed-95df9a2e9beb"],
+Cell[9456, 284, 988, 29, 20, "Text",ExpressionUUID->"1df17137-99cc-462e-a09b-3a75fc25cf77"],
+Cell[10447, 315, 197, 6, 26, "Equation",ExpressionUUID->"542d526b-982b-4b3d-b486-7c5da66b0429"],
+Cell[10647, 323, 373, 12, 26, "Equation",ExpressionUUID->"9e5d4b97-40ef-4cfb-9e16-d998869280f8"],
+Cell[11023, 337, 399, 14, 26, "Equation",ExpressionUUID->"40a322eb-6d69-43d6-9a60-800bec6d2d12"],
+Cell[11425, 353, 1017, 32, 20, "Text",ExpressionUUID->"0e77c657-20ca-4878-a442-7472a5d66467"],
+Cell[12445, 387, 2279, 66, 65, "Text",ExpressionUUID->"aa01b3af-ae51-421b-b984-4cfd7886af7d"],
+Cell[14727, 455, 416, 12, 26, "Equation",ExpressionUUID->"827fc181-7951-4886-8cf2-3a26d219ae90"],
+Cell[15146, 469, 834, 23, 35, "Text",ExpressionUUID->"f680cf6f-6662-4a4e-8bc4-eda61da90d14"],
+Cell[15983, 494, 795, 26, 44, "Equation",ExpressionUUID->"e99a0f37-6092-4bb3-be27-a690a5bf02f8"],
+Cell[16781, 522, 2850, 84, 65, "Text",ExpressionUUID->"4d78f0f2-16d3-4dd3-8739-8969c3920bd8"],
+Cell[19634, 608, 794, 25, 31, "Input",ExpressionUUID->"819a5e42-3223-4e0c-b585-17fbce6cdbb5"],
+Cell[20431, 635, 498, 13, 43, "Text",ExpressionUUID->"be76b1f6-1481-4d98-920a-b6b406698fea"],
+Cell[CellGroupData[{
+Cell[20954, 652, 248, 6, 31, "Input",ExpressionUUID->"091bb03d-84a6-4515-a842-7ff693805462"],
+Cell[21205, 660, 302, 6, 31, "Output",ExpressionUUID->"2d3b5ddb-37ec-4f1a-a6f6-a7cca0a59a56"]
+}, Open  ]],
+Cell[21522, 669, 136, 2, 31, "Input",ExpressionUUID->"f64d3ae3-d8db-4896-b167-ad1fd8c9b33e"],
+Cell[21661, 673, 760, 17, 54, "Text",ExpressionUUID->"caaa7ddc-0301-47ef-80d6-9b86c1a3eccb"],
+Cell[CellGroupData[{
+Cell[22446, 694, 332, 8, 51, "Input",ExpressionUUID->"84086e3c-4264-4d64-8877-08df01587013"],
+Cell[22781, 704, 1894, 50, 81, "Output",ExpressionUUID->"bc57ed06-c44b-4122-b373-f881b5dc4dd1"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24724, 760, 263, 7, 47, "Section",ExpressionUUID->"88982fc7-c408-47ea-9ca6-45f50bf4b91c"],
+Cell[24990, 769, 5061, 146, 140, "Text",ExpressionUUID->"3813798f-1a34-4e91-87ab-667431d96970"],
+Cell[30054, 917, 930, 22, 50, "Text",ExpressionUUID->"ebd51ebf-d421-467d-82a8-e097399af89b"],
+Cell[30987, 941, 1166, 30, 54, "Text",ExpressionUUID->"d8162705-ce4c-440f-bcb5-cd9b466d038c"],
+Cell[CellGroupData[{
+Cell[32178, 975, 514, 14, 51, "Input",ExpressionUUID->"5c5be9a3-767c-457e-bb0c-6999e12eecad"],
+Cell[32695, 991, 1635, 46, 47, "Output",ExpressionUUID->"e494ef68-fa59-405a-a095-94f233639be4"]
+}, Open  ]],
+Cell[34345, 1040, 272, 6, 43, "Text",ExpressionUUID->"1717f263-1351-45a9-9faa-ac96ea282040"],
+Cell[CellGroupData[{
+Cell[34642, 1050, 261, 5, 31, "Input",ExpressionUUID->"bc1e5aff-769f-4aa1-ab8b-b307520564a4"],
+Cell[34906, 1057, 1141, 38, 97, "Output",ExpressionUUID->"3778d792-e6fd-42bc-8d8c-d53566df0c5c"]
+}, Open  ]],
+Cell[36062, 1098, 2335, 71, 76, "Text",ExpressionUUID->"1316612f-b46b-4347-9b03-aa10d4ede961"],
+Cell[CellGroupData[{
+Cell[38422, 1173, 748, 20, 70, "Input",ExpressionUUID->"ec6ddbb4-2680-4b56-bf31-93bdc4053145"],
+Cell[39173, 1195, 3683, 99, 143, "Output",ExpressionUUID->"1cbddbc0-2643-4e84-bfef-260ab7aed4d9"]
+}, Open  ]],
+Cell[42871, 1297, 238, 4, 39, "Text",ExpressionUUID->"bb1255b4-2f10-45ef-bd2f-0185171fe1bb"],
+Cell[43112, 1303, 2564, 84, 71, "Text",ExpressionUUID->"b74b7d0e-484f-4492-b10f-385cbe96f512"],
+Cell[45679, 1389, 183, 4, 26, "Equation",ExpressionUUID->"74be0601-bc9b-4ab6-8f8f-0f7577d2498c"],
+Cell[45865, 1395, 935, 24, 64, "Text",ExpressionUUID->"7e59945a-ee11-4730-9880-dfcac89d9659"],
+Cell[CellGroupData[{
+Cell[46825, 1423, 1037, 17, 108, "Input",ExpressionUUID->"ae930542-7f52-4ff2-8931-0b6239308075"],
+Cell[47865, 1442, 4430, 123, 93, "Output",ExpressionUUID->"2df3c113-4a96-42c7-b642-f3cbb2743fa5"]
+}, Open  ]],
+Cell[52310, 1568, 885, 23, 43, "Text",ExpressionUUID->"a374002e-c7fe-4d16-9acb-c1ab3c4dcee4"],
+Cell[53198, 1593, 3636, 98, 131, "Text",ExpressionUUID->"f1c3abcf-f252-4597-95e2-fd54228b4df6"],
+Cell[56837, 1693, 1897, 52, 108, "Text",ExpressionUUID->"86435c24-a3e8-4860-95fb-a56ca20bf93a"],
+Cell[CellGroupData[{
+Cell[58759, 1749, 718, 20, 78, "Input",ExpressionUUID->"365f8bc6-6ca4-4bb1-aee3-546a07161bcb"],
+Cell[59480, 1771, 1731, 49, 47, "Output",ExpressionUUID->"8e6bc923-c9ff-4b49-93b2-134cf54bae8f"]
+}, Open  ]],
+Cell[61226, 1823, 903, 21, 54, "Text",ExpressionUUID->"b1c00358-846a-41bb-b318-97450fe049ed"],
+Cell[62132, 1846, 1094, 33, 22, "Theorem",ExpressionUUID->"7c743a90-3751-4f29-9eff-f349591a6ce4"],
+Cell[63229, 1881, 497, 16, 46, "Equation",ExpressionUUID->"f7fa5ab0-9f5b-44b1-a05d-321d0b37e27f"],
+Cell[63729, 1899, 786, 24, 20, "TheoremContinuation",ExpressionUUID->"b9abb1bc-f317-482b-933f-45029b1e4d43"],
+Cell[64518, 1925, 871, 29, 56, "Equation",ExpressionUUID->"781e0022-965e-4ebb-bae0-25d56a06ae5d"],
+Cell[65392, 1956, 786, 19, 50, "Text",ExpressionUUID->"81b64e19-4840-4047-a18e-61c00f823bbc"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[66215, 1980, 302, 7, 47, "Section",ExpressionUUID->"d41b3701-fbb4-4f24-a7f6-f2ef3e1f42c6"],
+Cell[66520, 1989, 1272, 36, 50, "Text",ExpressionUUID->"39a4f826-09bf-40f4-9268-86daadd212f6"],
+Cell[67795, 2027, 3432, 96, 101, "Text",ExpressionUUID->"b3771a83-c93e-4995-b2ab-e145e95275ea"],
+Cell[CellGroupData[{
+Cell[71252, 2127, 280, 7, 31, "Input",ExpressionUUID->"2769cab4-22b8-44b9-bbb5-7adb255b7a2c"],
+Cell[71535, 2136, 2209, 64, 108, "Output",ExpressionUUID->"e541f994-91e9-4733-8aa7-f5166c5044c9"]
+}, Open  ]],
+Cell[73759, 2203, 228, 6, 24, "Text",ExpressionUUID->"dbcea505-0d50-4576-aed0-6e24fd7cd369"],
+Cell[CellGroupData[{
+Cell[74012, 2213, 199, 3, 31, "Input",ExpressionUUID->"19958561-b9b5-450f-bea8-d021dae41e26"],
+Cell[74214, 2218, 21845, 480, 197, "Output",ExpressionUUID->"28f6b97c-aa82-4132-aef9-28b70246cd74"]
+}, Open  ]],
+Cell[96074, 2701, 1890, 52, 82, "Text",ExpressionUUID->"baa99613-d23f-4915-985b-1f1c88b7a41b"],
+Cell[CellGroupData[{
+Cell[97989, 2757, 745, 20, 71, "Input",ExpressionUUID->"dd67902b-06d3-44e0-9c4a-620879428a2f"],
+Cell[98737, 2779, 1434, 42, 70, "Output",ExpressionUUID->"ec10aca0-d8a7-4ea2-9677-61ad11393a91"],
+Cell[100174, 2823, 15246, 334, 82, "Output",ExpressionUUID->"f15c4ca0-ff8f-42fa-a5e5-7fc3666a494d"]
+}, Open  ]],
+Cell[115435, 3160, 896, 21, 50, "Text",ExpressionUUID->"1f75801a-864f-4ccc-aa39-c47d8bb6dcbc"],
+Cell[CellGroupData[{
+Cell[116356, 3185, 605, 15, 89, "Input",ExpressionUUID->"e5814d01-a34f-425a-a719-44c546ab5bbf"],
+Cell[116964, 3202, 108, 1, 31, "Output",ExpressionUUID->"90fc45e3-c29c-4f14-8302-7282cbd1586e"],
+Cell[117075, 3205, 205, 4, 31, "Output",ExpressionUUID->"aa080100-876b-4bef-945a-d914bacc6d16"]
+}, Open  ]],
+Cell[117295, 3212, 1832, 53, 73, "Text",ExpressionUUID->"4f834073-8b7d-4ab4-a2b4-ac279bff54cf"],
+Cell[CellGroupData[{
+Cell[119152, 3269, 923, 25, 139, "Input",ExpressionUUID->"7199d2a0-f05d-4ddf-9fa1-906b4a90768a"],
+Cell[120078, 3296, 109, 1, 31, "Output",ExpressionUUID->"26525772-2f3a-4bd7-8a58-dfe6738c86fc"],
+Cell[120190, 3299, 129, 2, 31, "Output",ExpressionUUID->"b52c4354-c116-4461-9bbf-c587dcb87b63"]
+}, Open  ]],
+Cell[120334, 3304, 337, 7, 35, "Text",ExpressionUUID->"776245e2-bdbb-4592-8b6f-85afd72e453e"],
+Cell[120674, 3313, 355, 5, 50, "Text",ExpressionUUID->"1eb18d54-5078-4be4-ab6e-f18658a1c0e4"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[121066, 3323, 93, 0, 47, "ReferenceSection",ExpressionUUID->"c6ce51a1-af34-470c-bb2a-ffa1dac91904"],
+Cell[121162, 3325, 445, 13, 20, "Text",ExpressionUUID->"881a3113-b3de-453e-b95d-ec89cc8e02a5"],
+Cell[121610, 3340, 390, 9, 37, "Text",ExpressionUUID->"645bbea8-1364-4325-9708-847fd387e5c1"],
+Cell[122003, 3351, 416, 10, 35, "Text",ExpressionUUID->"c9c620e4-79d9-4727-976d-a4a6f28c7bdb"],
+Cell[122422, 3363, 551, 17, 35, "Text",ExpressionUUID->"37c64897-bc6e-45cc-a7b6-474ba0349074"],
+Cell[122976, 3382, 283, 8, 20, "Text",ExpressionUUID->"14860d31-e90c-483a-a77b-56ae11e3927b"],
+Cell[123262, 3392, 283, 8, 20, "Text",ExpressionUUID->"d8384ab3-76c7-458f-a662-fa511ba3b18c"],
+Cell[123548, 3402, 744, 21, 37, "Text",ExpressionUUID->"a5fdefcd-d812-434f-bc26-5b79de466485"],
+Cell[124295, 3425, 317, 9, 35, "Text",ExpressionUUID->"2e164b3c-94ee-483f-8e92-faea7afca649"],
+Cell[124615, 3436, 441, 11, 20, "Text",ExpressionUUID->"1bf10b0c-48a5-49cb-a17e-9f46e8970706"],
+Cell[125059, 3449, 259, 8, 20, "Text",ExpressionUUID->"08894d59-e90d-4646-b73b-18bdbceb3a22"],
+Cell[125321, 3459, 470, 14, 35, "Text",ExpressionUUID->"b8597271-15f5-468a-ae00-3f6c762faee2"],
+Cell[125794, 3475, 342, 9, 35, "Text",ExpressionUUID->"550c8326-c85a-458a-b357-70328e633946"],
+Cell[126139, 3486, 391, 9, 35, "Text",ExpressionUUID->"bbd5d52c-efc9-42c3-8c3b-ffad53601597"],
+Cell[126533, 3497, 390, 8, 20, "Text",ExpressionUUID->"9328c105-aa1a-4c67-bfd8-c25bf65fc8e5"],
+Cell[126926, 3507, 362, 9, 35, "Text",ExpressionUUID->"d374e90e-fd2a-4a99-a569-7bc06dcb48d0"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
