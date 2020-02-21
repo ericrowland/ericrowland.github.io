@@ -1,0 +1,1318 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     48536,       1310]
+NotebookOptionsPosition[     33331,        934]
+NotebookOutlinePosition[     36488,       1016]
+CellTagsIndexPosition[     35930,       1000]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["TeXTools 1.24", "Title",ExpressionUUID->"8e9a33d2-477d-46e6-ba66-3bc242744509"],
+
+Cell["documentation notebook", "Subtitle"],
+
+Cell[TextData[{
+ "Eric Rowland\n",
+ ButtonBox["http://people.hofstra.edu/Eric_Rowland/packages.html",
+  BaseStyle->"Hyperlink",
+  ButtonData:>{
+    URL["http://people.hofstra.edu/Eric_Rowland/packages.html"], None}]
+}], "Subsubtitle"],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section"],
+
+Cell[TextData[{
+ "TeXTools automates some common tasks involved in writing papers in ",
+ Cell[BoxData[
+  FormBox[
+   StyleBox[
+    RowBox[{"L", 
+     StyleBox[
+      AdjustmentBox["A",
+       BoxBaselineShift->-0.4,
+       BoxMargins->{{-0.5, -0.3}, {0, 0}}],
+      FontSize->Smaller], "T", 
+     AdjustmentBox["E",
+      BoxBaselineShift->0.5,
+      BoxMargins->{{-0.3, 0}, {0, 0}}], "X"}],
+    SingleLetterItalics->False], TraditionalForm]]],
+ ".\nThis introduction gets you started with the main features of the \
+package; the next section provides a complete list of package symbols along \
+with their usage messages and further examples."
+}], "Text"],
+
+Cell[TextData[{
+ "To use TeXTools, first you will need to load the package by evaluating the \
+following cell.  (If you need help, see ",
+ ButtonBox["loading a package",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.\
+html"], None},
+  ButtonNote->
+   "http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.html"],
+ ".)"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"<<", "TeXTools`"}]], "Code",ExpressionUUID->"8b3385bb-47e9-4c34-8a1b-08137a45cfd3"],
+
+Cell[CellGroupData[{
+
+Cell["Exporting figures", "Subsection",ExpressionUUID->"f298d3ce-e9a1-4ef8-a931-16a08d0629b4"],
+
+Cell[TextData[{
+ "The value of ",
+ StyleBox["$TeXSourceDirectory", "Input"],
+ " is the current working directory for TeXTools functions.  It specifies the \
+location of the .tex source file.\nLet\[CloseCurlyQuote]s create a temporary \
+directory for the purpose of demonstrating how to use the functions in \
+TeXTools and set ",
+ StyleBox["$TeXSourceDirectory", "Input"],
+ " to our new directory."
+}], "Text",ExpressionUUID->"988c0020-8d7b-4117-b2c6-b421ab2e2d12"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   StyleBox["$TeXSourceDirectory", "Input"], 
+   StyleBox["=", "Input"], 
+   RowBox[{"CreateDirectory", "[", "]"}]}], ";"}]], "Input",ExpressionUUID->\
+"d088f773-fc45-4292-b80d-56722f160b24"],
+
+Cell[TextData[{
+ "If your graphics files are in a different directory than your source file, \
+you may set ",
+ StyleBox["$TeXFiguresDirectory", "Input"],
+ " to your figures directory.  By default, ",
+ StyleBox["$TeXFiguresDirectory", "Input"],
+ " is a subdirectory of ",
+ StyleBox["$TeXSourceDirectory", "Input"],
+ ":"
+}], "Text",ExpressionUUID->"c99fd4c8-de69-477f-8d4e-f2866a85e340"],
+
+Cell[BoxData[
+ StyleBox["$TeXFiguresDirectory", "Input"]], "Input",ExpressionUUID->"33f2d227-d04d-4826-aef4-d42ca3c2cd22"],
+
+Cell[TextData[{
+ "However, since this directory doesn't exist yet, we'll want to create it \
+too.  (Of course, you can do all of this so far in your operating system, \
+outside of ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ ".)"
+}], "Text",ExpressionUUID->"3a648a48-27af-456d-8307-3e640026d2f2"],
+
+Cell[BoxData[
+ RowBox[{"CreateDirectory", "[", 
+  StyleBox["$TeXFiguresDirectory", "Input"], "]"}]], "Input",ExpressionUUID->\
+"cbf21adb-5426-4fb6-91d8-22c12365c19b"],
+
+Cell[TextData[{
+ "When working on a paper in ",
+ Cell[BoxData[
+  FormBox[
+   StyleBox[
+    RowBox[{"L", 
+     StyleBox[
+      AdjustmentBox["A",
+       BoxBaselineShift->-0.4,
+       BoxMargins->{{-0.5, -0.3}, {0, 0}}],
+      FontSize->Smaller], "T", 
+     AdjustmentBox["E",
+      BoxBaselineShift->0.5,
+      BoxMargins->{{-0.3, 0}, {0, 0}}], "X"}],
+    SingleLetterItalics->False], TraditionalForm]],ExpressionUUID->
+  "943731dc-f903-4982-91fd-0af92c3cfb88"],
+ ", it is useful to have graphics files in both .ps and .pdf formats, so that \
+the paper looks correct as both .dvi and .pdf documents.  ",
+ StyleBox["ExportFigure", "Input"],
+ " exports an image to both formats.  This exports a circle:"
+}], "Text",ExpressionUUID->"694c76e5-f162-4cd3-8c3d-33fc17dc7485"],
+
+Cell[BoxData[
+ RowBox[{"ExportFigure", "[", 
+  RowBox[{"\"\<circle\>\"", ",", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"Circle", "[", "]"}], "]"}]}], "]"}]], "Input",ExpressionUUID->\
+"4ba99dd3-680c-4b18-b27a-dbd350070b88"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Checking your spelling", "Subsection",ExpressionUUID->"1ee437f3-3f21-4aef-9c32-1ff6f7192f96"],
+
+Cell["Let's create a .tex file in our temporary directory.", "Text",ExpressionUUID->"97b63c03-5ddf-4d3b-9664-3677dd368367"],
+
+Cell[BoxData[
+ RowBox[{"Export", "[", 
+  RowBox[{
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{"$TeXSourceDirectory", ",", "\"\<paper.tex\>\""}], "}"}], "]"}], 
+   ",", 
+   RowBox[{"Cell", "[", 
+    RowBox[{
+    "\"\<This is a survey paper on opallic hypergeoids.\>\"", ",", 
+     "\"\<Text\>\""}], "]"}]}], "]"}]], "Input",ExpressionUUID->"5bef7764-\
+a16d-4169-9f05-dc255afc5e8c"],
+
+Cell["\<\
+Now let's check the spelling.
+The output is a list of rules, where each rule contains certain misspelled \
+words along with corresponding line numbers.\
+\>", "Text",ExpressionUUID->"5dadac05-8b15-4483-a289-6a08411c668f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"MisspelledWords", "[", "%", "]"}]], "Input",ExpressionUUID->"e95d9f0c-1be6-4332-8032-fd26cf5f16a3"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"Other\"\>", "\[Rule]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"amsmath\"\>", ",", 
+       RowBox[{"{", "4", "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"amssymb\"\>", ",", 
+       RowBox[{"{", "4", "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"setspace\"\>", ",", 
+       RowBox[{"{", "4", "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"mathematicapage\"\>", ",", 
+       RowBox[{"{", "9", "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"opallic\"\>", ",", 
+       RowBox[{"{", "12", "}"}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"hypergeoids\"\>", ",", 
+       RowBox[{"{", "12", "}"}]}], "}"}]}], "}"}]}], "}"}]], "Output",Expressi\
+onUUID->"793174bb-8b46-4144-a77d-5c8948b9ad87"]
+}, Open  ]],
+
+Cell["\<\
+There are several dictionaries in the package source file that you can add \
+words to.\
+\>", "Text",ExpressionUUID->"3bdfc9c3-d191-40e0-8af6-cbb621de740f"],
+
+Cell["You can also search for duplicate words in your paper:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DuplicateWords", "[", "%%", "]"}]], "Input",ExpressionUUID->"471234c8-6fad-4496-af26-123dc5726940"],
+
+Cell[BoxData[
+ RowBox[{"{", "}"}]], "Output",ExpressionUUID->"dcb8f2be-c918-4540-807b-6079a404a4cd"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Working with ",
+ Cell[BoxData[
+  FormBox[
+   StyleBox[
+    RowBox[{"T", 
+     AdjustmentBox["E",
+      BoxBaselineShift->0.5,
+      BoxMargins->{{-0.3, 0}, {0, 0}}], "X"}],
+    SingleLetterItalics->False], TraditionalForm]],ExpressionUUID->
+  "50a473fa-54b4-4243-a150-5ced88ba5c28"],
+ " files"
+}], "Subsection",ExpressionUUID->"b45b067c-4aed-44cb-bc2d-5c7899c03b2e"],
+
+Cell[TextData[{
+ StyleBox["TeXCompile", "Input"],
+ " compiles a .tex file.  Let's first make a .dvi file."
+}], "Text",ExpressionUUID->"070dab2e-5122-45cc-b521-aac858d9bda4"],
+
+Cell[BoxData[
+ RowBox[{"TeXCompile", "[", 
+  RowBox[{"\"\<paper\>\"", ",", "\"\<dvi\>\""}], "]"}]], "Input",ExpressionUUI\
+D->"da410f7a-ae9c-42d4-a57e-58fca446eee3"],
+
+Cell["We can also make a .pdf file.", "Text"],
+
+Cell[BoxData[
+ RowBox[{"TeXCompile", "[", 
+  RowBox[{"\"\<paper\>\"", ",", "\"\<pdf\>\""}], "]"}]], "Input"],
+
+Cell[TextData[{
+ "One way to set up your work environment when writing a ",
+ Cell[BoxData[
+  FormBox[
+   StyleBox[
+    RowBox[{"L", 
+     StyleBox[
+      AdjustmentBox["A",
+       BoxBaselineShift->-0.4,
+       BoxMargins->{{-0.5, -0.3}, {0, 0}}],
+      FontSize->Smaller], "T", 
+     AdjustmentBox["E",
+      BoxBaselineShift->0.5,
+      BoxMargins->{{-0.3, 0}, {0, 0}}], "X"}],
+    SingleLetterItalics->False], TraditionalForm]]],
+ " paper is to have open the source file, a command window for compiling the \
+source, and the dvi file for viewing the results.  ",
+ StyleBox["TeXOpen", "Input"],
+ " opens all three.\n(Note that the opening of the command window here is \
+Windows-specific.  If you know what the corresponding code should be for \
+other operating systems, let me know and I'll add it to the package.)"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"TeXOpen", "[", "\"\<paper\>\"", "]"}]], "Input"],
+
+Cell["This deletes our temporary directory and its contents:", "Text"],
+
+Cell[BoxData[
+ RowBox[{"DeleteDirectory", "[", 
+  RowBox[{"$TeXSourceDirectory", ",", 
+   RowBox[{"DeleteContents", "\[Rule]", "True"}]}], "]"}]], "Input",Expression\
+UUID->"67c277e9-c18c-480b-9ab4-b6e86bf7940c"]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Package symbols", "Section",ExpressionUUID->"d57d0edb-b8a2-4ea4-8b2c-8c4e876832c4"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["CommandArguments", "Input"]], "Subsubsection",ExpressionUUID->"47dbb3a6-3f5b-456a-a7d0-c718885f6f40"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "CommandArguments"}]], "Input",ExpressionUUID->"cbb994fd-3f3b-4f7c-b301-56ef40d0fc3e"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"CommandArguments\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"file\\\\\\\",\
+\\\\\\\"TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"command\\\\\\\",\\\\\\\"\
+TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True]]], \\\"]\\\"]]\) \
+gives a list of all arguments given to a command in a \
+file.\\n\!\(\*RowBox[List[\\\"CommandArguments\\\", \\\"[\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"command\\\\\\\",\\\\\\\"\
+TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\"]\\\"]]\) \
+finds arguments in \\\"paper.tex\\\".\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info183702545994-3180607",ExpressionUUID->"aac4a46a-50a9-47e0-a850-\
+5d4ec57566f2"]
+}, Open  ]],
+
+Cell["Find all the graphics files used in a paper:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Union", "[", 
+  RowBox[{"CommandArguments", "[", 
+   RowBox[{
+   "\"\<\\\\includegraphics\>\"", "|", "\"\<\\\\vcentergraphics\>\""}], "]"}],
+   "]"}]], "Input",ExpressionUUID->"0bb26fd3-9c59-4147-8555-928058595c7e"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "}"}], ",", 
+   RowBox[{"{", "\<\"#1\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"5leafpathtrees\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"binarytree#1-#2\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"binarytree3-1\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"binarytree3-2\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"binarytree4-2\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"binarytree5-1\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"binarytree5-7\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"binarytree7-1\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"binarytree7-64\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"binarytree7-7\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"binarytree7-7labeled\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"binarytree8-231\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"binarytree8-69\"\>", "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.493075053442315*^9, 
+  3.493075074985915*^9}},ExpressionUUID->"c52d1e77-8d3e-4727-87e9-\
+eb9c4cdda939"]
+}, Open  ]],
+
+Cell["Delete unused graphics files:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"With", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"graphics", "=", 
+     RowBox[{"First", "/@", 
+      RowBox[{"CommandArguments", "[", "\"\<includegraphics\>\"", "]"}]}]}], 
+    "}"}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"DeleteFile", "[", 
+         RowBox[{"FileNameJoin", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            StyleBox[
+             RowBox[{"$", 
+              StyleBox["TeX", "Input"], "FiguresDirectory"}]], ",", "#1"}], 
+           "}"}], "]"}], "]"}], ";", 
+        RowBox[{"FileNameJoin", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           StyleBox[
+            RowBox[{"$", 
+             StyleBox["TeX", "Input"], "FiguresDirectory"}]], ",", "#1"}], 
+          "}"}], "]"}]}], ")"}], "&"}], ")"}], "/@", 
+    RowBox[{"Select", "[", 
+     RowBox[{
+      RowBox[{"FileNameTake", "/@", 
+       RowBox[{"FileNames", "[", 
+        RowBox[{"___", ",", 
+         StyleBox[
+          RowBox[{"$", 
+           StyleBox["TeX", "Input"], "FiguresDirectory"}]]}], "]"}]}], ",", 
+      RowBox[{
+       RowBox[{"!", 
+        RowBox[{"MemberQ", "[", 
+         RowBox[{"graphics", ",", 
+          RowBox[{"StringDrop", "[", 
+           RowBox[{"#1", ",", 
+            RowBox[{"-", "4"}]}], "]"}]}], "]"}]}], "&"}]}], "]"}]}]}], 
+  "]"}]], "Input",
+ Evaluatable->False],
+
+Cell[BoxData[
+ RowBox[{"{", "\<\"C:\\\\talk\\\\figures\\\\extra.pdf\"\>", "}"}]], "Output",
+ CellChangeTimes->{{3.5345387348082657`*^9, 3.534538770204665*^9}, {
+   3.5345388375830655`*^9, 3.5345388736190653`*^9}, 3.534538917885865*^9}]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["DuplicateWords", "Input"]], "Subsubsection",ExpressionUUID->"2ad4edef-a161-4c56-868a-af2455615f99"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "DuplicateWords"}]], "Input",ExpressionUUID->"e3870c1d-4624-4201-bf83-07a1c88587b4"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"DuplicateWords\\\", \\\"[\\\", StyleBox[\
+\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"file\\\\\\\",\\\\\\\"TI\\\\\\\"]\\\
+\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\"]\\\"]]\) gives a list of \
+duplicate words, along with the corresponding line numbers, in a file.\\n\!\(\
+\*RowBox[List[\\\"DuplicateWords\\\", \\\"[\\\", \\\"]\\\"]]\) finds \
+duplicate words in \\\"paper.tex\\\".\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info203702546009-3180607",ExpressionUUID->"7d9de4d2-c9fa-43e1-a707-\
+f6145104fbfd"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["ExportFigure", "Input"]], "Subsubsection",ExpressionUUID->"c58c6ed0-6862-469c-8bfc-f0ca6028c122"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ExportFigure"}]], "Input",ExpressionUUID->"662217a5-f655-4881-8ccb-ced377e9207a"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ExportFigure\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"file\\\\\\\",\
+\\\\\\\"TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\",\\\", \
+StyleBox[\\\"graphics\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) exports \
+\!\(\*StyleBox[\\\"graphics\\\", \\\"TI\\\"]\) as both \
+\\\"\!\(\*StyleBox[\\\"file\\\", \\\"TI\\\"]\).eps\\\" and \
+\\\"\!\(\*StyleBox[\\\"file\\\", \\\"TI\\\"]\).pdf\\\" to the directory given \
+by $TeXFiguresDirectory.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info223702546017-3180607",ExpressionUUID->"8e36333b-62b7-4fdd-990f-\
+d1d52dc132bd"]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"$TeXFiguresDirectory", "=", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{"$TemporaryDirectory", ",", "\"\<temp\>\""}], "}"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"CreateDirectory", "[", "$TeXFiguresDirectory", "]"}], ";"}], "\n", 
+ RowBox[{"ExportFigure", "[", 
+  RowBox[{"\"\<rule30\>\"", ",", 
+   RowBox[{"ArrayPlot", "[", 
+    RowBox[{"CellularAutomaton", "[", 
+     RowBox[{"30", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "1", "}"}], ",", "0"}], "}"}], ",", "100"}], "]"}], 
+    "]"}]}], "]"}]}], "Input",ExpressionUUID->"72a54d82-f9ea-4c2b-a48c-\
+bbbe8dabc998"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["MisspelledWords", "Input"]], "Subsubsection",ExpressionUUID->"1ffb9b7d-9c25-4727-824c-1e8a7026a7df"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "MisspelledWords"}]], "Input",ExpressionUUID->"b63aa83e-e60d-48cd-80c7-399c71f88f8c"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"MisspelledWords\\\", \\\"[\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"file\\\\\\\",\\\\\\\"TI\\\
+\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\"]\\\"]]\) gives \
+the words in a file that do not appear in one of the dictionaries, along with \
+the corresponding line numbers.\\n\!\(\*RowBox[List[\\\"MisspelledWords\\\", \
+\\\"[\\\", \\\"]\\\"]]\) finds misspelled words in \\\"paper.tex\\\".\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info213702546014-3180607",ExpressionUUID->"d5777ced-92f0-42bb-bdb4-\
+1a93adca67c1"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolReplace", "Input"]], "Subsubsection",ExpressionUUID->"c159fd06-27c1-48b0-a8aa-d724df42ba1a"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolReplace"}]], "Input",ExpressionUUID->"12173ca5-5216-4066-9f13-da52fe975069"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolReplace\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"file\\\\\\\",\
+\\\\\\\"TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"newfile\\\\\\\",\\\\\\\"\
+TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\",\\\", \
+RowBox[List[StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"symbol\\\\\\\
+\",\\\\\\\"TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \
+\\\"\\\\[Rule]\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"newsymbol\\\\\\\",\\\\\\\
+\"TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True]]]]], \
+\\\"]\\\"]]\) renames a variable in all math environments in a TeX source \
+file, and exports the result to a new \
+file.\\n\!\(\*RowBox[List[\\\"SymbolReplace\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"file\\\\\\\",\
+\\\\\\\"TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\",\\\", \
+RowBox[List[StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"symbol\\\\\\\
+\",\\\\\\\"TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \
+\\\"\\\\[Rule]\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"newsymbol\\\\\\\",\\\\\\\
+\"TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True]]]]], \
+\\\"]\\\"]]\) exports the result to the original file after making a \
+copy.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info233702546071-3180607",ExpressionUUID->"946cca69-7d85-4cdf-89ae-\
+1cd721f0027d"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Replace all instances of the variable ",
+ Cell[BoxData[
+  FormBox["f", TraditionalForm]],ExpressionUUID->
+  "a34a6d09-2404-45f7-8583-5b03095a479f"],
+ " with ",
+ Cell[BoxData[
+  FormBox["a", TraditionalForm]],ExpressionUUID->
+  "3ca823b5-0ec0-40cf-9cd8-9395af731137"],
+ ":"
+}], "Text",ExpressionUUID->"80df2ece-fb8f-4429-9933-f1c0d9ffa7fb"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolReplace", "[", 
+  RowBox[{"\"\<paper\>\"", ",", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{"$HomeDirectory", ",", "\"\<copy.tex\>\""}], "}"}], "]"}], ",", 
+   RowBox[{"\"\<f\>\"", "\[Rule]", "\"\<a\>\""}]}], "]"}]], "Input",Expression\
+UUID->"56d9cd5a-3f67-4791-af1d-2d3fcc77946a"],
+
+Cell[BoxData["\<\"C:\\\\temp\\\\copy.tex\"\>"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["TeXCompile", "Input"]], "Subsubsection",ExpressionUUID->"bc3076b1-0cdb-4b5e-b710-ff9a91fea264"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "TeXCompile"}]], "Input",ExpressionUUID->"768f9da1-404c-4aab-8f9e-bc931ba74592"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"TeXCompile\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"file\\\\\\\",\
+\\\\\\\"TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"ext\\\\\\\",\\\\\\\"TI\\\
+\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True]]], \\\"]\\\"]]\) \
+compiles the source file \\\"\!\(\*StyleBox[\\\"file\\\", \\\"TI\\\"]\).tex\\\
+\" to \\\"\!\(\*StyleBox[\\\"file\\\", \\\"TI\\\"]\).\!\(\*StyleBox[\\\"ext\\\
+\", \\\"TI\\\"]\)\\\".\\n\!\(\*RowBox[List[\\\"TeXCompile\\\", \\\"[\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"file\\\\\\\",\\\\\\\"TI\\\
+\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\"]\\\"]]\) compiles \
+\\\"\!\(\*StyleBox[\\\"file\\\", \\\"TI\\\"]\).tex\\\" to \\\"\!\(\*StyleBox[\
+\\\"file\\\", \\\"TI\\\"]\).dvi\\\".\\n\!\(\*RowBox[List[\\\"TeXCompile\\\", \
+\\\"[\\\", \\\"]\\\"]]\) compiles \\\"paper.tex\\\" to \
+\\\"paper.dvi\\\".\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info243702546076-3180607",ExpressionUUID->"d9c36cf9-c4d5-4410-95c3-\
+1810ef23f0bc"]
+}, Open  ]],
+
+Cell["Possible file types include dvi, pdf, and ps.", "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["TeXOpen", "Input"]], "Subsubsection",ExpressionUUID->"f7cfebfc-2b2c-4f8c-8888-8c3baae16ba1"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "TeXOpen"}]], "Input",ExpressionUUID->"6a4863de-e64f-4a4b-a85e-60bcf9fd1c59"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"TeXOpen\\\", \\\"[\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"file\\\\\\\",\\\\\\\"TI\\\
+\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\"]\\\"]]\) opens \
+the files \\\"\!\(\*StyleBox[\\\"file\\\", \\\"TI\\\"]\).tex\\\" and \\\"\!\(\
+\*StyleBox[\\\"file\\\", \\\"TI\\\"]\).dvi\\\", as well as a command prompt \
+for compiling the source.\\n\!\(\*RowBox[List[\\\"TeXOpen\\\", \\\"[\\\", \
+\\\"]\\\"]]\) opens \\\"paper.tex\\\" and \\\"paper.dvi\\\".\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info253702546081-3180607",ExpressionUUID->"acd0bc64-3f0b-4006-9193-\
+3816c926f38c"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"TeXOpen", "[", "]"}]], "Input"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["TeXPublish", "Input"]], "Subsubsection",ExpressionUUID->"7af0f162-45d9-47d1-8860-7744d4083ebf"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "TeXPublish"}]], "Input",ExpressionUUID->"dcac6fef-7c0b-4b19-b531-9bd66b2c702a"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"TeXPublish\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"file\\\\\\\",\
+\\\\\\\"TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"newfile\\\\\\\",\\\\\\\"\
+TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"ext\\\\\\\",\\\\\\\"TI\\\
+\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True]]], \\\"]\\\"]]\) \
+compiles \\\"\!\(\*StyleBox[\\\"file\\\", \\\"TI\\\"]\).tex\\\" to \
+\\\"\!\(\*StyleBox[\\\"file\\\", \\\"TI\\\"]\).\!\(\*StyleBox[\\\"ext\\\", \\\
+\"TI\\\"]\)\\\" and copies it to the directory given by \
+$TeXPublicationDirectory as \\\"\!\(\*StyleBox[\\\"newfile\\\", \
+\\\"TI\\\"]\).\!\(\*StyleBox[\\\"ext\\\", \
+\\\"TI\\\"]\)\\\".\\n\!\(\*RowBox[List[\\\"TeXPublish\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"file\\\\\\\",\
+\\\\\\\"TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\",\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"newfile\\\\\\\",\\\\\\\"\
+TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True]]], \\\"]\\\"]]\) \
+publishes \\\"\!\(\*StyleBox[\\\"file\\\", \\\"TI\\\"]\).tex\\\" as both \\\"\
+\!\(\*StyleBox[\\\"newfile\\\", \\\"TI\\\"]\).pdf\\\" and \\\"\!\(\*StyleBox[\
+\\\"newfile\\\", \
+\\\"TI\\\"]\).ps\\\".\\n\!\(\*RowBox[List[\\\"TeXPublish\\\", \\\"[\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"newfile\\\\\\\",\\\\\\\"\
+TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True], \\\"]\\\"]]\) \
+publishes \\\"paper.tex\\\".\\n\!\(\*RowBox[List[\\\"TeXPublish\\\", \
+\\\"[\\\", \\\"]\\\"]]\) publishes \\\"paper.tex\\\" with a file name \
+generated from the title of the paper.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info263702546084-3180607",ExpressionUUID->"aaa53f25-dc87-4912-988e-\
+beea3f19d319"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["TeXTableForm", "Input"]], "Subsubsection",ExpressionUUID->"686f3852-c61b-4efe-bd4f-dfe1d30fc80e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "TeXTableForm"}]], "Input",ExpressionUUID->"334af3f0-611c-41c8-ac92-d4e6e378ca76"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"TeXTableForm\\\", \\\"[\\\", StyleBox[\\\
+\"array\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives the TeX format of a \
+two\[Hyphen]dimensional table \!\(\*StyleBox[\\\"array\\\", \
+\\\"TI\\\"]\).\\nThe options Alignment and TableHeadings can be given.\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info273702546088-3180607",ExpressionUUID->"68dde6d0-eed1-4669-979e-\
+aa3915cb57ee"]
+}, Open  ]],
+
+Cell[TextData[{
+ "This is a minor improvement over the functionality for tables built into ",
+ StyleBox["TeXForm", "Input"],
+ ".\nIn addition to having two options, it handles ragged arrays."
+}], "Text"],
+
+Cell[TextData[{
+ "There is a trick to actually copying the output from this function:  It is \
+best to select the entire output cell by its bracket on the right or by \
+triple-clicking on the output; if ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " does not believe that you intend to copy the entire cell (even if every \
+character is selected), several stray quotes and backslashes will appear when \
+it is pasted."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox["TeXTableForm", "Input"], "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"47", ",", "1104", ",", "1105"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"817", ",", "744", ",", "1105"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"943", ",", "576", ",", "1105"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"1073", ",", "264", ",", "1105"}], "}"}]}], "}"}], 
+  "]"}]], "Input",ExpressionUUID->"447cbf9e-8618-470f-bb28-8be28988a270"],
+
+Cell[BoxData["\<\"\\\\[\\n\\\\begin{array}{ccc}\\n47 & 1104 & 1105 \
+\\\\\\\\\\n817 & 744 & 1105 \\\\\\\\\\n943 & 576 & 1105 \\\\\\\\\\n1073 & 264 \
+& 1105\\n\\\\end{array}\\n\\\\]\"\>"], "Output",ExpressionUUID->"b31087e8-\
+a839-46e5-8364-beb5d6444205"]
+}, Open  ]],
+
+Cell["Options:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Options", "[", 
+  StyleBox["TeXTableForm", "Input"], "]"}]], "Input",ExpressionUUID->\
+"3c35430f-1f5a-43e6-ae80-455d00646811"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"Alignment", "\[Rule]", "Center"}], ",", 
+   RowBox[{"TableHeadings", "\[Rule]", "None"}]}], "}"}]], "Output",Expression\
+UUID->"eb1c8353-1e4b-467c-b68f-0c72a5eb9625"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox["TeXTableForm", "Input"], "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"47", ",", "1104", ",", "1105"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"817", ",", "744", ",", "1105"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"943", ",", "576", ",", "1105"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1073", ",", "264", ",", "1105"}], "}"}]}], "}"}], ",", 
+   RowBox[{"Alignment", "\[Rule]", "Center"}], ",", 
+   RowBox[{"TableHeadings", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"None", ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", "y", ",", 
+        SqrtBox[
+         RowBox[{
+          SuperscriptBox["x", "2"], "+", 
+          SuperscriptBox["y", "2"]}]]}], "}"}]}], "}"}]}]}], "]"}]], "Input",E\
+xpressionUUID->"766c0a98-df17-4765-8a99-b9d43ac7902a"],
+
+Cell[BoxData["\<\"\\\\[\\n\\\\begin{array}{ccc}\\nx & y & \\\\sqrt{x^2+y^2} \
+\\\\\\\\ \\\\hline\\n47 & 1104 & 1105 \\\\\\\\\\n817 & 744 & 1105 \
+\\\\\\\\\\n943 & 576 & 1105 \\\\\\\\\\n1073 & 264 & \
+1105\\n\\\\end{array}\\n\\\\]\"\>"], "Output",ExpressionUUID->"29454da2-b5ef-\
+435a-bdc1-1492db10e2d8"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox["TeXTableForm", "Input"], "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"47", ",", "1104", ",", "1105"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"817", ",", "744", ",", "1105"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"943", ",", "576", ",", "1105"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1073", ",", "264", ",", "1105"}], "}"}]}], "}"}], ",", 
+   RowBox[{"TableHeadings", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Range", "[", "4", "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"x", ",", "y", ",", 
+        SqrtBox[
+         RowBox[{
+          SuperscriptBox["x", "2"], "+", 
+          SuperscriptBox["y", "2"]}]]}], "}"}]}], "}"}]}]}], "]"}]], "Input",E\
+xpressionUUID->"dd9ade02-b99c-4564-8213-968382b88d37"],
+
+Cell[BoxData["\<\"\\\\[\\n\\\\begin{array}{c|ccc}\\n\\\\text{} & x & y & \
+\\\\sqrt{x^2+y^2} \\\\\\\\ \\\\hline\\n1 & 47 & 1104 & 1105 \\\\\\\\\\n2 & \
+817 & 744 & 1105 \\\\\\\\\\n3 & 943 & 576 & 1105 \\\\\\\\\\n4 & 1073 & 264 & \
+1105\\n\\\\end{array}\\n\\\\]\"\>"], "Output",ExpressionUUID->"1cd23327-3cdb-\
+4f1a-bcd9-9e98ed71f9bd"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox["TeXTableForm", "Input"], "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"47", ",", "1104", ",", "1105"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"817", ",", "744", ",", "1105"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"943", ",", "576", ",", "1105"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1073", ",", "264", ",", "1105"}], "}"}]}], "}"}], ",", 
+   RowBox[{"Alignment", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"{", 
+      RowBox[{"Right", ",", "Right", ",", "Left"}], "}"}], "}"}]}]}], 
+  "]"}]], "Input",ExpressionUUID->"04b22e3f-399a-4b2c-8378-e2e4ddebf9d2"],
+
+Cell[BoxData["\<\"\\\\[\\n\\\\begin{array}{rrl}\\n47 & 1104 & 1105 \
+\\\\\\\\\\n817 & 744 & 1105 \\\\\\\\\\n943 & 576 & 1105 \\\\\\\\\\n1073 & 264 \
+& 1105\\n\\\\end{array}\\n\\\\]\"\>"], "Output",ExpressionUUID->"861ca7ef-\
+9a70-4942-9c91-c54da3fb903e"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["$TeXFiguresDirectory", "Input"]], "Subsubsection",ExpressionUUID->"685095ed-e6a6-4e5d-a68f-50a104e66497"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "$TeXFiguresDirectory"}]], "Input",ExpressionUUID->"8998c447-d5dc-4581-8484-75984a76e979"],
+
+Cell[BoxData[
+ StyleBox["\<\"$TeXFiguresDirectory gives the directory where graphics files \
+are exported.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616004515-2623274"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["ExportFigure", "Input"],
+ " exports graphics files to the directory given by ",
+ StyleBox["$TeXFiguresDirectory", "Input"],
+ " if no full path is given."
+}], "Text"],
+
+Cell[TextData[{
+ "By default, ",
+ StyleBox["$TeXFiguresDirectory", "Input"],
+ " is set to the following."
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"FileNameJoin", "[", 
+  RowBox[{"{", 
+   RowBox[{"$TeXSourceDirectory", ",", "\"\<figures\>\""}], "}"}], 
+  "]"}]], "Input",ExpressionUUID->"d9a53797-00de-487d-907b-91123486de8e"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["$TeXPublicationDirectory", "Input"]], "Subsubsection",ExpressionUUID->"35dfee24-f12a-4649-a3ca-689716d0f08c"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "$TeXPublicationDirectory"}]], "Input",ExpressionUUID->"26059c4e-2eb5-4349-b641-801ca330a674"],
+
+Cell[BoxData[
+ StyleBox["\<\"$TeXPublicationDirectory gives the directory where finished \
+papers are copied.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info343702546121-3180607",ExpressionUUID->"e192e2c6-7d83-4a1e-9444-\
+f6ea208c7155"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["$TeXSourceDirectory", "Input"]], "Subsubsection",ExpressionUUID->"123a4cac-a474-40f2-b3d5-f8f6e37851f7"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "$TeXSourceDirectory"}]], "Input",ExpressionUUID->"c169f40a-fe35-4b76-9486-0847c309298b"],
+
+Cell[BoxData[
+ StyleBox["\<\"$TeXSourceDirectory gives the directory where LaTeX source \
+files are read.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info353702546128-3180607",ExpressionUUID->"a0c381db-19ea-41c8-8810-\
+1c3f7ac3e185"]
+}, Open  ]],
+
+Cell[TextData[{
+ "The functions in TeXTools check for files in the directory given by ",
+ StyleBox["$TeXSourceDirectory", "Input"],
+ " if no full path is given."
+}], "Text"],
+
+Cell[TextData[{
+ "By default, ",
+ StyleBox["$TeXSourceDirectory", "Input"],
+ " is set to the directory containing the notebook into which TeXTools was \
+loaded, if it exists; if not, it is set to the value of ",
+ StyleBox["$InitialDirectory", "Input"],
+ "."
+}], "Text"]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+},
+AutoGeneratedPackage->None,
+WindowSize->{1264, 717},
+WindowMargins->{{35, Automatic}, {Automatic, 12}},
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
+ShowSelection->True,
+TrackCellChangeTimes->False,
+FrontEndVersion->"11.1 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 16, \
+2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "Info183702545994-3180607"->{
+  Cell[9914, 309, 851, 13, 
+  61, "Print", "ExpressionUUID" -> "aac4a46a-50a9-47e0-a850-5d4ec57566f2",
+   CellTags->"Info183702545994-3180607"]},
+ "Info203702546009-3180607"->{
+  Cell[14095, 425, 575, 9, 
+  58, "Print", "ExpressionUUID" -> "7d9de4d2-c9fa-43e1-a707-f6145104fbfd",
+   CellTags->"Info203702546009-3180607"]},
+ "Info223702546017-3180607"->{
+  Cell[14978, 447, 667, 11, 
+  43, "Print", "ExpressionUUID" -> "8e36333b-62b7-4fdd-990f-d1d52dc132bd",
+   CellTags->"Info223702546017-3180607"]},
+ "Info213702546014-3180607"->{
+  Cell[16615, 491, 610, 10, 
+  58, "Print", "ExpressionUUID" -> "d5777ced-92f0-42bb-bdb4-1a93adca67c1",
+   CellTags->"Info213702546014-3180607"]},
+ "Info233702546071-3180607"->{
+  Cell[17535, 514, 1583, 25, 
+  61, "Print", "ExpressionUUID" -> "946cca69-7d85-4cdf-89ae-1cd721f0027d",
+   CellTags->"Info233702546071-3180607"]},
+ "Info243702546076-3180607"->{
+  Cell[20212, 578, 1156, 17, 
+  76, "Print", "ExpressionUUID" -> "d9c36cf9-c4d5-4410-95c3-1810ef23f0bc",
+   CellTags->"Info243702546076-3180607"]},
+ "Info253702546081-3180607"->{
+  Cell[21730, 610, 667, 11, 
+  58, "Print", "ExpressionUUID" -> "acd0bc64-3f0b-4006-9193-3816c926f38c",
+   CellTags->"Info253702546081-3180607"]},
+ "Info263702546084-3180607"->{
+  Cell[22759, 637, 1971, 29, 
+  97, "Print", "ExpressionUUID" -> "aaa53f25-dc87-4912-988e-beea3f19d319",
+   CellTags->"Info263702546084-3180607"]},
+ "Info273702546088-3180607"->{
+  Cell[25038, 679, 433, 8, 
+  61, "Print", "ExpressionUUID" -> "68dde6d0-eed1-4669-979e-aa3915cb57ee",
+   CellTags->"Info273702546088-3180607"]},
+ "Info3616004515-2623274"->{
+  Cell[30988, 855, 181, 3, 
+  43, "Print", "ExpressionUUID" -> "9eda3a28-0451-4b6b-b4a9-267fddc850a6",
+   CellTags->"Info3616004515-2623274"]},
+ "Info343702546121-3180607"->{
+  Cell[32021, 890, 246, 5, 
+  43, "Print", "ExpressionUUID" -> "e192e2c6-7d83-4a1e-9444-f6ea208c7155",
+   CellTags->"Info343702546121-3180607"]},
+ "Info353702546128-3180607"->{
+  Cell[32589, 908, 242, 5, 
+  43, "Print", "ExpressionUUID" -> "a0c381db-19ea-41c8-8810-1c3f7ac3e185",
+   CellTags->"Info353702546128-3180607"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"Info183702545994-3180607", 33809, 949},
+ {"Info203702546009-3180607", 33986, 953},
+ {"Info223702546017-3180607", 34163, 957},
+ {"Info213702546014-3180607", 34341, 961},
+ {"Info233702546071-3180607", 34519, 965},
+ {"Info243702546076-3180607", 34698, 969},
+ {"Info253702546081-3180607", 34877, 973},
+ {"Info263702546084-3180607", 35055, 977},
+ {"Info273702546088-3180607", 35234, 981},
+ {"Info3616004515-2623274", 35409, 985},
+ {"Info343702546121-3180607", 35584, 989},
+ {"Info353702546128-3180607", 35761, 993}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 85, 0, 92, "Title", "ExpressionUUID" -> \
+"8e9a33d2-477d-46e6-ba66-3bc242744509"],
+Cell[655, 24, 42, 0, 51, "Subtitle", "ExpressionUUID" -> \
+"452f48a6-ec2e-4787-9734-cc3311cb3deb"],
+Cell[700, 26, 234, 6, 49, "Subsubtitle", "ExpressionUUID" -> \
+"e38485dc-3af0-4d7b-a92a-dd4c0c3d1f23"],
+Cell[CellGroupData[{
+Cell[959, 36, 31, 0, 64, "Section", "ExpressionUUID" -> \
+"95e71d9c-9270-4f81-8ddd-3631fff65771"],
+Cell[993, 38, 655, 18, 71, "Text", "ExpressionUUID" -> \
+"fd9ae123-74ae-437b-92f9-f960c8891402"],
+Cell[1651, 58, 414, 11, 30, "Text", "ExpressionUUID" -> \
+"ccef1895-3a82-448a-83ad-28ff4d9ba4db"],
+Cell[2068, 71, 107, 1, 52, "Code", "ExpressionUUID" -> \
+"8b3385bb-47e9-4c34-8a1b-08137a45cfd3"],
+Cell[CellGroupData[{
+Cell[2200, 76, 94, 0, 44, "Subsection", "ExpressionUUID" -> \
+"f298d3ce-e9a1-4ef8-a931-16a08d0629b4"],
+Cell[2297, 78, 464, 9, 51, "Text", "ExpressionUUID" -> \
+"988c0020-8d7b-4117-b2c6-b421ab2e2d12"],
+Cell[2764, 89, 226, 6, 32, "Input", "ExpressionUUID" -> \
+"d088f773-fc45-4292-b80d-56722f160b24"],
+Cell[2993, 97, 385, 9, 51, "Text", "ExpressionUUID" -> \
+"c99fd4c8-de69-477f-8d4e-f2866a85e340"],
+Cell[3381, 108, 122, 1, 32, "Input", "ExpressionUUID" -> \
+"33f2d227-d04d-4826-aef4-d42ca3c2cd22"],
+Cell[3506, 111, 304, 7, 30, "Text", "ExpressionUUID" -> \
+"3a648a48-27af-456d-8307-3e640026d2f2"],
+Cell[3813, 120, 166, 3, 32, "Input", "ExpressionUUID" -> \
+"cbf21adb-5426-4fb6-91d8-22c12365c19b"],
+Cell[3982, 125, 768, 20, 52, "Text", "ExpressionUUID" -> \
+"694c76e5-f162-4cd3-8c3d-33fc17dc7485"],
+Cell[4753, 147, 224, 5, 32, "Input", "ExpressionUUID" -> \
+"4ba99dd3-680c-4b18-b27a-dbd350070b88"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[5014, 157, 99, 0, 36, "Subsection", "ExpressionUUID" -> \
+"1ee437f3-3f21-4aef-9c32-1ff6f7192f96"],
+Cell[5116, 159, 123, 0, 30, "Text", "ExpressionUUID" -> \
+"97b63c03-5ddf-4d3b-9664-3677dd368367"],
+Cell[5242, 161, 400, 11, 32, "Input", "ExpressionUUID" -> \
+"5bef7764-a16d-4169-9f05-dc255afc5e8c"],
+Cell[5645, 174, 230, 4, 49, "Text", "ExpressionUUID" -> \
+"5dadac05-8b15-4483-a289-6a08411c668f"],
+Cell[CellGroupData[{
+Cell[5900, 182, 123, 1, 32, "Input", "ExpressionUUID" -> \
+"e95d9f0c-1be6-4332-8032-fd26cf5f16a3"],
+Cell[6026, 185, 822, 23, 32, "Output", "ExpressionUUID" -> \
+"793174bb-8b46-4144-a77d-5c8948b9ad87"]
+}, Open  ]],
+Cell[6863, 211, 165, 3, 30, "Text", "ExpressionUUID" -> \
+"3bdfc9c3-d191-40e0-8af6-cbb621de740f"],
+Cell[7031, 216, 70, 0, 30, "Text", "ExpressionUUID" -> \
+"86ae1933-9681-442a-86c4-e809f9f4c88d"],
+Cell[CellGroupData[{
+Cell[7126, 220, 123, 1, 32, "Input", "ExpressionUUID" -> \
+"471234c8-6fad-4496-af26-123dc5726940"],
+Cell[7252, 223, 100, 1, 32, "Output", "ExpressionUUID" -> \
+"dcb8f2be-c918-4540-807b-6079a404a4cd"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[7401, 230, 384, 12, 37, "Subsection", "ExpressionUUID" -> \
+"b45b067c-4aed-44cb-bc2d-5c7899c03b2e"],
+Cell[7788, 244, 173, 3, 31, "Text", "ExpressionUUID" -> \
+"070dab2e-5122-45cc-b521-aac858d9bda4"],
+Cell[7964, 249, 165, 3, 32, "Input", "ExpressionUUID" -> \
+"da410f7a-ae9c-42d4-a57e-58fca446eee3"],
+Cell[8132, 254, 45, 0, 30, "Text", "ExpressionUUID" -> \
+"51bc0b5d-816d-4265-afa8-1db1ec0e4750"],
+Cell[8180, 256, 108, 2, 32, "Input", "ExpressionUUID" -> \
+"572c2c4b-9cf8-4524-b71c-54c4fd160046"],
+Cell[8291, 260, 830, 21, 91, "Text", "ExpressionUUID" -> \
+"44f09b75-65c0-47cd-8918-584a5a3c1579"],
+Cell[9124, 283, 72, 1, 32, "Input", "ExpressionUUID" -> \
+"7b33234a-8d19-4cee-b93b-8865ef490b2f"],
+Cell[9199, 286, 70, 0, 30, "Text", "ExpressionUUID" -> \
+"b22c3da1-c317-446c-a262-3f337ced9cc3"],
+Cell[9272, 288, 212, 4, 32, "Input", "ExpressionUUID" -> \
+"67c277e9-c18c-480b-9ab4-b6e86bf7940c"]
+}, Closed]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9533, 298, 89, 0, 64, "Section", "ExpressionUUID" -> \
+"d57d0edb-b8a2-4ea4-8b2c-8c4e876832c4"],
+Cell[CellGroupData[{
+Cell[9647, 302, 125, 0, 29, "Subsubsection", "ExpressionUUID" -> \
+"47dbb3a6-3f5b-456a-a7d0-c718885f6f40"],
+Cell[CellGroupData[{
+Cell[9797, 306, 114, 1, 32, "Input", "ExpressionUUID" -> \
+"cbb994fd-3f3b-4f7c-b301-56ef40d0fc3e"],
+Cell[9914, 309, 851, 13, 61, "Print", "ExpressionUUID" -> \
+"aac4a46a-50a9-47e0-a850-5d4ec57566f2",
+ CellTags->"Info183702545994-3180607"]
+}, Open  ]],
+Cell[10780, 325, 60, 0, 30, "Text", "ExpressionUUID" -> \
+"21bc7126-4be6-4ccf-8f4f-b816ac2cdb50"],
+Cell[CellGroupData[{
+Cell[10865, 329, 239, 5, 34, "Input", "ExpressionUUID" -> \
+"0bb26fd3-9c59-4147-8555-928058595c7e"],
+Cell[11107, 336, 967, 20, 54, "Output", "ExpressionUUID" -> \
+"c52d1e77-8d3e-4727-87e9-eb9c4cdda939"]
+}, Open  ]],
+Cell[12089, 359, 45, 0, 30, "Text", "ExpressionUUID" -> \
+"1e957b99-0aeb-409c-9942-a5d7fc5c6ba2"],
+Cell[CellGroupData[{
+Cell[12159, 363, 1386, 44, 75, "Input", "ExpressionUUID" -> \
+"b48960b6-097e-4d47-8aaa-510e93229c88",
+ Evaluatable->False],
+Cell[13548, 409, 235, 3, 32, "Output", "ExpressionUUID" -> \
+"79b46c19-4db2-4165-be89-523a56846a47"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[13832, 418, 123, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"2ad4edef-a161-4c56-868a-af2455615f99"],
+Cell[CellGroupData[{
+Cell[13980, 422, 112, 1, 32, "Input", "ExpressionUUID" -> \
+"e3870c1d-4624-4201-bf83-07a1c88587b4"],
+Cell[14095, 425, 575, 9, 58, "Print", "ExpressionUUID" -> \
+"7d9de4d2-c9fa-43e1-a707-f6145104fbfd",
+ CellTags->"Info203702546009-3180607"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[14719, 440, 121, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"c58c6ed0-6862-469c-8bfc-f0ca6028c122"],
+Cell[CellGroupData[{
+Cell[14865, 444, 110, 1, 32, "Input", "ExpressionUUID" -> \
+"662217a5-f655-4881-8ccb-ced377e9207a"],
+Cell[14978, 447, 667, 11, 43, "Print", "ExpressionUUID" -> \
+"8e36333b-62b7-4fdd-990f-d1d52dc132bd",
+ CellTags->"Info223702546017-3180607"]
+}, Open  ]],
+Cell[15660, 461, 653, 18, 75, "Input", "ExpressionUUID" -> \
+"72a54d82-f9ea-4c2b-a48c-bbbe8dabc998"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[16350, 484, 124, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"1ffb9b7d-9c25-4727-824c-1e8a7026a7df"],
+Cell[CellGroupData[{
+Cell[16499, 488, 113, 1, 32, "Input", "ExpressionUUID" -> \
+"b63aa83e-e60d-48cd-80c7-399c71f88f8c"],
+Cell[16615, 491, 610, 10, 58, "Print", "ExpressionUUID" -> \
+"d5777ced-92f0-42bb-bdb4-1a93adca67c1",
+ CellTags->"Info213702546014-3180607"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[17274, 507, 122, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"c159fd06-27c1-48b0-a8aa-d724df42ba1a"],
+Cell[CellGroupData[{
+Cell[17421, 511, 111, 1, 32, "Input", "ExpressionUUID" -> \
+"12173ca5-5216-4066-9f13-da52fe975069"],
+Cell[17535, 514, 1583, 25, 61, "Print", "ExpressionUUID" -> \
+"946cca69-7d85-4cdf-89ae-1cd721f0027d",
+ CellTags->"Info233702546071-3180607"]
+}, Open  ]],
+Cell[19133, 542, 357, 10, 31, "Text", "ExpressionUUID" -> \
+"80df2ece-fb8f-4429-9933-f1c0d9ffa7fb"],
+Cell[CellGroupData[{
+Cell[19515, 556, 333, 7, 32, "Input", "ExpressionUUID" -> \
+"56d9cd5a-3f67-4791-af1d-2d3fcc77946a"],
+Cell[19851, 565, 57, 0, 32, "Output", "ExpressionUUID" -> \
+"c0ffc82e-c733-4e1e-9fc8-3e06e6bab02c"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[19957, 571, 119, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"bc3076b1-0cdb-4b5e-b710-ff9a91fea264"],
+Cell[CellGroupData[{
+Cell[20101, 575, 108, 1, 32, "Input", "ExpressionUUID" -> \
+"768f9da1-404c-4aab-8f9e-bc931ba74592"],
+Cell[20212, 578, 1156, 17, 76, "Print", "ExpressionUUID" -> \
+"d9c36cf9-c4d5-4410-95c3-1810ef23f0bc",
+ CellTags->"Info243702546076-3180607"]
+}, Open  ]],
+Cell[21383, 598, 61, 0, 30, "Text", "ExpressionUUID" -> \
+"25fcfcd3-6634-4d27-82f8-c78fb09a2eac"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[21481, 603, 116, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"f7cfebfc-2b2c-4f8c-8888-8c3baae16ba1"],
+Cell[CellGroupData[{
+Cell[21622, 607, 105, 1, 32, "Input", "ExpressionUUID" -> \
+"6a4863de-e64f-4a4b-a85e-60bcf9fd1c59"],
+Cell[21730, 610, 667, 11, 58, "Print", "ExpressionUUID" -> \
+"acd0bc64-3f0b-4006-9193-3816c926f38c",
+ CellTags->"Info253702546081-3180607"]
+}, Open  ]],
+Cell[22412, 624, 55, 1, 32, "Input", "ExpressionUUID" -> \
+"18201a67-831f-4db5-ae22-3007fb8559ff"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[22504, 630, 119, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"7af0f162-45d9-47d1-8860-7744d4083ebf"],
+Cell[CellGroupData[{
+Cell[22648, 634, 108, 1, 32, "Input", "ExpressionUUID" -> \
+"dcac6fef-7c0b-4b19-b531-9bd66b2c702a"],
+Cell[22759, 637, 1971, 29, 97, "Print", "ExpressionUUID" -> \
+"aaa53f25-dc87-4912-988e-beea3f19d319",
+ CellTags->"Info263702546084-3180607"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[24779, 672, 121, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"686f3852-c61b-4efe-bd4f-dfe1d30fc80e"],
+Cell[CellGroupData[{
+Cell[24925, 676, 110, 1, 32, "Input", "ExpressionUUID" -> \
+"334af3f0-611c-41c8-ac92-d4e6e378ca76"],
+Cell[25038, 679, 433, 8, 61, "Print", "ExpressionUUID" -> \
+"68dde6d0-eed1-4669-979e-aa3915cb57ee",
+ CellTags->"Info273702546088-3180607"]
+}, Open  ]],
+Cell[25486, 690, 203, 4, 50, "Text", "ExpressionUUID" -> \
+"0f72aac6-3694-4393-afb9-110ac302fe59"],
+Cell[25692, 696, 438, 9, 49, "Text", "ExpressionUUID" -> \
+"5a610ea1-85d1-4751-8e8f-6285844ad85c"],
+Cell[CellGroupData[{
+Cell[26155, 709, 485, 13, 32, "Input", "ExpressionUUID" -> \
+"447cbf9e-8618-470f-bb28-8be28988a270"],
+Cell[26643, 724, 254, 3, 180, "Output", "ExpressionUUID" -> \
+"b31087e8-a839-46e5-8364-beb5d6444205"]
+}, Open  ]],
+Cell[26912, 730, 24, 0, 30, "Text", "ExpressionUUID" -> \
+"a4f4866c-7026-41fd-b2ab-95fd85946b6f"],
+Cell[CellGroupData[{
+Cell[26961, 734, 150, 3, 32, "Input", "ExpressionUUID" -> \
+"3c35430f-1f5a-43e6-ae80-455d00646811"],
+Cell[27114, 739, 218, 5, 32, "Output", "ExpressionUUID" -> \
+"eb1c8353-1e4b-467c-b68f-0c72a5eb9625"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27369, 749, 843, 24, 44, "Input", "ExpressionUUID" -> \
+"766c0a98-df17-4765-8a99-b9d43ac7902a"],
+Cell[28215, 775, 303, 4, 201, "Output", "ExpressionUUID" -> \
+"29454da2-b5ef-435a-bdc1-1492db10e2d8"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28555, 784, 823, 24, 44, "Input", "ExpressionUUID" -> \
+"dd9ade02-b99c-4564-8213-968382b88d37"],
+Cell[29381, 810, 334, 4, 201, "Output", "ExpressionUUID" -> \
+"1cd23327-3cdb-4f1a-bcd9-9e98ed71f9bd"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29752, 819, 655, 18, 32, "Input", "ExpressionUUID" -> \
+"04b22e3f-399a-4b2c-8378-e2e4ddebf9d2"],
+Cell[30410, 839, 254, 3, 180, "Output", "ExpressionUUID" -> \
+"861ca7ef-9a70-4942-9c91-c54da3fb903e"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[30713, 848, 129, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"685095ed-e6a6-4e5d-a68f-50a104e66497"],
+Cell[CellGroupData[{
+Cell[30867, 852, 118, 1, 32, "Input", "ExpressionUUID" -> \
+"8998c447-d5dc-4581-8484-75984a76e979"],
+Cell[30988, 855, 181, 3, 43, "Print", "ExpressionUUID" -> \
+"9eda3a28-0451-4b6b-b4a9-267fddc850a6",
+ CellTags->"Info3616004515-2623274"]
+}, Open  ]],
+Cell[31184, 861, 192, 5, 31, "Text", "ExpressionUUID" -> \
+"3e498f7f-1c85-4afa-bef7-3020aa1be265"],
+Cell[31379, 868, 117, 4, 31, "Text", "ExpressionUUID" -> \
+"a9cd8c61-1781-45a5-8f59-20fd538c9574"],
+Cell[31499, 874, 202, 4, 32, "Input", "ExpressionUUID" -> \
+"d9a53797-00de-487d-907b-91123486de8e"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[31738, 883, 133, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"35dfee24-f12a-4649-a3ca-689716d0f08c"],
+Cell[CellGroupData[{
+Cell[31896, 887, 122, 1, 32, "Input", "ExpressionUUID" -> \
+"26059c4e-2eb5-4349-b641-801ca330a674"],
+Cell[32021, 890, 246, 5, 43, "Print", "ExpressionUUID" -> \
+"e192e2c6-7d83-4a1e-9444-f6ea208c7155",
+ CellTags->"Info343702546121-3180607"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[32316, 901, 128, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"123a4cac-a474-40f2-b3d5-f8f6e37851f7"],
+Cell[CellGroupData[{
+Cell[32469, 905, 117, 1, 32, "Input", "ExpressionUUID" -> \
+"c169f40a-fe35-4b76-9486-0847c309298b"],
+Cell[32589, 908, 242, 5, 43, "Print", "ExpressionUUID" -> \
+"a0c381db-19ea-41c8-8810-1c3f7ac3e185",
+ CellTags->"Info353702546128-3180607"]
+}, Open  ]],
+Cell[32846, 916, 173, 4, 31, "Text", "ExpressionUUID" -> \
+"b8a30c35-42d6-4424-9f00-aab83269c07c"],
+Cell[33022, 922, 269, 7, 31, "Text", "ExpressionUUID" -> \
+"6afd018f-b6b8-4d16-9cb7-322100bc7515"]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

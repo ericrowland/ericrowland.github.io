@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Loading a Mathematica package</title>
+<meta name=author value="Eric Rowland">
+<meta name=description value="Loading a package in Mathematica.">
+</head>
+<script language=javascript src=../layout.js></script><script language=javascript>header("loading a <i>Mathematica</i> package", 1);</script>
+
+
+<p style="font-size:80%"><a href=loading_a_package.nb>[<i>Mathematica</i> notebook of this page]</a></p>
+
+<p>
+There are a few different ways to load a package in <i>Mathematica</i>.
+The quick and dirty way (if your browser displays the contents of the .m file as text) is to copy the whole contents of the package, paste it into <i>Mathematica</i>, and Shift+Enter to evaluate it.
+The drawback of this method is that it makes a big mess in the notebook.
+
+<p><br>
+A slicker way of loading a package is to import it directly from the web.
+For example, the following loads the package <a href="https://people.hofstra.edu/Eric_Rowland/packages.html#IntegerSequences">IntegerSequences</a>.
+
+<pre>Import["https://people.hofstra.edu/Eric_Rowland/packages/IntegerSequences.m"]</pre>
+
+<p><br>
+If you intend to use a package more than once, it's probably better to download it.
+A good place to download packages is the Applications subdirectory of <b>$UserBaseDirectory</b>, which you can open by evaluating the following.
+
+<pre>SystemOpen[FileNameJoin[{$UserBaseDirectory, "Applications"}]]</pre>
+
+(Any of the directories listed when you evaluate <b>$Path</b> will work.)
+
+<p>
+Then you can load it by evaluating the following.
+
+<pre>&lt;&lt;IntegerSequences`</pre>
+
+<p>
+(That last character is a backtick (reverse single quotation mark), which is located to the left of the '1' key on US keyboards.)
+
+<p>
+To see all the symbols available in the package, evaluate the following.
+
+<pre>?IntegerSequences`*</pre>
+
+
+<p><div style="visibility:hidden">
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=562599; 
+var sc_partition=4; 
+var sc_security="bf96014a"; 
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c5.statcounter.com/counter.php?sc_project=562599&amp;amp;java=0&amp;amp;security="bf96014a"" width=0 height=0 border="0"></a></noscript>
+<!-- End of StatCounter Code -->
+</div>
+
+<script language=javascript>footer();</script>
+</body>
+</html>

@@ -1,0 +1,2386 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     73999,       2378]
+NotebookOptionsPosition[     55938,       1777]
+NotebookOutlinePosition[     60609,       1908]
+CellTagsIndexPosition[     59430,       1877]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["EquivalentWords 1.12", "Title"],
+
+Cell["documentation notebook", "Subtitle"],
+
+Cell[TextData[{
+ "Eric Rowland\n",
+ ButtonBox["http://people.hofstra.edu/Eric_Rowland/packages.html",
+  BaseStyle->"Hyperlink",
+  ButtonData:>{
+    URL["http://people.hofstra.edu/Eric_Rowland/packages.html"], None}]
+}], "Subsubtitle"],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section"],
+
+Cell[TextData[{
+ "EquivalentWords is a package for studying automorphic conjugacy in the free \
+group ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["F", "2"], TraditionalForm]]],
+ ".\nThis introduction gets you started with a few features of the package; \
+the next section provides a complete list of package symbols along with their \
+usage messages and further examples."
+}], "Text"],
+
+Cell[TextData[{
+ "To use EquivalentWords, first you will need to load the package by \
+evaluating the following cell.  (If you need help, see ",
+ ButtonBox["loading a package",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.\
+html"], None},
+  ButtonNote->
+   "http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.html"],
+ ".)"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"<<", "EquivalentWords`"}]], "Code"],
+
+Cell[CellGroupData[{
+
+Cell["Representing words", "Subsection"],
+
+Cell[TextData[{
+ "An element of the free group ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["F", "2"], TraditionalForm]]],
+ " on two generators is represented as a string.  The generators of ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["F", "2"], TraditionalForm]]],
+ " are ",
+ Cell[BoxData[
+  FormBox["\<\"a\"\>", TraditionalForm]]],
+ " and ",
+ Cell[BoxData[
+  FormBox["\<\"b\"\>", TraditionalForm]]],
+ ", and their inverses are ",
+ Cell[BoxData[
+  FormBox["\<\"A\"\>", TraditionalForm]]],
+ " and ",
+ Cell[BoxData[
+  FormBox["\<\"B\"\>", TraditionalForm]]],
+ ".  The group operation is string concatenation."
+}], "Text"],
+
+Cell[TextData[{
+ "Here are some elements of ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["F", "2"], TraditionalForm]]],
+ ":"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\"\<aabb\>\"", ",", "\"\<abAB\>\"", ",", "\"\<aAbB\>\""}], 
+  "}"}]], "Input"],
+
+Cell[TextData[{
+ "Each element has a canonical representation where there are no adjacent \
+inverses.  Moreover, it is convenient to take representatives of words modulo \
+the inner automorphism group (since eventually we are interested in \
+representatives modulo the full automorphism group), meaning that inverses \
+can be canceled from the beginning and end of a word.  ",
+ StyleBox["CancelInverses", "Input"],
+ " finds this representative."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CancelInverses", "[", "\"\<AABaBBAabaa\>\"", "]"}]], "Input"],
+
+Cell[BoxData["\<\"BaB\"\>"], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "In addition to choosing a representative with respect to inner \
+automorphisms (cycles), it is also relatively simple to choose a \
+representative with respect to permutations of the generators and their \
+inverses.  ",
+ StyleBox["CanonicalPermutation", "Input"],
+ " gives the word equivalent appearing first in lexicographic order among all \
+the words obtained by permuting the generators."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CanonicalPermutation", "[", "\"\<BaB\>\"", "]"}]], "Input"],
+
+Cell[BoxData["\<\"aba\"\>"], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["RCPRepresentative", "Input"],
+ " (\"reduced under cycled permutations\" representative) gives a canonical \
+representative with respect to both inner automorphisms and permutations of \
+generators:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RCPRepresentative", "[", "\"\<BaB\>\"", "]"}]], "Input"],
+
+Cell[BoxData["\<\"aab\"\>"], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Finally, we would like to take representatives with respect to word length. \
+ A word is ",
+ StyleBox["minimal",
+  FontSlant->"Italic"],
+ " if it is of minimum length in its equivalence class under ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Aut", " ", 
+    SubscriptBox["F", "2"]}], TraditionalForm]]],
+ ".  ",
+ StyleBox["MinimalWordQ", "Input"],
+ " implements a simple test for this."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"MinimalWordQ", "[", "\"\<aab\>\"", "]"}]], "Input"],
+
+Cell[BoxData["False"], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "In this package we are concerned with computing equivalence classes of ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["F", "2"], TraditionalForm]]],
+ " under ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Aut", " ", 
+    SubscriptBox["F", "2"]}], TraditionalForm]]],
+ ", and we represent an equivalence class by its list of minimal, RCP words.  \
+",
+ StyleBox["EquivalenceClass", "Input"],
+ " computes the equivalence class of a word."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EquivalenceClass", "[", "\"\<aab\>\"", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", "\<\"a\"\>", "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EquivalenceClass", "[", "\"\<AABaBBAabaa\>\"", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", "\<\"a\"\>", "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Manipulating words", "Subsection"],
+
+Cell[TextData[{
+ StyleBox["InverseGenerator", "Input"],
+ " gives the inverse of a generator."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"InverseGenerator", "/@", 
+  RowBox[{"{", 
+   RowBox[{
+   "\"\<a\>\"", ",", "\"\<b\>\"", ",", "\"\<A\>\"", ",", "\"\<B\>\""}], 
+   "}"}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"A\"\>", ",", "\<\"B\"\>", ",", "\<\"a\"\>", ",", "\<\"b\"\>"}],
+   "}"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["SyllableCount", "Input"],
+ " gives the number of occurrences of a subword and its inverse in a word.  \
+For example, this counts the number of ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["b", 
+    RowBox[{"\[PlusMinus]", "1"}]], TraditionalForm]]],
+ "'s:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SyllableCount", "[", 
+  RowBox[{"\"\<aaabbaBabbaB\>\"", ",", "\"\<b\>\""}], "]"}]], "Input"],
+
+Cell[BoxData["6"], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["ApplyAutomorphism", "Input"],
+ " applies a Whitehead type II automorphism to a word."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ApplyAutomorphism", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\"\<a\>\"", "}"}], ",", "\"\<b\>\""}], "}"}], ",", 
+   "\"\<aaabbaBabbaB\>\""}], "]"}]], "Input"],
+
+Cell[BoxData["\<\"abababbbaabbba\"\>"], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "In ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["F", "2"], TraditionalForm]]],
+ ", it suffices to consider automorphisms where the set ",
+ Cell[BoxData[
+  FormBox["A", TraditionalForm]]],
+ " consists of a single generator.\n",
+ StyleBox["$AllAutomorphisms", "Input"],
+ " contains eight one-letter automorphisms:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["$AllAutomorphisms"], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"a\"\>", "}"}], ",", "\<\"b\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"a\"\>", "}"}], ",", "\<\"B\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"b\"\>", "}"}], ",", "\<\"a\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"b\"\>", "}"}], ",", "\<\"A\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"A\"\>", "}"}], ",", "\<\"b\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"A\"\>", "}"}], ",", "\<\"B\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"B\"\>", "}"}], ",", "\<\"a\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"B\"\>", "}"}], ",", "\<\"A\"\>"}], "}"}]}], 
+  "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Computing all equivalence classes", "Subsection"],
+
+Cell[TextData[{
+ "To compute all equivalence classes of words of length ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ ", we start by computing a set of RCP candidate words of that length."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RCPCandidates", "[", "4", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaaa\"\>", ",", "\<\"aaab\"\>", ",", "\<\"aabb\"\>", 
+   ",", "\<\"abab\"\>", ",", "\<\"abaB\"\>", ",", "\<\"abAb\"\>", 
+   ",", "\<\"abAB\"\>"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["RCPWords", "Input"],
+ " calls ",
+ StyleBox["RCPCandidates", "Input"],
+ " and then removes the nonminimal words and equivalent duplicates in the \
+resulting list to obtain the set of minimal RCP words of length ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ "."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RCPWords", "[", "4", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaaa\"\>", ",", "\<\"aabb\"\>", ",", "\<\"abaB\"\>", 
+   ",", "\<\"abAB\"\>"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["ClassifyWords", "Input"],
+ " partitions this set into equivalence classes.  Thus these are the \
+equivalence classes of length-",
+ Cell[BoxData[
+  FormBox["4", TraditionalForm]]],
+ " words:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ClassifyWords", "[", 
+  RowBox[{"{", 
+   RowBox[{
+   "\"\<aaaa\>\"", ",", "\"\<aabb\>\"", ",", "\"\<abaB\>\"", ",", 
+    "\"\<abAB\>\""}], "}"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "\<\"aaaa\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"abAB\"\>", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabb\"\>", ",", "\<\"abaB\"\>"}], "}"}]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["WordEquivalenceClasses", "Input"],
+ " does this all behind the scenes."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"WordEquivalenceClasses", "[", "4", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "\<\"aaaa\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"abAB\"\>", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabb\"\>", ",", "\<\"abaB\"\>"}], "}"}]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Root words are a special class of minimal words.  There is a simple test to \
+identify root words, implemented in ",
+ StyleBox["RootWordQ", "Input"],
+ ".\nIf one minimal RCP word in an equivalence class is a root word, then \
+they all are."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Map", "[", 
+  RowBox[{"RootWordQ", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\"\<aaaa\>\"", "}"}], ",", 
+     RowBox[{"{", "\"\<abAB\>\"", "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<aabb\>\"", ",", "\"\<abaB\>\""}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", "2", "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "False", "}"}], ",", 
+   RowBox[{"{", "True", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"True", ",", "True"}], "}"}]}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Package symbols", "Section"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["AlternatingWordQ", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", 
+  StyleBox["AlternatingWordQ", "Input"]}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"AlternatingWordQ\\\", \\\"[\\\", \
+StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) yields True if \
+\!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\) has no adjacent identical letters, \
+and False otherwise.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059457-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"AlternatingWordQ", "[", "\"\<abAB\>\"", "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"AlternatingWordQ", "[", "\"\<aabAB\>\"", "]"}]], "Input"],
+
+Cell[BoxData["False"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["ApplyAutomorphism", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ApplyAutomorphism"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ApplyAutomorphism\\\", \\\"[\\\", \
+RowBox[List[RowBox[List[\\\"{\\\", RowBox[List[StyleBox[\\\"A\\\", \
+\\\"TI\\\"], \\\",\\\", StyleBox[\\\"x\\\", \\\"TI\\\"]]], \\\"}\\\"]], \\\",\
+\\\", StyleBox[\\\"word\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) applies to the \
+cyclic word \!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\) the Whitehead type II \
+automorphism \!\(\*RowBox[List[\\\"{\\\", RowBox[List[StyleBox[\\\"A\\\", \
+\\\"TI\\\"], \\\",\\\", StyleBox[\\\"x\\\", \\\"TI\\\"]]], \\\"}\\\"]]\), \
+where \!\(\*StyleBox[\\\"A\\\", \\\"TI\\\"]\) is a list of generators and \
+\!\(\*StyleBox[\\\"x\\\", \\\"TI\\\"]\) is a generator.\"\>", "MSG"]], "Print",\
+ "PrintUsage",
+ CellTags->"Info3616059463-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"ApplyAutomorphism", "[", 
+    RowBox[{"#", ",", "\"\<aabab\>\""}], "]"}], "&"}], "/@", 
+  "$Automorphisms"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"ababbabb\"\>", ",", "\<\"aBaa\"\>", ",", "\<\"aabaaba\"\>", 
+   ",", "\<\"abb\"\>"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Note that ",
+ StyleBox["ApplyAutomorphism", "Input"],
+ " cancels inverses from the front and back of a word.\nConsequently, inner \
+automorphisms always appear to act as the identity:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ApplyAutomorphism", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<a\>\"", ",", "\"\<A\>\""}], "}"}], ",", "\"\<b\>\""}], 
+    "}"}], ",", "\"\<aabab\>\""}], "]"}]], "Input"],
+
+Cell[BoxData["\<\"aabab\"\>"], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "This is convenient when working modulo ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"Inn", " ", 
+    SubscriptBox["F", "2"]}], TraditionalForm]]],
+ ", but it must be kept in mind where working with words instead of cyclic \
+words."
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["CancelInverses", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "CancelInverses"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"CancelInverses\\\", \\\"[\\\", StyleBox[\
+\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) cancels all adjacent inverses in the \
+cyclic word \!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\).\"\>", "MSG"]], "Print",\
+ "PrintUsage",
+ CellTags->"Info3616059587-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CancelInverses", "[", "\"\<ABabaa\>\"", "]"}]], "Input"],
+
+Cell[BoxData["\<\"Baba\"\>"], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CancelInverses", "[", "\"\<AABabaa\>\"", "]"}]], "Input"],
+
+Cell[BoxData["\<\"a\"\>"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["CanonicalPermutation", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "CanonicalPermutation"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"CanonicalPermutation\\\", \\\"[\\\", \
+StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) returns the \
+lexicographically least word in the orbit of \!\(\*StyleBox[\\\"word\\\", \
+\\\"TI\\\"]\) under permutations of the generators.\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3616059594-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CanonicalPermutation", "[", "\"\<bbA\>\"", "]"}]], "Input"],
+
+Cell[BoxData["\<\"aab\"\>"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["Children", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "Children"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"Children\\\", \\\"[\\\", \
+StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives the RCP words that \
+immediately descend from (by prepending \\\"a\\\" to a cycled permutation of) \
+the RCP word \!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\).\\n\!\(\*RowBox[List[\
+\\\"Children\\\", \\\"[\\\", StyleBox[\\\"list\\\", \\\"TI\\\"], \
+\\\"]\\\"]]\) gives the RCP words that immediately descend from any word in \
+\!\(\*StyleBox[\\\"list\\\", \\\"TI\\\"]\).\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3616059598-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Children", "[", "\"\<aaaab\>\"", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaaaab\"\>", ",", "\<\"aaaabb\"\>"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Children", "[", "\"\<aaabaBAABaaaaaB\>\"", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaaaaabaaaBabAAb\"\>", ",", "\<\"aaaaabaaaaBabAAb\"\>", 
+   ",", "\<\"aaaaabaaaBaabAAb\"\>", ",", "\<\"aaaaabaaaBabAAAb\"\>", 
+   ",", "\<\"aaaaabaaaBabAAbb\"\>", ",", "\<\"aaaaabaaaBabbAAb\"\>", 
+   ",", "\<\"aaaaabaaaBBabAAb\"\>", ",", "\<\"aaaaabbaaaBabAAb\"\>"}], 
+  "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["ClassifyWords", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ClassifyWords"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ClassifyWords\\\", \\\"[\\\", \
+StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) breaks up a list of RCP \
+words of the same length by the weights of the generators and partitions the \
+list into equivalence classes.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059603-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ClassifyWords", "[", 
+  RowBox[{"RCPWords", "[", "5", "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "\<\"aaaaa\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aabaB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aabAB\"\>", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aaabb\"\>", ",", "\<\"aabAb\"\>"}], "}"}]}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["CountAndClassifyWords", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "CountAndClassifyWords"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"CountAndClassifyWords\\\", \\\"[\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"], \\\"]\\\"]]\) classifies words of length \
+\!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\) by equivalence class, counts the \
+classes of each size, establishes the root word classes, and counts the root \
+word classes of each size, as well as giving in the first entry statistics \
+about the number of objects considered at each step.\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3616059606-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CountAndClassifyWords", "[", "5", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"7", ",", "5", ",", "4", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "3"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", "1"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"aaaaa\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aabaB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aabAB\"\>", "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aaabb\"\>", ",", "\<\"aabAb\"\>"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", "}"}]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CountAndClassifyWords", "[", "8", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"209", ",", "67", ",", "43", ",", "34", ",", "13"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "31"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", "5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"3", ",", "4"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"4", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"5", ",", "2"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", "5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"3", ",", "4"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"5", ",", "2"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"aaaaaaaa\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaaaabaB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaaaabbb\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaaaabAB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaaabaaB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaaabaBB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaaabAbb\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaaabABB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaaabbaB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaaabbAb\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaaabbAB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaaabbbb\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaaabAAB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabaaaB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabaaBB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabAAbb\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabAABB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabaBBB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabbaaB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabbAAb\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabbAAB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabbaBB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabbAbb\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabbABB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabbbaB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabbbAB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aaabAAAB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aabbaaBB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aabbAABB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"aabbABAB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"abABabAB\"\>", "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aababAbb\"\>", ",", "\<\"aabAbbaB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aabaBaBB\"\>", ",", "\<\"aabaBBAB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aabbaabb\"\>", ",", "\<\"abaBabaB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aabbaBAb\"\>", ",", "\<\"abaBabAB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aabABBAb\"\>", ",", "\<\"abaBAbAB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aaababbb\"\>", ",", "\<\"aababaBB\"\>", 
+       ",", "\<\"aabbaBaB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aaabbabb\"\>", ",", "\<\"aabaBBab\"\>", 
+       ",", "\<\"ababaBaB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aababbaB\"\>", ",", "\<\"aababbAb\"\>", 
+       ",", "\<\"aabaBABB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aababbAB\"\>", ",", "\<\"aababABB\"\>", 
+       ",", "\<\"aabbABaB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aaaaaabb\"\>", ",", "\<\"aaaaabAb\"\>", 
+       ",", "\<\"aaaabAAb\"\>", ",", "\<\"aaabAAAb\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aabaBabb\"\>", ",", "\<\"aabbaBab\"\>", 
+       ",", "\<\"aabbaBAB\"\>", ",", "\<\"aabbABAb\"\>", 
+       ",", "\<\"ababAbaB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aabaBAbb\"\>", ",", "\<\"aabaBBAb\"\>", 
+       ",", "\<\"aabbABab\"\>", ",", "\<\"aabAbbAB\"\>", 
+       ",", "\<\"ababAbAB\"\>"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"aabbABAB\"\>", "}"}], ",", 
+     RowBox[{"{", "\<\"abABabAB\"\>", "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aababAbb\"\>", ",", "\<\"aabAbbaB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aabaBaBB\"\>", ",", "\<\"aabaBBAB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aabbaabb\"\>", ",", "\<\"abaBabaB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aabbaBAb\"\>", ",", "\<\"abaBabAB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aabABBAb\"\>", ",", "\<\"abaBAbAB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aaababbb\"\>", ",", "\<\"aababaBB\"\>", 
+       ",", "\<\"aabbaBaB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aaabbabb\"\>", ",", "\<\"aabaBBab\"\>", 
+       ",", "\<\"ababaBaB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aababbaB\"\>", ",", "\<\"aababbAb\"\>", 
+       ",", "\<\"aabaBABB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aababbAB\"\>", ",", "\<\"aababABB\"\>", 
+       ",", "\<\"aabbABaB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aabaBabb\"\>", ",", "\<\"aabbaBab\"\>", 
+       ",", "\<\"aabbaBAB\"\>", ",", "\<\"aabbABAb\"\>", 
+       ",", "\<\"ababAbaB\"\>"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\<\"aabaBAbb\"\>", ",", "\<\"aabaBBAb\"\>", 
+       ",", "\<\"aabbABab\"\>", ",", "\<\"aabAbbAB\"\>", 
+       ",", "\<\"ababAbAB\"\>"}], "}"}]}], "}"}]}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["CountWords", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "CountWords"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"CountWords\\\", \\\"[\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"], \\\"]\\\"]]\) counts the classes of length\
+\[Hyphen]\!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\) words of each size and \
+counts the root word classes of each size, as well as giving in the first \
+entry statistics about the number of objects considered at each step.\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059611-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CountWords", "[", "5", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"7", ",", "5", ",", "4", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "3"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", "1"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", "}"}]}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["EquivalenceClass", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "EquivalenceClass"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"EquivalenceClass\\\", \\\"[\\\", \
+StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives a list of all minimal \
+RCP words equivalent to \!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\).\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059615-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EquivalenceClass", "[", "\"\<aaaaab\>\"", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", "\<\"a\"\>", "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EquivalenceClass", "[", "\"\<aaaabAAAAbaaaabAAAAb\>\"", 
+  "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaaaaaaabbaaaaaaaabb\"\>", ",", "\<\"aaaaaaabAbaaaaaaabAb\"\>",
+    ",", "\<\"aaaaaabAAbaaaaaabAAb\"\>", ",", "\<\"aaaaabAAAbaaaaabAAAb\"\>", 
+   ",", "\<\"aaaabAAAAbaaaabAAAAb\"\>"}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["EquivalentWords", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "EquivalentWords"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"EquivalentWords\\\", \\\"[\\\", \
+StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives a list of cyclically\
+\[Hyphen]reduced words that are equivalent to \!\(\*StyleBox[\\\"word\\\", \\\
+\"TI\\\"]\), among which are all the minimal RCP words that are equivalent to \
+\!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\).\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3616059619-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EquivalentWords", "[", "\"\<aaaabaaaabaaaabaaaab\>\"", 
+  "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaaa\"\>", ",", "\<\"aaaabaaaabaaaabaaaab\"\>", 
+   ",", "\<\"aaabaaaabaaaabaaaaba\"\>", ",", "\<\"aaabaaabaaabaaab\"\>", 
+   ",", "\<\"aabaaaabaaaabaaaabaa\"\>", ",", "\<\"aabaaabaaabaaaba\"\>", 
+   ",", "\<\"aabaabaabaab\"\>", ",", "\<\"abaaaabaaaabaaaabaaa\"\>", 
+   ",", "\<\"abaaabaaabaaabaa\"\>", ",", "\<\"abaabaabaaba\"\>", 
+   ",", "\<\"abababab\"\>", ",", "\<\"abbabbabbabb\"\>", 
+   ",", "\<\"abbbabbbabbbabbb\"\>", ",", "\<\"abbbbabbbbabbbbabbbb\"\>"}], 
+  "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EquivalentWords", "[", "\"\<aaaaaaab\>\"", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"a\"\>", ",", "\<\"aaaaaaab\"\>", ",", "\<\"aaaaaab\"\>", 
+   ",", "\<\"aaaaaaba\"\>", ",", "\<\"aaaaab\"\>", ",", "\<\"aaaaaba\"\>", 
+   ",", "\<\"aaaaabaa\"\>", ",", "\<\"aaaab\"\>", ",", "\<\"aaaaba\"\>", 
+   ",", "\<\"aaaabaa\"\>", ",", "\<\"aaaabaaa\"\>", ",", "\<\"aaab\"\>", 
+   ",", "\<\"aaaba\"\>", ",", "\<\"aaabaa\"\>", ",", "\<\"aaabaaa\"\>", 
+   ",", "\<\"aaabaaaa\"\>", ",", "\<\"aab\"\>", ",", "\<\"aaba\"\>", 
+   ",", "\<\"aabaa\"\>", ",", "\<\"aabaaa\"\>", ",", "\<\"aabaaaa\"\>", 
+   ",", "\<\"aabaaaaa\"\>", ",", "\<\"ab\"\>", ",", "\<\"aba\"\>", 
+   ",", "\<\"abaa\"\>", ",", "\<\"abaaa\"\>", ",", "\<\"abaaaa\"\>", 
+   ",", "\<\"abaaaaa\"\>", ",", "\<\"abaaaaaa\"\>", ",", "\<\"abb\"\>", 
+   ",", "\<\"abbb\"\>", ",", "\<\"abbbb\"\>", ",", "\<\"abbbbb\"\>", 
+   ",", "\<\"abbbbbb\"\>", ",", "\<\"abbbbbbb\"\>"}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["EquivalentWordsQ", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "EquivalentWordsQ"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"EquivalentWordsQ\\\", \\\"[\\\", \
+RowBox[List[SubscriptBox[StyleBox[\\\"word\\\", \\\"TI\\\"], StyleBox[\\\"1\\\
+\", \\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"word\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]]]], \\\"]\\\"]]\) yields True if \
+\!\(\*SubscriptBox[StyleBox[\\\"word\\\", \\\"TI\\\"], StyleBox[\\\"1\\\", \\\
+\"TR\\\"]]\) and \!\(\*SubscriptBox[StyleBox[\\\"word\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]]\) are equivalent, and False otherwise.\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059624-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EquivalentWordsQ", "[", 
+  RowBox[{"\"\<aaaaaaaaaaaaaaab\>\"", ",", "\"\<Bbbbbbbbbbbbbbba\>\""}], 
+  "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["ExtendWord", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ExtendWord"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ExtendWord\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives a list of \
+1\[Hyphen]letter extensions of \!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\) \
+toward RCP\[Hyphen]candidate \!\(\*StyleBox[\\\"n\\\", \
+\\\"TI\\\"]\)\[Hyphen]letter extensions.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059628-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ExtendWord", "[", 
+  RowBox[{"\"\<aabaabaB\>\"", ",", "3"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aabaabaBa\"\>", ",", "\<\"aabaabaBA\"\>", 
+   ",", "\<\"aabaabaBB\"\>"}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["InverseGenerator", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "InverseGenerator"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"InverseGenerator\\\", \\\"[\\\", \
+StyleBox[\\\"generator\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives the inverses of \
+the generators \\\"a\\\", \\\"b\\\", \\\"A\\\", and \\\"B\\\".\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059632-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"InverseGenerator", "[", "\"\<B\>\"", "]"}]], "Input"],
+
+Cell[BoxData["\<\"b\"\>"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["MinimalWordQ", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "MinimalWordQ"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"MinimalWordQ\\\", \\\"[\\\", StyleBox[\\\
+\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) yields True if \!\(\*StyleBox[\\\"word\
+\\\", \\\"TI\\\"]\) is of minimal length in its equivalence class, and False \
+otherwise.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059635-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"RCPCandidates", "[", "5", "]"}], ",", "MinimalWordQ"}], 
+  "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaaaa\"\>", ",", "\<\"aaabb\"\>", ",", "\<\"aabaB\"\>", 
+   ",", "\<\"aabAb\"\>", ",", "\<\"aabAB\"\>"}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["OneLetterAutomorphismEquivalentWords", "Input"]], \
+"Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "OneLetterAutomorphismEquivalentWords"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"OneLetterAutomorphismEquivalentWords\\\",\
+ \\\"[\\\", StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives a list of \
+all words equivalent to \!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\) under a \
+cycle or under a single Whitehead type II automorphism that does not increase \
+its length.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059640-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"OneLetterAutomorphismEquivalentWords", "[", 
+  "\"\<aaaabaaaabaaaabaaaab\>\"", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaaabaaaabaaaabaaaab\"\>", ",", "\<\"aaabaaaabaaaabaaaaba\"\>",
+    ",", "\<\"aaabaaabaaabaaab\"\>", ",", "\<\"aabaaaabaaaabaaaabaa\"\>", 
+   ",", "\<\"abaaaabaaaabaaaabaaa\"\>", ",", "\<\"baaaabaaaabaaaabaaaa\"\>"}],
+   "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["ProvablyIsolatedWordQ", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ProvablyIsolatedWordQ"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ProvablyIsolatedWordQ\\\", \\\"[\\\", \
+StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) yields True if \
+\!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\) can be proved to be isolated by \
+counting syllables, and False otherwise.\\n(A value of False therefore does \
+not necessarily imply that the word is not isolated.)\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3616059647-8904612"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Both these words are the only minimal RCP words in their equivalence \
+classes, but only one can be established as such by ",
+ StyleBox["ProvablyIsolatedWordQ", "Input"],
+ ":"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ProvablyIsolatedWordQ", "[", "\"\<aaabbb\>\"", "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ProvablyIsolatedWordQ", "[", "\"\<aaabAB\>\"", "]"}]], "Input"],
+
+Cell[BoxData["False"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["RCPCandidates", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RCPCandidates"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RCPCandidates\\\", \\\"[\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives a list of (not \
+necessarily minimal) RCP\[Hyphen]candidate words of length \
+\!\(\*StyleBox[\\\"n\\\", \
+\\\"TI\\\"]\).\\n\!\(\*RowBox[List[\\\"RCPCandidates\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives a list of (not \
+necessarily minimal) RCP\[Hyphen]candidate \!\(\*StyleBox[\\\"n\\\", \\\"TI\\\
+\"]\)\[Hyphen]letter extensions of \!\(\*StyleBox[\\\"word\\\", \
+\\\"TI\\\"]\).\\n\!\(\*RowBox[List[\\\"RCPCandidates\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"list\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) extends a list of \
+words.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059658-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RCPCandidates", "[", "7", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaaaaaa\"\>", ",", "\<\"aaaaaab\"\>", ",", "\<\"aaaaabb\"\>", 
+   ",", "\<\"aaaabab\"\>", ",", "\<\"aaaabaB\"\>", ",", "\<\"aaaabbb\"\>", 
+   ",", "\<\"aaaabAb\"\>", ",", "\<\"aaaabAB\"\>", ",", "\<\"aaabaab\"\>", 
+   ",", "\<\"aaabaaB\"\>", ",", "\<\"aaababb\"\>", ",", "\<\"aaabaBB\"\>", 
+   ",", "\<\"aaabbab\"\>", ",", "\<\"aaabbaB\"\>", ",", "\<\"aaabbAb\"\>", 
+   ",", "\<\"aaabbAB\"\>", ",", "\<\"aaabAbb\"\>", ",", "\<\"aaabAAb\"\>", 
+   ",", "\<\"aaabAAB\"\>", ",", "\<\"aaabABB\"\>", ",", "\<\"aabaabb\"\>", 
+   ",", "\<\"aabaaBB\"\>", ",", "\<\"aababab\"\>", ",", "\<\"aababaB\"\>", 
+   ",", "\<\"aababAb\"\>", ",", "\<\"aababAB\"\>", ",", "\<\"aabaBab\"\>", 
+   ",", "\<\"aabaBaB\"\>", ",", "\<\"aabaBAb\"\>", ",", "\<\"aabaBAB\"\>", 
+   ",", "\<\"aabbaab\"\>", ",", "\<\"aabbaaB\"\>", ",", "\<\"aabbabb\"\>", 
+   ",", "\<\"aabbaBB\"\>", ",", "\<\"aabbAbb\"\>", ",", "\<\"aabbAAb\"\>", 
+   ",", "\<\"aabbAAB\"\>", ",", "\<\"aabbABB\"\>", ",", "\<\"aabAbab\"\>", 
+   ",", "\<\"aabAbaB\"\>", ",", "\<\"aabAbAb\"\>", ",", "\<\"aabAbAB\"\>", 
+   ",", "\<\"aabAAbb\"\>", ",", "\<\"aabAABB\"\>", ",", "\<\"aabABab\"\>", 
+   ",", "\<\"aabABaB\"\>", ",", "\<\"aabABAb\"\>", ",", "\<\"aabABAB\"\>"}], 
+  "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["RCPRepresentative", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RCPRepresentative"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RCPRepresentative\\\", \\\"[\\\", \
+StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) returns the first in a \
+lexicographic ordering of all cycled permutations of \
+\!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\).\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3616059662-8904612"]
+}, Open  ]],
+
+Cell[TextData[{
+ "This word is not RCP, even though it appears in ",
+ StyleBox["RCPCandidates[7]", "Input"],
+ ":"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RCPRepresentative", "[", "\"\<aabbabb\>\"", "]"}]], "Input"],
+
+Cell[BoxData["\<\"aabaabb\"\>"], "Output"]
+}, Open  ]],
+
+Cell["This word is RCP:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RCPRepresentative", "[", "\"\<aabbaBB\>\"", "]"}]], "Input"],
+
+Cell[BoxData["\<\"aabbaBB\"\>"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["RCPWords", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RCPWords"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RCPWords\\\", \\\"[\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives a list of all minimal \
+RCP words of length \!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\).\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059667-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RCPWords", "[", "8", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaaaaaaa\"\>", ",", "\<\"aaaaaabb\"\>", 
+   ",", "\<\"aaaaabaB\"\>", ",", "\<\"aaaaabAb\"\>", ",", "\<\"aaaaabAB\"\>", 
+   ",", "\<\"aaaaabbb\"\>", ",", "\<\"aaaabaaB\"\>", ",", "\<\"aaaabAAb\"\>", 
+   ",", "\<\"aaaabAAB\"\>", ",", "\<\"aaaabaBB\"\>", ",", "\<\"aaaabAbb\"\>", 
+   ",", "\<\"aaaabABB\"\>", ",", "\<\"aaaabbaB\"\>", ",", "\<\"aaaabbAb\"\>", 
+   ",", "\<\"aaaabbAB\"\>", ",", "\<\"aaaabbbb\"\>", ",", "\<\"aaabaaaB\"\>", 
+   ",", "\<\"aaabAAAb\"\>", ",", "\<\"aaabAAAB\"\>", ",", "\<\"aaabaaBB\"\>", 
+   ",", "\<\"aaabAAbb\"\>", ",", "\<\"aaabAABB\"\>", ",", "\<\"aaababbb\"\>", 
+   ",", "\<\"aaabaBBB\"\>", ",", "\<\"aaabbaaB\"\>", ",", "\<\"aaabbAAb\"\>", 
+   ",", "\<\"aaabbAAB\"\>", ",", "\<\"aaabbabb\"\>", ",", "\<\"aaabbaBB\"\>", 
+   ",", "\<\"aaabbAbb\"\>", ",", "\<\"aaabbABB\"\>", ",", "\<\"aaabbbaB\"\>", 
+   ",", "\<\"aaabbbAB\"\>", ",", "\<\"aababaBB\"\>", ",", "\<\"aababAbb\"\>", 
+   ",", "\<\"aababABB\"\>", ",", "\<\"aabaBabb\"\>", ",", "\<\"aabaBaBB\"\>", 
+   ",", "\<\"aabaBAbb\"\>", ",", "\<\"aabaBABB\"\>", ",", "\<\"aababbaB\"\>", 
+   ",", "\<\"aababbAb\"\>", ",", "\<\"aababbAB\"\>", ",", "\<\"aabaBBab\"\>", 
+   ",", "\<\"aabaBBAb\"\>", ",", "\<\"aabaBBAB\"\>", ",", "\<\"aabAbbaB\"\>", 
+   ",", "\<\"aabAbbAB\"\>", ",", "\<\"aabABBAb\"\>", ",", "\<\"aabbaabb\"\>", 
+   ",", "\<\"aabbaaBB\"\>", ",", "\<\"aabbAABB\"\>", ",", "\<\"aabbaBab\"\>", 
+   ",", "\<\"aabbaBaB\"\>", ",", "\<\"aabbaBAb\"\>", ",", "\<\"aabbaBAB\"\>", 
+   ",", "\<\"aabbABab\"\>", ",", "\<\"aabbABaB\"\>", ",", "\<\"aabbABAb\"\>", 
+   ",", "\<\"aabbABAB\"\>", ",", "\<\"ababaBaB\"\>", ",", "\<\"ababAbaB\"\>", 
+   ",", "\<\"ababAbAB\"\>", ",", "\<\"abaBabaB\"\>", ",", "\<\"abaBabAB\"\>", 
+   ",", "\<\"abaBAbAB\"\>", ",", "\<\"abABabAB\"\>"}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["RootWordClasses", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RootWordClasses"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RootWordClasses\\\", \\\"[\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives the equivalence classes \
+of all RCP root words of length \!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\).\"\>",
+   "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059670-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RootWordClasses", "[", "8", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "\<\"aabbABAB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"abABabAB\"\>", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aababAbb\"\>", ",", "\<\"aabAbbaB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabaBaBB\"\>", ",", "\<\"aabaBBAB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabbaabb\"\>", ",", "\<\"abaBabaB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabbaBAb\"\>", ",", "\<\"abaBabAB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabABBAb\"\>", ",", "\<\"abaBAbAB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aaababbb\"\>", ",", "\<\"aababaBB\"\>", 
+     ",", "\<\"aabbaBaB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aaabbabb\"\>", ",", "\<\"aabaBBab\"\>", 
+     ",", "\<\"ababaBaB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aababbaB\"\>", ",", "\<\"aababbAb\"\>", 
+     ",", "\<\"aabaBABB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aababbAB\"\>", ",", "\<\"aababABB\"\>", 
+     ",", "\<\"aabbABaB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabaBabb\"\>", ",", "\<\"aabbaBab\"\>", 
+     ",", "\<\"aabbaBAB\"\>", ",", "\<\"aabbABAb\"\>", 
+     ",", "\<\"ababAbaB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabaBAbb\"\>", ",", "\<\"aabaBBAb\"\>", 
+     ",", "\<\"aabbABab\"\>", ",", "\<\"aabAbbAB\"\>", 
+     ",", "\<\"ababAbAB\"\>"}], "}"}]}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["RootWordQ", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RootWordQ"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RootWordQ\\\", \\\"[\\\", \
+StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) yields True if \
+\!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\) is a root word, and False \
+otherwise.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059700-5401346"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"RCPWords", "[", "8", "]"}], ",", "RootWordQ"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaababbb\"\>", ",", "\<\"aaabbabb\"\>", 
+   ",", "\<\"aababaBB\"\>", ",", "\<\"aababAbb\"\>", ",", "\<\"aababABB\"\>", 
+   ",", "\<\"aabaBabb\"\>", ",", "\<\"aabaBaBB\"\>", ",", "\<\"aabaBAbb\"\>", 
+   ",", "\<\"aabaBABB\"\>", ",", "\<\"aababbaB\"\>", ",", "\<\"aababbAb\"\>", 
+   ",", "\<\"aababbAB\"\>", ",", "\<\"aabaBBab\"\>", ",", "\<\"aabaBBAb\"\>", 
+   ",", "\<\"aabaBBAB\"\>", ",", "\<\"aabAbbaB\"\>", ",", "\<\"aabAbbAB\"\>", 
+   ",", "\<\"aabABBAb\"\>", ",", "\<\"aabbaabb\"\>", ",", "\<\"aabbaBab\"\>", 
+   ",", "\<\"aabbaBaB\"\>", ",", "\<\"aabbaBAb\"\>", ",", "\<\"aabbaBAB\"\>", 
+   ",", "\<\"aabbABab\"\>", ",", "\<\"aabbABaB\"\>", ",", "\<\"aabbABAb\"\>", 
+   ",", "\<\"aabbABAB\"\>", ",", "\<\"ababaBaB\"\>", ",", "\<\"ababAbaB\"\>", 
+   ",", "\<\"ababAbAB\"\>", ",", "\<\"abaBabaB\"\>", ",", "\<\"abaBabAB\"\>", 
+   ",", "\<\"abaBAbAB\"\>", ",", "\<\"abABabAB\"\>"}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["RootWords", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RootWords"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RootWords\\\", \\\"[\\\", StyleBox[\\\"n\
+\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives a list of all RCP root words of length \
+\!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\).\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059709-5401346"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RootWords", "[", "8", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaababbb\"\>", ",", "\<\"aaabbabb\"\>", 
+   ",", "\<\"aababaBB\"\>", ",", "\<\"aababAbb\"\>", ",", "\<\"aababABB\"\>", 
+   ",", "\<\"aabaBabb\"\>", ",", "\<\"aabaBaBB\"\>", ",", "\<\"aabaBAbb\"\>", 
+   ",", "\<\"aabaBABB\"\>", ",", "\<\"aababbaB\"\>", ",", "\<\"aababbAb\"\>", 
+   ",", "\<\"aababbAB\"\>", ",", "\<\"aabaBBab\"\>", ",", "\<\"aabaBBAb\"\>", 
+   ",", "\<\"aabaBBAB\"\>", ",", "\<\"aabAbbaB\"\>", ",", "\<\"aabAbbAB\"\>", 
+   ",", "\<\"aabABBAb\"\>", ",", "\<\"aabbaabb\"\>", ",", "\<\"aabbaBab\"\>", 
+   ",", "\<\"aabbaBaB\"\>", ",", "\<\"aabbaBAb\"\>", ",", "\<\"aabbaBAB\"\>", 
+   ",", "\<\"aabbABab\"\>", ",", "\<\"aabbABaB\"\>", ",", "\<\"aabbABAb\"\>", 
+   ",", "\<\"aabbABAB\"\>", ",", "\<\"ababaBaB\"\>", ",", "\<\"ababAbaB\"\>", 
+   ",", "\<\"ababAbAB\"\>", ",", "\<\"abaBabaB\"\>", ",", "\<\"abaBabAB\"\>", 
+   ",", "\<\"abaBAbAB\"\>", ",", "\<\"abABabAB\"\>"}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SortWords", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SortWords"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SortWords\\\", \\\"[\\\", \
+StyleBox[\\\"list\\\", \\\"TI\\\"], \\\"]\\\"]]\) sorts a list of words \
+according to the ordering \\\"a\\\", \\\"b\\\", \\\"A\\\", \\\"B\\\".\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059713-5401346"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RCPWords", "[", "6", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaaaaa\"\>", ",", "\<\"aaaabb\"\>", ",", "\<\"aaabaB\"\>", 
+   ",", "\<\"aaabAb\"\>", ",", "\<\"aaabAB\"\>", ",", "\<\"aaabbb\"\>", 
+   ",", "\<\"aabaaB\"\>", ",", "\<\"aabAAb\"\>", ",", "\<\"aabAAB\"\>", 
+   ",", "\<\"aabaBB\"\>", ",", "\<\"aabbaB\"\>", ",", "\<\"aabbAB\"\>"}], 
+  "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SortWords", "[", "%", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"aaaaaa\"\>", ",", "\<\"aaaabb\"\>", ",", "\<\"aaabaB\"\>", 
+   ",", "\<\"aaabbb\"\>", ",", "\<\"aaabAb\"\>", ",", "\<\"aaabAB\"\>", 
+   ",", "\<\"aabaaB\"\>", ",", "\<\"aabaBB\"\>", ",", "\<\"aabbaB\"\>", 
+   ",", "\<\"aabbAB\"\>", ",", "\<\"aabAAb\"\>", ",", "\<\"aabAAB\"\>"}], 
+  "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SyllableCount", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SyllableCount"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SyllableCount\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"syllable\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives the number of \
+occurrences of the subword \!\(\*StyleBox[\\\"syllable\\\", \\\"TI\\\"]\) and \
+its inverse in a cyclic word \!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\).\"\>",
+   "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059718-5401346"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SyllableCount", "[", 
+  RowBox[{"\"\<aabbAABB\>\"", ",", "\"\<aB\>\""}], "]"}]], "Input"],
+
+Cell[BoxData["1"], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SyllableCount", "[", 
+  RowBox[{"\"\<aabbAABB\>\"", ",", "\"\<Ba\>\""}], "]"}]], "Input"],
+
+Cell[BoxData["1"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["WordEquivalenceClasses", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "WordEquivalenceClasses"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"WordEquivalenceClasses\\\", \\\"[\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives the equivalence classes \
+of all RCP words of length \!\(\*StyleBox[\\\"n\\\", \
+\\\"TI\\\"]\).\\n\!\(\*RowBox[List[\\\"WordEquivalenceClasses\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"i\\\", \
+\\\"TI\\\"]]], \\\"]\\\"]]\) gives the equivalence classes of all RCP words \
+of length \!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\) whose minimal generator \
+weight is \!\(\*StyleBox[\\\"i\\\", \\\"TI\\\"]\).\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info23750869352-5017894"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"WordEquivalenceClasses", "[", "8", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "\<\"aaaaaaaa\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaaaabaB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaaaabbb\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaaaabAB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaaabaaB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaaabaBB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaaabAbb\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaaabABB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaaabbaB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaaabbAb\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaaabbAB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaaabbbb\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaaabAAB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabaaaB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabaaBB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabAAbb\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabAABB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabaBBB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabbaaB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabbAAb\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabbAAB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabbaBB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabbAbb\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabbABB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabbbaB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabbbAB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aaabAAAB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aabbaaBB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aabbAABB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"aabbABAB\"\>", "}"}], ",", 
+   RowBox[{"{", "\<\"abABabAB\"\>", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aababAbb\"\>", ",", "\<\"aabAbbaB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabaBaBB\"\>", ",", "\<\"aabaBBAB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabbaabb\"\>", ",", "\<\"abaBabaB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabbaBAb\"\>", ",", "\<\"abaBabAB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabABBAb\"\>", ",", "\<\"abaBAbAB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aaababbb\"\>", ",", "\<\"aababaBB\"\>", 
+     ",", "\<\"aabbaBaB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aaabbabb\"\>", ",", "\<\"aabaBBab\"\>", 
+     ",", "\<\"ababaBaB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aababbaB\"\>", ",", "\<\"aababbAb\"\>", 
+     ",", "\<\"aabaBABB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aababbAB\"\>", ",", "\<\"aababABB\"\>", 
+     ",", "\<\"aabbABaB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aaaaaabb\"\>", ",", "\<\"aaaaabAb\"\>", 
+     ",", "\<\"aaaabAAb\"\>", ",", "\<\"aaabAAAb\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabaBabb\"\>", ",", "\<\"aabbaBab\"\>", 
+     ",", "\<\"aabbaBAB\"\>", ",", "\<\"aabbABAb\"\>", 
+     ",", "\<\"ababAbaB\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"aabaBAbb\"\>", ",", "\<\"aabaBBAb\"\>", 
+     ",", "\<\"aabbABab\"\>", ",", "\<\"aabAbbAB\"\>", 
+     ",", "\<\"ababAbAB\"\>"}], "}"}]}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["$AllAutomorphisms", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "$AllAutomorphisms"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"$AllAutomorphisms is a list of the eight one\[Hyphen]letter \
+automorphisms on \!\(\*SubscriptBox[StyleBox[\\\"F\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]]\).\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059449-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["$AllAutomorphisms"], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"a\"\>", "}"}], ",", "\<\"b\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"a\"\>", "}"}], ",", "\<\"B\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"b\"\>", "}"}], ",", "\<\"a\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"b\"\>", "}"}], ",", "\<\"A\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"A\"\>", "}"}], ",", "\<\"b\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"A\"\>", "}"}], ",", "\<\"B\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"B\"\>", "}"}], ",", "\<\"a\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"B\"\>", "}"}], ",", "\<\"A\"\>"}], "}"}]}], 
+  "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["$Automorphisms", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "$Automorphisms"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"$Automorphisms is a list of four one\[Hyphen]letter \
+automorphisms on \!\(\*SubscriptBox[StyleBox[\\\"F\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]]\) that are distinct modulo Inn \
+\!\(\*SubscriptBox[StyleBox[\\\"F\\\", \\\"TI\\\"], StyleBox[\\\"2\\\", \
+\\\"TR\\\"]]\).\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3616059453-8904612"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["$Automorphisms"], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"a\"\>", "}"}], ",", "\<\"b\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"a\"\>", "}"}], ",", "\<\"B\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"b\"\>", "}"}], ",", "\<\"a\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "\<\"b\"\>", "}"}], ",", "\<\"A\"\>"}], "}"}]}], 
+  "}"}]], "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+},
+AutoGeneratedPackage->None,
+WindowSize->{1264, 717},
+WindowMargins->{{-8, Automatic}, {Automatic, 0}},
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
+ShowSelection->True,
+CellLabelAutoDelete->True,
+TrackCellChangeTimes->False,
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "Info3616059457-8904612"->{
+  Cell[11905, 462, 328, 5, 43, "Print",
+   CellTags->"Info3616059457-8904612"]},
+ "Info3616059463-8904612"->{
+  Cell[12745, 496, 749, 11, 43, "Print",
+   CellTags->"Info3616059463-8904612"]},
+ "Info3616059587-8904612"->{
+  Cell[14841, 566, 305, 5, 43, "Print",
+   CellTags->"Info3616059587-8904612"]},
+ "Info3616059594-8904612"->{
+  Cell[15676, 600, 358, 6, 43, "Print",
+   CellTags->"Info3616059594-8904612"]},
+ "Info3616059598-8904612"->{
+  Cell[16385, 627, 579, 9, 61, "Print",
+   CellTags->"Info3616059598-8904612"]},
+ "Info3616059603-8904612"->{
+  Cell[17831, 673, 343, 5, 43, "Print",
+   CellTags->"Info3616059603-8904612"]},
+ "Info3616059606-8904612"->{
+  Cell[18805, 707, 527, 8, 61, "Print",
+   CellTags->"Info3616059606-8904612"]},
+ "Info3616059611-8904612"->{
+  Cell[25769, 889, 454, 7, 43, "Print",
+   CellTags->"Info3616059611-8904612"]},
+ "Info3616059615-8904612"->{
+  Cell[26868, 928, 311, 5, 43, "Print",
+   CellTags->"Info3616059615-8904612"]},
+ "Info3616059619-8904612"->{
+  Cell[27948, 968, 442, 7, 43, "Print",
+   CellTags->"Info3616059619-8904612"]},
+ "Info3616059624-8904612"->{
+  Cell[30281, 1027, 614, 9, 43, "Print",
+   CellTags->"Info3616059624-8904612"]},
+ "Info3616059628-8904612"->{
+  Cell[31301, 1059, 456, 7, 43, "Print",
+   CellTags->"Info3616059628-8904612"]},
+ "Info3616059632-8904612"->{
+  Cell[32239, 1091, 305, 5, 43, "Print",
+   CellTags->"Info3616059632-8904612"]},
+ "Info3616059635-8904612"->{
+  Cell[32895, 1117, 336, 5, 43, "Print",
+   CellTags->"Info3616059635-8904612"]},
+ "Info3616059640-8904612"->{
+  Cell[33823, 1150, 417, 6, 43, "Print",
+   CellTags->"Info3616059640-8904612"]},
+ "Info3616059647-8904612"->{
+  Cell[34897, 1183, 443, 7, 58, "Print",
+   CellTags->"Info3616059647-8904612"]},
+ "Info3616059658-8904612"->{
+  Cell[36065, 1226, 873, 14, 76, "Print",
+   CellTags->"Info3616059658-8904612"]},
+ "Info3616059662-8904612"->{
+  Cell[38520, 1279, 337, 6, 43, "Print",
+   CellTags->"Info3616059662-8904612"]},
+ "Info3616059667-8904612"->{
+  Cell[39543, 1322, 293, 5, 43, "Print",
+   CellTags->"Info3616059667-8904612"]},
+ "Info3616059670-8904612"->{
+  Cell[41957, 1372, 314, 5, 43, "Print",
+   CellTags->"Info3616059670-8904612"]},
+ "Info3616059700-5401346"->{
+  Cell[43999, 1432, 302, 5, 40, "Print",
+   CellTags->"Info3616059700-5401346"]},
+ "Info3616059709-5401346"->{
+  Cell[45606, 1473, 288, 4, 43, "Print",
+   CellTags->"Info3616059709-5401346"]},
+ "Info3616059713-5401346"->{
+  Cell[47135, 1511, 300, 5, 43, "Print",
+   CellTags->"Info3616059713-5401346"]},
+ "Info3616059718-5401346"->{
+  Cell[48526, 1557, 452, 7, 43, "Print",
+   CellTags->"Info3616059718-5401346"]},
+ "Info23750869352-5017894"->{
+  Cell[49558, 1595, 666, 10, 61, "Print",
+   CellTags->"Info23750869352-5017894"]},
+ "Info3616059449-8904612"->{
+  Cell[53541, 1692, 272, 4, 43, "Print",
+   CellTags->"Info3616059449-8904612"]},
+ "Info3616059453-8904612"->{
+  Cell[54962, 1743, 384, 6, 43, "Print",
+   CellTags->"Info3616059453-8904612"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"Info3616059457-8904612", 56444, 1793},
+ {"Info3616059463-8904612", 56554, 1796},
+ {"Info3616059587-8904612", 56665, 1799},
+ {"Info3616059594-8904612", 56775, 1802},
+ {"Info3616059598-8904612", 56885, 1805},
+ {"Info3616059603-8904612", 56995, 1808},
+ {"Info3616059606-8904612", 57105, 1811},
+ {"Info3616059611-8904612", 57215, 1814},
+ {"Info3616059615-8904612", 57325, 1817},
+ {"Info3616059619-8904612", 57435, 1820},
+ {"Info3616059624-8904612", 57545, 1823},
+ {"Info3616059628-8904612", 57656, 1826},
+ {"Info3616059632-8904612", 57767, 1829},
+ {"Info3616059635-8904612", 57878, 1832},
+ {"Info3616059640-8904612", 57989, 1835},
+ {"Info3616059647-8904612", 58100, 1838},
+ {"Info3616059658-8904612", 58211, 1841},
+ {"Info3616059662-8904612", 58323, 1844},
+ {"Info3616059667-8904612", 58434, 1847},
+ {"Info3616059670-8904612", 58545, 1850},
+ {"Info3616059700-5401346", 58656, 1853},
+ {"Info3616059709-5401346", 58767, 1856},
+ {"Info3616059713-5401346", 58878, 1859},
+ {"Info3616059718-5401346", 58989, 1862},
+ {"Info23750869352-5017894", 59101, 1865},
+ {"Info3616059449-8904612", 59214, 1868},
+ {"Info3616059453-8904612", 59325, 1871}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 37, 0, 92, "Title"],
+Cell[607, 24, 42, 0, 51, "Subtitle"],
+Cell[652, 26, 234, 6, 49, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[911, 36, 31, 0, 64, "Section"],
+Cell[945, 38, 385, 9, 70, "Text"],
+Cell[1333, 49, 421, 11, 30, "Text"],
+Cell[1757, 62, 59, 1, 52, "Code"],
+Cell[CellGroupData[{
+Cell[1841, 67, 40, 0, 44, "Subsection"],
+Cell[1884, 69, 621, 22, 51, "Text"],
+Cell[2508, 93, 136, 6, 32, "Text"],
+Cell[2647, 101, 118, 3, 28, "Input"],
+Cell[2768, 106, 457, 8, 69, "Text"],
+Cell[CellGroupData[{
+Cell[3250, 118, 85, 1, 28, "Input"],
+Cell[3338, 121, 38, 0, 28, "Output"]
+}, Open  ]],
+Cell[3391, 124, 422, 8, 50, "Text"],
+Cell[CellGroupData[{
+Cell[3838, 136, 83, 1, 28, "Input"],
+Cell[3924, 139, 38, 0, 28, "Output"]
+}, Open  ]],
+Cell[3977, 142, 237, 5, 31, "Text"],
+Cell[CellGroupData[{
+Cell[4239, 151, 80, 1, 28, "Input"],
+Cell[4322, 154, 38, 0, 28, "Output"]
+}, Open  ]],
+Cell[4375, 157, 413, 13, 51, "Text"],
+Cell[CellGroupData[{
+Cell[4813, 174, 75, 1, 28, "Input"],
+Cell[4891, 177, 32, 0, 28, "Output"]
+}, Open  ]],
+Cell[4938, 180, 457, 14, 52, "Text"],
+Cell[CellGroupData[{
+Cell[5420, 198, 79, 1, 28, "Input"],
+Cell[5502, 201, 58, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5597, 207, 87, 1, 28, "Input"],
+Cell[5687, 210, 58, 1, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[5794, 217, 40, 0, 36, "Subsection"],
+Cell[5837, 219, 105, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[5967, 226, 172, 5, 28, "Input"],
+Cell[6142, 233, 128, 3, 28, "Output"]
+}, Open  ]],
+Cell[6285, 239, 297, 9, 32, "Text"],
+Cell[CellGroupData[{
+Cell[6607, 252, 116, 2, 28, "Input"],
+Cell[6726, 256, 28, 0, 28, "Output"]
+}, Open  ]],
+Cell[6769, 259, 124, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[6918, 266, 207, 6, 28, "Input"],
+Cell[7128, 274, 49, 0, 28, "Output"]
+}, Open  ]],
+Cell[7192, 277, 342, 11, 52, "Text"],
+Cell[CellGroupData[{
+Cell[7559, 292, 43, 0, 28, "Input"],
+Cell[7605, 294, 864, 27, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[8518, 327, 55, 0, 36, "Subsection"],
+Cell[8576, 329, 208, 5, 31, "Text"],
+Cell[CellGroupData[{
+Cell[8809, 338, 66, 1, 28, "Input"],
+Cell[8878, 341, 208, 4, 28, "Output"]
+}, Open  ]],
+Cell[9101, 348, 306, 9, 31, "Text"],
+Cell[CellGroupData[{
+Cell[9432, 361, 61, 1, 28, "Input"],
+Cell[9496, 364, 141, 3, 28, "Output"]
+}, Open  ]],
+Cell[9652, 370, 229, 7, 31, "Text"],
+Cell[CellGroupData[{
+Cell[9906, 381, 186, 5, 28, "Input"],
+Cell[10095, 388, 224, 6, 28, "Output"]
+}, Open  ]],
+Cell[10334, 397, 110, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[10469, 404, 75, 1, 28, "Input"],
+Cell[10547, 407, 224, 6, 28, "Output"]
+}, Open  ]],
+Cell[10786, 416, 270, 6, 50, "Text"],
+Cell[CellGroupData[{
+Cell[11081, 426, 329, 9, 28, "Input"],
+Cell[11413, 437, 193, 6, 28, "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11667, 450, 34, 0, 64, "Section"],
+Cell[CellGroupData[{
+Cell[11726, 454, 70, 0, 29, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[11821, 458, 81, 2, 28, "Input"],
+Cell[11905, 462, 328, 5, 43, "Print",
+ CellTags->"Info3616059457-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12270, 472, 80, 1, 28, "Input"],
+Cell[12353, 475, 31, 0, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12421, 480, 81, 1, 28, "Input"],
+Cell[12505, 483, 32, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[12586, 489, 71, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[12682, 493, 60, 1, 28, "Input"],
+Cell[12745, 496, 749, 11, 43, "Print",
+ CellTags->"Info3616059463-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13531, 512, 166, 5, 28, "Input"],
+Cell[13700, 519, 147, 3, 28, "Output"]
+}, Open  ]],
+Cell[13862, 525, 214, 5, 50, "Text"],
+Cell[CellGroupData[{
+Cell[14101, 534, 236, 7, 28, "Input"],
+Cell[14340, 543, 40, 0, 28, "Output"]
+}, Open  ]],
+Cell[14395, 546, 256, 8, 32, "Text"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[14688, 559, 68, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[14781, 563, 57, 1, 28, "Input"],
+Cell[14841, 566, 305, 5, 43, "Print",
+ CellTags->"Info3616059587-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15183, 576, 80, 1, 28, "Input"],
+Cell[15266, 579, 39, 0, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15342, 584, 81, 1, 28, "Input"],
+Cell[15426, 587, 36, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[15511, 593, 74, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[15610, 597, 63, 1, 28, "Input"],
+Cell[15676, 600, 358, 6, 43, "Print",
+ CellTags->"Info3616059594-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16071, 611, 83, 1, 28, "Input"],
+Cell[16157, 614, 38, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[16244, 620, 62, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[16331, 624, 51, 1, 28, "Input"],
+Cell[16385, 627, 579, 9, 61, "Print",
+ CellTags->"Info3616059598-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17001, 641, 73, 1, 28, "Input"],
+Cell[17077, 644, 99, 2, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17213, 651, 83, 1, 28, "Input"],
+Cell[17299, 654, 332, 6, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[17680, 666, 67, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[17772, 670, 56, 1, 28, "Input"],
+Cell[17831, 673, 343, 5, 43, "Print",
+ CellTags->"Info3616059603-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18211, 683, 101, 2, 28, "Input"],
+Cell[18315, 687, 274, 7, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[18638, 700, 75, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[18738, 704, 64, 1, 28, "Input"],
+Cell[18805, 707, 527, 8, 61, "Print",
+ CellTags->"Info3616059606-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19369, 720, 74, 1, 28, "Input"],
+Cell[19446, 723, 635, 19, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20118, 747, 74, 1, 28, "Input"],
+Cell[20195, 750, 5380, 126, 182, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[25624, 882, 64, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[25713, 886, 53, 1, 28, "Input"],
+Cell[25769, 889, 454, 7, 43, "Print",
+ CellTags->"Info3616059611-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[26260, 901, 63, 1, 28, "Input"],
+Cell[26326, 904, 336, 11, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[26711, 921, 70, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[26806, 925, 59, 1, 28, "Input"],
+Cell[26868, 928, 311, 5, 43, "Print",
+ CellTags->"Info3616059615-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27216, 938, 82, 1, 28, "Input"],
+Cell[27301, 941, 58, 1, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[27396, 947, 99, 2, 28, "Input"],
+Cell[27498, 951, 246, 4, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[27793, 961, 69, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[27887, 965, 58, 1, 28, "Input"],
+Cell[27948, 968, 442, 7, 43, "Print",
+ CellTags->"Info3616059619-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[28427, 980, 98, 2, 28, "Input"],
+Cell[28528, 984, 530, 9, 46, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29095, 998, 83, 1, 28, "Input"],
+Cell[29181, 1001, 894, 13, 46, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[30124, 1020, 70, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[30219, 1024, 59, 1, 28, "Input"],
+Cell[30281, 1027, 614, 9, 43, "Print",
+ CellTags->"Info3616059624-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[30932, 1041, 141, 3, 28, "Input"],
+Cell[31076, 1046, 31, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[31156, 1052, 64, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[31245, 1056, 53, 1, 28, "Input"],
+Cell[31301, 1059, 456, 7, 43, "Print",
+ CellTags->"Info3616059628-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[31794, 1071, 101, 2, 28, "Input"],
+Cell[31898, 1075, 135, 3, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[32082, 1084, 70, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[32177, 1088, 59, 1, 28, "Input"],
+Cell[32239, 1091, 305, 5, 43, "Print",
+ CellTags->"Info3616059632-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[32581, 1101, 77, 1, 28, "Input"],
+Cell[32661, 1104, 36, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[32746, 1110, 66, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[32837, 1114, 55, 1, 28, "Input"],
+Cell[32895, 1117, 336, 5, 43, "Print",
+ CellTags->"Info3616059635-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[33268, 1127, 137, 4, 28, "Input"],
+Cell[33408, 1133, 167, 3, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[33624, 1142, 92, 1, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[33741, 1147, 79, 1, 28, "Input"],
+Cell[33823, 1150, 417, 6, 43, "Print",
+ CellTags->"Info3616059640-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[34277, 1161, 119, 2, 28, "Input"],
+Cell[34399, 1165, 282, 5, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[34730, 1176, 75, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[34830, 1180, 64, 1, 28, "Input"],
+Cell[34897, 1183, 443, 7, 58, "Print",
+ CellTags->"Info3616059647-8904612"]
+}, Open  ]],
+Cell[35355, 1193, 205, 5, 31, "Text"],
+Cell[CellGroupData[{
+Cell[35585, 1202, 87, 1, 28, "Input"],
+Cell[35675, 1205, 31, 0, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[35743, 1210, 87, 1, 28, "Input"],
+Cell[35833, 1213, 32, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[35914, 1219, 67, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[36006, 1223, 56, 1, 28, "Input"],
+Cell[36065, 1226, 873, 14, 76, "Print",
+ CellTags->"Info3616059658-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[36975, 1245, 66, 1, 28, "Input"],
+Cell[37044, 1248, 1268, 18, 63, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[38361, 1272, 71, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[38457, 1276, 60, 1, 28, "Input"],
+Cell[38520, 1279, 337, 6, 43, "Print",
+ CellTags->"Info3616059662-8904612"]
+}, Open  ]],
+Cell[38872, 1288, 125, 4, 31, "Text"],
+Cell[CellGroupData[{
+Cell[39022, 1296, 84, 1, 28, "Input"],
+Cell[39109, 1299, 42, 0, 28, "Output"]
+}, Open  ]],
+Cell[39166, 1302, 33, 0, 30, "Text"],
+Cell[CellGroupData[{
+Cell[39224, 1306, 84, 1, 28, "Input"],
+Cell[39311, 1309, 42, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[39402, 1315, 62, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[39489, 1319, 51, 1, 28, "Input"],
+Cell[39543, 1322, 293, 5, 43, "Print",
+ CellTags->"Info3616059667-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[39873, 1332, 61, 1, 28, "Input"],
+Cell[39937, 1335, 1816, 24, 97, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[41802, 1365, 69, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[41896, 1369, 58, 1, 28, "Input"],
+Cell[41957, 1372, 314, 5, 43, "Print",
+ CellTags->"Info3616059670-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[42308, 1382, 68, 1, 28, "Input"],
+Cell[42379, 1385, 1428, 34, 63, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[43856, 1425, 63, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[43944, 1429, 52, 1, 28, "Input"],
+Cell[43999, 1432, 302, 5, 40, "Print",
+ CellTags->"Info3616059700-5401346"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[44338, 1442, 126, 3, 28, "Input"],
+Cell[44467, 1447, 947, 13, 63, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[45463, 1466, 63, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[45551, 1470, 52, 1, 28, "Input"],
+Cell[45606, 1473, 288, 4, 43, "Print",
+ CellTags->"Info3616059709-5401346"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[45931, 1482, 62, 1, 28, "Input"],
+Cell[45996, 1485, 947, 13, 63, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[46992, 1504, 63, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[47080, 1508, 52, 1, 28, "Input"],
+Cell[47135, 1511, 300, 5, 43, "Print",
+ CellTags->"Info3616059713-5401346"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[47472, 1521, 61, 1, 28, "Input"],
+Cell[47536, 1524, 344, 6, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[47917, 1535, 62, 1, 28, "Input"],
+Cell[47982, 1538, 344, 6, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[48375, 1550, 67, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[48467, 1554, 56, 1, 32, "Input"],
+Cell[48526, 1557, 452, 7, 43, "Print",
+ CellTags->"Info3616059718-5401346"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[49015, 1569, 113, 2, 32, "Input"],
+Cell[49131, 1573, 28, 0, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[49196, 1578, 113, 2, 32, "Input"],
+Cell[49312, 1582, 28, 0, 32, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[49389, 1588, 76, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[49490, 1592, 65, 1, 32, "Input"],
+Cell[49558, 1595, 666, 10, 61, "Print",
+ CellTags->"Info23750869352-5017894"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[50261, 1610, 75, 1, 32, "Input"],
+Cell[50339, 1613, 2994, 66, 138, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[53382, 1685, 71, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[53478, 1689, 60, 1, 28, "Input"],
+Cell[53541, 1692, 272, 4, 43, "Print",
+ CellTags->"Info3616059449-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[53850, 1701, 43, 0, 28, "Input"],
+Cell[53896, 1703, 864, 27, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[54809, 1736, 68, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[54902, 1740, 57, 1, 28, "Input"],
+Cell[54962, 1743, 384, 6, 43, "Print",
+ CellTags->"Info3616059453-8904612"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[55383, 1754, 40, 0, 28, "Input"],
+Cell[55426, 1756, 460, 15, 28, "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

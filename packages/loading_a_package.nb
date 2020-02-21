@@ -1,0 +1,753 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     27568,        745]
+NotebookOptionsPosition[     25858,        711]
+NotebookOutlinePosition[     26341,        730]
+CellTagsIndexPosition[     26298,        727]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ "loading a ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " package"
+}], "Title",ExpressionUUID->"4540036a-f16d-4b66-ab3f-6bc17ee469be"],
+
+Cell[TextData[{
+ "[This notebook can be downloaded from ",
+ ButtonBox["http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.\
+html",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.\
+html"], None}],
+ ".]"
+}], "Note",ExpressionUUID->"78a09490-a118-41bf-81f1-1ba9285dacf0"],
+
+Cell[TextData[{
+ "There are a few different ways to load a package in ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ ". The quick and dirty way (if your browser displays the contents of the .m \
+file as text) is to copy the whole contents of the package, paste it into ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ ", and Shift+Enter to evaluate it.  The drawback of this method is that it \
+makes a big mess in the notebook."
+}], "Text",ExpressionUUID->"7258de9a-7c5e-4a50-b30c-264494967381"],
+
+Cell[TextData[{
+ "A slicker way of loading a package is to import it directly from the web.  \
+For example, the following loads the package ",
+ ButtonBox["IntegerSequences",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://people.hofstra.edu/Eric_Rowland/packages.html#\
+IntegerSequences"], None},
+  ButtonNote->
+   "https://people.hofstra.edu/Eric_Rowland/packages.html#IntegerSequences"],
+ "."
+}], "Text",ExpressionUUID->"011961a7-1c59-4af8-972f-69aed22518a9"],
+
+Cell[BoxData[
+ RowBox[{"Import", "[", 
+  "\"\<https://people.hofstra.edu/Eric_Rowland/packages/IntegerSequences.m\>\"\
+", "]"}]], "Input",
+ CellLabel->"In[1]:=",ExpressionUUID->"e26ec5e0-54ce-43bc-9b69-8d5f79f5d28e"],
+
+Cell[TextData[{
+ "If you intend to use a package more than once, it\[CloseCurlyQuote]s \
+probably better to download it.",
+ "\n",
+ "A good place to download packages is the Applications subdirectory of ",
+ StyleBox["$UserBaseDirectory", "Input"],
+ ", which you can open by evaluating the following."
+}], "Text",ExpressionUUID->"0f910f73-5b6a-4a94-a6eb-2ca771c4658e"],
+
+Cell[BoxData[
+ RowBox[{"SystemOpen", "[", 
+  RowBox[{"FileNameJoin", "[", 
+   RowBox[{"{", 
+    RowBox[{"$UserBaseDirectory", ",", "\"\<Applications\>\""}], "}"}], "]"}],
+   "]"}]], "Input",
+ CellLabel->"In[2]:=",ExpressionUUID->"9cc102ec-44d6-4be1-a958-a15637f4975f"],
+
+Cell[TextData[{
+ "(Any of the directories listed when you evaluate ",
+ StyleBox["$Path", "Input"],
+ " will work.)"
+}], "Text",ExpressionUUID->"5a23a67e-acb0-4a3c-83d2-6f86e15a176a"],
+
+Cell["Then you can load it by evaluating the following.", "Text",ExpressionUUID->"34eddb28-ff03-47c3-afbf-77d07347bf24"],
+
+Cell[BoxData[
+ RowBox[{"<<", "IntegerSequences`"}]], "Input",
+ CellLabel->"In[11]:=",ExpressionUUID->"9a88be33-6c97-4457-a93f-a4cc4b6c1f13"],
+
+Cell["\<\
+(That last character is a backtick (reverse single quotation mark), which is \
+located to the left of the \[OpenCurlyQuote]1\[CloseCurlyQuote] key on US \
+keyboards.)\
+\>", "Text",ExpressionUUID->"5a8531d3-9d07-4205-b02a-dd8d313e25d9"],
+
+Cell["\<\
+To see all the symbols available in the package, evaluate the following.\
+\>", "Text",ExpressionUUID->"0180a943-3505-4daa-9e66-8105f2d1c81f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "IntegerSequences`*"}]], "Input",
+ CellLabel->"In[2]:=",ExpressionUUID->"9b33715b-f752-458c-bd75-f5fa0c763340"],
+
+Cell[BoxData[
+ DynamicModuleBox[{Typeset`open$$ = True}, 
+  PaneSelectorBox[{False->
+   RowBox[{
+    OpenerBox[Dynamic[Typeset`open$$],
+     ImageSize->Small], 
+    StyleBox["IntegerSequences`", "InfoHeading"]}], True->GridBox[{
+     {
+      RowBox[{
+       OpenerBox[Dynamic[Typeset`open$$],
+        ImageSize->Small], 
+       StyleBox["IntegerSequences`", "InfoHeading"]}]},
+     {GridBox[{
+        {
+         ButtonBox["AlgebraicSequence",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AlgebraicSequence", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["ClearMotzkinNumberCache",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "ClearMotzkinNumberCache", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["FindRegularSequenceRecurrence",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "FindRegularSequenceRecurrence", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["MotzkinNumber",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"MotzkinNumber", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AlgebraicSequenceReduce",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AlgebraicSequenceReduce", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["CompleteAutomatonQ",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "CompleteAutomatonQ", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["FlattenInputAlphabet",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "FlattenInputAlphabet", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["OEISWebLookup",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"OEISWebLookup", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AperyNumber",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"AperyNumber", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["ComplexListPlot",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "ComplexListPlot", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["FromCoefficientList",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "FromCoefficientList", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["OrePolynomial",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"OrePolynomial", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomaticSequence",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AutomaticSequence", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["CompressStateNames",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "CompressStateNames", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["FromDigitList",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"FromDigitList", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["Radical",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"Radical", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomaticSequenceAutomaton",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AutomaticSequenceAutomaton", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["ConstantTermSequence",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "ConstantTermSequence", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["FromRecurrence",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"FromRecurrence", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["ReduceAutomaton",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "ReduceAutomaton", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomaticSequenceReduce",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AutomaticSequenceReduce", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["ConstantTermSequenceReduce",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "ConstantTermSequenceReduce", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["GatherEdges",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"GatherEdges", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["RegularSequence",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "RegularSequence", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["Automaton",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"Automaton", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["DeterministicAutomatonQ",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "DeterministicAutomatonQ", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["GeneratingFunctionRelations",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "GeneratingFunctionRelations", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["RegularSequenceGeneratorTable",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "RegularSequenceGeneratorTable", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomatonAdjacencyMatrix",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AutomatonAdjacencyMatrix", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["DiagonalSequence",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "DiagonalSequence", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["HashStateNames",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"HashStateNames", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["RegularSequenceMatrixForm",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "RegularSequenceMatrixForm", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomatonDeterminize",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AutomatonDeterminize", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["DiagonalSequenceReduce",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "DiagonalSequenceReduce", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["ImportMotzkinNumber",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "ImportMotzkinNumber", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["RegularSequenceMatrixLength",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "RegularSequenceMatrixLength", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomatonGraph",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"AutomatonGraph", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["DigitGet",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"DigitGet", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["IndexedStateNames",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "IndexedStateNames", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["RegularSequenceRecurrence",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "RegularSequenceRecurrence", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomatonInputAlphabet",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AutomatonInputAlphabet", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["DigitList",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"DigitList", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["InputAlphabet",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"InputAlphabet", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["RegularSequenceReduce",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "RegularSequenceReduce", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomatonMinimize",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AutomatonMinimize", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["DigitsCount",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"DigitsCount", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["IntegerPrepend",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"IntegerPrepend", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["SequenceRiffle",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"SequenceRiffle", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomatonOutputAlphabet",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AutomatonOutputAlphabet", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["ExponentialFit",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"ExponentialFit", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["IntermediateFunction",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "IntermediateFunction", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["SeriesRoot",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"SeriesRoot", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomatonOutputRules",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AutomatonOutputRules", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["FactorForm",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"FactorForm", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["JacobsthalNumber",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "JacobsthalNumber", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["SeriesSolve",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"SeriesSolve", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomatonProduct",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AutomatonProduct", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["FactorGrid",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"FactorGrid", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["LaurentPolynomialCoefficientList",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "LaurentPolynomialCoefficientList", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["StateStorage",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"StateStorage", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomatonQ",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"AutomatonQ", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["FindAutomaticSequenceAutomaton",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "FindAutomaticSequenceAutomaton", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["LeadingZeros",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"LeadingZeros", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["SternBrocot",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"SternBrocot", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomatonReverse",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AutomatonReverse", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["FindAutomaticSequenceFunction",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "FindAutomaticSequenceFunction", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["MaxDenominator",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"MaxDenominator", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["TransitionSequence",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "TransitionSequence", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomatonStateCount",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AutomatonStateCount", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["FindAutomaticSequenceRecurrence",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "FindAutomaticSequenceRecurrence", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["MorphicSequence",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "MorphicSequence", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["Tribonacci",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"Tribonacci", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["AutomatonStateList",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "AutomatonStateList", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["FindPolynomial",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"FindPolynomial", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["MorphicSequenceReduce",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "MorphicSequenceReduce", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["$CacheMotzkinNumbers",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "$CacheMotzkinNumbers", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["BaumSweet",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"BaumSweet", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["FindQuasiPolynomial",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "FindQuasiPolynomial", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["MorphismAdjacencyMatrix",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "MorphismAdjacencyMatrix", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["$MotzkinNumberDirectory",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "$MotzkinNumberDirectory", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"]},
+        {
+         ButtonBox["CauchyProduct",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"CauchyProduct", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["FindRegularSequenceFunction",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {
+            "FindRegularSequenceFunction", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], 
+         ButtonBox["MorphismPower",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info23741278218-1886986", {"MorphismPower", "IntegerSequences`"}},
+          ButtonNote->"IntegerSequences`"], ""}
+       },
+       DefaultBaseStyle->"InfoGrid",
+       GridBoxItemSize->{"Columns" -> {{
+            Scaled[0.2375]}}}]}
+    },
+    GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}}]}, 
+   Dynamic[Typeset`open$$],
+   ImageSize->Automatic]]], "Print", \
+"InfoCell",ExpressionUUID->"9dac3bfd-d1a3-432b-97bf-1ca1ea986f66"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1264, 717},
+WindowMargins->{{42, Automatic}, {Automatic, 52}},
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
+ShowSelection->True,
+TrackCellChangeTimes->False,
+FrontEndVersion->"11.3 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 5, \
+2018)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 159, 5, 98, "Title",ExpressionUUID->"4540036a-f16d-4b66-ab3f-6bc17ee469be"],
+Cell[729, 29, 353, 9, 20, "Note",ExpressionUUID->"78a09490-a118-41bf-81f1-1ba9285dacf0"],
+Cell[1085, 40, 506, 10, 58, "Text",ExpressionUUID->"7258de9a-7c5e-4a50-b30c-264494967381"],
+Cell[1594, 52, 472, 11, 35, "Text",ExpressionUUID->"011961a7-1c59-4af8-972f-69aed22518a9"],
+Cell[2069, 65, 216, 4, 30, "Input",ExpressionUUID->"e26ec5e0-54ce-43bc-9b69-8d5f79f5d28e"],
+Cell[2288, 71, 366, 7, 58, "Text",ExpressionUUID->"0f910f73-5b6a-4a94-a6eb-2ca771c4658e"],
+Cell[2657, 80, 268, 6, 30, "Input",ExpressionUUID->"9cc102ec-44d6-4be1-a958-a15637f4975f"],
+Cell[2928, 88, 181, 4, 35, "Text",ExpressionUUID->"5a23a67e-acb0-4a3c-83d2-6f86e15a176a"],
+Cell[3112, 94, 120, 0, 35, "Text",ExpressionUUID->"34eddb28-ff03-47c3-afbf-77d07347bf24"],
+Cell[3235, 96, 140, 2, 30, "Input",ExpressionUUID->"9a88be33-6c97-4457-a93f-a4cc4b6c1f13"],
+Cell[3378, 100, 245, 4, 35, "Text",ExpressionUUID->"5a8531d3-9d07-4205-b02a-dd8d313e25d9"],
+Cell[3626, 106, 151, 2, 35, "Text",ExpressionUUID->"0180a943-3505-4daa-9e66-8105f2d1c81f"],
+Cell[CellGroupData[{
+Cell[3802, 112, 139, 2, 30, "Input",ExpressionUUID->"9b33715b-f752-458c-bd75-f5fa0c763340"],
+Cell[3944, 116, 21886, 591, 516, "Print",ExpressionUUID->"9dac3bfd-d1a3-432b-97bf-1ca1ea986f66"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

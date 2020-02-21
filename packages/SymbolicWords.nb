@@ -1,0 +1,4595 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    139644,       4587]
+NotebookOptionsPosition[    121403,       3988]
+NotebookOutlinePosition[    125527,       4104]
+CellTagsIndexPosition[    124451,       4076]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["SymbolicWords 1.01", "Title"],
+
+Cell["documentation notebook", "Subtitle"],
+
+Cell[TextData[{
+ "Eric Rowland\n",
+ ButtonBox["http://people.hofstra.edu/Eric_Rowland/packages.html",
+  BaseStyle->"Hyperlink",
+  ButtonData:>{
+    URL["http://people.hofstra.edu/Eric_Rowland/packages.html"], None}]
+}], "Subsubtitle"],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section"],
+
+Cell["\<\
+SymbolicWords is a collection of tools for manipulating run-length encodings \
+of words and morphisms with symbolic exponents.
+This introduction gives an overview of the main features of the package; the \
+next section provides a complete list of package symbols along with their \
+usage messages and further examples.\
+\>", "Text"],
+
+Cell[TextData[{
+ "To use SymbolicWords, first you will need to load the package by evaluating \
+the following cell.  (If you need help, see ",
+ ButtonBox["loading a package",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.\
+html"], None},
+  ButtonNote->
+   "http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.html"],
+ ".)"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"<<", "SymbolicWords`"}]], "Code"],
+
+Cell[CellGroupData[{
+
+Cell["Syntax and basic manipulation of symbolic words", "Subsection"],
+
+Cell[TextData[{
+ StyleBox["SymbolicWord", "Input"],
+ " encodes a sequence of expressions in its run-length encoding.  Each block \
+is of the form ",
+ StyleBox["Superscript[symbol_,length_]", "Input"],
+ " so that the lengths are formatted as superscripts in TraditionalForm:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   RowBox[{"Superscript", "[", 
+    RowBox[{"x", ",", "5"}], "]"}], ",", 
+   RowBox[{"Superscript", "[", 
+    RowBox[{"y", ",", "0"}], "]"}], ",", 
+   RowBox[{"Superscript", "[", 
+    RowBox[{"z", ",", "3"}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   TemplateBox[{"x","5"},
+    "Superscript"], ",", 
+   TemplateBox[{"y","0"},
+    "Superscript"], ",", 
+   TemplateBox[{"z","3"},
+    "Superscript"]}], "]"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "If the run lengths are integers, then ",
+ StyleBox["SymbolicWordCharacters", "Input"],
+ " gives the list of expressions:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordCharacters", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"x","5"},
+     "Superscript"], ",", 
+    TemplateBox[{"y","0"},
+     "Superscript"], ",", 
+    TemplateBox[{"z","3"},
+     "Superscript"]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "x", ",", "x", ",", "x", ",", "x", ",", "x", ",", "z", ",", "z", ",", "z"}],
+   "}"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "The main purpose of the package is to compute with symbolic run lengths.  A \
+number of basic list and string manipulation functions have been implemented \
+for symbolic words.  For example, ",
+ StyleBox["SymbolicWordLength", "Input"],
+ " computes the length:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordLength", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"0","a"},
+     "Superscript"], ",", 
+    TemplateBox[{"1","b"},
+     "Superscript"]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"a", "+", "b"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["SymbolicWordJoin", "Input"],
+ " joins two symbolic words, merging the blocks at the boundary if possible:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordJoin", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0",RowBox[{"a", "-", "b"}]},
+      "Superscript"], ",", 
+     TemplateBox[{"1","4"},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"1","a"},
+      "Superscript"], ",", 
+     TemplateBox[{"0",RowBox[{
+         RowBox[{"2", " ", "b"}], "-", "a"}]},
+      "Superscript"]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   TemplateBox[{"0",RowBox[{"a", "-", "b"}]},
+    "Superscript"], ",", 
+   TemplateBox[{"1",RowBox[{"4", "+", "a"}]},
+    "Superscript"], ",", 
+   TemplateBox[{"0",RowBox[{
+       RowBox[{"-", "a"}], "+", 
+       RowBox[{"2", " ", "b"}]}]},
+    "Superscript"]}], "]"}]], "Output"]
+}, Open  ]],
+
+Cell["Eventually periodic symbolic words are also supported:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordJoin", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    TemplateBox[{"0",RowBox[{"a", "-", "b"}]},
+     "Superscript"], "]"}], ",", 
+   RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+    RowBox[{
+     RowBox[{"SymbolicWord", "[", 
+      TemplateBox[{"1","a"},
+       "Superscript"], "]"}], ",", 
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0","a"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","b"},
+        "Superscript"]}], "]"}]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0",RowBox[{"a", "-", "b"}]},
+      "Superscript"], ",", 
+     TemplateBox[{"1","a"},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0","a"},
+      "Superscript"], ",", 
+     TemplateBox[{"1","b"},
+      "Superscript"]}], "]"}]}], "]"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "Application to ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["a", "b"], TraditionalForm]]],
+ "-power-free morphisms and words"
+}], "Subsection"],
+
+Cell[TextData[{
+ StyleBox["SymbolicWordUnequal", "Input"],
+ " can prove inequality of symbolic words:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordUnequal", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0",RowBox[{
+         RowBox[{"-", "1"}], "+", 
+         RowBox[{"5", " ", "a"}], "-", 
+         RowBox[{"6", " ", "b"}], "-", "i"}]},
+      "Superscript"], ",", 
+     TemplateBox[{"1","1"},
+      "Superscript"], ",", 
+     TemplateBox[{"0",RowBox[{
+         RowBox[{
+           RowBox[{"-", "7"}], " ", "a"}], "+", 
+         RowBox[{"9", " ", "b"}], "+", "i"}]},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0",RowBox[{
+         RowBox[{"-", "1"}], "-", 
+         RowBox[{"2", " ", "a"}], "+", 
+         RowBox[{"3", " ", "b"}], "-", "j"}]},
+      "Superscript"], ",", 
+     TemplateBox[{RowBox[{"2", "+", "n"}],"1"},
+      "Superscript"], ",", 
+     TemplateBox[{"0","j"},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{"n", "\[GreaterEqual]", "0"}]}], "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Detecting fractional powers in a word is equivalent to determining equality \
+of certain factors.  ",
+ StyleBox["PowerFreeMorphismObstructions", "Input"],
+ " uses ",
+ StyleBox["SymbolicWordUnequal", "Input"],
+ " to prove that certain symbolic morphisms preserve the property of being ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["a", "b"], TraditionalForm]]],
+ "-power-free and hence generate infinite ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["a", "b"], TraditionalForm]]],
+ "-power-free words:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PowerFreeMorphismObstructions", "[", 
+  RowBox[{
+   RowBox[{"n_", "\[RuleDelayed]", 
+    RowBox[{"SymbolicWord", "[", 
+     RowBox[{
+      TemplateBox[{"0",RowBox[{"a", "-", "1"}]},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0",RowBox[{"a", "-", "b", "-", "1"}]},
+       "Superscript"], ",", 
+      TemplateBox[{RowBox[{"n", "+", "1"}],"1"},
+       "Superscript"]}], "]"}]}], ",", 
+   FractionBox["a", "b"], ",", 
+   RowBox[{
+    RowBox[{"n", "\[GreaterEqual]", "0"}], "&&", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"a", "|", "b"}], ")"}], "\[Element]", "Integers"}], "&&", 
+    RowBox[{
+     RowBox[{"GCD", "[", 
+      RowBox[{"a", ",", "b"}], "]"}], "\[Equal]", "1"}], "&&", 
+    RowBox[{
+     RowBox[{"GCD", "[", 
+      RowBox[{"b", ",", "2"}], "]"}], "\[Equal]", "1"}], "&&", 
+    RowBox[{
+     FractionBox["5", "3"], "<", 
+     FractionBox["a", "b"], "<", "2"}]}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", "}"}]], "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Package symbols", "Section"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["EventuallyPeriodicSymbolicWord", "Input"]], \
+"Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "EventuallyPeriodicSymbolicWord"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"EventuallyPeriodicSymbolicWord\\\", \
+\\\"[\\\", RowBox[List[StyleBox[\\\"prefix\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"period\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) represents an \
+eventually periodic infinite word beginning with \
+\!\(\*StyleBox[\\\"prefix\\\", \\\"TI\\\"]\) and followed by repeating copies \
+of \!\(\*StyleBox[\\\"period\\\", \\\"TI\\\"]\).\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3653407088-1792782"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", "]"}], ",", 
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     RowBox[{"Superscript", "[", 
+      RowBox[{"0", ",", "a"}], "]"}], ",", 
+     RowBox[{"Superscript", "[", 
+      RowBox[{"1", ",", "b"}], "]"}]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", "]"}], ",", 
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0","a"},
+      "Superscript"], ",", 
+     TemplateBox[{"1","b"},
+      "Superscript"]}], "]"}]}], "]"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordPartitionAt", "[", 
+  RowBox[{
+   RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+    RowBox[{
+     RowBox[{"SymbolicWord", "[", "]"}], ",", 
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0","a"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","b"},
+        "Superscript"]}], "]"}]}], "]"}], ",", "a", ",", 
+   RowBox[{"a", "\[GreaterEqual]", "0"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    TemplateBox[{"0","a"},
+     "Superscript"], "]"}], ",", 
+   RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+    RowBox[{
+     RowBox[{"SymbolicWord", "[", 
+      TemplateBox[{"1","b"},
+       "Superscript"], "]"}], ",", 
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0","a"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","b"},
+        "Superscript"]}], "]"}]}], "]"}]}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["EventuallyPeriodicSymbolicWordQ", "Input"]], \
+"Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "EventuallyPeriodicSymbolicWordQ"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordQ\\\", \\\"[\\\", \
+StyleBox[\\\"expr\\\", \\\"TI\\\"], \\\"]\\\"]]\) yields True if \
+\!\(\*StyleBox[\\\"expr\\\", \\\"TI\\\"]\) is a valid \
+EventuallyPeriodicSymbolicWord object, and False otherwise.\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653225738-9372862"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EventuallyPeriodicSymbolicWordQ", "[", 
+  RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+   RowBox[{
+    RowBox[{"SymbolicWord", "[", "]"}], ",", 
+    RowBox[{"SymbolicWord", "[", 
+     RowBox[{
+      TemplateBox[{"0","4"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","2"},
+       "Superscript"]}], "]"}]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EventuallyPeriodicSymbolicWordQ", "[", 
+  RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"0","4"},
+     "Superscript"], ",", 
+    TemplateBox[{"1","2"},
+     "Superscript"]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData["False"], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["EventuallyPeriodicSymbolicWordQ", "Input"],
+ " does not check that the block lengths are non-negative:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EventuallyPeriodicSymbolicWordQ", "[", 
+  RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+   RowBox[{
+    RowBox[{"SymbolicWord", "[", "]"}], ",", 
+    RowBox[{"SymbolicWord", "[", 
+     TemplateBox[{"0","a"},
+      "Superscript"], "]"}]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EventuallyPeriodicSymbolicWordQ", "[", 
+  RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+   RowBox[{
+    RowBox[{"SymbolicWord", "[", "]"}], ",", 
+    RowBox[{"SymbolicWord", "[", 
+     TemplateBox[{"0",RowBox[{"-", "1"}]},
+      "Superscript"], "]"}]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["PowerFreeMorphismObstructions", "Input"]], \
+"Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "PowerFreeMorphismObstructions"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"PowerFreeMorphismObstructions\\\", \\\"[\
+\\\", RowBox[List[RowBox[List[StyleBox[\\\"n\\\", \\\"TI\\\"], \
+\\\"\\\\[RuleDelayed]\\\", \
+RowBox[List[\\\"\\\\\\\"\\\\[CurlyPhi]\\\\\\\"\\\", \\\"[\\\", StyleBox[\\\"n\
+\\\", \\\"TI\\\"], \\\"]\\\"]]]], \\\",\\\", FractionBox[StyleBox[\\\"a\\\", \
+\\\"TI\\\"], StyleBox[\\\"b\\\", \\\"TI\\\"]], \\\",\\\", \
+StyleBox[\\\"assum\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives a list of symbolic \
+factors of \!\(\*RowBox[List[\\\"\\\\\\\"\\\\[CurlyPhi]\\\\\\\"\\\", \
+\\\"[\\\", SubscriptBox[StyleBox[\\\"n\\\", \\\"TI\\\"], StyleBox[\\\"1\\\", \
+\\\"TR\\\"]], \\\"]\\\"]]\) \
+\!\(\*RowBox[List[\\\"\\\\\\\"\\\\[CurlyPhi]\\\\\\\"\\\", \\\"[\\\", \
+SubscriptBox[StyleBox[\\\"n\\\", \\\"TI\\\"], StyleBox[\\\"2\\\", \
+\\\"TR\\\"]], \\\"]\\\"]]\) \
+\!\(\*RowBox[List[\\\"\\\\\\\"\\\\[CurlyPhi]\\\\\\\"\\\", \\\"[\\\", \
+SubscriptBox[StyleBox[\\\"n\\\", \\\"TI\\\"], StyleBox[\\\"3\\\", \
+\\\"TR\\\"]], \\\"]\\\"]]\) \[CenterEllipsis] that SymbolicWordUnequal does \
+not rule out as being \!\(\*StyleBox[\\\"a\\\", \\\"TI\\\"]\)/\!\(\*StyleBox[\
+\\\"b\\\", \\\"TI\\\"]\)\[Hyphen]powers, along with their corresponding \
+intervals, using the assumptions \!\(\*StyleBox[\\\"assum\\\", \\\"TI\\\"]\).\
+\\n\!\(\*RowBox[List[\\\"PowerFreeMorphismObstructions\\\", \\\"[\\\", \
+RowBox[List[RowBox[List[StyleBox[\\\"n\\\", \\\"TI\\\"], \
+\\\"\\\\[RuleDelayed]\\\", StyleBox[\\\"word\\\", \\\"TI\\\"]]], \\\",\\\", \
+FractionBox[StyleBox[\\\"a\\\", \\\"TI\\\"], StyleBox[\\\"b\\\", \
+\\\"TI\\\"]]]], \\\"]\\\"]]\) uses default assumptions specified by any \
+enclosing Assuming constructs.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653410855-8934735"]
+}, Open  ]],
+
+Cell[TextData[{
+ "There are no ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["8", "5"], TraditionalForm]]],
+ "-powers in the word ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["\[CurlyPhi]", "\[Infinity]"], "(", "0", ")"}], 
+   TraditionalForm]]],
+ " for this morphism:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PowerFreeMorphismObstructions", "[", 
+  RowBox[{
+   RowBox[{"n_", "\[RuleDelayed]", 
+    RowBox[{"SymbolicWord", "[", 
+     RowBox[{
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"2","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"2","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","3"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","5"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","7"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0","2"},
+       "Superscript"], ",", 
+      TemplateBox[{RowBox[{"2", "+", "n"}],"1"},
+       "Superscript"]}], "]"}]}], ",", 
+   FractionBox["8", "5"], ",", 
+   RowBox[{"n", "\[GreaterEqual]", "0"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", "}"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "There are no ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["a", "b"], TraditionalForm]]],
+ "-powers in the word ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["\[CurlyPhi]", "\[Infinity]"], "(", "0", ")"}], 
+   TraditionalForm]]],
+ " for this morphism:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PowerFreeMorphismObstructions", "[", 
+  RowBox[{
+   RowBox[{"n_", "\[RuleDelayed]", 
+    RowBox[{"SymbolicWord", "[", 
+     RowBox[{
+      TemplateBox[{"0",RowBox[{"a", "-", "1"}]},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0",RowBox[{"a", "-", "b", "-", "1"}]},
+       "Superscript"], ",", 
+      TemplateBox[{RowBox[{"n", "+", "1"}],"1"},
+       "Superscript"]}], "]"}]}], ",", 
+   FractionBox["a", "b"], ",", 
+   RowBox[{
+    RowBox[{"n", "\[GreaterEqual]", "0"}], "&&", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"a", "|", "b"}], ")"}], "\[Element]", "Integers"}], "&&", 
+    RowBox[{
+     RowBox[{"GCD", "[", 
+      RowBox[{"a", ",", "b"}], "]"}], "\[Equal]", "1"}], "&&", 
+    RowBox[{
+     RowBox[{"GCD", "[", 
+      RowBox[{"b", ",", "2"}], "]"}], "\[Equal]", "1"}], "&&", 
+    RowBox[{
+     FractionBox["5", "3"], "<", 
+     FractionBox["a", "b"], "<", "2"}]}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", "}"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "However, the word ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["\[CurlyPhi]", "\[Infinity]"], "(", "0", ")"}], 
+   TraditionalForm]]],
+ " generated by this morphism contains ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["a", "b"], TraditionalForm]]],
+ "-powers for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox["a", "b"], "\[Equal]", 
+    FractionBox["11", "9"]}], TraditionalForm]]],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox["a", "b"], "\[Equal]", 
+    FractionBox["17", "14"]}], TraditionalForm]]],
+ ":"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PowerFreeMorphismObstructions", "[", 
+  RowBox[{
+   RowBox[{"n_", "\[RuleDelayed]", 
+    RowBox[{"SymbolicWord", "[", 
+     RowBox[{
+      TemplateBox[{"0",RowBox[{
+          RowBox[{"-", "1"}], "+", 
+          RowBox[{"6", " ", "a"}], "-", 
+          RowBox[{"7", " ", "b"}]}]},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0",RowBox[{
+          RowBox[{"-", "1"}], "-", 
+          RowBox[{"3", " ", "a"}], "+", 
+          RowBox[{"4", " ", "b"}]}]},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0",RowBox[{
+          RowBox[{"-", "1"}], "-", 
+          RowBox[{"8", " ", "a"}], "+", 
+          RowBox[{"10", " ", "b"}]}]},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0",RowBox[{
+          RowBox[{"-", "1"}], "+", 
+          RowBox[{"6", " ", "a"}], "-", 
+          RowBox[{"7", " ", "b"}]}]},
+       "Superscript"], ",", 
+      TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+       "Superscript"]}], "]"}]}], ",", 
+   FractionBox["a", "b"], ",", 
+   RowBox[{
+    RowBox[{"n", "\[GreaterEqual]", "0"}], "&&", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"a", "|", "b"}], ")"}], "\[Element]", "Integers"}], "&&", 
+    RowBox[{
+     RowBox[{"GCD", "[", 
+      RowBox[{"a", ",", "b"}], "]"}], "\[Equal]", "1"}], "&&", 
+    RowBox[{
+     FractionBox["6", "5"], "<", 
+     FractionBox["a", "b"], "<", 
+     FractionBox["5", "4"]}]}], ",", 
+   RowBox[{"Information", "\[Rule]", "True"}], ",", 
+   RowBox[{"Monitor", "\[Rule]", "True"}]}], "]"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Locating length: \"\>", "\[InvisibleSpace]", "a"}],
+  SequenceForm["Locating length: ", $CellContext`a],
+  Editable->False]], "Print"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Interior endpoints for locating length verification: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"{", "}"}]}],
+  SequenceForm["Interior endpoints for locating length verification: ", {}],
+  Editable->False]], "Print"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Max factor length to check: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"5", " ", "a"}]}],
+  SequenceForm["Max factor length to check: ", 5 $CellContext`a],
+  Editable->False]], "Print"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Interior endpoints for \"\>", "\[InvisibleSpace]", 
+   FractionBox["a", "b"], 
+   "\[InvisibleSpace]", "\<\"\[Hyphen]power\[Hyphen]freeness verification: \"\
+\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{
+     FractionBox["17", "14"], ",", 
+     FractionBox["11", "9"], ",", 
+     FractionBox["16", "13"]}], "}"}]}],
+  SequenceForm[
+  "Interior endpoints for ", $CellContext`a/$CellContext`b, 
+   "\[Hyphen]power\[Hyphen]freeness verification: ", {
+    Rational[17, 14], 
+    Rational[11, 9], 
+    Rational[16, 13]}],
+  Editable->False]], "Print"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"1",RowBox[{"1", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"0","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","C"},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"1",RowBox[{"1", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","C"},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"0",RowBox[{"2", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"1","C"},
+          "Superscript"]}], "]"}]}], "}"}], ",", 
+     RowBox[{"1", "\[LessEqual]", "C", "\[LessEqual]", "1"}], ",", 
+     RowBox[{
+      FractionBox["a", "b"], "\[Equal]", 
+      FractionBox["11", "9"]}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"0",RowBox[{"1", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","C"},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"0",RowBox[{"2", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0",RowBox[{"1", "+", "C"}]},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"0",RowBox[{"1", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","C"},
+          "Superscript"]}], "]"}]}], "}"}], ",", 
+     RowBox[{"1", "\[LessEqual]", "C", "\[LessEqual]", "1"}], ",", 
+     RowBox[{
+      FractionBox["a", "b"], "\[Equal]", 
+      FractionBox["11", "9"]}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"0",RowBox[{"3", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","3"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0",RowBox[{"1", "+", "C"}]},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"0",RowBox[{"2", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","3"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","4"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","3"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","3"},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","3"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","4"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","3"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","C"},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"0",RowBox[{"3", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","3"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0",RowBox[{"1", "+", "C"}]},
+          "Superscript"]}], "]"}]}], "}"}], ",", 
+     RowBox[{"0", "\[LessEqual]", "C", "\[LessEqual]", "2"}], ",", 
+     RowBox[{
+      FractionBox["a", "b"], "\[Equal]", 
+      FractionBox["17", "14"]}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"0",RowBox[{"2", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","C"},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"0",RowBox[{"1", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","C"},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"1",RowBox[{"1", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"0","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","C"},
+          "Superscript"]}], "]"}]}], "}"}], ",", 
+     RowBox[{"0", "\[LessEqual]", "C", "\[LessEqual]", "1"}], ",", 
+     RowBox[{
+      FractionBox["a", "b"], "\[Equal]", 
+      FractionBox["11", "9"]}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"1",RowBox[{"1", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"0","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","C"},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"1",RowBox[{"1", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","C"},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"0",RowBox[{"2", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","C"},
+          "Superscript"]}], "]"}]}], "}"}], ",", 
+     RowBox[{"1", "\[LessEqual]", "C", "\[LessEqual]", "1"}], ",", 
+     RowBox[{
+      FractionBox["a", "b"], "\[Equal]", 
+      FractionBox["11", "9"]}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"0",RowBox[{"1", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","C"},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"0",RowBox[{"2", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0",RowBox[{"1", "+", "C"}]},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"0",RowBox[{"1", "-", "C"}]},
+          "Superscript"], ",", 
+         TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","2"},
+          "Superscript"], ",", 
+         TemplateBox[{"1","1"},
+          "Superscript"], ",", 
+         TemplateBox[{"0","C"},
+          "Superscript"]}], "]"}]}], "}"}], ",", 
+     RowBox[{"1", "\[LessEqual]", "C", "\[LessEqual]", "1"}], ",", 
+     RowBox[{
+      FractionBox["a", "b"], "\[Equal]", 
+      FractionBox["11", "9"]}]}], "}"}]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Use ",
+ StyleBox["LocatingLength", "Input"],
+ " to specify a locating length and avoid searching for one:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "LocatingLength"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"LocatingLength is an option for PowerFreeMorphismObstructions \
+that specifies a length to test whether the morphism locates words of that \
+length.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653409281-5775084"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PowerFreeMorphismObstructions", "[", 
+  RowBox[{
+   RowBox[{"n_", "\[RuleDelayed]", 
+    RowBox[{"SymbolicWord", "[", 
+     RowBox[{
+      TemplateBox[{"0",RowBox[{"a", "-", "1"}]},
+       "Superscript"], ",", 
+      TemplateBox[{"1","1"},
+       "Superscript"], ",", 
+      TemplateBox[{"0",RowBox[{"a", "-", "b", "-", "1"}]},
+       "Superscript"], ",", 
+      TemplateBox[{RowBox[{"n", "+", "1"}],"1"},
+       "Superscript"]}], "]"}]}], ",", 
+   FractionBox["a", "b"], ",", 
+   RowBox[{
+    RowBox[{"n", "\[GreaterEqual]", "0"}], "&&", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"a", "|", "b"}], ")"}], "\[Element]", "Integers"}], "&&", 
+    RowBox[{
+     RowBox[{"GCD", "[", 
+      RowBox[{"a", ",", "b"}], "]"}], "\[Equal]", "1"}], "&&", 
+    RowBox[{
+     RowBox[{"GCD", "[", 
+      RowBox[{"b", ",", "2"}], "]"}], "\[Equal]", "1"}], "&&", 
+    RowBox[{
+     FractionBox["5", "3"], "<", 
+     FractionBox["a", "b"], "<", "2"}]}], ",", 
+   RowBox[{"Information", "\[Rule]", "True"}], ",", 
+   RowBox[{"LocatingLength", "\[Rule]", 
+    RowBox[{
+     RowBox[{"2", "a"}], "-", 
+     RowBox[{"2", "b"}]}]}]}], "]"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Locating length: \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"2", " ", "a"}], "-", 
+    RowBox[{"2", " ", "b"}]}]}],
+  SequenceForm["Locating length: ", 2 $CellContext`a - 2 $CellContext`b],
+  Editable->False]], "Print"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Interior endpoints for locating length verification: \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"{", "}"}]}],
+  SequenceForm["Interior endpoints for locating length verification: ", {}],
+  Editable->False]], "Print"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Max factor length to check: \"\>", "\[InvisibleSpace]", "a"}],
+  SequenceForm["Max factor length to check: ", $CellContext`a],
+  Editable->False]], "Print"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Interior endpoints for \"\>", "\[InvisibleSpace]", 
+   FractionBox["a", "b"], 
+   "\[InvisibleSpace]", "\<\"\[Hyphen]power\[Hyphen]freeness verification: \"\
+\>", "\[InvisibleSpace]", 
+   RowBox[{"{", "}"}]}],
+  SequenceForm[
+  "Interior endpoints for ", $CellContext`a/$CellContext`b, 
+   "\[Hyphen]power\[Hyphen]freeness verification: ", {}],
+  Editable->False]], "Print"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"{", "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["PowerFreeWordTransientObstructions", "Input"]], \
+"Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "PowerFreeWordTransientObstructions"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"PowerFreeWordTransientObstructions\\\", \
+\\\"[\\\", RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+FractionBox[StyleBox[\\\"a\\\", \\\"TI\\\"], StyleBox[\\\"b\\\", \
+\\\"TI\\\"]], \\\",\\\", StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"assum\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives a list of symbolic \
+factors, overlapping the transient factor of an eventually periodic word, \
+that SymbolicWordUnequal does not rule out as being \!\(\*StyleBox[\\\"a\\\", \
+\\\"TI\\\"]\)/\!\(\*StyleBox[\\\"b\\\", \\\"TI\\\"]\)\[Hyphen]powers, along \
+with their corresponding intervals, using the assumptions \
+\!\(\*StyleBox[\\\"assum\\\", \\\"TI\\\"]\).\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3653411165-7841521"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PowerFreeWordTransientObstructions", "[", 
+  RowBox[{
+   RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+    RowBox[{
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0","3"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","3"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","3"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","3"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"]}], "]"}], ",", 
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"1","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","2"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","3"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","2"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","3"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","3"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","1"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","2"},
+        "Superscript"], ",", 
+       TemplateBox[{"0","3"},
+        "Superscript"], ",", 
+       TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+        "Superscript"]}], "]"}]}], "]"}], ",", 
+   FractionBox["4", "3"], ",", "n", ",", 
+   RowBox[{
+    RowBox[{"n", "\[Equal]", "0"}], "||", 
+    RowBox[{"n", "\[GreaterEqual]", "2"}]}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", "}"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["PowerFreeWordTransientObstructions", "Input"],
+ " checks for ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["a", "b"], TraditionalForm]]],
+ "-powers beginning in positions up to (and not including) the longest common \
+suffix of the prefix and the repetition period."
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWord", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWord"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWord\\\", \\\"[\\\", \
+RowBox[List[SubscriptBox[StyleBox[\\\"b\\\", \\\"TI\\\"], StyleBox[\\\"1\\\", \
+\\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"b\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]], \\\",\\\", StyleBox[\\\"\\\\[Ellipsis]\\\", \
+\\\"TR\\\"]]], \\\"]\\\"]]\) represents a symbolic word with blocks \
+\!\(\*SubscriptBox[StyleBox[\\\"b\\\", \\\"TI\\\"], StyleBox[\\\"i\\\", \
+\\\"TI\\\"]]\).\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653225943-9372862"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   RowBox[{"Superscript", "[", 
+    RowBox[{"0", ",", "a"}], "]"}], ",", 
+   RowBox[{"Superscript", "[", 
+    RowBox[{"1", ",", "b"}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   TemplateBox[{"0","a"},
+    "Superscript"], ",", 
+   TemplateBox[{"1","b"},
+    "Superscript"]}], "]"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordLength", "[", "%", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"a", "+", "b"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordAppend", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordAppend"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordAppend\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"newblock\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives \!\(\*StyleBox[\
+\\\"word\\\", \\\"TI\\\"]\) with \!\(\*StyleBox[\\\"newblock\\\", \\\"TI\\\"]\
+\) appended.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653409291-5775084"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordAppend", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", "]"}], ",", 
+   TemplateBox[{"0","a"},
+    "Superscript"]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  TemplateBox[{"0","a"},
+   "Superscript"], "]"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordAppend", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    TemplateBox[{"0","b"},
+     "Superscript"], "]"}], ",", 
+   TemplateBox[{"0","a"},
+    "Superscript"]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  TemplateBox[{"0",RowBox[{"a", "+", "b"}]},
+   "Superscript"], "]"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordAppend", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    TemplateBox[{"0","b"},
+     "Superscript"], "]"}], ",", 
+   TemplateBox[{"1","a"},
+    "Superscript"]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   TemplateBox[{"0","b"},
+    "Superscript"], ",", 
+   TemplateBox[{"1","a"},
+    "Superscript"]}], "]"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordBlockDrop", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordBlockDrop"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordBlockDrop\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives \
+\!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\) with its first \
+\!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\) blocks \
+dropped.\\n\!\(\*RowBox[List[\\\"SymbolicWordBlockDrop\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+RowBox[List[\\\"-\\\", StyleBox[\\\"n\\\", \\\"TI\\\"]]]]], \\\"]\\\"]]\) \
+gives \!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\) with its last \
+\!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\) blocks dropped.\"\>", "MSG"]], "Print",\
+ "PrintUsage",
+ CellTags->"Info3653409299-5775084"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordBlockDrop", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"2","a"},
+      "Superscript"], ",", 
+     TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+      "Superscript"], ",", 
+     TemplateBox[{"0","b"},
+      "Superscript"]}], "]"}], ",", "1"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+    "Superscript"], ",", 
+   TemplateBox[{"0","b"},
+    "Superscript"]}], "]"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Column", "[", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"SymbolicWordBlockDrop", "[", 
+     RowBox[{
+      RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+       RowBox[{
+        RowBox[{"SymbolicWord", "[", 
+         TemplateBox[{"0","c"},
+          "Superscript"], "]"}], ",", 
+        RowBox[{"SymbolicWord", "[", 
+         RowBox[{
+          TemplateBox[{"2","a"},
+           "Superscript"], ",", 
+          TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+           "Superscript"], ",", 
+          TemplateBox[{"0","b"},
+           "Superscript"]}], "]"}]}], "]"}], ",", "n"}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"n", ",", "0", ",", "5"}], "}"}]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+      RowBox[{
+       RowBox[{"SymbolicWord", "[", 
+        TemplateBox[{"0","c"},
+         "Superscript"], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"2","a"},
+          "Superscript"], ",", 
+         TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"0","b"},
+          "Superscript"]}], "]"}]}], "]"}]},
+    {
+     RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+      RowBox[{
+       RowBox[{"SymbolicWord", "[", "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"2","a"},
+          "Superscript"], ",", 
+         TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"0","b"},
+          "Superscript"]}], "]"}]}], "]"}]},
+    {
+     RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+      RowBox[{
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"0","b"},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"2","a"},
+          "Superscript"], ",", 
+         TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"0","b"},
+          "Superscript"]}], "]"}]}], "]"}]},
+    {
+     RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+      RowBox[{
+       RowBox[{"SymbolicWord", "[", 
+        TemplateBox[{"0","b"},
+         "Superscript"], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"2","a"},
+          "Superscript"], ",", 
+         TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"0","b"},
+          "Superscript"]}], "]"}]}], "]"}]},
+    {
+     RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+      RowBox[{
+       RowBox[{"SymbolicWord", "[", "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"2","a"},
+          "Superscript"], ",", 
+         TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"0","b"},
+          "Superscript"]}], "]"}]}], "]"}]},
+    {
+     RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+      RowBox[{
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"0","b"},
+          "Superscript"]}], "]"}], ",", 
+       RowBox[{"SymbolicWord", "[", 
+        RowBox[{
+         TemplateBox[{"2","a"},
+          "Superscript"], ",", 
+         TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+          "Superscript"], ",", 
+         TemplateBox[{"0","b"},
+          "Superscript"]}], "]"}]}], "]"}]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordBlockTake", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordBlockTake"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordBlockTake\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives a symbolic word \
+containing the first \!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\) blocks of \
+\!\(\*StyleBox[\\\"word\\\", \
+\\\"TI\\\"]\).\\n\!\(\*RowBox[List[\\\"SymbolicWordBlockTake\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+RowBox[List[\\\"-\\\", StyleBox[\\\"n\\\", \\\"TI\\\"]]]]], \\\"]\\\"]]\) \
+gives the last \!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\) blocks of \
+\!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\).\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3653225985-9372862"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordBlockTake", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"2","a"},
+      "Superscript"], ",", 
+     TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+      "Superscript"], ",", 
+     TemplateBox[{"0","b"},
+      "Superscript"]}], "]"}], ",", "2"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   TemplateBox[{"2","a"},
+    "Superscript"], ",", 
+   TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+    "Superscript"]}], "]"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Column", "[", 
+  RowBox[{"Table", "[", 
+   RowBox[{
+    RowBox[{"SymbolicWordBlockTake", "[", 
+     RowBox[{
+      RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+       RowBox[{
+        RowBox[{"SymbolicWord", "[", 
+         TemplateBox[{"0","c"},
+          "Superscript"], "]"}], ",", 
+        RowBox[{"SymbolicWord", "[", 
+         RowBox[{
+          TemplateBox[{"2","a"},
+           "Superscript"], ",", 
+          TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+           "Superscript"], ",", 
+          TemplateBox[{"0","b"},
+           "Superscript"]}], "]"}]}], "]"}], ",", "n"}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"n", ",", "0", ",", "5"}], "}"}]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     RowBox[{"SymbolicWord", "[", "]"}]},
+    {
+     RowBox[{"SymbolicWord", "[", 
+      TemplateBox[{"0","c"},
+       "Superscript"], "]"}]},
+    {
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0","c"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","a"},
+        "Superscript"]}], "]"}]},
+    {
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0","c"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","a"},
+        "Superscript"], ",", 
+       TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+        "Superscript"]}], "]"}]},
+    {
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0","c"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","a"},
+        "Superscript"], ",", 
+       TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+        "Superscript"], ",", 
+       TemplateBox[{"0","b"},
+        "Superscript"]}], "]"}]},
+    {
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0","c"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","a"},
+        "Superscript"], ",", 
+       TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+        "Superscript"], ",", 
+       TemplateBox[{"0","b"},
+        "Superscript"], ",", 
+       TemplateBox[{"2","a"},
+        "Superscript"]}], "]"}]}
+   },
+   DefaultBaseStyle->"Column",
+   GridBoxAlignment->{"Columns" -> {{Left}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Column"]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordCharacters", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordCharacters"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordCharacters\\\", \\\"[\\\", \
+StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives a list of the \
+characters in a symbolic word with integer block lengths.\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653225991-9372862"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordCharacters", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"x","5"},
+     "Superscript"], ",", 
+    TemplateBox[{"y","0"},
+     "Superscript"], ",", 
+    TemplateBox[{"z","3"},
+     "Superscript"]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "x", ",", "x", ",", "x", ",", "x", ",", "x", ",", "z", ",", "z", ",", "z"}],
+   "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordFactorList", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordFactorList"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordFactorList\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"assum\\\", \
+\\\"TI\\\"]]], \\\"]\\\"]]\) gives a list of all symbolic factors of length \
+\!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\) of an eventually periodic \
+word.\\n\!\(\*RowBox[List[\\\"SymbolicWordFactorList\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+RowBox[List[\\\"{\\\", RowBox[List[SubscriptBox[StyleBox[\\\"n\\\", \
+\\\"TI\\\"], StyleBox[\\\"1\\\", \\\"TR\\\"]], \\\",\\\", \
+SubscriptBox[StyleBox[\\\"n\\\", \\\"TI\\\"], StyleBox[\\\"2\\\", \
+\\\"TR\\\"]], \\\",\\\", StyleBox[\\\"\\\\[Ellipsis]\\\", \\\"TR\\\"]]], \
+\\\"}\\\"]], \\\",\\\", StyleBox[\\\"assum\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) \
+gives a list of all symbolic factors of \!\(\*StyleBox[\\\"word\\\", \\\"TI\\\
+\"]\) where each factor is split into subfactors of lengths \
+\!\(\*RowBox[List[SubscriptBox[StyleBox[\\\"n\\\", \\\"TI\\\"], \
+StyleBox[\\\"1\\\", \\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"n\\\", \
+\\\"TI\\\"], StyleBox[\\\"2\\\", \\\"TR\\\"]], \\\",\\\", \
+StyleBox[\\\"\\\\[Ellipsis]\\\", \
+\\\"TR\\\"]]]\).\\n\!\(\*RowBox[List[\\\"SymbolicWordFactorList\\\", \
+\\\"[\\\", RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+RowBox[List[\\\"{\\\", RowBox[List[SubscriptBox[StyleBox[\\\"n\\\", \
+\\\"TI\\\"], StyleBox[\\\"1\\\", \\\"TR\\\"]], \\\",\\\", \
+SubscriptBox[StyleBox[\\\"n\\\", \\\"TI\\\"], StyleBox[\\\"2\\\", \
+\\\"TR\\\"]], \\\",\\\", StyleBox[\\\"\\\\[Ellipsis]\\\", \\\"TR\\\"]]], \
+\\\"}\\\"]]]], \\\"]\\\"]]\) uses default assumptions specified by any \
+enclosing Assuming constructs.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653409319-5775084"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Compute symbolic representatives of all factors of length ",
+ Cell[BoxData[
+  FormBox["a", TraditionalForm]]],
+ " in a fairly simple periodic word:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"TraditionalForm", "[", 
+  RowBox[{"Grid", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"SymbolicWordFactorList", "[", 
+      RowBox[{
+       RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+        RowBox[{
+         RowBox[{"SymbolicWord", "[", "]"}], ",", 
+         RowBox[{"SymbolicWord", "[", 
+          RowBox[{
+           TemplateBox[{"0","a"},
+            "Superscript"], ",", 
+           TemplateBox[{"1","2"},
+            "Superscript"], ",", 
+           TemplateBox[{"0",RowBox[{
+               RowBox[{"2", " ", "a"}], "-", "1"}]},
+            "Superscript"], ",", 
+           TemplateBox[{"2","1"},
+            "Superscript"]}], "]"}]}], "]"}], ",", "a", ",", 
+       RowBox[{
+        RowBox[{"a", "\[Element]", "Integers"}], "&&", 
+        RowBox[{"a", "\[GreaterEqual]", "2"}]}], ",", 
+       RowBox[{"GeneratedParameters", "\[Rule]", "i"}]}], "]"}], "/.", 
+     "\[VeryThinSpace]", 
+     RowBox[{"SymbolicWord", "\[Rule]", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"Row", "[", 
+         RowBox[{"{", "##1", "}"}], "]"}], "&"}], ")"}]}]}], ",", 
+    RowBox[{"Dividers", "\[Rule]", "All"}]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ FormBox[
+  TagBox[GridBox[{
+     {
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{"a", "-", "i"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox],
+        TemplateBox[{"1", "i"}, "Superscript", SyntaxForm -> SuperscriptBox]},
+       
+       "RowDefault"], 
+      RowBox[{"0", "\[LessEqual]", "i", "\[LessEqual]", "2"}]},
+     {
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{"a", "-", "i", "-", "2"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox],
+        TemplateBox[{"1", "2"}, "Superscript", SyntaxForm -> SuperscriptBox],
+        TemplateBox[{"0", "i"}, "Superscript", SyntaxForm -> SuperscriptBox]},
+       
+       "RowDefault"], 
+      RowBox[{"1", "\[LessEqual]", "i", "\[LessEqual]", 
+       RowBox[{"a", "-", "2"}]}]},
+     {
+      TemplateBox[{TemplateBox[{"1", 
+          RowBox[{"2", "-", "i"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox],TemplateBox[{"0", 
+          RowBox[{"a", "+", "i", "-", "2"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox]},
+       "RowDefault"], 
+      RowBox[{"1", "\[LessEqual]", "i", "\[LessEqual]", "2"}]},
+     {
+      TemplateBox[{
+       TemplateBox[{"0", "a"}, "Superscript", SyntaxForm -> SuperscriptBox]},
+       "RowDefault"], 
+      RowBox[{"1", "\[LessEqual]", "i", "\[LessEqual]", 
+       RowBox[{"a", "-", "1"}]}]},
+     {
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{"a", "-", "i", "-", "1"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox],
+        TemplateBox[{"2", "1"}, "Superscript", SyntaxForm -> SuperscriptBox],
+        TemplateBox[{"0", "i"}, "Superscript", SyntaxForm -> SuperscriptBox]},
+       
+       "RowDefault"], 
+      RowBox[{"0", "\[LessEqual]", "i", "\[LessEqual]", 
+       RowBox[{"a", "-", "1"}]}]}
+    },
+    AutoDelete->False,
+    GridBoxDividers->{"Columns" -> {{True}}, "Rows" -> {{True}}},
+    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+   "Grid"], TraditionalForm]], "Output"]
+}, Open  ]],
+
+Cell["Partition each factor into subfactors of prescribed lengths:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"TraditionalForm", "[", 
+  RowBox[{"Grid", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Append", "@@@", 
+      RowBox[{"SymbolicWordFactorList", "[", 
+       RowBox[{
+        RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+         RowBox[{
+          RowBox[{"SymbolicWord", "[", "]"}], ",", 
+          RowBox[{"SymbolicWord", "[", 
+           RowBox[{
+            TemplateBox[{"0",RowBox[{"a", "-", "1"}]},
+             "Superscript"], ",", 
+            TemplateBox[{"1","1"},
+             "Superscript"], ",", 
+            TemplateBox[{"0",RowBox[{"a", "-", "b", "-", "1"}]},
+             "Superscript"], ",", 
+            TemplateBox[{RowBox[{"(", 
+                RowBox[{"n", "+", "1"}], ")"}],"1"},
+             "Superscript"]}], "]"}]}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"a", "-", "b"}], ",", 
+          RowBox[{
+           RowBox[{"2", " ", "b"}], "-", "a"}], ",", 
+          RowBox[{"a", "-", "b"}]}], "}"}], ",", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"a", "|", "b"}], ")"}], "\[Element]", "Integers"}], "&&", 
+         RowBox[{
+          FractionBox[
+           RowBox[{"5", " ", "b"}], "3"], "\[LessEqual]", "a", "<", 
+          RowBox[{"2", " ", "b"}]}], "&&", 
+         RowBox[{"b", "\[GreaterEqual]", "3"}]}], ",", 
+        RowBox[{"GeneratedParameters", "\[Rule]", "i"}]}], "]"}]}], "/.", 
+     "\[VeryThinSpace]", 
+     RowBox[{"SymbolicWord", "\[Rule]", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"Row", "[", 
+         RowBox[{"{", "##1", "}"}], "]"}], "&"}], ")"}]}]}], ",", 
+    RowBox[{"Dividers", "\[Rule]", "All"}]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ FormBox[
+  TagBox[GridBox[{
+     {
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{"a", "-", "b"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox]},
+       "RowDefault"], 
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{
+            RowBox[{"2", " ", "b"}], "-", "a"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox]},
+       "RowDefault"], 
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{"a", "-", "b", "-", "i", "-", "1"}]}, "Superscript", 
+         SyntaxForm -> SuperscriptBox],
+        TemplateBox[{"1", "1"}, "Superscript", SyntaxForm -> SuperscriptBox],
+        TemplateBox[{"0", "i"}, "Superscript", SyntaxForm -> SuperscriptBox]},
+       
+       "RowDefault"], 
+      RowBox[{"0", "\[LessEqual]", "i", "\[LessEqual]", 
+       RowBox[{"a", "-", "b", "-", "1"}]}]},
+     {
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{"a", "-", "b"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox]},
+       "RowDefault"], 
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{
+            RowBox[{"-", 
+              RowBox[{"a"}]}], "+", 
+            RowBox[{"2", " ", "b"}], "-", "i", "-", "1"}]}, "Superscript", 
+         SyntaxForm -> SuperscriptBox],
+        TemplateBox[{"1", "1"}, "Superscript", SyntaxForm -> SuperscriptBox],
+        TemplateBox[{"0", "i"}, "Superscript", SyntaxForm -> SuperscriptBox]},
+       
+       "RowDefault"], 
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{"a", "-", "b", "-", "i", "-", "1"}]}, "Superscript", 
+         SyntaxForm -> SuperscriptBox],TemplateBox[{
+          RowBox[{"n", "+", "1"}], "1"}, "Superscript", SyntaxForm -> 
+         SuperscriptBox],
+        TemplateBox[{"0", "i"}, "Superscript", SyntaxForm -> SuperscriptBox]},
+       
+       "RowDefault"], 
+      RowBox[{"0", "\[LessEqual]", "i", "\[LessEqual]", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", 
+        RowBox[{"2", " ", "b"}], "-", "1"}]}]},
+     {
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{"a", "-", "b", "-", "i", "-", "1"}]}, "Superscript", 
+         SyntaxForm -> SuperscriptBox],
+        TemplateBox[{"1", "1"}, "Superscript", SyntaxForm -> SuperscriptBox],
+        TemplateBox[{"0", "i"}, "Superscript", SyntaxForm -> SuperscriptBox]},
+       
+       "RowDefault"], 
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{
+            RowBox[{"2", " ", "b"}], "-", "a"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox]},
+       "RowDefault"], 
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{
+            RowBox[{"2", " ", "a"}], "-", 
+            RowBox[{"3", " ", "b"}], "-", "i", "-", "1"}]}, "Superscript", 
+         SyntaxForm -> SuperscriptBox],TemplateBox[{
+          RowBox[{"n", "+", "1"}], "1"}, "Superscript", SyntaxForm -> 
+         SuperscriptBox],TemplateBox[{"0", 
+          RowBox[{
+            RowBox[{"-", 
+              RowBox[{"a"}]}], "+", 
+            RowBox[{"2", " ", "b"}], "+", "i"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox]},
+       "RowDefault"], 
+      RowBox[{"0", "\[LessEqual]", "i", "\[LessEqual]", 
+       RowBox[{
+        RowBox[{"2", " ", "a"}], "-", 
+        RowBox[{"3", " ", "b"}], "-", "1"}]}]},
+     {
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{
+            RowBox[{"-", 
+              RowBox[{"a"}]}], "+", 
+            RowBox[{"2", " ", "b"}], "-", "i", "-", "1"}]}, "Superscript", 
+         SyntaxForm -> SuperscriptBox],
+        TemplateBox[{"1", "1"}, "Superscript", SyntaxForm -> SuperscriptBox],
+        TemplateBox[{"0", 
+          RowBox[{
+            RowBox[{"2", " ", "a"}], "-", 
+            RowBox[{"3", " ", "b"}], "+", "i"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox]},
+       "RowDefault"], 
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{
+            RowBox[{"-", 
+              RowBox[{"a"}]}], "+", 
+            RowBox[{"2", " ", "b"}], "-", "i", "-", "1"}]}, "Superscript", 
+         SyntaxForm -> SuperscriptBox],TemplateBox[{
+          RowBox[{"n", "+", "1"}], "1"}, "Superscript", SyntaxForm -> 
+         SuperscriptBox],
+        TemplateBox[{"0", "i"}, "Superscript", SyntaxForm -> SuperscriptBox]},
+       
+       "RowDefault"], 
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{"a", "-", "b"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox]},
+       "RowDefault"], 
+      RowBox[{"0", "\[LessEqual]", "i", "\[LessEqual]", 
+       RowBox[{
+        RowBox[{"-", "a"}], "+", 
+        RowBox[{"2", " ", "b"}], "-", "1"}]}]},
+     {
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{"a", "-", "b", "-", "i", "-", "1"}]}, "Superscript", 
+         SyntaxForm -> SuperscriptBox],TemplateBox[{
+          RowBox[{"n", "+", "1"}], "1"}, "Superscript", SyntaxForm -> 
+         SuperscriptBox],
+        TemplateBox[{"0", "i"}, "Superscript", SyntaxForm -> SuperscriptBox]},
+       
+       "RowDefault"], 
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{
+            RowBox[{"2", " ", "b"}], "-", "a"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox]},
+       "RowDefault"], 
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{"a", "-", "b"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox]},
+       "RowDefault"], 
+      RowBox[{"0", "\[LessEqual]", "i", "\[LessEqual]", 
+       RowBox[{"a", "-", "b", "-", "1"}]}]}
+    },
+    AutoDelete->False,
+    GridBoxDividers->{"Columns" -> {{True}}, "Rows" -> {{True}}},
+    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+   "Grid"], TraditionalForm]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Use the option ",
+ StyleBox["TransientOnly", "Input"],
+ " to limit the factors to those overlapping the transient (nonperiodic \
+prefix):"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "TransientOnly"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"TransientOnly is an option for SymbolicWordFactorList that \
+specifies whether to only list symbolic factors beginning in the nonperiodic \
+portion of the word.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653413727-5989508"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"TraditionalForm", "[", 
+  RowBox[{"Grid", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"SymbolicWordFactorList", "[", 
+      RowBox[{
+       RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+        RowBox[{
+         RowBox[{"SymbolicWord", "[", 
+          RowBox[{
+           TemplateBox[{"0",RowBox[{"a", "-", "1"}]},
+            "Superscript"], ",", 
+           TemplateBox[{"1","1"},
+            "Superscript"], ",", 
+           TemplateBox[{"0",RowBox[{
+               RowBox[{"2", "a"}], "-", "1"}]},
+            "Superscript"], ",", 
+           TemplateBox[{"1","1"},
+            "Superscript"]}], "]"}], ",", 
+         RowBox[{"SymbolicWord", "[", 
+          RowBox[{
+           TemplateBox[{"0",RowBox[{
+               RowBox[{"3", "a"}], "-", "1"}]},
+            "Superscript"], ",", 
+           TemplateBox[{"1","1"},
+            "Superscript"]}], "]"}]}], "]"}], ",", "a", ",", 
+       RowBox[{
+        RowBox[{"a", "\[Element]", "Integers"}], "&&", 
+        RowBox[{"a", "\[GreaterEqual]", "2"}]}], ",", 
+       RowBox[{"TransientOnly", "\[Rule]", "True"}]}], "]"}], "/.", 
+     "\[VeryThinSpace]", 
+     RowBox[{"SymbolicWord", "\[Rule]", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"Row", "[", 
+         RowBox[{"{", "##1", "}"}], "]"}], "&"}], ")"}]}]}], ",", 
+    RowBox[{"Dividers", "\[Rule]", "All"}]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ FormBox[
+  TagBox[GridBox[{
+     {
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{"a", "-", "C", "-", "1"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox],
+        TemplateBox[{"1", "1"}, "Superscript", SyntaxForm -> SuperscriptBox],
+        TemplateBox[{"0", "C"}, "Superscript", SyntaxForm -> SuperscriptBox]},
+       
+       "RowDefault"], 
+      RowBox[{"0", "\[LessEqual]", "C", "\[LessEqual]", 
+       RowBox[{"a", "-", "1"}]}]},
+     {
+      TemplateBox[{
+       TemplateBox[{"0", "a"}, "Superscript", SyntaxForm -> SuperscriptBox]},
+       "RowDefault"], 
+      RowBox[{"0", "\[LessEqual]", "C", "\[LessEqual]", 
+       RowBox[{"a", "-", "1"}]}]},
+     {
+      TemplateBox[{TemplateBox[{"0", 
+          RowBox[{"a", "-", "C", "-", "1"}]}, "Superscript", SyntaxForm -> 
+         SuperscriptBox],
+        TemplateBox[{"1", "1"}, "Superscript", SyntaxForm -> SuperscriptBox],
+        TemplateBox[{"0", "C"}, "Superscript", SyntaxForm -> SuperscriptBox]},
+       
+       "RowDefault"], 
+      RowBox[{"0", "\[LessEqual]", "C", "\[LessEqual]", 
+       RowBox[{"a", "-", "1"}]}]}
+    },
+    AutoDelete->False,
+    GridBoxDividers->{"Columns" -> {{True}}, "Rows" -> {{True}}},
+    GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+   "Grid"], TraditionalForm]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordFirstBlockCharacter", "Input"]], \
+"Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordFirstBlockCharacter"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordFirstBlockCharacter\\\", \
+\\\"[\\\", StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives the \
+character of the first block in \!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\).\"\
+\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653411798-6064807"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordFirstBlockCharacter", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"2","a"},
+     "Superscript"], ",", 
+    TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+     "Superscript"], ",", 
+    TemplateBox[{"0","b"},
+     "Superscript"]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData["2"], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["SymbolicWordFirstBlockCharacter", "Input"],
+ " does not check that first block length is non-negative:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordFirstBlockCharacter", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"2","0"},
+     "Superscript"], ",", 
+    TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+     "Superscript"], ",", 
+    TemplateBox[{"0","b"},
+     "Superscript"]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData["2"], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "To assure that the result is first character, use ",
+ StyleBox["SymbolicWordFirstCharacter", "Input"],
+ " and provide assumptions on symbols as necessary:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordFirstCharacter", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"2","0"},
+      "Superscript"], ",", 
+     TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+      "Superscript"], ",", 
+     TemplateBox[{"0","b"},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{
+    RowBox[{"a", "\[GreaterEqual]", "1"}], "&&", 
+    RowBox[{"b", "\[GreaterEqual]", "0"}]}]}], "]"}]], "Input"],
+
+Cell[BoxData["1"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordFirstCharacter", "Input"]], \
+"Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordFirstCharacter"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordFirstCharacter\\\", \
+\\\"[\\\", RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"assum\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives the first \
+character in \!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\), taking into account \
+blocks of length \
+zero.\\n\!\(\*RowBox[List[\\\"SymbolicWordFirstCharacter\\\", \\\"[\\\", \
+StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) uses default assumptions \
+specified by any enclosing Assuming constructs.\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3653411667-6064807"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordFirstCharacter", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"v","0"},
+     "Superscript"], ",", 
+    TemplateBox[{"w","0"},
+     "Superscript"], ",", 
+    TemplateBox[{"x","5"},
+     "Superscript"], ",", 
+    TemplateBox[{"y","0"},
+     "Superscript"], ",", 
+    TemplateBox[{"z","3"},
+     "Superscript"]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData["x"], "Output"]
+}, Open  ]],
+
+Cell["\<\
+Symbolic run lengths should be accompanied by assumptions, so that positivity \
+can be determined:\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordFirstCharacter", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"2","0"},
+      "Superscript"], ",", 
+     TemplateBox[{"1",RowBox[{"a", "+", "b"}]},
+      "Superscript"], ",", 
+     TemplateBox[{"0","b"},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{
+    RowBox[{"a", "\[GreaterEqual]", "1"}], "&&", 
+    RowBox[{"b", "\[GreaterEqual]", "0"}]}]}], "]"}]], "Input"],
+
+Cell[BoxData["1"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordJoin", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordJoin"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordJoin\\\", \\\"[\\\", \
+RowBox[List[SubscriptBox[StyleBox[\\\"w\\\", \\\"TI\\\"], StyleBox[\\\"1\\\", \
+\\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"w\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]], \\\",\\\", StyleBox[\\\"\\\\[Ellipsis]\\\", \
+\\\"TR\\\"]]], \\\"]\\\"]]\) yields a symbolic word consisting of a \
+concatenation of the \!\(\*SubscriptBox[StyleBox[\\\"w\\\", \\\"TI\\\"], \
+StyleBox[\\\"i\\\", \\\"TI\\\"]]\).\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653409334-5775084"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordJoin", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0",RowBox[{"a", "-", "b"}]},
+      "Superscript"], ",", 
+     TemplateBox[{"1","4"},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"1","a"},
+      "Superscript"], ",", 
+     TemplateBox[{"0",RowBox[{
+         RowBox[{"2", " ", "b"}], "-", "a"}]},
+      "Superscript"]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   TemplateBox[{"0",RowBox[{"a", "-", "b"}]},
+    "Superscript"], ",", 
+   TemplateBox[{"1",RowBox[{"4", "+", "a"}]},
+    "Superscript"], ",", 
+   TemplateBox[{"0",RowBox[{
+       RowBox[{"-", "a"}], "+", 
+       RowBox[{"2", " ", "b"}]}]},
+    "Superscript"]}], "]"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordJoin", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0",RowBox[{"a", "-", "b"}]},
+      "Superscript"], ",", 
+     TemplateBox[{"1","4"},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0","a"},
+      "Superscript"], ",", 
+     TemplateBox[{"1",RowBox[{
+         RowBox[{"2", " ", "b"}], "-", "a"}]},
+      "Superscript"]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   TemplateBox[{"0",RowBox[{"a", "-", "b"}]},
+    "Superscript"], ",", 
+   TemplateBox[{"1","4"},
+    "Superscript"], ",", 
+   TemplateBox[{"0","a"},
+    "Superscript"], ",", 
+   TemplateBox[{"1",RowBox[{
+       RowBox[{"-", "a"}], "+", 
+       RowBox[{"2", " ", "b"}]}]},
+    "Superscript"]}], "]"}]], "Output"]
+}, Open  ]],
+
+Cell["The final symbolic word can be eventually periodic:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordJoin", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    TemplateBox[{"0",RowBox[{"a", "-", "b"}]},
+     "Superscript"], "]"}], ",", 
+   RowBox[{"SymbolicWord", "[", 
+    TemplateBox[{"1","a"},
+     "Superscript"], "]"}], ",", 
+   RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+    RowBox[{
+     RowBox[{"SymbolicWord", "[", 
+      TemplateBox[{"1",RowBox[{
+          RowBox[{"2", " ", "b"}], "-", "a"}]},
+       "Superscript"], "]"}], ",", 
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0","a"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","b"},
+        "Superscript"]}], "]"}]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0",RowBox[{"a", "-", "b"}]},
+      "Superscript"], ",", 
+     TemplateBox[{"1",RowBox[{"2", " ", "b"}]},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0","a"},
+      "Superscript"], ",", 
+     TemplateBox[{"1","b"},
+      "Superscript"]}], "]"}]}], "]"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordLength", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordLength"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordLength\\\", \\\"[\\\", \
+StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives the number of \
+characters in a symbolic word.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653409343-5775084"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordLength", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"0","a"},
+     "Superscript"], ",", 
+    TemplateBox[{"1","b"},
+     "Superscript"]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"a", "+", "b"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["SymbolicWordLength", "Input"],
+ " does not check that the block lengths are non-negative:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordLength", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"0","a"},
+     "Superscript"], ",", 
+    TemplateBox[{"1",RowBox[{"-", "a"}]},
+     "Superscript"]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData["0"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordPartitionAt", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordPartitionAt"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordPartitionAt\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"assum\\\", \
+\\\"TI\\\"]]], \\\"]\\\"]]\) partitions an eventually periodic word into its \
+prefix of length \!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\) and the remainder, \
+using the assumptions \!\(\*StyleBox[\\\"assum\\\", \
+\\\"TI\\\"]\).\\n\!\(\*RowBox[List[\\\"SymbolicWordPartitionAt\\\", \
+\\\"[\\\", RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) uses default assumptions \
+specified by any enclosing Assuming constructs.\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3653413547-5989508"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordPartitionAt", "[", 
+  RowBox[{
+   RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+    RowBox[{
+     RowBox[{"SymbolicWord", "[", "]"}], ",", 
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0","a"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","b"},
+        "Superscript"]}], "]"}]}], "]"}], ",", "a", ",", 
+   RowBox[{"a", "\[GreaterEqual]", "0"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    TemplateBox[{"0","a"},
+     "Superscript"], "]"}], ",", 
+   RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+    RowBox[{
+     RowBox[{"SymbolicWord", "[", 
+      TemplateBox[{"1","b"},
+       "Superscript"], "]"}], ",", 
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0","a"},
+        "Superscript"], ",", 
+       TemplateBox[{"1","b"},
+        "Superscript"]}], "]"}]}], "]"}]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"SymbolicWordPartitionAt", "[", 
+  RowBox[{
+   RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+    RowBox[{
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0",RowBox[{
+           RowBox[{"-", "1"}], "+", 
+           RowBox[{"2", " ", "a"}], "-", 
+           RowBox[{"3", " ", "b"}]}]},
+        "Superscript"], ",", 
+       TemplateBox[{"1","1"},
+        "Superscript"]}], "]"}], ",", 
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0",RowBox[{"a", "-", "1"}]},
+        "Superscript"], ",", 
+       TemplateBox[{"1","1"},
+        "Superscript"]}], "]"}]}], "]"}], ",", 
+   RowBox[{"a", "-", "b"}], ",", 
+   RowBox[{
+    RowBox[{
+     FractionBox["5", "3"], "\[LessEqual]", 
+     FractionBox["a", "b"], "<", "2"}], "&&", 
+    RowBox[{"b", "\[GreaterEqual]", "3"}]}]}], "]"}], "\n", 
+ RowBox[{"SymbolicWordLength", "[", 
+  RowBox[{"First", "[", "%", "]"}], "]"}]}], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0",RowBox[{
+         RowBox[{"-", "1"}], "+", 
+         RowBox[{"2", " ", "a"}], "-", 
+         RowBox[{"3", " ", "b"}]}]},
+      "Superscript"], ",", 
+     TemplateBox[{"1","1"},
+      "Superscript"], ",", 
+     TemplateBox[{"0",RowBox[{
+         RowBox[{"-", "a"}], "+", 
+         RowBox[{"2", " ", "b"}]}]},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{"EventuallyPeriodicSymbolicWord", "[", 
+    RowBox[{
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0",RowBox[{
+           RowBox[{"-", "1"}], "+", 
+           RowBox[{"2", " ", "a"}], "-", 
+           RowBox[{"2", " ", "b"}]}]},
+        "Superscript"], ",", 
+       TemplateBox[{"1","1"},
+        "Superscript"]}], "]"}], ",", 
+     RowBox[{"SymbolicWord", "[", 
+      RowBox[{
+       TemplateBox[{"0",RowBox[{
+           RowBox[{"-", "1"}], "+", "a"}]},
+        "Superscript"], ",", 
+       TemplateBox[{"1","1"},
+        "Superscript"]}], "]"}]}], "]"}]}], "}"}]], "Output"],
+
+Cell[BoxData[
+ RowBox[{"a", "-", "b"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordPower", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordPower"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordPower\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) generates a symbolic word of \
+\!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\) copies of \
+\!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\).\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3653409373-5775084"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordPower", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0","a"},
+      "Superscript"], ",", 
+     TemplateBox[{"1","b"},
+      "Superscript"]}], "]"}], ",", "3"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   TemplateBox[{"0","a"},
+    "Superscript"], ",", 
+   TemplateBox[{"1","b"},
+    "Superscript"], ",", 
+   TemplateBox[{"0","a"},
+    "Superscript"], ",", 
+   TemplateBox[{"1","b"},
+    "Superscript"], ",", 
+   TemplateBox[{"0","a"},
+    "Superscript"], ",", 
+   TemplateBox[{"1","b"},
+    "Superscript"]}], "]"}]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+A symbolic exponent is simplified if the symbolic word contains a single \
+block:\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordPower", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    TemplateBox[{"0","a"},
+     "Superscript"], "]"}], ",", "n"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  TemplateBox[{"0",RowBox[{"a", " ", "n"}]},
+   "Superscript"], "]"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordQ", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordQ"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordQ\\\", \\\"[\\\", \
+StyleBox[\\\"expr\\\", \\\"TI\\\"], \\\"]\\\"]]\) yields True if \
+\!\(\*StyleBox[\\\"expr\\\", \\\"TI\\\"]\) is a valid SymbolicWord object, \
+and False otherwise.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653409378-5775084"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordQ", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"0","4"},
+     "Superscript"], ",", 
+    TemplateBox[{"1","2"},
+     "Superscript"]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordQ", "[", 
+  TemplateBox[{"0","4"},
+   "Superscript"], "]"}]], "Input"],
+
+Cell[BoxData["False"], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["SymbolicWordQ", "Input"],
+ " does not check that the block lengths are non-negative:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordQ", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   TemplateBox[{"0","a"},
+    "Superscript"], "]"}], "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordQ", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   TemplateBox[{"0",RowBox[{"-", "1"}]},
+    "Superscript"], "]"}], "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordSimplified", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordSimplified"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordSimplified\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"assum\
+\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) yields True if adjacent blocks in \
+\!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\) have unequal characters and blocks \
+in \!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\) have positive lengths under the \
+assumptions \!\(\*StyleBox[\\\"assum\\\", \\\"TI\\\"]\).\\n\!\(\*RowBox[List[\
+\\\"SymbolicWordSimplified\\\", \\\"[\\\", StyleBox[\\\"word\\\", \
+\\\"TI\\\"], \\\"]\\\"]]\) uses default assumptions specified by any \
+enclosing Assuming constructs.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653409389-5775084"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordSimplified", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"0","4"},
+     "Superscript"], ",", 
+    TemplateBox[{"1","2"},
+     "Superscript"]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordSimplified", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0","a"},
+      "Superscript"], ",", 
+     TemplateBox[{"1","b"},
+      "Superscript"], ",", 
+     TemplateBox[{"0","c"},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{
+    RowBox[{"a", "\[GreaterEqual]", "1"}], "&&", 
+    RowBox[{"b", "\[GreaterEqual]", "1"}], "&&", 
+    RowBox[{"c", "\[GreaterEqual]", "1"}]}]}], "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "If ",
+ StyleBox["SymbolicWordSimplified", "Input"],
+ " cannot determine that the word is simplified, it returns unevaluated:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordSimplified", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"0","a"},
+     "Superscript"], ",", 
+    TemplateBox[{"0","b"},
+     "Superscript"]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordSimplified", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"0","a"},
+     "Superscript"], ",", 
+    TemplateBox[{"0","b"},
+     "Superscript"]}], "]"}], "]"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordSimplify", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordSimplify"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordSimplify\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"word\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"assum\
+\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) combines adjacent blocks in \
+\!\(\*StyleBox[\\\"word\\\", \\\"TI\\\"]\) having common characters and \
+deletes each block whose symbolic length is equal to 0 under the assumptions \
+\!\(\*StyleBox[\\\"assum\\\", \
+\\\"TI\\\"]\).\\n\!\(\*RowBox[List[\\\"SymbolicWordSimplify\\\", \\\"[\\\", \
+StyleBox[\\\"word\\\", \\\"TI\\\"], \\\"]\\\"]]\) uses default assumptions \
+specified by any enclosing Assuming constructs.\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3653409398-5775084"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordSimplify", "[", 
+  RowBox[{"SymbolicWord", "[", 
+   RowBox[{
+    TemplateBox[{"0","a"},
+     "Superscript"], ",", 
+    TemplateBox[{"1","b"},
+     "Superscript"], ",", 
+    TemplateBox[{"1","c"},
+     "Superscript"], ",", 
+    TemplateBox[{"1","d"},
+     "Superscript"], ",", 
+    TemplateBox[{"0","e"},
+     "Superscript"], ",", 
+    TemplateBox[{"0","f"},
+     "Superscript"]}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   TemplateBox[{"0","a"},
+    "Superscript"], ",", 
+   TemplateBox[{"1",RowBox[{"b", "+", "c", "+", "d"}]},
+    "Superscript"], ",", 
+   TemplateBox[{"0",RowBox[{"e", "+", "f"}]},
+    "Superscript"]}], "]"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SymbolicWordUnequal", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SymbolicWordUnequal"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"SymbolicWordUnequal\\\", \\\"[\\\", \
+RowBox[List[SubscriptBox[StyleBox[\\\"word\\\", \\\"TI\\\"], StyleBox[\\\"1\\\
+\", \\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"word\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]], \\\",\\\", StyleBox[\\\"assum\\\", \\\"TI\\\
+\"]]], \\\"]\\\"]]\) yields True if \!\(\*SubscriptBox[StyleBox[\\\"word\\\", \
+\\\"TI\\\"], StyleBox[\\\"1\\\", \\\"TR\\\"]]\) and \
+\!\(\*SubscriptBox[StyleBox[\\\"word\\\", \\\"TI\\\"], StyleBox[\\\"2\\\", \\\
+\"TR\\\"]]\) can be shown to be unequal under the assumptions \!\(\*StyleBox[\
+\\\"assum\\\", \
+\\\"TI\\\"]\).\\n\!\(\*RowBox[List[\\\"SymbolicWordUnequal\\\", \\\"[\\\", \
+RowBox[List[SubscriptBox[StyleBox[\\\"word\\\", \\\"TI\\\"], StyleBox[\\\"1\\\
+\", \\\"TR\\\"]], \\\",\\\", SubscriptBox[StyleBox[\\\"word\\\", \\\"TI\\\"], \
+StyleBox[\\\"2\\\", \\\"TR\\\"]]]], \\\"]\\\"]]\) uses default assumptions \
+specified by any enclosing Assuming constructs.\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3653409402-5775084"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordUnequal", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0",RowBox[{
+         RowBox[{"-", "1"}], "+", 
+         RowBox[{"5", " ", "a"}], "-", 
+         RowBox[{"6", " ", "b"}], "-", "i"}]},
+      "Superscript"], ",", 
+     TemplateBox[{"1","1"},
+      "Superscript"], ",", 
+     TemplateBox[{"0",RowBox[{
+         RowBox[{
+           RowBox[{"-", "7"}], " ", "a"}], "+", 
+         RowBox[{"9", " ", "b"}], "+", "i"}]},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0",RowBox[{
+         RowBox[{"-", "1"}], "-", 
+         RowBox[{"2", " ", "a"}], "+", 
+         RowBox[{"3", " ", "b"}], "-", "j"}]},
+      "Superscript"], ",", 
+     TemplateBox[{RowBox[{"2", "+", "n"}],"1"},
+      "Superscript"], ",", 
+     TemplateBox[{"0","j"},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{"n", "\[GreaterEqual]", "0"}]}], "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordUnequal", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0",RowBox[{"1", "-", "C"}]},
+      "Superscript"], ",", 
+     TemplateBox[{"1","2"},
+      "Superscript"], ",", 
+     TemplateBox[{"0","7"},
+      "Superscript"], ",", 
+     TemplateBox[{"1","1"},
+      "Superscript"], ",", 
+     TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+      "Superscript"], ",", 
+     TemplateBox[{"0","7"},
+      "Superscript"], ",", 
+     TemplateBox[{"1","2"},
+      "Superscript"], ",", 
+     TemplateBox[{"0","6"},
+      "Superscript"], ",", 
+     TemplateBox[{"1",RowBox[{"1", "+", "C"}]},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0",RowBox[{"1", "-", "C"}]},
+      "Superscript"], ",", 
+     TemplateBox[{"1","1"},
+      "Superscript"], ",", 
+     TemplateBox[{RowBox[{"1", "+", "n"}],"1"},
+      "Superscript"], ",", 
+     TemplateBox[{"0","7"},
+      "Superscript"], ",", 
+     TemplateBox[{"1","2"},
+      "Superscript"], ",", 
+     TemplateBox[{"0","6"},
+      "Superscript"], ",", 
+     TemplateBox[{"1","2"},
+      "Superscript"], ",", 
+     TemplateBox[{"0","7"},
+      "Superscript"], ",", 
+     TemplateBox[{"1","1"},
+      "Superscript"], ",", 
+     TemplateBox[{RowBox[{"1", "+", "n"}],"C"},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{
+    RowBox[{"1", "\[LessEqual]", "C", "\[LessEqual]", "1"}], "&&", 
+    RowBox[{"n", "\[GreaterEqual]", "0"}]}]}], "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SymbolicWordUnequal", "[", 
+  RowBox[{
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0","a"},
+      "Superscript"], ",", 
+     TemplateBox[{"1","b"},
+      "Superscript"]}], "]"}], ",", 
+   RowBox[{"SymbolicWord", "[", 
+    RowBox[{
+     TemplateBox[{"0","a"},
+      "Superscript"], ",", 
+     TemplateBox[{"1","b"},
+      "Superscript"]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData["False"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["ToSymbolicWord", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ToSymbolicWord"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ToSymbolicWord\\\", \\\"[\\\", StyleBox[\
+\\\"list\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives a symbolic word representing \
+\!\(\*StyleBox[\\\"list\\\", \\\"TI\\\"]\) in its run\[Hyphen]length \
+encoding.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3653409404-5775084"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ToSymbolicWord", "[", 
+  RowBox[{"{", 
+   RowBox[{"x", ",", "x", ",", "y", ",", "x", ",", "z", ",", "z", ",", "z"}], 
+   "}"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   TemplateBox[{"x","2"},
+    "Superscript"], ",", 
+   TemplateBox[{"y","1"},
+    "Superscript"], ",", 
+   TemplateBox[{"x","1"},
+    "Superscript"], ",", 
+   TemplateBox[{"z","3"},
+    "Superscript"]}], "]"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Compute the run-length encoding of the first several bits of ",
+ Cell[BoxData[
+  FormBox["\[Pi]", TraditionalForm]]],
+ ":"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Most", "[", 
+  RowBox[{"ToSymbolicWord", "[", 
+   RowBox[{"First", "[", 
+    RowBox[{"RealDigits", "[", 
+     RowBox[{"\[Pi]", ",", "2", ",", "21"}], "]"}], "]"}], "]"}], 
+  "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"SymbolicWord", "[", 
+  RowBox[{
+   TemplateBox[{"1","2"},
+    "Superscript"], ",", 
+   TemplateBox[{"0","2"},
+    "Superscript"], ",", 
+   TemplateBox[{"1","1"},
+    "Superscript"], ",", 
+   TemplateBox[{"0","2"},
+    "Superscript"], ",", 
+   TemplateBox[{"1","1"},
+    "Superscript"], ",", 
+   TemplateBox[{"0","4"},
+    "Superscript"], ",", 
+   TemplateBox[{"1","6"},
+    "Superscript"], ",", 
+   TemplateBox[{"0","1"},
+    "Superscript"]}], "]"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["$PowerFreeMorphismList", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "$PowerFreeMorphismList"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"$PowerFreeMorphismList is a list of 30 symbolic \
+power\[Hyphen]free morphisms and associated data.\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->"Info3653409413-5775084"]
+}, Open  ]],
+
+Cell["Here is the data for the first morphism:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Grid", "[", 
+  RowBox[{
+   RowBox[{"List", "@@@", 
+    RowBox[{"First", "[", "$PowerFreeMorphismList", "]"}]}], ",", 
+   RowBox[{"Dividers", "\[Rule]", "All"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"\<\"Morphism\"\>", 
+     RowBox[{"Function", "[", 
+      RowBox[{"SymbolicWords`Private`q", ",", 
+       RowBox[{"With", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"SymbolicWords`Private`a", "=", 
+            RowBox[{"Numerator", "[", "SymbolicWords`Private`q", "]"}]}], ",", 
+           RowBox[{"SymbolicWords`Private`b", "=", 
+            RowBox[{"Denominator", "[", "SymbolicWords`Private`q", "]"}]}]}], 
+          "}"}], ",", 
+         RowBox[{"SymbolicWords`Private`n_", "\[RuleDelayed]", 
+          RowBox[{"SymbolicWord", "[", 
+           RowBox[{
+            TemplateBox[{"0",RowBox[{"SymbolicWords`Private`a", "-", "1"}]},
+             "Superscript"], ",", 
+            TemplateBox[{"1","1"},
+             "Superscript"], ",", 
+            
+            TemplateBox[{
+             "0",RowBox[{
+               "SymbolicWords`Private`a", "-", "SymbolicWords`Private`b", "-",
+                 "1"}]},
+             "Superscript"], ",", 
+            TemplateBox[{RowBox[{"SymbolicWords`Private`n", "+", "1"}],"1"},
+             "Superscript"]}], "]"}]}]}], "]"}]}], "]"}]},
+    {"\<\"LengthCoefficients\"\>", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", 
+       RowBox[{"-", "1"}]}], "}"}]},
+    {"\<\"LocatingLengthCoefficients\"\>", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", 
+       RowBox[{"-", "2"}]}], "}"}]},
+    {"\<\"NonzeroCharacterCount\"\>", "2"},
+    {"\<\"SourceRationals\"\>", 
+     RowBox[{"{", 
+      RowBox[{
+       FractionBox["5", "3"], ",", 
+       FractionBox["22", "13"], ",", 
+       FractionBox["12", "7"], ",", 
+       FractionBox["19", "11"], ",", 
+       FractionBox["26", "15"], ",", 
+       FractionBox["23", "13"], ",", 
+       FractionBox["16", "9"], ",", 
+       FractionBox["9", "5"], ",", 
+       FractionBox["20", "11"], ",", 
+       FractionBox["24", "13"], ",", 
+       FractionBox["13", "7"], ",", 
+       FractionBox["28", "15"], ",", 
+       FractionBox["17", "9"], ",", 
+       FractionBox["21", "11"], ",", 
+       FractionBox["25", "13"], ",", 
+       FractionBox["29", "15"]}], "}"}]},
+    {"\<\"LocatingLengthExceptionalRationals\"\>", 
+     RowBox[{"{", "}"}]},
+    {"\<\"PowerFreeExceptionalRationals\"\>", 
+     RowBox[{"{", "}"}]},
+    {"\<\"PowerFreeIntervalEndpoints\"\>", 
+     RowBox[{"{", 
+      RowBox[{
+       FractionBox["5", "3"], ",", "2"}], "}"}]},
+    {"\<\"PowerFreeRationalTest\"\>", 
+     RowBox[{"Function", "[", 
+      RowBox[{"SymbolicWords`Private`q", ",", 
+       RowBox[{
+        RowBox[{"SymbolicWords`Private`q", "\[Element]", "Rationals"}], "&&", 
+        
+        RowBox[{
+         FractionBox["5", "3"], "\[LessEqual]", "SymbolicWords`Private`q", 
+         "<", "2"}], "&&", 
+        RowBox[{"CoprimeQ", "[", 
+         RowBox[{
+          RowBox[{"Denominator", "[", "SymbolicWords`Private`q", "]"}], ",", 
+          "2"}], "]"}]}]}], "]"}]},
+    {"\<\"WordAdditionalRationals\"\>", 
+     RowBox[{"{", "}"}]},
+    {"\<\"WordExceptionalRationals\"\>", 
+     RowBox[{"{", "}"}]},
+    {"\<\"WordIntervalEndpoints\"\>", 
+     RowBox[{"{", 
+      RowBox[{
+       FractionBox["5", "3"], ",", "2"}], "}"}]},
+    {"\<\"WordRationalTest\"\>", 
+     RowBox[{"Function", "[", 
+      RowBox[{"SymbolicWords`Private`q", ",", 
+       RowBox[{
+        RowBox[{"SymbolicWords`Private`q", "\[Element]", "Rationals"}], "&&", 
+        
+        RowBox[{
+         FractionBox["5", "3"], "\[LessEqual]", "SymbolicWords`Private`q", 
+         "<", "2"}], "&&", 
+        RowBox[{"CoprimeQ", "[", 
+         RowBox[{
+          RowBox[{"Denominator", "[", "SymbolicWords`Private`q", "]"}], ",", 
+          "2"}], "]"}]}]}], "]"}]},
+    {"\<\"WordStatus\"\>", "\<\"Theorem\"\>"}
+   },
+   AutoDelete->False,
+   GridBoxDividers->{"Columns" -> {{True}}, "Rows" -> {{True}}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "LocatingLengthExceptionalRationals make the morphism a perfect power.\n\
+PowerFreenessExceptionalRationals are obstructions to power-freeness.\n\
+WordAdditionalRationals are exceptional rationals that \
+aren\[CloseCurlyQuote]t governed by the morphism but that lie in the interval \
+and nonetheless have the predicted value of ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]]],
+ "."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Length", "[", "$PowerFreeMorphismList", "]"}]], "Input"],
+
+Cell[BoxData["30"], "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1130, 796},
+WindowMargins->{{36, Automatic}, {Automatic, 0}},
+ShowSelection->True,
+TrackCellChangeTimes->False,
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September \
+21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "Info3653407088-1792782"->{
+  Cell[9261, 342, 489, 8, 43, "Print",
+   CellTags->"Info3653407088-1792782"]},
+ "Info3653225738-9372862"->{
+  Cell[11644, 424, 343, 6, 43, "Print",
+   CellTags->"Info3653225738-9372862"]},
+ "Info3653410855-8934735"->{
+  Cell[13859, 508, 1739, 26, 104, "Print",
+   CellTags->"Info3653410855-8934735"]},
+ "Info3653409281-5775084"->{
+  Cell[52329, 1753, 252, 4, 43, "Print",
+   CellTags->"Info3653409281-5775084"]},
+ "Info3653411165-7841521"->{
+  Cell[55283, 1850, 798, 12, 74, "Print",
+   CellTags->"Info3653411165-7841521"]},
+ "Info3653225943-9372862"->{
+  Cell[60419, 2015, 549, 8, 43, "Print",
+   CellTags->"Info3653225943-9372862"]},
+ "Info3653409291-5775084"->{
+  Cell[61768, 2064, 394, 6, 43, "Print",
+   CellTags->"Info3653409291-5775084"]},
+ "Info3653409299-5775084"->{
+  Cell[63514, 2135, 725, 12, 61, "Print",
+   CellTags->"Info3653409299-5775084"]},
+ "Info3653225985-9372862"->{
+  Cell[68834, 2302, 732, 12, 61, "Print",
+   CellTags->"Info3653225985-9372862"]},
+ "Info3653225991-9372862"->{
+  Cell[72602, 2429, 299, 5, 43, "Print",
+   CellTags->"Info3653225991-9372862"]},
+ "Info3653409319-5775084"->{
+  Cell[73578, 2467, 1829, 27, 79, "Print",
+   CellTags->"Info3653409319-5775084"]},
+ "Info3653413727-5989508"->{
+  Cell[86361, 2792, 264, 4, 43, "Print",
+   CellTags->"Info3653413727-5989508"]},
+ "Info3653411798-6064807"->{
+  Cell[89608, 2887, 315, 5, 43, "Print",
+   CellTags->"Info3653411798-6064807"]},
+ "Info3653411667-6064807"->{
+  Cell[91744, 2969, 602, 10, 61, "Print",
+   CellTags->"Info3653411667-6064807"]},
+ "Info3653409334-5775084"->{
+  Cell[93643, 3037, 574, 8, 43, "Print",
+   CellTags->"Info3653409334-5775084"]},
+ "Info3653409343-5775084"->{
+  Cell[97417, 3167, 265, 4, 43, "Print",
+   CellTags->"Info3653409343-5775084"]},
+ "Info3653413547-5989508"->{
+  Cell[98651, 3218, 777, 12, 61, "Print",
+   CellTags->"Info3653413547-5989508"]},
+ "Info3653409373-5775084"->{
+  Cell[102711, 3348, 400, 7, 43, "Print",
+   CellTags->"Info3653409373-5775084"]},
+ "Info3653409378-5775084"->{
+  Cell[104433, 3417, 322, 5, 43, "Print",
+   CellTags->"Info3653409378-5775084"]},
+ "Info3653409389-5775084"->{
+  Cell[106017, 3486, 725, 10, 61, "Print",
+   CellTags->"Info3653409389-5775084"]},
+ "Info3653409398-5775084"->{
+  Cell[108439, 3571, 698, 11, 61, "Print",
+   CellTags->"Info3653409398-5775084"]},
+ "Info3653409402-5775084"->{
+  Cell[110104, 3625, 1073, 16, 61, "Print",
+   CellTags->"Info3653409402-5775084"]},
+ "Info3653409404-5775084"->{
+  Cell[114458, 3764, 326, 5, 43, "Print",
+   CellTags->"Info3653409404-5775084"]},
+ "Info3653409413-5775084"->{
+  Cell[116381, 3841, 205, 4, 40, "Print",
+   CellTags->"Info3653409413-5775084"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"Info3653407088-1792782", 121776, 4001},
+ {"Info3653225738-9372862", 121885, 4004},
+ {"Info3653410855-8934735", 121995, 4007},
+ {"Info3653409281-5775084", 122108, 4010},
+ {"Info3653411165-7841521", 122219, 4013},
+ {"Info3653225943-9372862", 122331, 4016},
+ {"Info3653409291-5775084", 122442, 4019},
+ {"Info3653409299-5775084", 122553, 4022},
+ {"Info3653225985-9372862", 122665, 4025},
+ {"Info3653225991-9372862", 122777, 4028},
+ {"Info3653409319-5775084", 122888, 4031},
+ {"Info3653413727-5989508", 123001, 4034},
+ {"Info3653411798-6064807", 123112, 4037},
+ {"Info3653411667-6064807", 123223, 4040},
+ {"Info3653409334-5775084", 123335, 4043},
+ {"Info3653409343-5775084", 123446, 4046},
+ {"Info3653413547-5989508", 123557, 4049},
+ {"Info3653409373-5775084", 123669, 4052},
+ {"Info3653409378-5775084", 123781, 4055},
+ {"Info3653409389-5775084", 123893, 4058},
+ {"Info3653409398-5775084", 124006, 4061},
+ {"Info3653409402-5775084", 124119, 4064},
+ {"Info3653409404-5775084", 124233, 4067},
+ {"Info3653409413-5775084", 124345, 4070}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 35, 0, 92, "Title"],
+Cell[618, 24, 42, 0, 51, "Subtitle"],
+Cell[663, 26, 234, 6, 49, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[922, 36, 31, 0, 64, "Section"],
+Cell[956, 38, 342, 6, 68, "Text"],
+Cell[1301, 46, 419, 11, 30, "Text"],
+Cell[1723, 59, 57, 1, 52, "Code"],
+Cell[CellGroupData[{
+Cell[1805, 64, 69, 0, 44, "Subsection"],
+Cell[1877, 66, 286, 6, 50, "Text"],
+Cell[CellGroupData[{
+Cell[2188, 76, 290, 8, 28, "Input"],
+Cell[2481, 86, 225, 8, 34, "Output"]
+}, Open  ]],
+Cell[2721, 97, 151, 4, 31, "Text"],
+Cell[CellGroupData[{
+Cell[2897, 105, 280, 9, 35, "Input"],
+Cell[3180, 116, 139, 4, 28, "Output"]
+}, Open  ]],
+Cell[3334, 123, 290, 6, 50, "Text"],
+Cell[CellGroupData[{
+Cell[3649, 133, 222, 7, 35, "Input"],
+Cell[3874, 142, 50, 1, 28, "Output"]
+}, Open  ]],
+Cell[3939, 146, 145, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[4109, 153, 476, 15, 35, "Input"],
+Cell[4588, 170, 336, 10, 34, "Output"]
+}, Open  ]],
+Cell[4939, 183, 70, 0, 30, "Text"],
+Cell[CellGroupData[{
+Cell[5034, 187, 538, 16, 35, "Input"],
+Cell[5575, 205, 441, 14, 34, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[6065, 225, 160, 6, 43, "Subsection"],
+Cell[6228, 233, 114, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[6367, 240, 956, 28, 36, "Input"],
+Cell[7326, 270, 31, 0, 28, "Output"]
+}, Open  ]],
+Cell[7372, 273, 527, 15, 58, "Text"],
+Cell[CellGroupData[{
+Cell[7924, 292, 982, 28, 84, "Input"],
+Cell[8909, 322, 45, 1, 28, "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9015, 330, 34, 0, 64, "Section"],
+Cell[CellGroupData[{
+Cell[9074, 334, 86, 1, 29, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[9185, 339, 73, 1, 28, "Input"],
+Cell[9261, 342, 489, 8, 43, "Print",
+ CellTags->"Info3653407088-1792782"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9787, 355, 342, 9, 28, "Input"],
+Cell[10132, 366, 299, 9, 34, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10468, 380, 436, 12, 35, "Input"],
+Cell[10907, 394, 499, 16, 35, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[11455, 416, 87, 1, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[11567, 421, 74, 1, 28, "Input"],
+Cell[11644, 424, 343, 6, 43, "Print",
+ CellTags->"Info3653225738-9372862"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12024, 435, 364, 10, 35, "Input"],
+Cell[12391, 447, 31, 0, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12459, 452, 253, 7, 35, "Input"],
+Cell[12715, 461, 32, 0, 28, "Output"]
+}, Open  ]],
+Cell[12762, 464, 142, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[12929, 471, 288, 7, 35, "Input"],
+Cell[13220, 480, 31, 0, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13288, 485, 303, 7, 35, "Input"],
+Cell[13594, 494, 31, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[13674, 500, 85, 1, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[13784, 505, 72, 1, 28, "Input"],
+Cell[13859, 508, 1739, 26, 104, "Print",
+ CellTags->"Info3653410855-8934735"]
+}, Open  ]],
+Cell[15613, 537, 294, 12, 39, "Text"],
+Cell[CellGroupData[{
+Cell[15932, 553, 18376, 631, 273, "Input"],
+Cell[34311, 1186, 45, 1, 28, "Output"]
+}, Open  ]],
+Cell[34371, 1190, 294, 12, 38, "Text"],
+Cell[CellGroupData[{
+Cell[34690, 1206, 982, 28, 84, "Input"],
+Cell[35675, 1236, 45, 1, 28, "Output"]
+}, Open  ]],
+Cell[35735, 1240, 582, 24, 39, "Text"],
+Cell[CellGroupData[{
+Cell[36342, 1268, 1660, 48, 85, "Input"],
+Cell[CellGroupData[{
+Cell[38027, 1320, 183, 4, 22, "Print"],
+Cell[38213, 1326, 266, 6, 22, "Print"],
+Cell[38482, 1334, 231, 5, 22, "Print"],
+Cell[38716, 1341, 606, 17, 39, "Print"]
+}, Open  ]],
+Cell[39337, 1361, 12756, 378, 349, "Output"]
+}, Open  ]],
+Cell[52108, 1742, 136, 4, 31, "Text"],
+Cell[CellGroupData[{
+Cell[52269, 1750, 57, 1, 28, "Input"],
+Cell[52329, 1753, 252, 4, 43, "Print",
+ CellTags->"Info3653409281-5775084"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[52618, 1762, 1155, 33, 84, "Input"],
+Cell[CellGroupData[{
+Cell[53798, 1799, 278, 7, 22, "Print"],
+Cell[54079, 1808, 266, 6, 22, "Print"],
+Cell[54348, 1816, 205, 4, 22, "Print"],
+Cell[54556, 1822, 423, 10, 36, "Print"]
+}, Open  ]],
+Cell[54994, 1835, 45, 1, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[55088, 1842, 90, 1, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[55203, 1847, 77, 1, 28, "Input"],
+Cell[55283, 1850, 798, 12, 74, "Print",
+ CellTags->"Info3653411165-7841521"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[56118, 1867, 3749, 122, 101, "Input"],
+Cell[59870, 1991, 45, 1, 28, "Output"]
+}, Open  ]],
+Cell[59930, 1995, 303, 8, 57, "Text"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[60270, 2008, 66, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[60361, 2012, 55, 1, 28, "Input"],
+Cell[60419, 2015, 549, 8, 43, "Print",
+ CellTags->"Info3653225943-9372862"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[61005, 2028, 216, 6, 28, "Input"],
+Cell[61224, 2036, 173, 6, 34, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[61434, 2047, 71, 1, 28, "Input"],
+Cell[61508, 2050, 50, 1, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[61607, 2057, 72, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[61704, 2061, 61, 1, 28, "Input"],
+Cell[61768, 2064, 394, 6, 43, "Print",
+ CellTags->"Info3653409291-5775084"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[62199, 2075, 171, 5, 35, "Input"],
+Cell[62373, 2082, 106, 3, 35, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[62516, 2090, 220, 7, 35, "Input"],
+Cell[62739, 2099, 126, 3, 34, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[62902, 2107, 220, 7, 35, "Input"],
+Cell[63125, 2116, 173, 6, 34, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[63347, 2128, 75, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[63447, 2132, 64, 1, 28, "Input"],
+Cell[63514, 2135, 725, 12, 61, "Print",
+ CellTags->"Info3653409299-5775084"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[64276, 2152, 330, 10, 35, "Input"],
+Cell[64609, 2164, 193, 6, 34, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[64839, 2175, 713, 20, 35, "Input"],
+Cell[65555, 2197, 3063, 92, 145, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[68667, 2295, 75, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[68767, 2299, 64, 1, 28, "Input"],
+Cell[68834, 2302, 732, 12, 61, "Print",
+ CellTags->"Info3653225985-9372862"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[69603, 2319, 330, 10, 35, "Input"],
+Cell[69936, 2331, 193, 6, 34, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[70166, 2342, 713, 20, 35, "Input"],
+Cell[70882, 2364, 1502, 52, 131, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[72433, 2422, 76, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[72534, 2426, 65, 1, 28, "Input"],
+Cell[72602, 2429, 299, 5, 43, "Print",
+ CellTags->"Info3653225991-9372862"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[72938, 2439, 280, 9, 35, "Input"],
+Cell[73221, 2450, 139, 4, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[73409, 2460, 76, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[73510, 2464, 65, 1, 28, "Input"],
+Cell[73578, 2467, 1829, 27, 79, "Print",
+ CellTags->"Info3653409319-5775084"]
+}, Open  ]],
+Cell[75422, 2497, 178, 5, 31, "Text"],
+Cell[CellGroupData[{
+Cell[75625, 2506, 1161, 31, 78, "Input"],
+Cell[76789, 2539, 1985, 49, 133, "Output"]
+}, Open  ]],
+Cell[78789, 2591, 76, 0, 30, "Text"],
+Cell[CellGroupData[{
+Cell[78890, 2595, 1675, 44, 162, "Input"],
+Cell[80568, 2641, 5526, 136, 137, "Output"]
+}, Open  ]],
+Cell[86109, 2780, 168, 5, 31, "Text"],
+Cell[CellGroupData[{
+Cell[86302, 2789, 56, 1, 28, "Input"],
+Cell[86361, 2792, 264, 4, 43, "Print",
+ CellTags->"Info3653413727-5989508"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[86662, 2801, 1376, 37, 78, "Input"],
+Cell[88041, 2840, 1329, 33, 91, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[89419, 2879, 87, 1, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[89531, 2884, 74, 1, 28, "Input"],
+Cell[89608, 2887, 315, 5, 43, "Print",
+ CellTags->"Info3653411798-6064807"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[89960, 2897, 309, 9, 35, "Input"],
+Cell[90272, 2908, 28, 0, 28, "Output"]
+}, Open  ]],
+Cell[90315, 2911, 142, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[90482, 2918, 309, 9, 35, "Input"],
+Cell[90794, 2929, 28, 0, 28, "Output"]
+}, Open  ]],
+Cell[90837, 2932, 185, 4, 31, "Text"],
+Cell[CellGroupData[{
+Cell[91047, 2940, 438, 13, 35, "Input"],
+Cell[91488, 2955, 28, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[91565, 2961, 82, 1, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[91672, 2966, 69, 1, 28, "Input"],
+Cell[91744, 2969, 602, 10, 61, "Print",
+ CellTags->"Info3653411667-6064807"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[92383, 2984, 392, 13, 35, "Input"],
+Cell[92778, 2999, 28, 0, 28, "Output"]
+}, Open  ]],
+Cell[92821, 3002, 122, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[92968, 3009, 438, 13, 35, "Input"],
+Cell[93409, 3024, 28, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[93486, 3030, 70, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[93581, 3034, 59, 1, 28, "Input"],
+Cell[93643, 3037, 574, 8, 43, "Print",
+ CellTags->"Info3653409334-5775084"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[94254, 3050, 476, 15, 35, "Input"],
+Cell[94733, 3067, 336, 10, 34, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[95106, 3082, 476, 15, 35, "Input"],
+Cell[95585, 3099, 368, 12, 34, "Output"]
+}, Open  ]],
+Cell[95968, 3114, 67, 0, 30, "Text"],
+Cell[CellGroupData[{
+Cell[96060, 3118, 683, 20, 35, "Input"],
+Cell[96746, 3140, 461, 14, 34, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[97256, 3160, 72, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[97353, 3164, 61, 1, 28, "Input"],
+Cell[97417, 3167, 265, 4, 43, "Print",
+ CellTags->"Info3653409343-5775084"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[97719, 3176, 222, 7, 35, "Input"],
+Cell[97944, 3185, 50, 1, 28, "Output"]
+}, Open  ]],
+Cell[98009, 3189, 129, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[98163, 3196, 237, 7, 35, "Input"],
+Cell[98403, 3205, 28, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[98480, 3211, 77, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[98582, 3215, 66, 1, 28, "Input"],
+Cell[98651, 3218, 777, 12, 61, "Print",
+ CellTags->"Info3653413547-5989508"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[99465, 3235, 436, 12, 35, "Input"],
+Cell[99904, 3249, 499, 16, 35, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[100440, 3270, 942, 27, 96, "Input"],
+Cell[101385, 3299, 1065, 33, 35, "Output"],
+Cell[102453, 3334, 50, 1, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[102552, 3341, 71, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[102648, 3345, 60, 1, 28, "Input"],
+Cell[102711, 3348, 400, 7, 43, "Print",
+ CellTags->"Info3653409373-5775084"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[103148, 3360, 250, 8, 35, "Input"],
+Cell[103401, 3370, 381, 14, 34, "Output"]
+}, Open  ]],
+Cell[103797, 3387, 105, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[103927, 3394, 177, 5, 35, "Input"],
+Cell[104107, 3401, 126, 3, 35, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[104282, 3410, 67, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[104374, 3414, 56, 1, 28, "Input"],
+Cell[104433, 3417, 322, 5, 43, "Print",
+ CellTags->"Info3653409378-5775084"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[104792, 3427, 217, 7, 35, "Input"],
+Cell[105012, 3436, 31, 0, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[105080, 3441, 106, 3, 35, "Input"],
+Cell[105189, 3446, 32, 0, 28, "Output"]
+}, Open  ]],
+Cell[105236, 3449, 124, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[105385, 3456, 147, 4, 35, "Input"],
+Cell[105535, 3462, 31, 0, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[105603, 3467, 162, 4, 35, "Input"],
+Cell[105768, 3473, 31, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[105848, 3479, 76, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[105949, 3483, 65, 1, 28, "Input"],
+Cell[106017, 3486, 725, 10, 61, "Print",
+ CellTags->"Info3653409389-5775084"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[106779, 3501, 226, 7, 35, "Input"],
+Cell[107008, 3510, 31, 0, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[107076, 3515, 464, 14, 35, "Input"],
+Cell[107543, 3531, 31, 0, 28, "Output"]
+}, Open  ]],
+Cell[107589, 3534, 155, 4, 31, "Text"],
+Cell[CellGroupData[{
+Cell[107769, 3542, 226, 7, 35, "Input"],
+Cell[107998, 3551, 227, 7, 34, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[108274, 3564, 74, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[108373, 3568, 63, 1, 28, "Input"],
+Cell[108439, 3571, 698, 11, 61, "Print",
+ CellTags->"Info3653409398-5775084"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[109174, 3587, 440, 15, 35, "Input"],
+Cell[109617, 3604, 275, 8, 34, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[109941, 3618, 73, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[110039, 3622, 62, 1, 28, "Input"],
+Cell[110104, 3625, 1073, 16, 61, "Print",
+ CellTags->"Info3653409402-5775084"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[111214, 3646, 956, 28, 36, "Input"],
+Cell[112173, 3676, 31, 0, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[112241, 3681, 1500, 47, 57, "Input"],
+Cell[113744, 3730, 31, 0, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[113812, 3735, 409, 14, 35, "Input"],
+Cell[114224, 3751, 32, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[114305, 3757, 68, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[114398, 3761, 57, 1, 28, "Input"],
+Cell[114458, 3764, 326, 5, 43, "Print",
+ CellTags->"Info3653409404-5775084"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[114821, 3774, 168, 4, 28, "Input"],
+Cell[114992, 3780, 277, 10, 34, "Output"]
+}, Open  ]],
+Cell[115284, 3793, 152, 5, 31, "Text"],
+Cell[CellGroupData[{
+Cell[115461, 3802, 214, 6, 28, "Input"],
+Cell[115678, 3810, 485, 18, 34, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[116212, 3834, 76, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[116313, 3838, 65, 1, 28, "Input"],
+Cell[116381, 3841, 205, 4, 40, "Print",
+ CellTags->"Info3653409413-5775084"]
+}, Open  ]],
+Cell[116601, 3848, 56, 0, 30, "Text"],
+Cell[CellGroupData[{
+Cell[116682, 3852, 203, 5, 28, "Input"],
+Cell[116888, 3859, 3897, 104, 443, "Output"]
+}, Open  ]],
+Cell[120800, 3966, 414, 9, 69, "Text"],
+Cell[CellGroupData[{
+Cell[121239, 3979, 80, 1, 28, "Input"],
+Cell[121322, 3982, 29, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

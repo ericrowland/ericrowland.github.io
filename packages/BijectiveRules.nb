@@ -1,0 +1,4177 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[    145641,       4169]
+NotebookOptionsPosition[    127762,       3590]
+NotebookOutlinePosition[    132220,       3714]
+CellTagsIndexPosition[    131101,       3685]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["BijectiveRules 1.12", "Title"],
+
+Cell["documentation notebook", "Subtitle"],
+
+Cell[TextData[{
+ "Eric Rowland\n",
+ ButtonBox["http://people.hofstra.edu/Eric_Rowland/packages.html",
+  BaseStyle->"Hyperlink",
+  ButtonData:>{
+    URL["http://people.hofstra.edu/Eric_Rowland/packages.html"], None}]
+}], "Subsubtitle"],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section"],
+
+Cell["\<\
+BijectiveRules is a package for studying right bijective and left bijective \
+cellular automaton rules.
+This introduction gives an overview of the main features of the package; the \
+next section provides a complete list of package symbols along with their \
+usage messages and further examples.\
+\>", "Text"],
+
+Cell[TextData[{
+ "To use BijectiveRules, first you will need to load the package by \
+evaluating the following cell.  (If you need help, see ",
+ ButtonBox["loading a package",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.\
+html"], None},
+  ButtonNote->
+   "http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.html"],
+ ".)"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"<<", "BijectiveRules`"}]], "Code"],
+
+Cell[TextData[{
+ "BijectiveRules uses the same notation as ",
+ StyleBox["CellularAutomaton", "Input"],
+ ".  That is, rules are written in the form ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"{", 
+    RowBox[{"n", ",", "k", ",", "r"}], "}"}], TraditionalForm]]],
+ ", where ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ " is the rule number, ",
+ Cell[BoxData[
+  FormBox["k", TraditionalForm]]],
+ " is the number of colors, and ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]]],
+ " is the radius (so that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"2", "r"}], "+", "1"}], TraditionalForm]]],
+ " is the number of cells on which the rule depends)."
+}], "Text"],
+
+Cell[TextData[{
+ "For reversible cellular automata, a row with an infinite right tail (\
+\[OpenCurlyDoubleQuote]leftful row\[CloseCurlyDoubleQuote]) is represented as \
+",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"{", 
+    RowBox[{"foregroundlist", ",", "tailcolor"}], "}"}], TraditionalForm]]],
+ ", as in ",
+ StyleBox["CellularAutomaton", "Input"],
+ ".\nA row with an infinite left tail (\[OpenCurlyDoubleQuote]rightful row\
+\[CloseCurlyDoubleQuote]) is represented as ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"{", 
+    RowBox[{"tailcolor", ",", "foregroundlist"}], "}"}], TraditionalForm]]],
+ "."
+}], "Text"],
+
+Cell["\<\
+Here we explore 2-color, radius 1 (\"elementary\") right bijective rules.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RightBijectiveRules", "[", 
+  RowBox[{"2", ",", "1"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "85", ",", "86", ",", "89", ",", "90", ",", "101", ",", "102", ",", "105", 
+   ",", "106", ",", "149", ",", "150", ",", "153", ",", "154", ",", "165", 
+   ",", "166", ",", "169", ",", "170"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+This shows which rules can have which backgrounds (white, black, alternating, \
+or either).\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Grid", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"#", ",", 
+      RowBox[{"ColorCycles", "[", 
+       RowBox[{"First", "[", "#", "]"}], "]"}]}], "}"}], "&"}], "/@", 
+   RowBox[{"GatherBy", "[", 
+    RowBox[{
+     RowBox[{"RightBijectiveRules", "[", 
+      RowBox[{"2", ",", "1"}], "]"}], ",", "ColorCycles"}], "]"}]}], 
+  "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     RowBox[{"{", 
+      RowBox[{"85", ",", "89", ",", "101", ",", "105"}], "}"}], 
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{"0", ",", "1"}], "}"}], "}"}]},
+    {
+     RowBox[{"{", 
+      RowBox[{"86", ",", "90", ",", "102", ",", "106"}], "}"}], 
+     RowBox[{"{", 
+      RowBox[{"{", "0", "}"}], "}"}]},
+    {
+     RowBox[{"{", 
+      RowBox[{"149", ",", "153", ",", "165", ",", "169"}], "}"}], 
+     RowBox[{"{", 
+      RowBox[{"{", "1", "}"}], "}"}]},
+    {
+     RowBox[{"{", 
+      RowBox[{"150", ",", "154", ",", "166", ",", "170"}], "}"}], 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "0", "}"}], ",", 
+       RowBox[{"{", "1", "}"}]}], "}"}]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+The first class below supports initial conditions with a white background; \
+the second class supports initial conditions with a black background.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"Select", "[", 
+       RowBox[{"#1", ",", 
+        RowBox[{
+         RowBox[{"MemberQ", "[", 
+          RowBox[{
+           RowBox[{"Flatten", "[", 
+            RowBox[{"ColorCycles", "[", "#1", "]"}], "]"}], ",", "0"}], "]"}],
+          "&"}]}], "]"}], ",", 
+      RowBox[{"Select", "[", 
+       RowBox[{"#1", ",", 
+        RowBox[{
+         RowBox[{"MemberQ", "[", 
+          RowBox[{
+           RowBox[{"Flatten", "[", 
+            RowBox[{"ColorCycles", "[", "#1", "]"}], "]"}], ",", "1"}], "]"}],
+          "&"}]}], "]"}]}], "}"}], "&"}], ")"}], "[", 
+  RowBox[{"RightBijectiveRules", "[", 
+   RowBox[{"2", ",", "1"}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "85", ",", "86", ",", "89", ",", "90", ",", "101", ",", "102", ",", "105",
+      ",", "106", ",", "150", ",", "154", ",", "166", ",", "170"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "85", ",", "89", ",", "101", ",", "105", ",", "149", ",", "150", ",", 
+     "153", ",", "154", ",", "165", ",", "166", ",", "169", ",", "170"}], 
+    "}"}]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["White background initial conditions", "Subsection"],
+
+Cell["\<\
+Here are the predecessor rows for the 12 right bijective rules which support \
+white background initial conditions.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Grid", "[", 
+  RowBox[{
+   RowBox[{"Function", "[", 
+    RowBox[{"n", ",", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", 
+       RowBox[{"RightfulPredecessor", "[", 
+        RowBox[{"n", ",", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", 
+           RowBox[{"Prepend", "[", 
+            RowBox[{
+             RowBox[{"ConstantArray", "[", 
+              RowBox[{"0", ",", "10"}], "]"}], ",", "1"}], "]"}]}], "}"}]}], 
+        "]"}]}], "}"}]}], "]"}], "/@", 
+   RowBox[{"{", 
+    RowBox[{
+    "85", ",", "86", ",", "89", ",", "90", ",", "101", ",", "102", ",", "105",
+      ",", "106", ",", "150", ",", "154", ",", "166", ",", "170"}], "}"}]}], 
+  "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"85", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "0", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+         "1", ",", "1", ",", "1", ",", "1"}], "}"}]}], "}"}]},
+    {"86", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+         "1", ",", "1", ",", "1", ",", "1"}], "}"}]}], "}"}]},
+    {"89", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "0", ",", "1", ",", "0", ",", "1", ",", "0", ",", "1", ",", "0", ",", 
+         "1", ",", "0", ",", "1", ",", "0"}], "}"}]}], "}"}]},
+    {"90", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "1", ",", "0", ",", "1", ",", "0", ",", "1", ",", "0", ",", "1", ",", 
+         "0", ",", "1", ",", "0", ",", "1"}], "}"}]}], "}"}]},
+    {"101", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "0", ",", "0", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+         "1", ",", "1", ",", "1", ",", "1"}], "}"}]}], "}"}]},
+    {"102", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+         "1", ",", "1", ",", "1", ",", "1"}], "}"}]}], "}"}]},
+    {"105", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "0", ",", 
+         "0", ",", "1", ",", "0", ",", "0"}], "}"}]}], "}"}]},
+    {"106", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+         "0", ",", "0", ",", "0", ",", "0"}], "}"}]}], "}"}]},
+    {"150", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "1", ",", "1", ",", "0", ",", "1", ",", "1", ",", "0", ",", "1", ",", 
+         "1", ",", "0", ",", "1", ",", "1"}], "}"}]}], "}"}]},
+    {"154", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "1", ",", "0", ",", "1", ",", "0", ",", "1", ",", "0", ",", "1", ",", 
+         "0", ",", "1", ",", "0", ",", "1"}], "}"}]}], "}"}]},
+    {"166", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+         "0", ",", "0", ",", "0", ",", "0"}], "}"}]}], "}"}]},
+    {"170", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+         "0", ",", "0", ",", "0", ",", "0"}], "}"}]}], "}"}]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output"]
+}, Open  ]],
+
+Cell["Here is a little of each history:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"GraphicsGrid", "[", 
+  RowBox[{
+   RowBox[{"Partition", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Function", "[", 
+       RowBox[{"n", ",", 
+        RowBox[{"ArrayPlot", "[", 
+         RowBox[{"ReversibleCellularAutomaton", "[", 
+          RowBox[{"n", ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", 
+             RowBox[{"Prepend", "[", 
+              RowBox[{
+               RowBox[{"ConstantArray", "[", 
+                RowBox[{"0", ",", "100"}], "]"}], ",", "1"}], "]"}]}], "}"}], 
+           ",", 
+           RowBox[{"{", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "32"}], ",", "32"}], "}"}], "}"}]}], "]"}], 
+         "]"}]}], "]"}], "/@", 
+      RowBox[{"{", 
+       RowBox[{
+       "85", ",", "86", ",", "89", ",", "90", ",", "101", ",", "102", ",", 
+        "105", ",", "106", ",", "150", ",", "154", ",", "166", ",", "170"}], 
+       "}"}]}], ",", "4"}], "]"}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "700"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {{InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJztz0EJACAABMHTJkaxghEE3/b/aQpBmIUNMG3uMWuSfl/3lBflRSQkJCQk
+JCQkJCQkJCQkJCQkJCQkJCQkJP9IDkdQD1M=
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {194.4, -124.52970297029701}, 
+      ImageScaled[{0.5, 0.5}], {360.00000000000006, 231.68316831683163}], 
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy9VlFOQzEMi7kJR+EKHGES39z/j6nPdvM2CQ09h7J1WR7Edey2vN++P29v
+VfVxf3/d3wWOWj9Y31e2TgH4u8dH6cH++99GaRwoLoaHoAh0fCj5EgS4eK7a
+yyuXU8DHxPsDCy6T60db3i6n9vExTPZ1CDfczVZVlbukRWNSajMY9nKXtGhM
+3Gb5qZe7pEVjQj60Es7lLmnRmLAg5GRhXteiMZHBgFYVCS0aEylcvWoltGhM
+oP3+fKhc1KIx8X5/PlQuatGY1K71eKhc1KIxabUeD5UACzI5YTmX0MIgD1hR
+LQxiCfq1EdLCIJbArs1pYZDyyvNaGAS7QXEtDNIaFNfCIK1B+3t49AaNsAB8
+n8xoYZC2TYYgfJ/MsVjFJ7UwCIZZLJBpFgtkmsUCmYfwfTIM8i/DV8rgi+aa
+fsH/2I3NPOSnZ8zPxz4ZnnmfzM708fTsgxhjMcFAJwzFEKycPRCXqXRa6Xi5
+mcym4sPNEOpMXDrx2b+R2Ac+5OmJGGqbnC2mwTz9vCP6DeE8I2CvohDNE29F
+lOvk71SeO8dyNa+H8lZqy9W8Hsqb25bLvYzlza0ZTr1M5w3tZ8l8iVsznHqZ
+y0Nb1Ybj82BeSp0MZ9qpPDfoyXCmHcprg3oF4HrkDCTy4NiG44bSagL5H0LA
+ExI=
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {583.2, -124.52970297029701}, 
+      ImageScaled[{0.5, 0.5}], {360.00000000000006, 231.68316831683163}], 
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy9V1uS2zAMI3qTHqVX6BF2pt+9/183a+LBbNvZsaTYYzOSE4ogACX5/vb7
+59u3qvrxfv16vwp9FB6Dxx0fk4/Xj6m6wvX8Y/LGUX2C2cCMTPgRupy6eyhh
+MeWV0c/55B6Mq1L15UJ0TUCd9JMVHOpLsW9qGpe8zYZwaL2r2Lg3ScAKDELp
+9agrQJnRHVyAQSigoCBckBiW2Ohk0RcqGRDdtchGJ2tmCYLOwbo3JpYEYYN3
+CcswGkuCiA7uYKNx9G2A2eGNgeMqfILZ4o0JBVKXNsqNbDQUq8sa2AlD9TPt
+Pm8MIKmuvd4YWEJVwG42iKWsqo3emDjCIrWdDeIIi+AEjIYiixyB0VBkkTMw
+alrk1DEscu7opY7BIJbDMOqYNwaO4zDqFTAuKC8A8oqjXnHWCy5QXyev4v+T
+k5f+n+BoxPgFcSjOX9f8dtkaC/xmL/7O2x+1mNAciFqst5eexd7oIXkqfRlv
+i06rrYxECeBypMJiKyNRArgcW2c86SCZaEekzmIv66Wt7lqN1Bk418y0mQrc
+21YidVZcC1zV+b3w/RhM8OQ0pDiXcC8qj4ixOSWSQhaQJX1lbLGKirI5JZJZ
+QJb0lbHFamKetWczpdjN6Sjxb2OL1cRYe3Kmi5DYpY5O8Z+xxSoqQtPgB6QW
+ix0u4/rIv8cWq7uQu4u0bZbUrMqJirKexlouu5C7iwRjlmSAMZFlPY1VTnZB
+VZfqSZasbPGEWRY+jWkCd8EC6qyhFn2kIjXMKOL9Ma5PXVDVoigKkmUidZjL
+j8dY9drfbIEoslrYR2SqMFeqyzWzhenvaONUg801UoW5Ul2uObYaAwtWhxrS
+MnCqMFeqzWXGVmNgwapeTXNxCaEYnRtqxB9iMQ9q
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {972., -124.52970297029701}, 
+      ImageScaled[{0.5, 0.5}], {360., 231.68316831683163}], InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy9l9EJwzAMRN1u0lG6Qkco9Lv7/zUQSggGvZN0ToIRQj0/O7Y4+nh/X+/7
+GOO5jc82xq33SPrRfOWVdIYIGa0o76QTRcj522ZzEXJeVTYXIaOVi5BeLkLi
+e1/qi3mS+N6X+mKeJL73pb6YJznHbF2ExN+6dRbHJPEqW2dxTBJP0d7FPkmv
+LkIMfsEQg18wxOAXDImjCWLwC4YY/IIhBr9gSJybIAv6YoYs6IsZsqAvZsg5
+LoIsPIsDsngXO2Q54oJd7JAL3u7/E2mQn1gi+Yklkp9YcvITS05+YsnJTyw5
++YmlTn5iqZOfWOrkJ5Y6+YmlTn5iqUer+K+kXY9/YqqTF9Aj6ckLGCLoyQ+U
+naCe/EDZCerJDxgi6MkPGCLoyQ8YIujJDxgi6LN9UdJn+6Kkz/ZFSZ/ti5K+
+ehYpffUsUvrOLmR9DyHqf0Q3GUo=
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {1360.8000000000002, -124.52970297029701}, 
+      ImageScaled[{0.5, 0.5}], {359.9999999999998, 231.68316831683163}]}, {
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJztl11y2zAMhLG9SY/SK/QImelz7/9Wj8T9gePOxBLYp8phYEoKyQ/YpZTv
+H79/fnyrqh+P9uvRCsdROL+fcZ0+z6hfx1VcOiqmqnYWtUY+vhRiDe8eHOP4
+2s4ec6xG1Ksgawy0IYrXVlvTXgY5fwFtjLMibperketW4tanSLbiDQyvmyli
+AwsF3KqGICxTtypfuo+BlKmLgLh0uxoygFxS4Og3vdFQTh65BCDFPW88gVim
+LsJ9bzyBMEtZhCFvJEzFjqiiT2EQBnS4y1+jGLF7ZflnMcBtKoo9Wg3NAGiK
+MW80FG1P/JnG8PPCIOMYfl5ggzc6TVhlHoM0zNwuDL9GbKmGKDZ5o6Hs8kZD
+2eSNzyBbMabeqb4AsxdjwfzHeAPlXxzY/4kXyH0tXiD3Ndbl6X+e8VbcWY7p
+tkQ/3rlN1nyEnu3cJiWIueiXCGPFQ2YksiwNKx4yI/ElFjPo6/dix6PaVgY5
+20CE8dqGxgSiBmJpzSDIEto6Q8DLcfGw9NzT6KRU3fW4eFh67mpeglWHy1EV
+kSWdIt6pfc7s70bByIxEhbNpVVyKWjkt6RRFNpVBi/ydqJVTzMxWyybFYm1I
+7F/oS0USM7OldPl2eSvFLnX8vW8hR/ohb+b9Klz8gZRigpd9pj7rT0G0+1W4
++ANfEMHLvubOYUgV+UmPecFKqIhe9jV31L+li/eHx8qNCdWKbDT1Y+6oPxfY
+7v/kLZ8UOC1F3jaRB0BYRupSXrQCk5ULKcuKt03kAdIyYRsPGerSyTRc4/XE
+hRggLWNjplOtLs0To3Re9asNYGernk9OlbQ9T4xSWpxvd+lCAzJLc5blUojl
+pSspRvE407AjumVsTGQSKCQlIATATNg/j88fzyAO7w==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {194.4, -373.589108910891}, 
+      ImageScaled[{0.5, 0.5}], {360.00000000000006, 231.68316831683165}], 
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy9l1FuAyEMRCE36VFyhR4hUr57/7+saMJmbeHpqm/CyrKcQYwDGGu+bj/f
+t0tr7brZfbPW66HwP40mBsGxZVp/DEmrjSERxpA8933lGZJnvivPkLTaMyTC
+MyShHtD6mIuGekDrYy4a6gGtj7loP+4/Wh9z0bD/+HmMRUPe+HmMRVsdMyQi
+Zkgc/SOROPpHInH0j0QSzEPi6B+JxNE/EomjfySS4D0kzvqYJM76mCTO+pgk
+3Xweg8R9HoPE/z8+cB6D5AMcUp8wQyoU4FP6hDKpUf5tsZ9YvNIniFf6BPGx
+n1j8vMmvHy1x6CeWWOkTLH5/vyzx+/71vt9vNFb6BImVPkHi8JsnTi9/nITg
+4e1Pkwhc6RMKP7z9ORMAj+9/zgTAlT5BcKVPEDy+/zkTAF/d7z0TAl/c7z0T
+AFf6BMOLOcv7fwqv9rP39f0/hVf7+ZsJgNd5QLiYw+AP60gXzg==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {583.2, -373.589108910891}, 
+      ImageScaled[{0.5, 0.5}], {360.00000000000006, 231.68316831683165}], 
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy9V1tyxSAI1e6kS+kWuoQ70+/u/6932qvyBhHLJFGBJJ6DhPj++P58vLXW
+Pp7n1/Ns3ZZT+3IzDsfcYvJ6kna1bEEUE3F7Mcf6li0ugFepb9m2gAyGIcfa
+mOrDMRkMN/JqaUz1YSiDNcqiNKb6IJLFMyZRHmdQdC0ftHFOlHzQxlkJ5UdP
+oyBPQW9Uxmkgkfw4k2B+nApjzxonkVDy7HEWCDpy9cJFgnMiWy8CUPB3CeqK
+kPDvUkFecCA0HnWxmEh4PIpR/EEZrMG2GMkgDbfVQArqhYukpl4EoFTnBUNy
+JS84kHuxmEjuxmJCuS//gKKzH6w7B//Hqr8K/1jlfVpPLvXt/UmJ3tuflOkH
+d2RlF+oBdx3NoFTfQHTWMXo8d1P+c8Wh61rhdGYZ/7Xi0Brvwqwke8gfeqE3
+CrOS7EH/vf1Iyn93P5L1ZxxakvMXOLQk6Y8XfKMKx+4JyhP43bGuVOeJWE9G
+q/WpzkcC8qSTVutTnY+E8AxbyKllj8TE3Z+c7l/EekK59uyRmLj7E8/uIxnN
+jI5fP3YF5Ym27k/3L2I9kTi17D4SNE+d0528UO7fqx/7SIR6InGaRQHvdzk9
+kd6FeiJxeiK/9/8AdwgRCQ==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {972., -373.589108910891}, 
+      ImageScaled[{0.5, 0.5}], {360., 231.68316831683165}], InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJztzTENACAMAMGCE6RgAQlNmPG/0RUDTPfJzzfyrOwRMetdR/sQBAKBQCAQ
+CAQCgUAgEAgEAoFAIBAI5O0C9zIbsw==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {1360.8000000000002, -373.589108910891}, 
+      ImageScaled[{0.5, 0.5}], {359.9999999999998, 231.68316831683165}]}, {
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy1l92RwyAMhCGdXCnXQkrITJ6v/7fLr0MkLSsJwSQ2CHk+YXuz4efyd76c
+Wmu/t+/19m193lbnn0lt/iHTHsS9kjY9sgwf5FUv6s/m3O1dL+rP5vyQ+6pf
+d3i8x2gs486VfO5wM+Isz7mS9nWWcZbng4izjLM8HwToAY1TDekBjXMQoAc0
+Tq7Ep48FBNYDGucgTn2sQZz6WIMExzmIEETKLyhEaCLlFxQiNCFjNZCuf5eW
+daEgwidKdKEgxvMoRmifKH0WBwScayEVfkEhFX5BIRV+QSF9gy4UZIcuFGTn
+szggu1fxgOxH8P1JyUc7yIajZw+y3u98D7LcRz5SGwc+Uhpn+5OSOPKR0rj0
+E+YvqXzpJ8xfUvnR/Ugu/6jjcw9n/pLKR+87arl88L7DizL50f1IKh+977iy
+RL584Zk3yABrpp8wb5AxChl18qRyb5AxvpJBJ12cUV/G+EoMP2E+wXShVzLo
+xOsTTBd6JYNOvD4R/Z9m+gnziRgC+ImuZD5PIZaf6Erm8xRi+YmuZD5PIZaf
+6EpiujCvj/pHGGL5ia4k9yy+ro/6Rxhi+YmuZK09rv8HsDYXWQ==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {194.4, -622.6485148514851}, 
+      ImageScaled[{0.5, 0.5}], {360.00000000000006, 231.68316831683165}], 
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy9l9EJwzAMRN1u0lG6Qkco9Lv7/zUQSggGvZN0ToIRQj0/O7Y4+nh/X+/7
+GOO5jc82xq33SPrRfOWVdIYIGa0o76QTRcj522ZzEXJeVTYXIaOVi5BeLkLi
+e1/qi3mS+N6X+mKeJL73pb6YJznHbF2ExN+6dRbHJPEqW2dxTBJP0d7FPkmv
+LkIMfsEQg18wxOAXDImjCWLwC4YY/IIhBr9gSJybIAv6YoYs6IsZsqAvZsg5
+LoIsPIsDsngXO2Q54oJd7JAL3u7/E2mQn1gi+Yklkp9YcvITS05+YsnJTyw5
++YmlTn5iqZOfWOrkJ5Y6+YmlTn5iqUer+K+kXY9/YqqTF9Aj6ckLGCLoyQ+U
+naCe/EDZCerJDxgi6MkPGCLoyQ8YIujJDxgi6LN9UdJn+6Kkz/ZFSZ/ti5K+
+ehYpffUsUvrOLmR9DyHqf0Q3GUo=
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {583.2, -622.6485148514851}, 
+      ImageScaled[{0.5, 0.5}], {360.00000000000006, 231.68316831683165}], 
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJztz7ENgEAQxMB7OqEUWqAEJGL6z/gWnDjyShuPfD7f/Rwzc+2/+7OEKUol
+DKkEIYJRCUQEoxKICEYlEBGMSiAiGJVARDAqgYhgVAIRwagEIoJRCUQEoxKI
+CEYlEBGMSiAiGJVARDAqgYhgrB9WoxuT
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {972., -622.6485148514851}, 
+      ImageScaled[{0.5, 0.5}], {360., 231.68316831683165}], InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJztzTENACAMAMGCE6RgAQlNmPG/0RUDTPfJzzfyrOwRMetdR/sQBAKBQCAQ
+CAQCgUAgEAgEAoFAIBAI5O0C9zIbsw==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {1360.8000000000002, -622.6485148514851}, 
+      ImageScaled[{0.5, 0.5}], {359.9999999999998, 231.68316831683165}]}}, {}},
+  ContentSelectable->True,
+  ImageSize->700,
+  PlotRangePadding->{6, 5}]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+The following table counts the number of leftmost black cells for a range of \
+41 rows in the history.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"With", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"init", "=", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"Prepend", "[", 
+        RowBox[{
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"0", ",", "100"}], "]"}], ",", "1"}], "]"}]}], "}"}]}], 
+    "}"}], ",", 
+   RowBox[{"Grid", "[", 
+    RowBox[{
+     RowBox[{"Function", "[", 
+      RowBox[{"n", ",", 
+       RowBox[{"{", 
+        RowBox[{"n", ",", 
+         RowBox[{"BorderBlockLength", "/@", 
+          RowBox[{"ReversibleCellularAutomaton", "[", 
+           RowBox[{"n", ",", "init", ",", 
+            RowBox[{"{", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "10"}], ",", "10"}], "}"}], "}"}]}], "]"}]}]}], 
+        "}"}]}], "]"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "85", ",", "86", ",", "89", ",", "90", ",", "101", ",", "102", ",", 
+       "105", ",", "106", ",", "150", ",", "154", ",", "166", ",", "170"}], 
+      "}"}]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"85", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "100", ",", "1", ",", "100", ",", "1", ",", "100", ",", "1", 
+       ",", "100", ",", "1", ",", "100", ",", "1", ",", "100", ",", "1", ",", 
+       "100", ",", "1", ",", "100", ",", "1", ",", "100", ",", "1", ",", 
+       "100", ",", "1"}], "}"}]},
+    {"86", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "6", ",", "1", ",", "3", ",", "1", ",", "4", ",", "1", ",", 
+       "3", ",", "1", ",", "101", ",", "1", ",", "3", ",", "1", ",", "4", ",",
+        "1", ",", "3", ",", "1", ",", "6", ",", "1", ",", "3", ",", "1"}], 
+      "}"}]},
+    {"89", 
+     RowBox[{"{", 
+      RowBox[{
+      "3", ",", "1", ",", "1", ",", "2", ",", "2", ",", "2", ",", "1", ",", 
+       "2", ",", "3", ",", "1", ",", "1", ",", "99", ",", "2", ",", "2", ",", 
+       "1", ",", "1", ",", "3", ",", "1", ",", "1", ",", "2", ",", "2"}], 
+      "}"}]},
+    {"90", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+      "}"}]},
+    {"101", 
+     RowBox[{"{", 
+      RowBox[{
+      "2", ",", "2", ",", "1", ",", "1", ",", "6", ",", "2", ",", "1", ",", 
+       "2", ",", "2", ",", "99", ",", "1", ",", "1", ",", "4", ",", "1", ",", 
+       "1", ",", "2", ",", "2", ",", "2", ",", "1", ",", "1", ",", "5"}], 
+      "}"}]},
+    {"102", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "8", ",", "1", ",", "2", ",", "1", ",", "4", ",", "1", ",", 
+       "2", ",", "1", ",", "101", ",", "1", ",", "2", ",", "1", ",", "4", ",",
+        "1", ",", "2", ",", "1", ",", "8", ",", "1", ",", "2", ",", "1"}], 
+      "}"}]},
+    {"105", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "1", ",", "1", ",", "5", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "98", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "5", ",", "1"}], 
+      "}"}]},
+    {"106", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+      "}"}]},
+    {"150", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "2", ",", "1", ",", "3", ",", "1", ",", "2", ",", "1", ",", 
+       "3", ",", "1", ",", "2", ",", "1", ",", "3", ",", "1", ",", "2", ",", 
+       "1", ",", "3", ",", "1", ",", "2", ",", "1", ",", "3", ",", "1"}], 
+      "}"}]},
+    {"154", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+      "}"}]},
+    {"166", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "2", ",", "1", ",", "2", ",", "1", ",", "2", ",", "1", ",", 
+       "2", ",", "1", ",", "2", ",", "1", ",", "2", ",", "1", ",", "2", ",", 
+       "1", ",", "2", ",", "1", ",", "2", ",", "1", ",", "2", ",", "1"}], 
+      "}"}]},
+    {"170", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+      "}"}]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "The next table counts the number of leftmost cells on row ",
+ Cell[BoxData[
+  FormBox["t", TraditionalForm]]],
+ " that agree with the initial condition."
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"AgreementLength", "[", 
+   RowBox[{"lists__", "?", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Depth", "[", "#", "]"}], "\[GreaterEqual]", "2"}], "&"}], 
+     ")"}]}], "]"}], ":=", 
+  RowBox[{"LengthWhile", "[", 
+   RowBox[{
+    RowBox[{"Transpose", "[", 
+     RowBox[{"PadRight", "[", 
+      RowBox[{
+       RowBox[{"List", "@@@", 
+        RowBox[{"{", "lists", "}"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Length", "[", 
+          RowBox[{"{", "lists", "}"}], "]"}], ",", 
+         RowBox[{"Max", "[", 
+          RowBox[{"Length", "/@", 
+           RowBox[{"{", "lists", "}"}]}], "]"}]}], "}"}], ",", 
+       RowBox[{"Unique", "[", "]"}]}], "]"}], "]"}], ",", 
+    RowBox[{
+     RowBox[{"SameQ", "@@", "#"}], "&"}]}], "]"}]}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"With", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"row", "=", 
+     RowBox[{"Prepend", "[", 
+      RowBox[{
+       RowBox[{"ConstantArray", "[", 
+        RowBox[{"0", ",", "100"}], "]"}], ",", "1"}], "]"}]}], "}"}], ",", 
+   RowBox[{"Grid", "[", 
+    RowBox[{
+     RowBox[{"Function", "[", 
+      RowBox[{"n", ",", 
+       RowBox[{"{", 
+        RowBox[{"n", ",", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"AgreementLength", "[", 
+             RowBox[{"row", ",", "#1"}], "]"}], "&"}], ")"}], "/@", 
+          RowBox[{"ReversibleCellularAutomaton", "[", 
+           RowBox[{"n", ",", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "row"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "10"}], ",", "10"}], "}"}], "}"}]}], "]"}]}]}], 
+        "}"}]}], "]"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "85", ",", "86", ",", "89", ",", "90", ",", "101", ",", "102", ",", 
+       "105", ",", "106", ",", "150", ",", "154", ",", "166", ",", "170"}], 
+      "}"}]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"85", 
+     RowBox[{"{", 
+      RowBox[{
+      "101", ",", "0", ",", "101", ",", "0", ",", "101", ",", "0", ",", "101",
+        ",", "0", ",", "101", ",", "0", ",", "101", ",", "0", ",", "101", ",",
+        "0", ",", "101", ",", "0", ",", "101", ",", "0", ",", "101", ",", "0",
+        ",", "101"}], "}"}]},
+    {"86", 
+     RowBox[{"{", 
+      RowBox[{
+      "3", ",", "1", ",", "6", ",", "1", ",", "3", ",", "1", ",", "4", ",", 
+       "1", ",", "3", ",", "1", ",", "101", ",", "1", ",", "3", ",", "1", ",",
+        "4", ",", "1", ",", "3", ",", "1", ",", "6", ",", "1", ",", "3"}], 
+      "}"}]},
+    {"89", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "0", ",", "4", ",", "0", ",", "1", ",", "0", ",", "2", ",", 
+       "0", ",", "1", ",", "0", ",", "101", ",", "0", ",", "1", ",", "0", ",",
+        "2", ",", "0", ",", "1", ",", "0", ",", "4", ",", "0", ",", "1"}], 
+      "}"}]},
+    {"90", 
+     RowBox[{"{", 
+      RowBox[{
+      "4", ",", "2", ",", "16", ",", "2", ",", "4", ",", "2", ",", "8", ",", 
+       "2", ",", "4", ",", "2", ",", "101", ",", "2", ",", "4", ",", "2", ",",
+        "8", ",", "2", ",", "4", ",", "2", ",", "16", ",", "2", ",", "4"}], 
+      "}"}]},
+    {"101", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "0", ",", "4", ",", "0", ",", "1", ",", "0", ",", "2", ",", 
+       "0", ",", "1", ",", "0", ",", "101", ",", "0", ",", "1", ",", "0", ",",
+        "2", ",", "0", ",", "1", ",", "0", ",", "4", ",", "0", ",", "1"}], 
+      "}"}]},
+    {"102", 
+     RowBox[{"{", 
+      RowBox[{
+      "2", ",", "1", ",", "8", ",", "1", ",", "2", ",", "1", ",", "4", ",", 
+       "1", ",", "2", ",", "1", ",", "101", ",", "1", ",", "2", ",", "1", ",",
+        "4", ",", "1", ",", "2", ",", "1", ",", "8", ",", "1", ",", "2"}], 
+      "}"}]},
+    {"105", 
+     RowBox[{"{", 
+      RowBox[{
+      "2", ",", "0", ",", "8", ",", "0", ",", "2", ",", "0", ",", "4", ",", 
+       "0", ",", "2", ",", "0", ",", "101", ",", "0", ",", "2", ",", "0", ",",
+        "4", ",", "0", ",", "2", ",", "0", ",", "8", ",", "0", ",", "2"}], 
+      "}"}]},
+    {"106", 
+     RowBox[{"{", 
+      RowBox[{
+      "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", 
+       "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", "101", ",",
+        "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", "101", 
+       ",", "101", ",", "101", ",", "101"}], "}"}]},
+    {"150", 
+     RowBox[{"{", 
+      RowBox[{
+      "2", ",", "1", ",", "8", ",", "1", ",", "2", ",", "1", ",", "4", ",", 
+       "1", ",", "2", ",", "1", ",", "101", ",", "1", ",", "2", ",", "1", ",",
+        "4", ",", "1", ",", "2", ",", "1", ",", "8", ",", "1", ",", "2"}], 
+      "}"}]},
+    {"154", 
+     RowBox[{"{", 
+      RowBox[{
+      "4", ",", "2", ",", "16", ",", "2", ",", "4", ",", "2", ",", "8", ",", 
+       "2", ",", "4", ",", "2", ",", "101", ",", "2", ",", "4", ",", "2", ",",
+        "8", ",", "2", ",", "4", ",", "2", ",", "16", ",", "2", ",", "4"}], 
+      "}"}]},
+    {"166", 
+     RowBox[{"{", 
+      RowBox[{
+      "101", ",", "1", ",", "101", ",", "1", ",", "101", ",", "1", ",", "101",
+        ",", "1", ",", "101", ",", "1", ",", "101", ",", "1", ",", "101", ",",
+        "1", ",", "101", ",", "1", ",", "101", ",", "1", ",", "101", ",", "1",
+        ",", "101"}], "}"}]},
+    {"170", 
+     RowBox[{"{", 
+      RowBox[{
+      "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", 
+       "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", "101", ",",
+        "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", "101", 
+       ",", "101", ",", "101", ",", "101"}], "}"}]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Picking out the rows ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"t", "=", 
+    SuperscriptBox["2", "n"]}], TraditionalForm]]],
+ " gives the following sequences."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"With", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"init", "=", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"Prepend", "[", 
+        RowBox[{
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"0", ",", "200"}], "]"}], ",", "1"}], "]"}]}], "}"}]}], 
+    "}"}], ",", 
+   RowBox[{"Grid", "[", 
+    RowBox[{
+     RowBox[{"Function", "[", 
+      RowBox[{"n", ",", 
+       RowBox[{"{", 
+        RowBox[{"n", ",", 
+         RowBox[{"ConvergenceSequence", "[", 
+          RowBox[{"n", ",", "init", ",", "8"}], "]"}]}], "}"}]}], "]"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "85", ",", "86", ",", "89", ",", "90", ",", "101", ",", "102", ",", 
+       "105", ",", "106", ",", "150", ",", "154", ",", "166", ",", "170"}], 
+      "}"}]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"85", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "201", ",", "201", ",", "201", ",", "201", 
+       ",", "201", ",", "201", ",", "201", ",", "201"}], "}"}]},
+    {"86", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "3", ",", "4", ",", "6", ",", "7", ",", "9", ",", "15", ",", 
+       "16", ",", "24"}], "}"}]},
+    {"89", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1", ",", "2", ",", "4", ",", "5", ",", "9", 
+       ",", "10", ",", "12", ",", "14"}], "}"}]},
+    {"90", 
+     RowBox[{"{", 
+      RowBox[{
+      "2", ",", "4", ",", "8", ",", "16", ",", "32", ",", "64", ",", "128", 
+       ",", "201", ",", "201"}], "}"}]},
+    {"101", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1", ",", "2", ",", "4", ",", "5", ",", "7", 
+       ",", "9", ",", "13", ",", "14"}], "}"}]},
+    {"102", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "2", ",", "4", ",", "8", ",", "16", ",", "32", ",", "64", ",",
+        "128", ",", "201"}], "}"}]},
+    {"105", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "2", ",", "4", ",", "8", ",", "16", ",", "32",
+        ",", "64", ",", "128", ",", "201"}], "}"}]},
+    {"106", 
+     RowBox[{"{", 
+      RowBox[{
+      "201", ",", "201", ",", "201", ",", "201", ",", "201", ",", "201", ",", 
+       "201", ",", "201", ",", "201"}], "}"}]},
+    {"150", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "2", ",", "4", ",", "8", ",", "16", ",", "32", ",", "64", ",",
+        "128", ",", "201"}], "}"}]},
+    {"154", 
+     RowBox[{"{", 
+      RowBox[{
+      "2", ",", "4", ",", "8", ",", "16", ",", "32", ",", "64", ",", "128", 
+       ",", "201", ",", "201"}], "}"}]},
+    {"166", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "201", ",", "201", ",", "201", ",", "201", ",", "201", ",", 
+       "201", ",", "201", ",", "201"}], "}"}]},
+    {"170", 
+     RowBox[{"{", 
+      RowBox[{
+      "201", ",", "201", ",", "201", ",", "201", ",", "201", ",", "201", ",", 
+       "201", ",", "201", ",", "201"}], "}"}]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Black background initial conditions", "Subsection"],
+
+Cell["\<\
+Here are the predecessor rows for the 12 right bijective rules which support \
+black background initial conditions.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Grid", "[", 
+  RowBox[{
+   RowBox[{"Function", "[", 
+    RowBox[{"n", ",", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", 
+       RowBox[{"RightfulPredecessor", "[", 
+        RowBox[{"n", ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"Prepend", "[", 
+            RowBox[{
+             RowBox[{"ConstantArray", "[", 
+              RowBox[{"1", ",", "10"}], "]"}], ",", "0"}], "]"}]}], "}"}]}], 
+        "]"}]}], "}"}]}], "]"}], "/@", 
+   RowBox[{"{", 
+    RowBox[{
+    "85", ",", "89", ",", "101", ",", "105", ",", "149", ",", "150", ",", 
+     "153", ",", "154", ",", "165", ",", "166", ",", "169", ",", "170"}], 
+    "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"85", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+         "0", ",", "0", ",", "0", ",", "0"}], "}"}]}], "}"}]},
+    {"89", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+         "0", ",", "0", ",", "0", ",", "0"}], "}"}]}], "}"}]},
+    {"101", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "1", ",", "0", ",", "1", ",", "0", ",", "1", ",", "0", ",", "1", ",", 
+         "0", ",", "1", ",", "0", ",", "1"}], "}"}]}], "}"}]},
+    {"105", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "1", ",", "1", ",", "0", ",", "1", ",", "1", ",", "0", ",", "1", ",", 
+         "1", ",", "0", ",", "1", ",", "1"}], "}"}]}], "}"}]},
+    {"149", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+         "0", ",", "0", ",", "0", ",", "0"}], "}"}]}], "}"}]},
+    {"150", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "0", ",", 
+         "0", ",", "1", ",", "0", ",", "0"}], "}"}]}], "}"}]},
+    {"153", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+         "0", ",", "0", ",", "0", ",", "0"}], "}"}]}], "}"}]},
+    {"154", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "0", ",", "0", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+         "1", ",", "1", ",", "1", ",", "1"}], "}"}]}], "}"}]},
+    {"165", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "0", ",", "1", ",", "0", ",", "1", ",", "0", ",", "1", ",", "0", ",", 
+         "1", ",", "0", ",", "1", ",", "0"}], "}"}]}], "}"}]},
+    {"166", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "0", ",", "1", ",", "0", ",", "1", ",", "0", ",", "1", ",", "0", ",", 
+         "1", ",", "0", ",", "1", ",", "0"}], "}"}]}], "}"}]},
+    {"169", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "0", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+         "1", ",", "1", ",", "1", ",", "1"}], "}"}]}], "}"}]},
+    {"170", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"{", 
+        RowBox[{
+        "0", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+         "1", ",", "1", ",", "1", ",", "1"}], "}"}]}], "}"}]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output"]
+}, Open  ]],
+
+Cell["Here is a little of each history:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"GraphicsGrid", "[", 
+  RowBox[{
+   RowBox[{"Partition", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Function", "[", 
+       RowBox[{"n", ",", 
+        RowBox[{"ArrayPlot", "[", 
+         RowBox[{"ReversibleCellularAutomaton", "[", 
+          RowBox[{"n", ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", 
+             RowBox[{"Prepend", "[", 
+              RowBox[{
+               RowBox[{"ConstantArray", "[", 
+                RowBox[{"1", ",", "100"}], "]"}], ",", "0"}], "]"}]}], "}"}], 
+           ",", 
+           RowBox[{"{", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "32"}], ",", "32"}], "}"}], "}"}]}], "]"}], 
+         "]"}]}], "]"}], "/@", 
+      RowBox[{"{", 
+       RowBox[{
+       "85", ",", "89", ",", "101", ",", "105", ",", "149", ",", "150", ",", 
+        "153", ",", "154", ",", "165", ",", "166", ",", "169", ",", "170"}], 
+       "}"}]}], ",", "4"}], "]"}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "700"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {{InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJztz0EJACAQAMHTJkaxghEOfNv/pykOhFnYADPyrOwRMd/73aKiVhEJCQkJ
+CQkJCQkJCQkJCQkJCQkJCQkJCck/kgtR0A7w
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {194.4, -124.52970297029701}, 
+      ImageScaled[{0.5, 0.5}], {360.00000000000006, 231.68316831683163}], 
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJztl01y2zAMhR96kx6lV+gRMtN177+rR+L7gePOxBLYVeUwMCUFxAfgUcr3
+j98/P74B+PEYvx6jcByFehy0x1fgPKN5HVdx6ZBPpIvjZC3Px5dCxPDuQR/H
+13a2TtA6l3csV0CWDzQXxWtrrGUvg5y/gObjrIjH5Wpk3Erc+hTJlr2B4biZ
+Ig6wUMCtagjCbepR5Uv3MZBt6iIgLt2uhgQglRTo/aY2GsrJI5UApLinjScQ
+t6mLcF8bTyDMUhZhSBsJU7EjquhTGIQBFe7y1yhG7F5Z/lkMcJuKYo9WQysA
+WmJMGw1F2xN/pjH8vDDIOIafF9igjU4TUpnHIA0ztwvDrxFbqiGKTdpoKLu0
+0VA2aeMzyFaMqXeqL8DsxVgw/zHeQPkXB/Z/4gVy34gXyH2DdXn6n2d8FHeW
+Y7kt1o93bpM1b6FnO7dJNcSc9UuEseIhM2JZloYVD5kR+xKLGfT1e7bjsdtW
+BrnagIXx2obGBKIGbClmEGQ12jpDwMt28bD03NOopOy663bxsPTc1RyCuw6X
+rSoiSTpFvFP7nNnftYKRGIkKZ9NdcckqckrSKYpsKoNu8nesImczM1stm2wW
+94aa/QtzdZGamdlSuny7tJXNru74+9yNHOmHtJn3q3DxB+oUE7ycM/VZfzZE
+u1+Fiz/wBRG8nGvtdEOqyE9qzAEroSJ6OdfaUf+WLt4fGisPJlQRWWiax9pR
+fwbY7v+kLZ8UOCVF3raQHSAko+5SXhSBycqFlGTF2xayg5RMyMYuo7t0MgXX
+eL1wIRykZCzMVKq7S+uEl86reTUHVrbq+aRUtbbXCS+l4Hy7Sxc9ILE0Zbld
+ChFeqpLNKB5nGlZEl4yFiUwCG0kJiAZgJqyfx+cPyfEPVA==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {583.2, -124.52970297029701}, 
+      ImageScaled[{0.5, 0.5}], {360.00000000000006, 231.68316831683163}], 
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy9V1ty2zAMXPQmPUqv0CNkJt+9/18TE/tA0nZSibQUGSFlg1jsLmV/f/n1
+8+UbgB9v1+vbVeijUFWP1/e/xxjvU7XCul9+/38d1SeYDczIhI/wuNOrXjmU
+sJhyZfR93rkGY1WqvixEa2I1jSDcvKs41Jdi39Q0LnmZDeHQeqvYeG2SgDsw
+CKXXo64AZUZ38AYMQgEFBeGCxHCLjU4WfaGSAdFdN9noZM0sQdA5uO+NiSVB
+2OBdwm0YjSVBRAd3sNE4+mWA2eGNgWMVPsFs8caEAqlLG+VGNhqK1WUN7ISh
++pl2nzcGkFTXXm8MLKEqYDcbxFJW1UZvTBxhkdrOBnGERXACRkORRY7AaCiy
+yBkYNS1y6hgWOXf0UsdgEMthGHXMGwPHcRj1DBgLyhOAPOOoZ5z1hAvU18mr
++Pvk5KXfJzgaMb5BHIrz2zWfLltjgU/24ve8/VGLCc2BqMV6e+lZ7I0ekqfS
+w3hbdFptZSRKAG9HKiy2MhIlgLdj64wnHSQT7YjUWexlvbTVXXcjdQbONTNt
+pgL3tjuROiuuBa7q/F74egwmeHIaUpxLuBaVR8TYnBJJIQvIkr4ytlhFRdmc
+EsksIEv6ythiNTEftWczpdjN6SjxT2OL1cRYe3Kmi5DYpY5O8Y+xxSoqQtPg
+B6QWix0uY33k72OL1V3I3UXaNktqVuVERVkfxlouu5C7iwRjlmSAMZFlfRir
+nOyCqi7VkyxZ2eIJsyx8GtME7oIF1FlDLfpIRWqYUcT7Y1yfuqCqRVEUJMtE
+6jCXb4+x6rW/2QJRZLWwj8hUYa5Ul2tmC9Pf0capBptrpApzpbpcc2w1Bhas
+DjWkZeBUYa5Um8uMrcbAglX9N83FJYRidG6oEb8BNu8O2Q==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {972., -124.52970297029701}, 
+      ImageScaled[{0.5, 0.5}], {360., 231.68316831683163}], InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy9V1tyxSAIxe6kS+kWuoQ70+/u/693eqsC8hKxTBIVSOI5SIjvj+/PxxsA
+fDzPr+fZwJZT+3QzDsfcYvL3JO1q2YIoBuLX+4S+ZYsL4lXqW7YtIJ1hzLE2
+5vpwTDrDjb1aGnN9GEpnjbMojbk+iGTyTEmUxxkUoOWDNs6Jkg/aOCuh/IA0
+CvYU8kZlnAYSyY8zCebHqSzsWeMkEk6ePc4CIUeuXrhIaE5k60UACv0uYV0R
+kvW7VJAXKxAej7pYDCRrPIpRvKB01nBbjKSTRttqIAX1wkVSUy8CUKrzYkFy
+JS9WIPdiMZDcjcWAcl/+AQUsP1h3jvUfq/4q/GOV93k9udS39yclem9/Uqbv
+3LGVXahH3AGZQam+oejMo/fW3E35jxVHrnOF85ll/OeKI2schFlJ9pA/9iJv
+FGYl2YP+e/uRlP/ufiTrv3BoSc5f4NCSpD9d8I0rHLsnJE/wd8e6cp0nYj3p
+rdbnOh8JyhNgrdbnOh8J4xm3mFPLHomJuz853b+I9YRz7dkjMXH3J57dR9Kb
+ER2/fuwKyRNt3Z/uX8R6InFq2X0kZJ46pzt5ody/Vz/2kQj1ROI0iwLf73J6
+IgBCPZE4PZHf+38AIhgNOg==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {1360.8000000000002, -124.52970297029701}, 
+      ImageScaled[{0.5, 0.5}], {359.9999999999998, 231.68316831683163}]}, {
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy9VlFOQzEMc7gJR+EKHGES39z/j6nPdvM2CQ09h7J1WSriOnb79n77/ry9
+Afi4v7/u7wJHrb/jexVXdnAPjy/ro7RQ/v/fRmkcKC6Gh6AIdHwo+RIEuHnu
+2tsrl1PAZeL9gQW3yf2jbW+XU/u4DJN9HcINd7NVVeUuadGYlNoMhr3cJS0a
+E7dZfurlLmnRmJAPrYRzuUtaNCYsCDlZmNe1aExkMKBVRUKLxkQKV69aCS0a
+E+i8P18qF7VoTHzeny+Vi1o0JrVrPV4qF7VoTFqtx0slwIJMTljOJbQwyANW
+VAuDWIL+2AhpYRBLYNfmtDBIeed5LQyC3aC4FgZpDYprYZDWoP09PHqDRlgA
+fp7MaGGQdkyGIPw8mWOxik9qYRAMs1gg0ywWyDSLBTIP4efJMMi/DD9SBl80
+1/QL/mE3NvOSn54xPx/nZHjm82R2po+nZ1/EGIsJBjphKIZg5eyBuEyl00rH
+y81kNhUfboZQZ+LSjc/+jcS+8CFPT8RQ2+RsMQ3m6ecd0W8I5xkBexeFaJ54
+K6JcJ3+n8jw5lqt5PZS3Uluu5vVQ3ty2XO5lLG9uzXDqZTpvaK8l8yVuzXDq
+ZS4PHVUbjuvBvJQ6Gc60U3ke0JPhTDuU1wH1DsD9yBlI5MGxDccDpd0E8j9W
+YAsx
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {194.4, -373.589108910891}, 
+      ImageScaled[{0.5, 0.5}], {360.00000000000006, 231.68316831683165}], 
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy1l92RwyAMhCGdXCnXQkrITJ6v/7fLr0MkLSsJwSQ2CHk+YXuz4efyd76c
+Wmu/t+/19u1t3lbnn0l9/iHTHsS9kj49sgwf5FUv6s/m3O1dL+rP5vyQ+6pf
+d3i8x2gs486VfO5wN+Isz7mS/nWWcZbng4izjLM8HwToAY1TDekBjXMQoAc0
+Tq7Ep48FBNYDGucgTn2sQZz6WIMExzmIEETKLyhEaCLlFxQiNCFjNZCmf5eW
+daEgwidKdKEgxvMoRmifKH0WBwScayEVfkEhFX5BIRV+QSFtgy4UZIcuFGTn
+szggu1fxgOxH8P1JyUc7yIajZw+y3m98D7LcRz5SGwc+Uhpn+5OSOPKR0rj0
+E+YvqXzpJ8xfUvnR/Ugu/6jjcw9n/pLKR+87arl88L7DizL50f1IKh+977iy
+RL584Zk3yABrpp8wb5AxChl18qRyb5AxvpJBJ02cUV/G+EoMP2E+wXShVzLo
+xOsTTBd6JYNOvD4R/Z9m+gnziRgC+ImuZD5PIZaf6Erm8xRi+YmuZD5PIZaf
+6EpiujCvj/pHGGL5ia4k9yy+ro/6Rxhi+YmuZK09rv8H6NsG6g==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {583.2, -373.589108910891}, 
+      ImageScaled[{0.5, 0.5}], {360.00000000000006, 231.68316831683165}], 
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy9l1FuAyEMRE1v0qP0Cj1CpHz3/n9d0ZRNbOFp1DdhZVnOIMYBjDXvl6/P
+y1tEfBx2PWxEPxT+pzHEIDiOTPuPIRm9MSTCGJLbvu88Q3LLd+cZktF7hkR4
+hiTVA1ofa9FUD2h9rEVTPaD1sRaNx/1H62MtmvYfP4+5aMobP4+56OhjhkTE
+DImjfxQSR/8oJI7+UUiSeUgc/aOQOPpHIXH0j0KSvIfEWR+LxFkfi8RZH4sk
+zOcxSdznMUn8/+MF5zFJXsAh9QkzpEIBPqVPKJMa5d+W+4nFK32CeKVPEJ/7
+icWvm/z7oyVO/cQSK32CxffvlyW+37+I836jsdInSKz0CRKn3zxxefnzJARP
+b3+ZROBKn1D4w9tfMwHw/P7XTABc6RMEV/oEwfP7XzMB8N39PjMh8M39PjMB
+cKVPMLyZs73/T+Hdfkbs7/9TeLefP5kAeJ8HhIs5DP4NrckGdQ==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {972., -373.589108910891}, 
+      ImageScaled[{0.5, 0.5}], {360., 231.68316831683165}], InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJztz7ENgEAQxMB7OqEUWqAEJGL6z/gWnDjyShuPfD7f/Rwzc+2/+2uELUOp
+hCGVIEQwKoGIYFQCEcGoBCKCUQlEBKMSiAhGJRARjEogIhiVQEQwKoGIYFQC
+EcGoBCKCUQlEBKMSiAhGJRARjPkBQn0CsA==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {1360.8000000000002, -373.589108910891}, 
+      ImageScaled[{0.5, 0.5}], {359.9999999999998, 231.68316831683165}]}, {
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy9l9EJwzAMRJNu0lG6QkcI9Lv7/zUQSggGvZN0ToIRQj0/O7Y4+ty+7+2x
+LMtrH599rEvvkfRr85VX0hkiZG1FeSedKEKu3zabi5DrqrK5CFlbuQjp5SIk
+vvelvhgnie99qS/GSeJ7X+qLcZJrzNZFSPytW2dxThKvsnUW5yTxFO1dHJP0
+6iLE4BcMMfgFQwx+wZA4miAGv2CIwS8YYvALhsS5CTKhL0bIhL4YIRP6YoRc
+4yTIxLM4IZN3cUCmI27YxQG54e3+P5EG+Yklkp9YIvmJJSc/seTkJ5ac/MSS
+k59Y6uQnljr5iaVOfmKpk59Y6uQnlnq0iv9K2vX4J6Y6eQE9kp68gCGCnvxA
+2QnqyQ+UnaCe/IAhgp78gCGCnvyAIYKe/IAhgj7bFyV9ti9K+mxflPTZvijp
+q2eR0lfPIqXv7ELW9xCi/gdU6QT5
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {194.4, -622.6485148514851}, 
+      ImageScaled[{0.5, 0.5}], {360.00000000000006, 231.68316831683165}], 
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJy9l9EJwzAMRJNu0lG6QkcI9Lv7/zUQSggGvZN0ToIRQj0/O7Y4+ty+7+2x
+LMtrH599rEvvkfRr85VX0hkiZG1FeSedKEKu3zabi5DrqrK5CFlbuQjp5SIk
+vvelvhgnie99qS/GSeJ7X+qLcZJrzNZFSPytW2dxThKvsnUW5yTxFO1dHJP0
+6iLE4BcMMfgFQwx+wZA4miAGv2CIwS8YYvALhsS5CTKhL0bIhL4YIRP6YoRc
+4yTIxLM4IZN3cUCmI27YxQG54e3+P5EG+Yklkp9YIvmJJSc/seTkJ5ac/MSS
+k59Y6uQnljr5iaVOfmKpk59Y6uQnlnq0iv9K2vX4J6Y6eQE9kp68gCGCnvxA
+2QnqyQ+UnaCe/IAhgp78gCGCnvyAIYKe/IAhgj7bFyV9ti9K+mxflPTZvijp
+q2eR0lfPIqXv7ELW9xCi/gdU6QT5
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {583.2, -622.6485148514851}, 
+      ImageScaled[{0.5, 0.5}], {360.00000000000006, 231.68316831683165}], 
+     InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJztzTENACAMAMGCE6RgAQlNmPG/0RUDTPfJzzfyrOwRMetdt/gQBAKBQCAQ
+CAQCgUAgEAgEAoFAIBAI5O0Cod8CkA==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {972., -622.6485148514851}, 
+      ImageScaled[{0.5, 0.5}], {360., 231.68316831683165}], InsetBox[
+      GraphicsBox[RasterBox[CompressedData["
+1:eJztzTENACAMAMGCE6RgAQlNmPG/0RUDTPfJzzfyrOwRMetdt/gQBAKBQCAQ
+CAQCgUAgEAgEAoFAIBAI5O0Cod8CkA==
+        "], {{0, 0}, {101, 65}}, {0, 1}],
+       Frame->Automatic,
+       FrameLabel->{None, None},
+       FrameTicks->{{None, None}, {None, None}},
+       GridLinesStyle->Directive[
+         GrayLevel[0.5, 0.4]],
+       Method->{
+        "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+         Automatic}], {1360.8000000000002, -622.6485148514851}, 
+      ImageScaled[{0.5, 0.5}], {359.9999999999998, 231.68316831683165}]}}, {}},
+  ContentSelectable->True,
+  ImageSize->700,
+  PlotRangePadding->{6, 5}]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+The following table counts the number of leftmost white cells for a range of \
+41 rows in the history.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"With", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"init", "=", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"Prepend", "[", 
+        RowBox[{
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"1", ",", "100"}], "]"}], ",", "0"}], "]"}]}], "}"}]}], 
+    "}"}], ",", 
+   RowBox[{"Grid", "[", 
+    RowBox[{
+     RowBox[{"Function", "[", 
+      RowBox[{"n", ",", 
+       RowBox[{"{", 
+        RowBox[{"n", ",", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"BorderBlockLength", "[", 
+             RowBox[{"#1", ",", "1"}], "]"}], "&"}], ")"}], "/@", 
+          RowBox[{"ReversibleCellularAutomaton", "[", 
+           RowBox[{"n", ",", "init", ",", 
+            RowBox[{"{", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "10"}], ",", "10"}], "}"}], "}"}]}], "]"}]}]}], 
+        "}"}]}], "]"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "85", ",", "89", ",", "101", ",", "105", ",", "149", ",", "150", ",", 
+       "153", ",", "154", ",", "165", ",", "166", ",", "169", ",", "170"}], 
+      "}"}]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"85", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "100", ",", "1", ",", "100", ",", "1", ",", "100", ",", "1", 
+       ",", "100", ",", "1", ",", "100", ",", "1", ",", "100", ",", "1", ",", 
+       "100", ",", "1", ",", "100", ",", "1", ",", "100", ",", "1", ",", 
+       "100", ",", "1"}], "}"}]},
+    {"89", 
+     RowBox[{"{", 
+      RowBox[{
+      "2", ",", "2", ",", "1", ",", "1", ",", "6", ",", "2", ",", "1", ",", 
+       "2", ",", "2", ",", "99", ",", "1", ",", "1", ",", "4", ",", "1", ",", 
+       "1", ",", "2", ",", "2", ",", "2", ",", "1", ",", "1", ",", "5"}], 
+      "}"}]},
+    {"101", 
+     RowBox[{"{", 
+      RowBox[{
+      "3", ",", "1", ",", "1", ",", "2", ",", "2", ",", "2", ",", "1", ",", 
+       "2", ",", "3", ",", "1", ",", "1", ",", "99", ",", "2", ",", "2", ",", 
+       "1", ",", "1", ",", "3", ",", "1", ",", "1", ",", "2", ",", "2"}], 
+      "}"}]},
+    {"105", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "1", ",", "1", ",", "5", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "98", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "5", ",", "1"}], 
+      "}"}]},
+    {"149", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "6", ",", "1", ",", "3", ",", "1", ",", "4", ",", "1", ",", 
+       "3", ",", "1", ",", "101", ",", "1", ",", "3", ",", "1", ",", "4", ",",
+        "1", ",", "3", ",", "1", ",", "6", ",", "1", ",", "3", ",", "1"}], 
+      "}"}]},
+    {"150", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "2", ",", "1", ",", "3", ",", "1", ",", "2", ",", "1", ",", 
+       "3", ",", "1", ",", "2", ",", "1", ",", "3", ",", "1", ",", "2", ",", 
+       "1", ",", "3", ",", "1", ",", "2", ",", "1", ",", "3", ",", "1"}], 
+      "}"}]},
+    {"153", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "8", ",", "1", ",", "2", ",", "1", ",", "4", ",", "1", ",", 
+       "2", ",", "1", ",", "101", ",", "1", ",", "2", ",", "1", ",", "4", ",",
+        "1", ",", "2", ",", "1", ",", "8", ",", "1", ",", "2", ",", "1"}], 
+      "}"}]},
+    {"154", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "2", ",", "1", ",", "2", ",", "1", ",", "2", ",", "1", ",", 
+       "2", ",", "1", ",", "2", ",", "1", ",", "2", ",", "1", ",", "2", ",", 
+       "1", ",", "2", ",", "1", ",", "2", ",", "1", ",", "2", ",", "1"}], 
+      "}"}]},
+    {"165", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+      "}"}]},
+    {"166", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+      "}"}]},
+    {"169", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+      "}"}]},
+    {"170", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", 
+       "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+      "}"}]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "The next table counts the number of leftmost cells on row ",
+ Cell[BoxData[
+  FormBox["t", TraditionalForm]]],
+ " that agree with the initial condition."
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"AgreementLength", "[", 
+   RowBox[{"lists__", "?", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Depth", "[", "#", "]"}], "\[GreaterEqual]", "2"}], "&"}], 
+     ")"}]}], "]"}], ":=", 
+  RowBox[{"LengthWhile", "[", 
+   RowBox[{
+    RowBox[{"Transpose", "[", 
+     RowBox[{"PadRight", "[", 
+      RowBox[{
+       RowBox[{"List", "@@@", 
+        RowBox[{"{", "lists", "}"}]}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Length", "[", 
+          RowBox[{"{", "lists", "}"}], "]"}], ",", 
+         RowBox[{"Max", "[", 
+          RowBox[{"Length", "/@", 
+           RowBox[{"{", "lists", "}"}]}], "]"}]}], "}"}], ",", 
+       RowBox[{"Unique", "[", "]"}]}], "]"}], "]"}], ",", 
+    RowBox[{
+     RowBox[{"SameQ", "@@", "#"}], "&"}]}], "]"}]}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"With", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"row", "=", 
+     RowBox[{"Prepend", "[", 
+      RowBox[{
+       RowBox[{"ConstantArray", "[", 
+        RowBox[{"1", ",", "100"}], "]"}], ",", "0"}], "]"}]}], "}"}], ",", 
+   RowBox[{"Grid", "[", 
+    RowBox[{
+     RowBox[{"Function", "[", 
+      RowBox[{"n", ",", 
+       RowBox[{"{", 
+        RowBox[{"n", ",", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"AgreementLength", "[", 
+             RowBox[{"row", ",", "#1"}], "]"}], "&"}], ")"}], "/@", 
+          RowBox[{"ReversibleCellularAutomaton", "[", 
+           RowBox[{"n", ",", 
+            RowBox[{"{", 
+             RowBox[{"1", ",", "row"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"-", "10"}], ",", "10"}], "}"}], "}"}]}], "]"}]}]}], 
+        "}"}]}], "]"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "85", ",", "89", ",", "101", ",", "105", ",", "149", ",", "150", ",", 
+       "153", ",", "154", ",", "165", ",", "166", ",", "169", ",", "170"}], 
+      "}"}]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"85", 
+     RowBox[{"{", 
+      RowBox[{
+      "101", ",", "0", ",", "101", ",", "0", ",", "101", ",", "0", ",", "101",
+        ",", "0", ",", "101", ",", "0", ",", "101", ",", "0", ",", "101", ",",
+        "0", ",", "101", ",", "0", ",", "101", ",", "0", ",", "101", ",", "0",
+        ",", "101"}], "}"}]},
+    {"89", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "0", ",", "4", ",", "0", ",", "1", ",", "0", ",", "2", ",", 
+       "0", ",", "1", ",", "0", ",", "101", ",", "0", ",", "1", ",", "0", ",",
+        "2", ",", "0", ",", "1", ",", "0", ",", "4", ",", "0", ",", "1"}], 
+      "}"}]},
+    {"101", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "0", ",", "4", ",", "0", ",", "1", ",", "0", ",", "2", ",", 
+       "0", ",", "1", ",", "0", ",", "101", ",", "0", ",", "1", ",", "0", ",",
+        "2", ",", "0", ",", "1", ",", "0", ",", "4", ",", "0", ",", "1"}], 
+      "}"}]},
+    {"105", 
+     RowBox[{"{", 
+      RowBox[{
+      "2", ",", "0", ",", "8", ",", "0", ",", "2", ",", "0", ",", "4", ",", 
+       "0", ",", "2", ",", "0", ",", "101", ",", "0", ",", "2", ",", "0", ",",
+        "4", ",", "0", ",", "2", ",", "0", ",", "8", ",", "0", ",", "2"}], 
+      "}"}]},
+    {"149", 
+     RowBox[{"{", 
+      RowBox[{
+      "3", ",", "1", ",", "6", ",", "1", ",", "3", ",", "1", ",", "4", ",", 
+       "1", ",", "3", ",", "1", ",", "101", ",", "1", ",", "3", ",", "1", ",",
+        "4", ",", "1", ",", "3", ",", "1", ",", "6", ",", "1", ",", "3"}], 
+      "}"}]},
+    {"150", 
+     RowBox[{"{", 
+      RowBox[{
+      "2", ",", "1", ",", "8", ",", "1", ",", "2", ",", "1", ",", "4", ",", 
+       "1", ",", "2", ",", "1", ",", "101", ",", "1", ",", "2", ",", "1", ",",
+        "4", ",", "1", ",", "2", ",", "1", ",", "8", ",", "1", ",", "2"}], 
+      "}"}]},
+    {"153", 
+     RowBox[{"{", 
+      RowBox[{
+      "2", ",", "1", ",", "8", ",", "1", ",", "2", ",", "1", ",", "4", ",", 
+       "1", ",", "2", ",", "1", ",", "101", ",", "1", ",", "2", ",", "1", ",",
+        "4", ",", "1", ",", "2", ",", "1", ",", "8", ",", "1", ",", "2"}], 
+      "}"}]},
+    {"154", 
+     RowBox[{"{", 
+      RowBox[{
+      "101", ",", "1", ",", "101", ",", "1", ",", "101", ",", "1", ",", "101",
+        ",", "1", ",", "101", ",", "1", ",", "101", ",", "1", ",", "101", ",",
+        "1", ",", "101", ",", "1", ",", "101", ",", "1", ",", "101", ",", "1",
+        ",", "101"}], "}"}]},
+    {"165", 
+     RowBox[{"{", 
+      RowBox[{
+      "4", ",", "2", ",", "16", ",", "2", ",", "4", ",", "2", ",", "8", ",", 
+       "2", ",", "4", ",", "2", ",", "101", ",", "2", ",", "4", ",", "2", ",",
+        "8", ",", "2", ",", "4", ",", "2", ",", "16", ",", "2", ",", "4"}], 
+      "}"}]},
+    {"166", 
+     RowBox[{"{", 
+      RowBox[{
+      "4", ",", "2", ",", "16", ",", "2", ",", "4", ",", "2", ",", "8", ",", 
+       "2", ",", "4", ",", "2", ",", "101", ",", "2", ",", "4", ",", "2", ",",
+        "8", ",", "2", ",", "4", ",", "2", ",", "16", ",", "2", ",", "4"}], 
+      "}"}]},
+    {"169", 
+     RowBox[{"{", 
+      RowBox[{
+      "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", 
+       "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", "101", ",",
+        "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", "101", 
+       ",", "101", ",", "101", ",", "101"}], "}"}]},
+    {"170", 
+     RowBox[{"{", 
+      RowBox[{
+      "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", 
+       "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", "101", ",",
+        "101", ",", "101", ",", "101", ",", "101", ",", "101", ",", "101", 
+       ",", "101", ",", "101", ",", "101"}], "}"}]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Picking out the rows ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"t", "=", 
+    SuperscriptBox["2", "n"]}], TraditionalForm]]],
+ " gives the following sequences."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"With", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"init", "=", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", 
+       RowBox[{"Prepend", "[", 
+        RowBox[{
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"1", ",", "200"}], "]"}], ",", "0"}], "]"}]}], "}"}]}], 
+    "}"}], ",", 
+   RowBox[{"Grid", "[", 
+    RowBox[{
+     RowBox[{"Function", "[", 
+      RowBox[{"n", ",", 
+       RowBox[{"{", 
+        RowBox[{"n", ",", 
+         RowBox[{"ConvergenceSequence", "[", 
+          RowBox[{"n", ",", "init", ",", "8"}], "]"}]}], "}"}]}], "]"}], "/@", 
+     RowBox[{"{", 
+      RowBox[{
+      "85", ",", "89", ",", "101", ",", "105", ",", "149", ",", "150", ",", 
+       "153", ",", "154", ",", "165", ",", "166", ",", "169", ",", "170"}], 
+      "}"}]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {"85", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "201", ",", "201", ",", "201", ",", "201", 
+       ",", "201", ",", "201", ",", "201", ",", "201"}], "}"}]},
+    {"89", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1", ",", "2", ",", "4", ",", "5", ",", "7", 
+       ",", "9", ",", "13", ",", "14"}], "}"}]},
+    {"101", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "1", ",", "2", ",", "4", ",", "5", ",", "9", 
+       ",", "10", ",", "12", ",", "14"}], "}"}]},
+    {"105", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "2", ",", "4", ",", "8", ",", "16", ",", "32",
+        ",", "64", ",", "128", ",", "201"}], "}"}]},
+    {"149", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "3", ",", "4", ",", "6", ",", "7", ",", "9", ",", "15", ",", 
+       "16", ",", "24"}], "}"}]},
+    {"150", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "2", ",", "4", ",", "8", ",", "16", ",", "32", ",", "64", ",",
+        "128", ",", "201"}], "}"}]},
+    {"153", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "2", ",", "4", ",", "8", ",", "16", ",", "32", ",", "64", ",",
+        "128", ",", "201"}], "}"}]},
+    {"154", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "201", ",", "201", ",", "201", ",", "201", ",", "201", ",", 
+       "201", ",", "201", ",", "201"}], "}"}]},
+    {"165", 
+     RowBox[{"{", 
+      RowBox[{
+      "2", ",", "4", ",", "8", ",", "16", ",", "32", ",", "64", ",", "128", 
+       ",", "201", ",", "201"}], "}"}]},
+    {"166", 
+     RowBox[{"{", 
+      RowBox[{
+      "2", ",", "4", ",", "8", ",", "16", ",", "32", ",", "64", ",", "128", 
+       ",", "201", ",", "201"}], "}"}]},
+    {"169", 
+     RowBox[{"{", 
+      RowBox[{
+      "201", ",", "201", ",", "201", ",", "201", ",", "201", ",", "201", ",", 
+       "201", ",", "201", ",", "201"}], "}"}]},
+    {"170", 
+     RowBox[{"{", 
+      RowBox[{
+      "201", ",", "201", ",", "201", ",", "201", ",", "201", ",", "201", ",", 
+       "201", ",", "201", ",", "201"}], "}"}]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Package symbols", "Section"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["ApplyRule", "Input"],
+ StyleBox[" and ", "Text"],
+ StyleBox["ApplyRightBijectiveRuleInverse", "Input"]
+}], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ApplyRule"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ApplyRule\\\", \\\"[\\\", \
+RowBox[List[RowBox[List[\\\"{\\\", RowBox[List[StyleBox[\\\"n\\\", \
+\\\"TI\\\"], \\\",\\\", StyleBox[\\\"k\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\
+\\\"r\\\", \\\"TI\\\"]]], \\\"}\\\"]], \\\",\\\", StyleBox[\\\"cells\\\", \
+\\\"TI\\\"]]], \\\"]\\\"]]\) gives the color of the cell yielded by the \
+sequence \!\(\*StyleBox[\\\"cells\\\", \\\"TI\\\"]\) under the specified \
+rule.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427457-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ApplyRightBijectiveRuleInverse"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ApplyRightBijectiveRuleInverse\\\", \
+\\\"[\\\", RowBox[List[RowBox[List[\\\"{\\\", RowBox[List[StyleBox[\\\"n\\\", \
+\\\"TI\\\"], \\\",\\\", StyleBox[\\\"k\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\
+\\\"r\\\", \\\"TI\\\"]]], \\\"}\\\"]], \\\",\\\", StyleBox[\\\"cells\\\", \
+\\\"TI\\\"], \\\",\\\", StyleBox[\\\"rightcell\\\", \\\"TI\\\"]]], \
+\\\"]\\\"]]\) gives \!\(\*RowBox[List[\\\"Append\\\", \\\"[\\\", \
+RowBox[List[RowBox[List[\\\"Rest\\\", \\\"[\\\", StyleBox[\\\"cells\\\", \
+\\\"TI\\\"], \\\"]\\\"]], \\\",\\\", StyleBox[\\\"c\\\", \\\"TI\\\"]]], \\\"]\
+\\\"]]\), where \!\(\*StyleBox[\\\"c\\\", \\\"TI\\\"]\) is such that \
+\!\(\*RowBox[List[\\\"Append\\\", \\\"[\\\", RowBox[List[StyleBox[\\\"cells\\\
+\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"c\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) \
+yields \!\(\*StyleBox[\\\"rightcell\\\", \\\"TI\\\"]\) under the specified \
+rule.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427458-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ApplyRightBijectiveRuleInverse", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"86", ",", "2", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0"}], "}"}], ",", "0"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "1"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ApplyRule", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"86", ",", "2", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0", ",", "1"}], "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData["0"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["BijectiveQ", "Input"],
+ StyleBox[", ", "Text"],
+ StyleBox["LeftBijectiveQ", "Input"],
+ StyleBox[", and ", "Text"],
+ StyleBox["RightBijectiveQ", "Input"]
+}], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "LeftBijectiveQ"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"LeftBijectiveQ\\\", \\\"[\\\", StyleBox[\
+\\\"rule\\\", \\\"TI\\\"], \\\"]\\\"]]\) yields True if \
+\!\(\*StyleBox[\\\"rule\\\", \\\"TI\\\"]\) is left bijective, and False \
+otherwise.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427462-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"Range", "[", 
+    RowBox[{"0", ",", "255"}], "]"}], ",", "LeftBijectiveQ"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "15", ",", "30", ",", "45", ",", "60", ",", "75", ",", "90", ",", "105", 
+   ",", "120", ",", "135", ",", "150", ",", "165", ",", "180", ",", "195", 
+   ",", "210", ",", "225", ",", "240"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RightBijectiveQ"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RightBijectiveQ\\\", \\\"[\\\", \
+StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\"]\\\"]]\) yields True if \
+\!\(\*StyleBox[\\\"rule\\\", \\\"TI\\\"]\) is right bijective, and False \
+otherwise.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427463-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"Range", "[", 
+    RowBox[{"0", ",", "255"}], "]"}], ",", "RightBijectiveQ"}], 
+  "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "85", ",", "86", ",", "89", ",", "90", ",", "101", ",", "102", ",", "105", 
+   ",", "106", ",", "149", ",", "150", ",", "153", ",", "154", ",", "165", 
+   ",", "166", ",", "169", ",", "170"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "BijectiveQ"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"BijectiveQ\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"p\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) yields True if \
+\!\(\*StyleBox[\\\"rule\\\", \\\"TI\\\"]\) is bijective in position \
+\!\(\*StyleBox[\\\"p\\\", \\\"TI\\\"]\), and False otherwise.\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427464-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"Range", "[", 
+    RowBox[{"0", ",", "255"}], "]"}], ",", 
+   RowBox[{
+    RowBox[{"BijectiveQ", "[", 
+     RowBox[{"#", ",", "2"}], "]"}], "&"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "51", ",", "54", ",", "57", ",", "60", ",", "99", ",", "102", ",", "105", 
+   ",", "108", ",", "147", ",", "150", ",", "153", ",", "156", ",", "195", 
+   ",", "198", ",", "201", ",", "204"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"Range", "[", 
+    RowBox[{"0", ",", "255"}], "]"}], ",", 
+   RowBox[{"Function", "[", 
+    RowBox[{"n", ",", 
+     RowBox[{"And", "@@", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"BijectiveQ", "[", 
+          RowBox[{"n", ",", "#1"}], "]"}], "&"}], ")"}], "/@", 
+       RowBox[{"Range", "[", "3", "]"}]}]}]}], "]"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"105", ",", "150"}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["BorderBlockLength", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "BorderBlockLength"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"BorderBlockLength\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"list\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"backgroundcolor\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives the \
+length of the first single\[Hyphen]color block following the initial block of \
+color \!\(\*StyleBox[\\\"backgroundcolor\\\", \\\"TI\\\"]\) in \
+\!\(\*StyleBox[\\\"list\\\", \
+\\\"TI\\\"]\).\\n\!\(\*RowBox[List[\\\"BorderBlockLength\\\", \\\"[\\\", \
+StyleBox[\\\"list\\\", \\\"TI\\\"], \\\"]\\\"]]\) uses background color \
+0.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427468-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"BorderBlockLength", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "2", ",", "3", ",", "3", ",", "3"}], "}"}], 
+   ",", "1"}], "]"}]], "Input"],
+
+Cell[BoxData["2"], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"BorderBlockLength", "/@", 
+  RowBox[{"ReversibleCellularAutomaton", "[", 
+   RowBox[{"86", ",", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", 
+      RowBox[{"Prepend", "[", 
+       RowBox[{
+        RowBox[{"ConstantArray", "[", 
+         RowBox[{"0", ",", "100"}], "]"}], ",", "1"}], "]"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "10"}], ",", "10"}], "}"}], "}"}]}], "]"}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "6", ",", "1", ",", "3", ",", "1", ",", "4", ",", "1", ",", "3", 
+   ",", "1", ",", "101", ",", "1", ",", "3", ",", "1", ",", "4", ",", "1", 
+   ",", "3", ",", "1", ",", "6", ",", "1", ",", "3", ",", "1"}], 
+  "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"BorderBlockLength", "/@", 
+  RowBox[{"Reverse", "/@", 
+   RowBox[{"ReversibleCellularAutomaton", "[", 
+    RowBox[{"30", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Append", "[", 
+        RowBox[{
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"0", ",", "100"}], "]"}], ",", "1"}], "]"}], ",", "0"}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"-", "10"}], ",", "10"}], "}"}], "}"}]}], "]"}]}]}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "6", ",", "1", ",", "3", ",", "1", ",", "4", ",", "1", ",", "3", 
+   ",", "1", ",", "101", ",", "1", ",", "3", ",", "1", ",", "4", ",", "1", 
+   ",", "3", ",", "1", ",", "6", ",", "1", ",", "3", ",", "1"}], 
+  "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["ColorCycle", "Input"],
+ StyleBox[" and ", "Text"],
+ StyleBox["ColorCycles", "Input"]
+}], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ColorCycle"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ColorCycle\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"c\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives the eventual cycle of \
+tail colors obtained from tail color \!\(\*StyleBox[\\\"c\\\", \\\"TI\\\"]\) \
+under \!\(\*StyleBox[\\\"rule\\\", \\\"TI\\\"]\).\\nIf \!\(\*StyleBox[\\\"c\\\
+\", \\\"TI\\\"]\) is present in this cycle, \!\(\*StyleBox[\\\"c\\\", \
+\\\"TI\\\"]\) appears as the first entry in the cycle; otherwise the cycle is \
+given in its sorted rotation.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427472-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ColorCycles"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ColorCycles\\\", \\\"[\\\", \
+StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\"]\\\"]]\) lists the possible cycles \
+of tail colors under \!\(\*StyleBox[\\\"rule\\\", \\\"TI\\\"]\).\\nEach cycle \
+is given in its sorted rotation.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427473-4343701"]
+}, Open  ]],
+
+Cell["\<\
+Rule 30 has a white background, while rule 45 has an alternating background:\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ColorCycles", "[", "30", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", "0", "}"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ColorCycles", "[", "45", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{"0", ",", "1"}], "}"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+Rule 150 has either a white background or a black background:\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ColorCycles", "[", "150", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "0", "}"}], ",", 
+   RowBox[{"{", "1", "}"}]}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["ColorEquivalentRules", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ColorEquivalentRules"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ColorEquivalentRules\\\", \\\"[\\\", \
+RowBox[List[\\\"{\\\", RowBox[List[StyleBox[\\\"n\\\", \\\"TI\\\"], \
+\\\",\\\", StyleBox[\\\"k\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"r\\\", \\\
+\"TI\\\"]]], \\\"}\\\"]], \\\"]\\\"]]\) gives the rule numbers of all \
+\!\(\*StyleBox[\\\"k\\\", \\\"TI\\\"]\)\[Hyphen]color, radius \!\(\*StyleBox[\
+\\\"r\\\", \\\"TI\\\"]\) rules that are equivalent to the specified rule \
+under some permutation of colors.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427480-4343701"]
+}, Open  ]],
+
+Cell["\<\
+These are the 2-color rules depending on 3 cells that are equivalent to rule \
+86 under a permutation of colors.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ColorEquivalentRules", "[", "86", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"86", ",", "149"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+This gives the additional rules that are equivalent under a left\[Dash]right \
+reflection.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ColorEquivalentRules", "[", 
+  RowBox[{"LeftRightReflection", "[", "86", "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"30", ",", "135"}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["ConvergenceSequence", "Input"],
+ StyleBox[" and ", "Text"],
+ StyleBox["Rule30ConvergenceData", "Input"]
+}], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ConvergenceSequence"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ConvergenceSequence\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"init\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"power\\\", \\\"TI\
+\\\"], \\\",\\\", StyleBox[\\\"l\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives the \
+agreement lengths for rows offset by successive powers of \
+\!\(\*StyleBox[\\\"l\\\", \\\"TI\\\"]\) in the evolution of the cellular \
+automaton with the specified rule from initial condition \
+\!\(\*StyleBox[\\\"init\\\", \
+\\\"TI\\\"]\).\\n\!\(\*RowBox[List[\\\"ConvergenceSequence\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"init\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"power\\\", \\\"TI\
+\\\"]]], \\\"]\\\"]]\) uses \!\(\*RowBox[List[StyleBox[\\\"l\\\", \
+\\\"TI\\\"], \\\"=\\\", RowBox[List[\\\"LCM\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"1\\\", \\\"TR\\\"], \\\",\\\", StyleBox[\\\"2\\\", \
+\\\"TR\\\"], \\\",\\\", StyleBox[\\\"\\\\[Ellipsis]\\\", \\\"TR\\\"], \\\",\\\
+\", StyleBox[\\\"k\\\", \\\"TI\\\"]]], \\\"]\\\"]]]]\).\"\>", "MSG"]], "Print",\
+ "PrintUsage",
+ CellTags->"Info3645514309-2860159"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ArrayPlot", "[", 
+  RowBox[{
+   RowBox[{"ReversibleCellularAutomaton", "[", 
+    RowBox[{"86", ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"Prepend", "[", 
+        RowBox[{
+         RowBox[{"ConstantArray", "[", 
+          RowBox[{"0", ",", "200"}], "]"}], ",", "1"}], "]"}]}], "}"}], ",", 
+     SuperscriptBox["2", "10"]}], "]"}], "\[LeftDoubleBracket]", 
+   RowBox[{
+    SuperscriptBox["2", 
+     RowBox[{"Range", "[", 
+      RowBox[{"0", ",", "10"}], "]"}]], "+", "1"}], "\[RightDoubleBracket]"}],
+   "]"}]], "Input"],
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1:eJzdVVsOwjAMc/jlFFyJI+wCnJNbsbWJ7U4qCCEhRray9ZHUdtJxWW7X5QTg
+vLb72hBTw3ZvK1qL9hP50tzAfuRsd2kjfUWP0KyFiQxSQaNGcrZP9tUtWm5N
+z5yvHSt0xJRIws1I4XzCeTEQYD7lGqAe2YMhSYgBu6o3rGSfdzKgsNOMJEdi
+FdRSPwKOvxStZMGCSM8xyyBqMhaFhAHAYIyPErH2GxNB+k5W5VKoPWPjCpVO
+OAY6eMGwaJW3QUIlSJA4SBqU1hPhEutUSEAFs2qQLELjyGrbKhYl7MkZfc+g
+F50Z7CT5BpBPTV+C3vtZoK+sauxwwPd2eAJlf0Fis/k/ycHsAVADCSg=
+   "], {{0, 0}, {201, 11}}, {0, 1}],
+  Frame->Automatic,
+  FrameLabel->{None, None},
+  FrameTicks->{{None, None}, {None, None}},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+    Automatic}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"With", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"row", "=", 
+     RowBox[{"Prepend", "[", 
+      RowBox[{
+       RowBox[{"ConstantArray", "[", 
+        RowBox[{"0", ",", "200"}], "]"}], ",", "1"}], "]"}]}], "}"}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"LengthWhile", "[", 
+       RowBox[{
+        RowBox[{"Equal", "@@@", 
+         RowBox[{"Transpose", "[", 
+          RowBox[{"{", 
+           RowBox[{"row", ",", "#"}], "}"}], "]"}]}], ",", 
+        RowBox[{"#", "&"}]}], "]"}], "&"}], ")"}], "/@", 
+    RowBox[{
+     RowBox[{"ReversibleCellularAutomaton", "[", 
+      RowBox[{"86", ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", "row"}], "}"}], ",", 
+       SuperscriptBox["2", "10"]}], "]"}], "\[LeftDoubleBracket]", 
+     RowBox[{
+      SuperscriptBox["2", 
+       RowBox[{"Range", "[", 
+        RowBox[{"0", ",", "10"}], "]"}]], "+", "1"}], 
+     "\[RightDoubleBracket]"}]}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "3", ",", "4", ",", "6", ",", "7", ",", "9", ",", "15", ",", "16",
+    ",", "24", ",", "25", ",", "27"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ConvergenceSequence", "[", 
+  RowBox[{"86", ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", 
+     RowBox[{"Prepend", "[", 
+      RowBox[{
+       RowBox[{"ConstantArray", "[", 
+        RowBox[{"0", ",", "200"}], "]"}], ",", "1"}], "]"}]}], "}"}], ",", 
+   "10"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "3", ",", "4", ",", "6", ",", "7", ",", "9", ",", "15", ",", "16",
+    ",", "24", ",", "25", ",", "27"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell["Many more terms of this sequence have been computed:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "Rule30ConvergenceData"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"Rule30ConvergenceData\\\", \\\"[\\\", \
+StyleBox[\\\"n\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives the number of rightmost \
+consecutive black cells on row \
+\!\(\*RowBox[List[SuperscriptBox[StyleBox[\\\"2\\\", \\\"TR\\\"], StyleBox[\\\
+\"n\\\", \\\"TI\\\"]], \\\"-\\\", \\\"1\\\"]]\) of rule 30 begun from a \
+single black cell.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427488-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Rule30ConvergenceData", "[", 
+  RowBox[{"Range", "[", 
+   RowBox[{"0", ",", "45"}], "]"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "3", ",", "4", ",", "6", ",", "7", ",", "9", ",", "15", ",", "16",
+    ",", "24", ",", "25", ",", "27", ",", "29", ",", "34", ",", "36", ",", 
+   "37", ",", "39", ",", "41", ",", "43", ",", "48", ",", "49", ",", "51", 
+   ",", "54", ",", "55", ",", "58", ",", "60", ",", "63", ",", "64", ",", 
+   "66", ",", "69", ",", "70", ",", "72", ",", "74", ",", "77", ",", "79", 
+   ",", "80", ",", "82", ",", "84", ",", "86", ",", "90", ",", "91", ",", 
+   "93", ",", "100", ",", "103", ",", 
+   RowBox[{"Missing", "[", "\<\"Unknown\"\>", "]"}], ",", 
+   RowBox[{"Missing", "[", "\<\"Unknown\"\>", "]"}], ",", 
+   RowBox[{"Missing", "[", "\<\"Unknown\"\>", "]"}]}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["DependenceStrengths", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "DependenceStrengths"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"DependenceStrengths\\\", \\\"[\\\", \
+StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives, for each position in \
+the rule, the probability that changing the input in that position changes \
+the output.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427497-4343701"]
+}, Open  ]],
+
+Cell["\<\
+Rule 30 is left bijective, since changing the left bit always changes the \
+output:\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DependenceStrengths", "[", "30", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", 
+   FractionBox["1", "2"], ",", 
+   FractionBox["1", "2"]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell["A cell under rule 0 has no dependence on the previous step:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DependenceStrengths", "[", "0", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", "0", ",", "0"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell["Rule 105 is bijective in each position:", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DependenceStrengths", "[", "105", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "1", ",", "1"}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["LeftBijectiveInverse", "Input"],
+ StyleBox[" and ", "Text"],
+ StyleBox["RightBijectiveInverse", "Input"]
+}], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "LeftBijectiveInverse"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"LeftBijectiveInverse\\\", \\\"[\\\", \
+StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives the radius 1/2 rule \
+that computes the inverse of the specified left bijective rule.\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645514563-3120361"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RightBijectiveInverse"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RightBijectiveInverse\\\", \\\"[\\\", \
+StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives the radius 1/2 rule \
+that computes the inverse of the specified right bijective rule.\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645514564-3120361"]
+}, Open  ]],
+
+Cell["This is the rule that computes the inverse of rule 86.", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RightBijectiveInverse", "[", "86", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"457907124", ",", "4", ",", 
+   FractionBox["1", "2"]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ArrayPlot", "[", 
+  RowBox[{"CellularAutomaton", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"457907124", ",", "4", ",", 
+      FractionBox["1", "2"]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", "3", "}"}], ",", "0"}], "}"}], ",", "100"}], "]"}], 
+  "]"}]], "Input"],
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1:eJy9mVGS3DAIRBGcJFfKEVKV79z/L+I1nhVT+zO2tGwlu2NZEg1Ni7F//fn3
++4+b2d/6Z2Fj+IgxInwO+PCYnywiGPU5GvOXzfH557xuOThyfN5mPifMe3Kd
+XMPmzXNCcHmunJOHMTAn5wYjp+Wq89bIhdjY2T+3nH/mZb8cYJvp4RzASfP0
+Jr3W5TAmmwbm5ATjOc35lIvMvXLjwf65YzqTWAefBuvieDrmCTu9met44dHk
+IDA5Od1nWjpmQyHzENycl1edrdLSA9adQyOh5E0zaERI8bliRWAJ4PzEbMOx
+AMYcMMHlXrzLrfIn0v1cd2Tw082MVgwi5MTnilVGWAGc15gtxwwYpo2t8kC0
+c6vg5mGs6+l4YhwZ5Ix9/h1LrILb0sVMs8lnskh0B25zV7oSXIBlgfumJfPG
+zAMuvPGKPXK/pF/GB1g5AtD8xcbiucOpDEcOG+5nFnAcOAN8b7ySFb9xIoes
+eJl4tDFECnEKBpEScCYc6oQ82De8KiTiNwAhcrwKyLUxRGJbF4Oc/Bm8rzoh
+D9/xqpCI305ykgFfBQQlxQGimLOSQbgMzlGOKw/f8erKCd6BAvp8FZAjMBIJ
+Ey0QElwW04dkSXn4jldXTvAOFNDnq4AkMHBAlPpIr5Y9ovg9JDkoylVAJrkh
+mVDqI71azcTvkpxRapv7ecnNuITrM71qSMRvhA9xwuncz/RRyZS4faJXDUkU
+WUKuGE7bMNUxgRD7PtSrnpMiSzElC6OOqWRLiBNShY/0quekyFJMMWlkBpoU
+iRP+uV71nDAJBTGCFdcxpfPDXNXxqV71nOAHCkJJEzRkSOdHOn9Hr97qxEYp
+CBvF65jS+YEI3NCrtzqpMyRGHezXMUWK8t8tveo5uc4Qq17Ir2MK1XW7qVc9
+J1ZnCGyUGuqYIkXjrl71nOCHzluynFnnMinyu3rVc4IfOm8HtOKgojjJ9E29
+6jnBD/qJzCn+SdFI0W296jnBj1Qlqo09YSyA7utVzwl+IIjMVt2xbowHetVz
+4iKLitur7qIA3dernhP88Cruq+5YN57oVc8JfngV9xiqO9Z9pFc9J+q5q7gd
+lta6j/Sq54R7vIpbLK11H+lVzwm/XA0xjVAudvXd9/WqIdEvHX1qhOiz7Kle
+NSQyHX2mFJPcp3rVkND/1NGH8BOb53rVkOjrGdTkfyc2z/WqIdGPqxtBM0Jn
+yUO9akjUS7u6ETQjYodeNSRehwfVrTbVduhVQ2J1eFDdalO36FVDUu0w337p
+S2kbnutVQ0JScjd9vza1Dc/1qiHh0RAtMGvQU+zQq4aEDjHG9f2aRXboVUNC
+DkKPtkKPgrboVUOi9jSuZ2rb9KohUXuaUGDzNr1qSNSeWqiX36dXDYnaUz1e
+3KlXDYnaU69efp9eNSRqT4d5PTzdpVcNCU9s6Uf36lVDwhPbbOw261VDkhI/
+8HWvXjUkTq8V2/WqIVGvtV+vGpJ66LRdrxqSeui0Xa8aknrotF2vGhJT8W3X
+q4ZE70/261VDovcn+/WqIdH7k/161ZDo/cl+vVqt3p/s16vVxjikV6uZH9Kr
+1cYpvVrtmF6tdkyvVrNTerXaMb1azU7p1WrH9Go1O6VXqx3Tq9XslF6tdkyv
+VrNTerXaMb1azc7ySnaYVzI7yyvZYV7J7CyvZId5JbOzvJId5pXMjscqXu9P
+ju7xA7GKn4hVvN6fnLXzsYrX+5Ozdj5WET8Qq2n/AQIqWo8=
+   "], {{0, 0}, {101, 101}}, {0, 3}],
+  Frame->Automatic,
+  FrameLabel->{None, None},
+  FrameTicks->{{None, None}, {None, None}},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+    Automatic}]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+Taking the inverse twice gives a 4-color, radius 1/2 rule that emulates the \
+2-color, radius 1 rule 86.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RightBijectiveInverse", "[", 
+  RowBox[{"{", 
+   RowBox[{"457907124", ",", "4", ",", 
+    FractionBox["1", "2"]}], "}"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"454958004", ",", "4", ",", 
+   FractionBox["1", "2"]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"GraphicsRow", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"ArrayPlot", "[", 
+      RowBox[{"CellularAutomaton", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"454958004", ",", "4", ",", 
+          FractionBox["1", "2"]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", "3", "}"}], ",", "0"}], "}"}], ",", "100"}], "]"}], 
+      "]"}], ",", 
+     RowBox[{"ArrayPlot", "[", 
+      RowBox[{"CellularAutomaton", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"86", ",", "2", ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"-", "2"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"-", "1"}], "}"}], ",", 
+            RowBox[{"{", "0", "}"}]}], "}"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", "1", "}"}], ",", "0"}], "}"}], ",", "100"}], "]"}], 
+      "]"}]}], "}"}], ",", 
+   RowBox[{"ImageSize", "\[Rule]", "700"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {InsetBox[
+     GraphicsBox[RasterBox[CompressedData["
+1:eJy9mU2WJDcIhEGcxFfyEeY9r33/nTO+QE2PN1VZrRxNTf11SSKAAIT++vXv
+379WRPzT/6NWRV5jRcbKuP5nXc+RtXJlpR5Reo21rpn+IjRhreJx/VmvlcwP
+va3UynH9iPWvf0xPT2GL63mxjRbSWnX95Pr59bXe6GfXzOtj8GBrZNQ+S2+v
+na4Xrcr6hZgpwfVTyaVnb6OFtBaAS6LozfV8/eoSQuJdD7a+PkggSVaSMtCQ
+cAgWYiK4ZmlvLaNfaFGvhUDSquTTL6WHQDytrSfpTPqVCFpR3wQ4SvsYicRA
+ueAtFJK8CllaRQuJI9CD9C5VLraWzgqj/W4P1pfx10I/Vi54A4Vojh7aGhUh
+nxQvPaAVAdS7kM4Co/1ujwJJSjuJXpBWlsGA6E7fyVhlqyDx4leBVjQFpWvB
+9PNv9jAStIPggbRazzuibXlBWZNh+XBaOZK0oimSXV+wyP/tYSRoB9fG2bGn
+xGtOoBJ9D055jzmCU73gR+9Rae2EaYgSEotEc0IGY0dwanOcNtnuBT/qC0lg
+woCGBUmYgnoXrEh2TFM07LTS2Ut+DBIJhG2WX8pTUO+CFbKAMeE9OK2c4iU/
+BomUipumvTU8BfWmDSafWDiuJ5sOr/kxSAIFpT3YCi2MYENjI73DcT15mRQv
++TFIiKpI7BfRvLwhsYa5i68lJH9k79f8GCQO2RnbW3F8b2jx7JxQP/kbrv0O
+PwYJO2TvplnyJO9r8eycYIMUhIW3+PGNJ8Tf3o2Yl6aMhZQGytF3dWJb3vs1
+P77xhERof3XMa8pYyNzvCGXOhfUmP77xxNyDyo55TZkO+ugMEqydC+NNfnzj
+CdEQW1uzpMPYQhIQoIRjMRje5Mc3nhB/V21vTdIssTZteSsGezsXvsuPQUKO
+c9jAW51ml9MviqBYsL2dC9/lxyAhq0dbwHzhsyxgRSzri+zPd+/yY5CQ1Vdb
+oKe6FmsUxEHCo+CsG/wYJGT1bDcxy6oTvFFk6wsxSPbv8mOQOC5FbG+l+HGC
+N4pofTlF3eHHIHFcKmqiZtlO8GvtjTuvu9h6mx+DpNBn2YPMsnApR3LySi76
+oOgNfgyScHloD3LNQy1CUbktS7ahJr7Dj0FifbYHueYpqgoyeq8EOBP3Bj8G
+ieXYqnYR4pMCQd8rAU5h/hY/BonlyFZ1OufjvwT91TUFzLjJj0FiOUinq2se
+VxUO+sTC6qB8kx+DJL7U5tNVISKO7VyJL5gZN/kxSEZt2SVC2c4O+umI65Bw
+kx+DZNTW1W+0nR30sTV57D4/BonHaiwutzK+gj62TteOd/kxSChOnE67RLAD
+OY5wVvWx7j4/BsnyEWW5FHW5RQ28fOINx+hP+DFIXIHA6uwizDUwe+LFPt7d
+58cgcQWCIqKLMNfA9mNOxh/yY5CQLayOcpnXNbD92N2Kz/gxSAj1VkeXedm5
+JV1IrI/5MUhIUNXZJNNlVnabhTrsY34MkvARxdlkOXH5U7qM+5wfgyS7hi/3
+ZKpDY4V7EfRzPuTHIFldwxM+OnFJPfhtuZ/zIT8GiWhCo4OyxYkL06QPkD/g
+xyARTdLdj8I0hEXsbgt8zo9BQh1X3V7zoZR0tbI7EJ/zY5CU61unL2oH95yg
+5c/4MUi61xN2Z84QsKZg44/4MUi611N2Z+cun+Xrp/wYJB1qw50H5y6f5X/M
+j0FCicKBgA4RuWv5vP5TfgyS1R1Tl45VPmo7Xf6QH4Mku2PqsFV91Ha6PGAP
+I4m1DwTlrobU1x29A/YwEncG3fRxx4Ou7wl+DJJyZ6a6ZHdX6ww/BklwZk+f
+tckl+5R+xB5G4jN7n7UJXCsO8WOQ+MzuNjZaijzFj0HiM/vyWZvAdYwfg8T3
+J+kOOoHrGD8GiWN9OZenc9dBexhJuccV3SD00eucPTRYwzndDcI6yI899v1J
+7gbhSX7sse9PHFmstqP20Nj3J44sXaWetIfGvj9J3wGs4/bQ2Pcnq1c+bg+N
+fX+yeuXj9tDY9yfLN27n7aGx708yu0Fw2h4a+/6ko8p5e2js+5PYDYLT9tDY
+9ycdVc7bQ2Pfn3RUOW8PjX1/kvs+9DyOuT/pqPIEjrk/yafsobHvTx6zh8a+
+P3nMHhr7/uQxe2js+5PH7KGx708es4fGvj95EMfcnzyIY+5PHsQx9ydP7vF1
+f/LkHl/3J4+OfNoeGo/bQyOfxzH3J4+OP4Cj/gSOqv8A5YdamQ==
+       "], {{0, 0}, {101, 101}}, {0, 3}],
+      Frame->Automatic,
+      FrameLabel->{None, None},
+      FrameTicks->{{None, None}, {None, None}},
+      GridLinesStyle->Directive[
+        GrayLevel[0.5, 0.4]],
+      Method->{
+       "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+        Automatic}], {192., -141.98507462686567}, 
+     ImageScaled[{0.5, 0.5}], {360., 270.44776119402985}], InsetBox[
+     GraphicsBox[RasterBox[CompressedData["
+1:eJzdl2ty4zYQhGdyk1wpR9iq/M45c6tYNrr7G7JcXisSRRpreyUKBKZfA+rP
+X//89euPqvr77ffft9/q7rff24uPf/1+UT/r//bl9xtu13rdqr/rgzV3Xfq4
+yTPWO22G2z/u9vuPWd5TV9dUl9Osf9WazVldA4QvVGXN/O1eCLXRqEc3r715
+o8HhfXUqzBKa2ioHtGvu4qwL1VT2y2uAKZcL+hdzIsVXLLFpHLcHdKTW7e2r
+KKFUq+svcAnlWgviLmnaWXOUBf/BOxFJFVDUlM3lYF6TYJkjarCKPyrCvSMg
+LtDkEAC2tATh0hJHYS6CqFjaKfNn2XD9GkIy9o6ADNRwUzJM/0FWOKCM3EZp
+l02UWTQkfJKNCEEKt3t3lkSghpviM/rPJHkBrKUN0AIofmVpyPxZNqAIKKS6
+eafyADFuqhQE/y2eURPW0gZyfzzRmWzlv8gGFIlxLHw7qyY2CGg63Y7+BDWD
+P3SCcOwyKuTeX2YDisQ4Bbh4l9SF6cjhLmGI4Tmw3DQADrs0KyxW8lU2oIhF
+1To2k+9HPuLcSILQxkkDv/wCkr2zP8WMVPJVNqCI+NEuoiAguElIjROSfKpE
+/J39w459D97W69/PBhTpDn0QI+/GJiFV4qULeeYOf25KdthZajPj97MBRRyK
+HmLkHWkwQFMWEoJyhz+iuex2hTWX/V42oIg8XRWGx7uuzXyGGSRAVIeJdxo2
+Llg1KvidbIBheZoMr8XQRNiP3DRhv1wLE7jPE7KaK/RVFfudbIDhQBiLqmB1
+IInhueGuxrVM5I2ETcQk4Z5sQJFAWGwEmjYv/2DutF+uFW/ND2ATMUm4JxtQ
+BPOTw0WLLAYxNjzW7tq4NX/FjTCkQl+9JxtQhHgID34t/93xaOpsl7XC5sZY
+xsKrwiC6IxtQhHgQafo1ZO54NHW2C6KNG2MZC195fX82oEhl/QRTBUSG0dAc
+HfkedkG0caNt2WCkScZ92YAiWL/lAkuMTa2Z2hJ9j4Ag2rgRFYaRIhn3ZQOK
+YH0517VwU32edgXfIyCsKPNQYRc3MBn3ZQOKmCq9Qi3cNPUJGHyPgGQ94e0e
+FbKP/e9sQJHKmsk+jKpNU3NvlJgByXrt6c0KheYh2YAiWDPZn1F2K6g0I1pv
+ay43A033MtD7MdmAIoTTI7k2kFvBAg8bjriCXuL1G+35wGwYyIQzk2sDtVku
+Ysx/diUaR4shdGLq/ZhsGEhMg7aFbKsU9QW2q1TXs2ARFJETiAdnw0Bimo1f
+aCBrokZkdmdJ0Y0MeQks+rBsGMj05s7R9BUakdmdJUU3MvSUc2MHpAcb7k/w
+jKpiI3JPnSV1PIoKn3Ju7IBMNuyjOC2OQiNSbcY2MKuyvI7wj86GK59smMgY
+y1WxEblF21bJTKjPa/Py8Gy48rmMiRy4AtnVlfGIWGfGC1VePy8brnz7Fva2
+uQMgLa3tLC9TUmqkLG3wKdlw5XPESG6Y1QDQnhNnKdLS6JhzYwdk/thq6jdp
+UOk9ZW1yqKjA2Yb9+nnZMBA5Ca3e7DrQlMfXlZVKnZqIxVqAn5QNA+l2qQyt
+OxSa55gjeygqZoDaHZANA3FC0X8sTHZuUztgJiro1IF+QDYMxAlF/2GHCtr0
+HzbicZikmx2WDQNxQimCuqk6b4Na1xORjE5rHpgNA5l/LQ7Ld22zHvifgbBu
+x2TDQArEOyhxw/BUj3rKIllM5uagbBiIsyAbCF+cgUz7s1aTNemNRnFgNgzE
+Lcbsrn1Vz8i0neIma9IPPjd2QPxrdtOjqmdtTowFAOkHnxs7IGlUbrrZPER6
+gsNE/7/g3NgByRnmppsjIRV4gqPe/vwl58YOSGpx083maqjusqFXV/WB0R6c
+DQNJLW0/GIEaqlCB3gpMz+8XZMNAJuEAxoYqVKjr1efGDkhqcb+V3dJQ3X/H
+jS89N3ZAUgs6rM4Lno9B6Qb9ynNjB6R5RKvDjqakWUjMCc6NHZBxRMtI5QIx
+C4k5wbmxA+K2mtJDa5ovrXSKc2MHBKebSs8H+km1C+h5smEgqjrZsAgxUqo9
+zbmxA2LrOBtt9tmTodGpsmEgblBi3mhgpAhyumxouP2YeaOBkWpodKpsaKRB
+uRkNlj3pbOfGdiTlfpZSnXzKOt+5sR2xi5+lRvqh2TmzoeHzu/wslaMdL06b
+DY3KC/NPh7W1OWk2NPIUEv7pML04bTY0/Bxi3/CQzIvTZkMjzanZwlzy6bOh
+keZk7pslnz4bGoqHe9Wm5NNnQ6NsnNWiNiWfPhsaMY6eRmbJp8+Ghh+m/DTS
+eEC5QDY0ykW7C+MB5QLZ0MBTVbHyuko2NCpPVb1/QLlANjTwVOVH9ffrV8mG
+hr5pNJ7X60rZ0NA3DVtsPKBcRI3bqGK9+tpxoWxorDKN53LZ0ChHgl87LpQN
+jUTCHfda2dBwwH0cXiwbGnoWcfPqC6pxGwUzXTIbGjRT3l9w0EyXVeM2/GTV
+F1bjNniMXBiGv49cW43bqKtnQ+Py2dD4EWrcxo9Q4zbqZ8Dw95Hrj/8AwLo9
+cQ==
+       "], {{0, 0}, {201, 101}}, {0, 1}],
+      Frame->Automatic,
+      FrameLabel->{None, None},
+      FrameTicks->{{None, None}, {None, None}},
+      GridLinesStyle->Directive[
+        GrayLevel[0.5, 0.4]],
+      Method->{
+       "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+        Automatic}], {576., -141.98507462686567}, 
+     ImageScaled[{0.5, 0.5}], {360., 270.44776119402985}]}, {}},
+  ContentSelectable->True,
+  ImageSize->700,
+  PlotRangePadding->{6, 5}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["LeftBijectiveRules", "Input"],
+ StyleBox[", ", "Text"],
+ StyleBox["RightBijectiveRules", "Input"],
+ StyleBox[", and ", "Text"],
+ StyleBox["LeftOrRightBijectiveRules", "Input"]
+}], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "LeftBijectiveRules"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"LeftBijectiveRules\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"k\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"r\\\", \
+\\\"TI\\\"]]], \\\"]\\\"]]\) lists the rule numbers of all left bijective \
+\!\(\*StyleBox[\\\"k\\\", \\\"TI\\\"]\)\[Hyphen]color, radius \!\(\*StyleBox[\
+\\\"r\\\", \\\"TI\\\"]\) rules.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427514-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"LeftBijectiveRules", "[", 
+  RowBox[{"2", ",", "1"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "15", ",", "30", ",", "45", ",", "60", ",", "75", ",", "90", ",", "105", 
+   ",", "120", ",", "135", ",", "150", ",", "165", ",", "180", ",", "195", 
+   ",", "210", ",", "225", ",", "240"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RightBijectiveRules"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RightBijectiveRules\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"k\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"r\\\", \
+\\\"TI\\\"]]], \\\"]\\\"]]\) lists the rule numbers of all right bijective \!\
+\(\*StyleBox[\\\"k\\\", \\\"TI\\\"]\)\[Hyphen]color, radius \!\(\*StyleBox[\\\
+\"r\\\", \\\"TI\\\"]\) rules.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427516-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RightBijectiveRules", "[", 
+  RowBox[{"2", ",", "1"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "85", ",", "86", ",", "89", ",", "90", ",", "101", ",", "102", ",", "105", 
+   ",", "106", ",", "149", ",", "150", ",", "153", ",", "154", ",", "165", 
+   ",", "166", ",", "169", ",", "170"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "LeftOrRightBijectiveRules"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"LeftOrRightBijectiveRules\\\", \
+\\\"[\\\", RowBox[List[StyleBox[\\\"k\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"r\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) lists the rule numbers of \
+all \!\(\*StyleBox[\\\"k\\\", \\\"TI\\\"]\)\[Hyphen]color, radius \
+\!\(\*StyleBox[\\\"r\\\", \\\"TI\\\"]\) rules that are either left bijective \
+or right bijective.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427517-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"LeftOrRightBijectiveRules", "[", 
+  RowBox[{"2", ",", "1"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "15", ",", "30", ",", "45", ",", "60", ",", "75", ",", "85", ",", "86", ",",
+    "89", ",", "90", ",", "101", ",", "102", ",", "105", ",", "106", ",", 
+   "120", ",", "135", ",", "149", ",", "150", ",", "153", ",", "154", ",", 
+   "165", ",", "166", ",", "169", ",", "170", ",", "180", ",", "195", ",", 
+   "210", ",", "225", ",", "240"}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["LeftfulPredecessor", "Input"],
+ StyleBox[" and ", "Text"],
+ StyleBox["RightfulPredecessor", "Input"]
+}], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "LeftfulPredecessor"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"LeftfulPredecessor\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\",\\\", \
+RowBox[List[\\\"{\\\", RowBox[List[StyleBox[\\\"row\\\", \\\"TI\\\"], \\\",\\\
+\", StyleBox[\\\"tailcolor\\\", \\\"TI\\\"]]], \\\"}\\\"]]]], \\\"]\\\"]]\) \
+gives the predecessor of a row with an infinite leftful history under the \
+specified left bijective rule.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427521-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"LeftfulPredecessor", "[", 
+  RowBox[{"30", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "1"}], "}"}], ",", "0"}], "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1",
+      ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+    "}"}], ",", "0"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RightfulPredecessor"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RightfulPredecessor\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\",\\\", \
+RowBox[List[\\\"{\\\", RowBox[List[StyleBox[\\\"tailcolor\\\", \\\"TI\\\"], \
+\\\",\\\", StyleBox[\\\"row\\\", \\\"TI\\\"]]], \\\"}\\\"]]]], \\\"]\\\"]]\) \
+gives the predecessor of a row with an infinite rightful history under the \
+specified right bijective rule.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427523-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RightfulPredecessor", "[", 
+  RowBox[{"86", ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0"}], "}"}]}], "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1",
+      ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+    "}"}]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["ReversibleCellularAutomaton", "Input"],
+ " is generally faster than ",
+ StyleBox["LeftfulPredecessor", "Input"],
+ " and ",
+ StyleBox["RightfulPredecessor", "Input"],
+ " because it uses ",
+ StyleBox["CellularAutomaton", "Input"],
+ "."
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["LeftfulSuccessor", "Input"],
+ StyleBox[" and ", "Text"],
+ StyleBox["RightfulSuccessor", "Input"]
+}], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "LeftfulSuccessor"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"LeftfulSuccessor\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\",\\\", \
+RowBox[List[\\\"{\\\", RowBox[List[StyleBox[\\\"row\\\", \\\"TI\\\"], \\\",\\\
+\", StyleBox[\\\"tailcolor\\\", \\\"TI\\\"]]], \\\"}\\\"]]]], \\\"]\\\"]]\) \
+gives the successor of a row under the specified rule.\"\>", "MSG"]], "Print",\
+ "PrintUsage",
+ CellTags->"Info3645427530-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"LeftfulSuccessor", "[", 
+  RowBox[{"30", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "1"}], "}"}], ",", "0"}], "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0", ",", "0", ",", "0", ",", "1", ",", "1", ",", "1"}], 
+    "}"}], ",", "0"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RightfulSuccessor"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RightfulSuccessor\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\",\\\", \
+RowBox[List[\\\"{\\\", RowBox[List[StyleBox[\\\"tailcolor\\\", \\\"TI\\\"], \
+\\\",\\\", StyleBox[\\\"row\\\", \\\"TI\\\"]]], \\\"}\\\"]]]], \\\"]\\\"]]\) \
+gives the successor of a row under the specified rule.\"\>", "MSG"]], "Print",\
+ "PrintUsage",
+ CellTags->"Info3645427532-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RightfulSuccessor", "[", 
+  RowBox[{"86", ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0"}], "}"}]}], "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
+    "}"}]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["ReversibleCellularAutomaton", "Input"],
+ " is generally faster than ",
+ StyleBox["LeftfulSuccecessor", "Input"],
+ " and ",
+ StyleBox["Rightful", "Input"],
+ StyleBox["Succ", "Input"],
+ StyleBox["ecessor", "Input"],
+ " because it uses ",
+ StyleBox["CellularAutomaton", "Input"],
+ "."
+}], "Text"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["LeftRightReflection", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "LeftRightReflection"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"LeftRightReflection\\\", \\\"[\\\", \
+StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives the left\[Dash]right \
+reflection of the specified rule.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427536-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"LeftRightReflection", "[", "30", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"86", ",", "2", ",", "1"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"LeftRightReflection", "[", "86", "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"30", ",", "2", ",", "1"}], "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["RandomLeftBijectiveRule", "Input"],
+ StyleBox[" and ", "Text"],
+ StyleBox["RandomRightBijectiveRule", "Input"]
+}], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RandomLeftBijectiveRule"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RandomLeftBijectiveRule\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"k\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"r\\\", \
+\\\"TI\\\"]]], \\\"]\\\"]]\) produces a pseudorandom left bijective \
+\!\(\*StyleBox[\\\"k\\\", \\\"TI\\\"]\)\[Hyphen]color, radius \!\(\*StyleBox[\
+\\\"r\\\", \\\"TI\\\"]\) rule.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427540-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RandomRightBijectiveRule"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RandomRightBijectiveRule\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"k\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"r\\\", \
+\\\"TI\\\"]]], \\\"]\\\"]]\) produces a pseudorandom right bijective \
+\!\(\*StyleBox[\\\"k\\\", \\\"TI\\\"]\)\[Hyphen]color, radius \!\(\*StyleBox[\
+\\\"r\\\", \\\"TI\\\"]\) rule.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427540-4343701"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RandomRightBijectiveRule", "[", 
+  RowBox[{"2", ",", "1"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"154", ",", "2", ",", "1"}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RandomRightBijectiveRule", "[", 
+  RowBox[{"5", ",", 
+   RowBox[{"3", "/", "2"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "233259524570484894875376701499898370703899633175299611363200341458095769862\
+725029316107449483848551590195601800725559750161099950068096782997848740167525\
+942590105400380087678589437194460132383896809567489311737086181984481246406654\
+620602748303506640888444844394598226292893643154495152985462808562813484194767\
+673869781363901644199256293979353579141456352009872796997046054912582960268229\
+78682243206073680100149290995832886345341043527538", ",", "5", ",", 
+   FractionBox["3", "2"]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RightBijectiveQ", "[", "%", "]"}]], "Input"],
+
+Cell[BoxData["True"], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["ReverseRow", "Input"]], "Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ReverseRow"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ReverseRow\\\", \\\"[\\\", \
+StyleBox[\\\"list\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives the left\[Dash]right \
+reflection of a row of the form \!\(\*RowBox[List[\\\"{\\\", \
+RowBox[List[StyleBox[\\\"lefttailcolor\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\
+\\\"row\\\", \\\"TI\\\"]]], \\\"}\\\"]]\) or \!\(\*RowBox[List[\\\"{\\\", \
+RowBox[List[StyleBox[\\\"row\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"righttailcolor\\\", \\\"TI\\\"]]], \\\"}\\\"]]\).\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645427557-9963253"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ReverseRow", "[", 
+  RowBox[{"{", 
+   RowBox[{"0", ",", 
+    RowBox[{"{", 
+     RowBox[{"1", ",", "0", ",", "0", ",", "1", ",", "1"}], "}"}]}], "}"}], 
+  "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "0", ",", "0", ",", "1"}], "}"}], ",", "0"}], 
+  "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ReverseRow", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"1", ",", "1", ",", "0", ",", "0", ",", "1"}], "}"}], ",", "0"}],
+    "}"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0", ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0", ",", "0", ",", "1", ",", "1"}], "}"}]}], 
+  "}"}]], "Output"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["ReversibleCellularAutomaton", "Input"]], \
+"Subsubsection"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "ReversibleCellularAutomaton"}]], "Input"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"ReversibleCellularAutomaton\\\", \\\"[\\\
+\", RowBox[List[StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"init\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"t\\\", \
+\\\"TI\\\"]]], \\\"]\\\"]]\) generates a list representing the evolution of \
+the reversible cellular automaton with the specified rule from initial \
+condition \!\(\*StyleBox[\\\"init\\\", \\\"TI\\\"]\) for \!\(\*StyleBox[\\\"t\
+\\\", \\\"TI\\\"]\) \
+steps.\\n\!\(\*RowBox[List[\\\"ReversibleCellularAutomaton\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"rule\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"init\\\", \\\"TI\\\"], \\\",\\\", RowBox[List[\\\"{\\\", \
+StyleBox[\\\"tspec\\\", \\\"TI\\\"], \\\"}\\\"]]]], \\\"]\\\"]]\) gives only \
+those parts of the evolution specified by \!\(\*StyleBox[\\\"tspec\\\", \
+\\\"TI\\\"]\).\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->"Info3645514357-2860159"]
+}, Open  ]],
+
+Cell["\<\
+The following evaluations compute some rows in the history of right bijective \
+rule 86.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ReversibleCellularAutomaton", "[", 
+  RowBox[{"86", ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0"}], "}"}]}], "}"}], ",", 
+   RowBox[{"-", "2"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "0",
+      ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", 
+     ",", "1", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", 
+     ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "0", 
+     ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1",
+      ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", 
+     ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", 
+     ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", 
+     ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0"}], "}"}]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ReversibleCellularAutomaton", "[", 
+  RowBox[{"86", ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0"}], "}"}]}], "}"}], ",", "2"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "0", ",", "0", ",", "1", ",", "1", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0"}], "}"}]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ReversibleCellularAutomaton", "[", 
+  RowBox[{"86", ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", 
+     RowBox[{"{", 
+      RowBox[{
+      "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", "2"}], ",", "2"}], "}"}], "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "0",
+      ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", 
+     ",", "1", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", 
+     ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "0", 
+     ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1",
+      ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", 
+     ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", 
+     ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", 
+     ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "1", ",", "1", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "0", ",", "0", ",", "1", ",", "1", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0"}], "}"}]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ArrayPlot", "[", 
+  RowBox[{"ReversibleCellularAutomaton", "[", 
+   RowBox[{"86", ",", 
+    RowBox[{"{", 
+     RowBox[{"0", ",", 
+      RowBox[{"Prepend", "[", 
+       RowBox[{
+        RowBox[{"ConstantArray", "[", 
+         RowBox[{"0", ",", "100"}], "]"}], ",", "1"}], "]"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "50"}], ",", "50"}], "}"}], "}"}]}], "]"}], 
+  "]"}]], "Input"],
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1:eJy9VkmSG0EIBP/EX/ITJsLn+f/NMS1yQUtoaXBbapfoEmSSSWl+f33/+foV
+EX/rHZn1/vmXP6uod14eXS5uqC9g83FH8NhTn5DuWGvfkVxFK1xX1UF1+2o9
+IJJLhdodVbwBDYGLQsNNBJyAmAKQRBJFRKTzCqgVJahQRbUvDQKXEcRJFgSU
+wiNw1rxEv1OXQXioRQNEGA7OmsdnoSsF4aEWDRBh1BIyuADYQ5FMu0daGBOD
+geYEv2y7TCEY/YkWxkTU2Rw8kIG9PU/nIq8uErS0eoCXMkGCl7RwTSA00gK8
+mqNML83FHSbA3FTvzVGml+biDhMNRa9kzRGRt7RwTShttkrWnGjcXtbCNSEi
+WY3oJNwbc3FPkwQimldO4HS/Mxf3NAFGsxqdYFzf18KYYIGzSSNvi4+0MCZY
+ELd3LcnpAy2MSZlIuL1rWHykhTEJopbVdF6d0cKYoO9uNaY7pYUxwYAAc0t3
+SgtjggEJOUzpTmlhTNhm+MnTndLCmCQG/JKkpzulhTGphDhBWPO8FsYEBtOp
+ZQN4SgtjAoXDs8aEFsZE5/zNoXJSC2PCeb89VE5qYUxCua4PlZNaGBPLdX2o
+DLAoJq0WYxNasMhVrVEtWIQS+M/GkBYsQgno2jktWCSIfF4LFkk1aFwLFrEG
+jWvBItYgfR6+vEErLDL5e7KjBYvYmCyV4O/JHosj+aYWLJLLLI4i2yyOItss
+jiL7Jfh7slzkv1z8SVl8lbm2X8k/7Nbudchv33P/fpmT5Xv9nuzey8fbdx7E
+ubauYllOWFonysLZC+sgFac1vT7cXMy21hc3J6rurAMnfvVvZc0DP+HpjXWi
+bXA2mA7Gy89ald9yOF6rTKGIHI1XvWNVcjV/T8VrciiXeX0oTqUkl3l9KE5u
+kou9HIuTmxkOvZyOszSfTcYD3Mxw6OVcPDGqNFw9H4xDqWY40p6K14A2w5H2
+UBwDSgRZeOCMnIhnXTJcDRTQDMR5NcNBuZyJ85Xyt5Qbi8PiRZjt5ZFD338c
+1zEAC7AaMdAnVPSDuFtO7e19JFc2WfPwNN4KVlIazvpIrsBW1V+KNyAc3AAy
+7QVXfa5OvxZHY1BZhvO9JWSmV7QePInDYKicIQTay7nyig3o4zh1QCE3nI1u
+OtHWaQKVpW7joEekmNw2uuFEOckkZkTYMMWDsKyjJKM+ajN1c2JGhA1zV8qn
+7mMZXrA4Qk2Y1io2mZNGSGZdm1yj55ubR+UXF94nzfOyD/BCOD10ofHsfnFD
++KRxLxTzCZJ+hJudJ08cByzLaRZTJcMKSfEwuFc80VKNgXeeAFRTfbCJNZn5
+n/FMMyTdwVoA9fP+BzjMGq4=
+   "], {{0, 0}, {101, 101}}, {0, 1}],
+  Frame->Automatic,
+  FrameLabel->{None, None},
+  FrameTicks->{{None, None}, {None, None}},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+    Automatic}]], "Output"]
+}, Open  ]],
+
+Cell["\<\
+Equivalently, we can consider the history of rule 30, its left\[Dash]right \
+reflection.\
+\>", "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ReversibleCellularAutomaton", "[", 
+  RowBox[{"30", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+       "0", ",", "1"}], "}"}], ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", "2"}], ",", "2"}], "}"}], "}"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0",
+      ",", "1", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", 
+     ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "0", 
+     ",", "0", ",", "1", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", 
+     ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1",
+      ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", 
+     ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", 
+     ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1", 
+     ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "1", ",", "1", 
+     ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0",
+      ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+     ",", "0", ",", "0", ",", "0", ",", "1", ",", "1", ",", "0", ",", "0", 
+     ",", "1"}], "}"}]}], "}"}]], "Output"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"ArrayPlot", "[", 
+    RowBox[{"ReversibleCellularAutomaton", "[", 
+     RowBox[{"30", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Append", "[", 
+         RowBox[{
+          RowBox[{"ConstantArray", "[", 
+           RowBox[{"0", ",", "200"}], "]"}], ",", "1"}], "]"}], ",", "0"}], 
+       "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"{", 
+        RowBox[{"t0", ",", 
+         RowBox[{"t0", "+", "length", "-", "1"}]}], "}"}], "}"}]}], "]"}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"t0", ",", 
+       RowBox[{"-", "50"}]}], "}"}], ",", 
+     RowBox[{"-", "100"}], ",", "100", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"length", ",", "100"}], "}"}], ",", "1", ",", "200", ",", "1"}],
+     "}"}], ",", 
+   RowBox[{"SaveDefinitions", "\[Rule]", "True"}]}], "]"}]], "Input"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`length$$ = 100, $CellContext`t0$$ = -50, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`t0$$], -50}, -100, 100, 1}, {{
+       Hold[$CellContext`length$$], 100}, 1, 200, 1}}, Typeset`size$$ = {
+    360., {91., 96.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`t0$5147$$ = 
+    0, $CellContext`length$5148$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`length$$ = 100, $CellContext`t0$$ = -50}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`t0$$, $CellContext`t0$5147$$, 0], 
+        Hold[$CellContext`length$$, $CellContext`length$5148$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> ArrayPlot[
+        BijectiveRules`ReversibleCellularAutomaton[30, {
+          Append[
+           ConstantArray[0, 200], 1], 
+          0}, {{$CellContext`t0$$, $CellContext`t0$$ + $CellContext`length$$ - 
+           1}}]], "Specifications" :> {{{$CellContext`t0$$, -50}, -100, 100, 
+         1}, {{$CellContext`length$$, 100}, 1, 200, 1}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{405., {149., 154.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+},
+AutoGeneratedPackage->None,
+WindowSize->{1264, 709},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
+ShowSelection->True,
+TrackCellChangeTimes->False,
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
+2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "Info3645427457-4343701"->{
+  Cell[68078, 1849, 532, 8, 43, "Print",
+   CellTags->"Info3645427457-4343701"]},
+ "Info3645427458-4343701"->{
+  Cell[68723, 1865, 1000, 14, 43, "Print",
+   CellTags->"Info3645427458-4343701"]},
+ "Info3645427462-4343701"->{
+  Cell[70667, 1926, 310, 5, 43, "Print",
+   CellTags->"Info3645427462-4343701"]},
+ "Info3645427463-4343701"->{
+  Cell[71520, 1955, 312, 5, 43, "Print",
+   CellTags->"Info3645427463-4343701"]},
+ "Info3645427464-4343701"->{
+  Cell[72376, 1985, 416, 7, 43, "Print",
+   CellTags->"Info3645427464-4343701"]},
+ "Info3645427468-4343701"->{
+  Cell[74059, 2046, 625, 10, 61, "Print",
+   CellTags->"Info3645427468-4343701"]},
+ "Info3645427472-4343701"->{
+  Cell[76792, 2139, 634, 9, 61, "Print",
+   CellTags->"Info3645427472-4343701"]},
+ "Info3645427473-4343701"->{
+  Cell[77520, 2156, 346, 5, 61, "Print",
+   CellTags->"Info3645427473-4343701"]},
+ "Info3645427480-4343701"->{
+  Cell[78878, 2215, 573, 8, 43, "Print",
+   CellTags->"Info3645427480-4343701"]},
+ "Info3645514309-2860159"->{
+  Cell[80423, 2271, 1169, 18, 61, "Print",
+   CellTags->"Info3645514309-2860159"]},
+ "Info3645427488-4343701"->{
+  Cell[84765, 2398, 449, 7, 43, "Print",
+   CellTags->"Info3645427488-4343701"]},
+ "Info3645427497-4343701"->{
+  Cell[86323, 2440, 332, 5, 43, "Print",
+   CellTags->"Info3645427497-4343701"]},
+ "Info3645514563-3120361"->{
+  Cell[87825, 2503, 309, 5, 43, "Print",
+   CellTags->"Info3645514563-3120361"]},
+ "Info3645514564-3120361"->{
+  Cell[88238, 2516, 311, 5, 43, "Print",
+   CellTags->"Info3645514564-3120361"]},
+ "Info3645427514-4343701"->{
+  Cell[99039, 2772, 427, 6, 43, "Print",
+   CellTags->"Info3645427514-4343701"]},
+ "Info3645427516-4343701"->{
+  Cell[99952, 2800, 429, 6, 43, "Print",
+   CellTags->"Info3645427516-4343701"]},
+ "Info3645427517-4343701"->{
+  Cell[100876, 2828, 471, 7, 43, "Print",
+   CellTags->"Info3645427517-4343701"]},
+ "Info3645427521-4343701"->{
+  Cell[102173, 2868, 487, 7, 43, "Print",
+   CellTags->"Info3645427521-4343701"]},
+ "Info3645427523-4343701"->{
+  Cell[103420, 2906, 490, 7, 43, "Print",
+   CellTags->"Info3645427523-4343701"]},
+ "Info3645427530-4343701"->{
+  Cell[105124, 2964, 435, 7, 43, "Print",
+   CellTags->"Info3645427530-4343701"]},
+ "Info3645427532-4343701"->{
+  Cell[106315, 3002, 436, 7, 43, "Print",
+   CellTags->"Info3645427532-4343701"]},
+ "Info3645427536-4343701"->{
+  Cell[107943, 3058, 276, 4, 43, "Print",
+   CellTags->"Info3645427536-4343701"]},
+ "Info3645427540-4343701"->{
+  Cell[108914, 3099, 425, 6, 43, "Print",
+   CellTags->"Info3645427540-4343701"],
+  Cell[109446, 3113, 427, 6, 43, "Print",
+   CellTags->"Info3645427540-4343701"]},
+ "Info3645427557-9963253"->{
+  Cell[111149, 3170, 577, 9, 43, "Print",
+   CellTags->"Info3645427557-9963253"]},
+ "Info3645514357-2860159"->{
+  Cell[112735, 3229, 931, 14, 61, "Print",
+   CellTags->"Info3645514357-2860159"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"Info3645427457-4343701", 128235, 3605},
+ {"Info3645427458-4343701", 128346, 3608},
+ {"Info3645427462-4343701", 128459, 3611},
+ {"Info3645427463-4343701", 128570, 3614},
+ {"Info3645427464-4343701", 128681, 3617},
+ {"Info3645427468-4343701", 128792, 3620},
+ {"Info3645427472-4343701", 128904, 3623},
+ {"Info3645427473-4343701", 129015, 3626},
+ {"Info3645427480-4343701", 129126, 3629},
+ {"Info3645514309-2860159", 129237, 3632},
+ {"Info3645427488-4343701", 129350, 3635},
+ {"Info3645427497-4343701", 129461, 3638},
+ {"Info3645514563-3120361", 129572, 3641},
+ {"Info3645514564-3120361", 129683, 3644},
+ {"Info3645427514-4343701", 129794, 3647},
+ {"Info3645427516-4343701", 129905, 3650},
+ {"Info3645427517-4343701", 130016, 3653},
+ {"Info3645427521-4343701", 130128, 3656},
+ {"Info3645427523-4343701", 130240, 3659},
+ {"Info3645427530-4343701", 130352, 3662},
+ {"Info3645427532-4343701", 130464, 3665},
+ {"Info3645427536-4343701", 130576, 3668},
+ {"Info3645427540-4343701", 130688, 3671},
+ {"Info3645427557-9963253", 130882, 3676},
+ {"Info3645514357-2860159", 130994, 3679}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 36, 0, 92, "Title"],
+Cell[606, 24, 42, 0, 51, "Subtitle"],
+Cell[651, 26, 234, 6, 49, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[910, 36, 31, 0, 64, "Section"],
+Cell[944, 38, 319, 6, 68, "Text"],
+Cell[1266, 46, 420, 11, 30, "Text"],
+Cell[1689, 59, 58, 1, 52, "Code"],
+Cell[1750, 62, 672, 23, 51, "Text"],
+Cell[2425, 87, 605, 17, 53, "Text"],
+Cell[3033, 106, 97, 2, 30, "Text"],
+Cell[CellGroupData[{
+Cell[3155, 112, 95, 2, 32, "Input"],
+Cell[3253, 116, 252, 5, 32, "Output"]
+}, Open  ]],
+Cell[3520, 124, 115, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[3660, 131, 380, 12, 32, "Input"],
+Cell[4043, 145, 836, 28, 85, "Output"]
+}, Open  ]],
+Cell[4894, 176, 170, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[5089, 183, 745, 23, 32, "Input"],
+Cell[5837, 208, 444, 12, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6318, 225, 57, 0, 44, "Subsection"],
+Cell[6378, 227, 139, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[6542, 234, 691, 20, 28, "Input"],
+Cell[7236, 256, 2996, 89, 217, "Output"]
+}, Open  ]],
+Cell[10247, 348, 49, 0, 30, "Text"],
+Cell[CellGroupData[{
+Cell[10321, 352, 1018, 28, 46, "Input"],
+Cell[11342, 382, 11492, 240, 350, "Output"]
+}, Open  ]],
+Cell[22849, 625, 126, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[23000, 632, 1011, 30, 63, "Input"],
+Cell[24014, 664, 3672, 89, 217, "Output"]
+}, Open  ]],
+Cell[27701, 756, 183, 5, 31, "Text"],
+Cell[27887, 763, 819, 25, 46, "Input"],
+Cell[CellGroupData[{
+Cell[28731, 792, 1141, 33, 63, "Input"],
+Cell[29875, 827, 3796, 89, 217, "Output"]
+}, Open  ]],
+Cell[33686, 919, 188, 7, 31, "Text"],
+Cell[CellGroupData[{
+Cell[33899, 930, 810, 24, 46, "Input"],
+Cell[34712, 956, 2203, 65, 217, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[36964, 1027, 57, 0, 36, "Subsection"],
+Cell[37024, 1029, 139, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[37188, 1036, 695, 20, 28, "Input"],
+Cell[37886, 1058, 2998, 89, 217, "Output"]
+}, Open  ]],
+Cell[40899, 1150, 49, 0, 30, "Text"],
+Cell[CellGroupData[{
+Cell[40973, 1154, 1020, 28, 46, "Input"],
+Cell[41996, 1184, 11508, 240, 350, "Output"]
+}, Open  ]],
+Cell[53519, 1427, 126, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[53670, 1434, 1144, 34, 63, "Input"],
+Cell[54817, 1470, 3674, 89, 217, "Output"]
+}, Open  ]],
+Cell[58506, 1562, 183, 5, 31, "Text"],
+Cell[58692, 1569, 819, 25, 46, "Input"],
+Cell[CellGroupData[{
+Cell[59536, 1598, 1143, 33, 63, "Input"],
+Cell[60682, 1633, 3798, 89, 217, "Output"]
+}, Open  ]],
+Cell[64495, 1725, 188, 7, 31, "Text"],
+Cell[CellGroupData[{
+Cell[64708, 1736, 812, 24, 46, "Input"],
+Cell[65523, 1762, 2205, 65, 217, "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[67789, 1834, 34, 0, 64, "Section"],
+Cell[CellGroupData[{
+Cell[67848, 1838, 150, 4, 29, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[68023, 1846, 52, 1, 28, "Input"],
+Cell[68078, 1849, 532, 8, 43, "Print",
+ CellTags->"Info3645427457-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[68647, 1862, 73, 1, 28, "Input"],
+Cell[68723, 1865, 1000, 14, 43, "Print",
+ CellTags->"Info3645427458-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[69760, 1884, 225, 6, 28, "Input"],
+Cell[69988, 1892, 73, 2, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[70098, 1899, 204, 6, 28, "Input"],
+Cell[70305, 1907, 28, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[70382, 1913, 200, 6, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[70607, 1923, 57, 1, 28, "Input"],
+Cell[70667, 1926, 310, 5, 43, "Print",
+ CellTags->"Info3645427462-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[71014, 1936, 155, 4, 28, "Input"],
+Cell[71172, 1942, 250, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[71459, 1952, 58, 1, 28, "Input"],
+Cell[71520, 1955, 312, 5, 43, "Print",
+ CellTags->"Info3645427463-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[71869, 1965, 159, 5, 28, "Input"],
+Cell[72031, 1972, 252, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[72320, 1982, 53, 1, 28, "Input"],
+Cell[72376, 1985, 416, 7, 43, "Print",
+ CellTags->"Info3645427464-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[72829, 1997, 226, 7, 28, "Input"],
+Cell[73058, 2006, 251, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[73346, 2016, 425, 13, 28, "Input"],
+Cell[73774, 2031, 77, 2, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[73900, 2039, 71, 0, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[73996, 2043, 60, 1, 28, "Input"],
+Cell[74059, 2046, 625, 10, 61, "Print",
+ CellTags->"Info3645427468-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[74721, 2061, 186, 5, 28, "Input"],
+Cell[74910, 2068, 28, 0, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[74975, 2073, 453, 13, 28, "Input"],
+Cell[75431, 2088, 279, 6, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[75747, 2099, 501, 15, 28, "Input"],
+Cell[76251, 2116, 279, 6, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[76579, 2128, 132, 4, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[76736, 2136, 53, 1, 28, "Input"],
+Cell[76792, 2139, 634, 9, 61, "Print",
+ CellTags->"Info3645427472-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[77463, 2153, 54, 1, 28, "Input"],
+Cell[77520, 2156, 346, 5, 61, "Print",
+ CellTags->"Info3645427473-4343701"]
+}, Open  ]],
+Cell[77881, 2164, 100, 2, 30, "Text"],
+Cell[CellGroupData[{
+Cell[78006, 2170, 65, 1, 28, "Input"],
+Cell[78074, 2173, 73, 2, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[78184, 2180, 65, 1, 28, "Input"],
+Cell[78252, 2183, 97, 3, 28, "Output"]
+}, Open  ]],
+Cell[78364, 2189, 85, 2, 30, "Text"],
+Cell[CellGroupData[{
+Cell[78474, 2195, 66, 1, 28, "Input"],
+Cell[78543, 2198, 121, 4, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[78713, 2208, 74, 0, 20, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[78812, 2212, 63, 1, 28, "Input"],
+Cell[78878, 2215, 573, 8, 43, "Print",
+ CellTags->"Info3645427480-4343701"]
+}, Open  ]],
+Cell[79466, 2226, 136, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[79627, 2233, 74, 1, 28, "Input"],
+Cell[79704, 2236, 76, 2, 28, "Output"]
+}, Open  ]],
+Cell[79795, 2241, 114, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[79934, 2248, 120, 2, 28, "Input"],
+Cell[80057, 2252, 76, 2, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[80182, 2260, 151, 4, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[80358, 2268, 62, 1, 28, "Input"],
+Cell[80423, 2271, 1169, 18, 61, "Print",
+ CellTags->"Info3645514309-2860159"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[81629, 2294, 565, 16, 35, "Input"],
+Cell[82197, 2312, 704, 16, 50, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[82938, 2333, 959, 29, 57, "Input"],
+Cell[83900, 2364, 175, 4, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[84112, 2373, 300, 9, 28, "Input"],
+Cell[84415, 2384, 175, 4, 28, "Output"]
+}, Open  ]],
+Cell[84605, 2391, 68, 0, 30, "Text"],
+Cell[CellGroupData[{
+Cell[84698, 2395, 64, 1, 28, "Input"],
+Cell[84765, 2398, 449, 7, 43, "Print",
+ CellTags->"Info3645427488-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[85251, 2410, 131, 3, 28, "Input"],
+Cell[85385, 2415, 726, 12, 46, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[86160, 2433, 73, 0, 20, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[86258, 2437, 62, 1, 28, "Input"],
+Cell[86323, 2440, 332, 5, 43, "Print",
+ CellTags->"Info3645427497-4343701"]
+}, Open  ]],
+Cell[86670, 2448, 107, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[86802, 2455, 73, 1, 28, "Input"],
+Cell[86878, 2458, 127, 4, 47, "Output"]
+}, Open  ]],
+Cell[87020, 2465, 75, 0, 30, "Text"],
+Cell[CellGroupData[{
+Cell[87120, 2469, 72, 1, 28, "Input"],
+Cell[87195, 2472, 83, 2, 28, "Output"]
+}, Open  ]],
+Cell[87293, 2477, 55, 0, 30, "Text"],
+Cell[CellGroupData[{
+Cell[87373, 2481, 74, 1, 28, "Input"],
+Cell[87450, 2484, 83, 2, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[87582, 2492, 152, 4, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[87759, 2500, 63, 1, 28, "Input"],
+Cell[87825, 2503, 309, 5, 43, "Print",
+ CellTags->"Info3645514563-3120361"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[88171, 2513, 64, 1, 28, "Input"],
+Cell[88238, 2516, 311, 5, 43, "Print",
+ CellTags->"Info3645514564-3120361"]
+}, Open  ]],
+Cell[88564, 2524, 70, 0, 30, "Text"],
+Cell[CellGroupData[{
+Cell[88659, 2528, 75, 1, 28, "Input"],
+Cell[88737, 2531, 113, 3, 47, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[88887, 2539, 317, 10, 48, "Input"],
+Cell[89207, 2551, 2100, 39, 374, "Output"]
+}, Open  ]],
+Cell[91322, 2593, 128, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[91475, 2600, 162, 4, 48, "Input"],
+Cell[91640, 2606, 113, 3, 47, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[91790, 2614, 1030, 31, 77, "Input"],
+Cell[92823, 2647, 5855, 106, 292, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[98727, 2759, 223, 6, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[98975, 2769, 61, 1, 28, "Input"],
+Cell[99039, 2772, 427, 6, 43, "Print",
+ CellTags->"Info3645427514-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[99503, 2783, 94, 2, 28, "Input"],
+Cell[99600, 2787, 250, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[99887, 2797, 62, 1, 28, "Input"],
+Cell[99952, 2800, 429, 6, 43, "Print",
+ CellTags->"Info3645427516-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[100418, 2811, 95, 2, 28, "Input"],
+Cell[100516, 2815, 252, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[100805, 2825, 68, 1, 28, "Input"],
+Cell[100876, 2828, 471, 7, 43, "Print",
+ CellTags->"Info3645427517-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[101384, 2840, 101, 2, 28, "Input"],
+Cell[101488, 2844, 399, 7, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[101936, 2857, 148, 4, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[102109, 2865, 61, 1, 28, "Input"],
+Cell[102173, 2868, 487, 7, 43, "Print",
+ CellTags->"Info3645427521-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[102697, 2880, 350, 9, 28, "Input"],
+Cell[103050, 2891, 268, 7, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[103355, 2903, 62, 1, 28, "Input"],
+Cell[103420, 2906, 490, 7, 43, "Print",
+ CellTags->"Info3645427523-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[103947, 2918, 351, 9, 28, "Input"],
+Cell[104301, 2929, 268, 7, 28, "Output"]
+}, Open  ]],
+Cell[104584, 2939, 272, 9, 31, "Text"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[104893, 2953, 144, 4, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[105062, 2961, 59, 1, 28, "Input"],
+Cell[105124, 2964, 435, 7, 43, "Print",
+ CellTags->"Info3645427530-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[105596, 2976, 348, 9, 28, "Input"],
+Cell[105947, 2987, 268, 7, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[106252, 2999, 60, 1, 28, "Input"],
+Cell[106315, 3002, 436, 7, 43, "Print",
+ CellTags->"Info3645427532-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[106788, 3014, 349, 9, 28, "Input"],
+Cell[107140, 3025, 268, 7, 28, "Output"]
+}, Open  ]],
+Cell[107423, 3035, 320, 11, 31, "Text"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[107780, 3051, 73, 0, 20, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[107878, 3055, 62, 1, 28, "Input"],
+Cell[107943, 3058, 276, 4, 43, "Print",
+ CellTags->"Info3645427536-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[108256, 3067, 73, 1, 28, "Input"],
+Cell[108332, 3070, 84, 2, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[108453, 3077, 73, 1, 28, "Input"],
+Cell[108529, 3080, 84, 2, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[108662, 3088, 158, 4, 23, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[108845, 3096, 66, 1, 28, "Input"],
+Cell[108914, 3099, 425, 6, 43, "Print",
+ CellTags->"Info3645427540-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[109376, 3110, 67, 1, 28, "Input"],
+Cell[109446, 3113, 427, 6, 43, "Print",
+ CellTags->"Info3645427540-4343701"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[109910, 3124, 100, 2, 28, "Input"],
+Cell[110013, 3128, 85, 2, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[110135, 3135, 124, 3, 28, "Input"],
+Cell[110262, 3140, 554, 9, 110, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[110853, 3154, 68, 1, 28, "Input"],
+Cell[110924, 3157, 31, 0, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[111004, 3163, 64, 0, 20, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[111093, 3167, 53, 1, 28, "Input"],
+Cell[111149, 3170, 577, 9, 43, "Print",
+ CellTags->"Info3645427557-9963253"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[111763, 3184, 194, 6, 28, "Input"],
+Cell[111960, 3192, 155, 5, 28, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[112152, 3202, 195, 6, 28, "Input"],
+Cell[112350, 3210, 155, 5, 28, "Output"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[112554, 3221, 83, 1, 20, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[112662, 3226, 70, 1, 28, "Input"],
+Cell[112735, 3229, 931, 14, 61, "Print",
+ CellTags->"Info3645514357-2860159"]
+}, Open  ]],
+Cell[113681, 3246, 112, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[113818, 3253, 554, 12, 28, "Input"],
+Cell[114375, 3267, 1157, 23, 63, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[115569, 3295, 535, 11, 28, "Input"],
+Cell[116107, 3308, 1157, 23, 63, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[117301, 3336, 632, 15, 46, "Input"],
+Cell[117936, 3353, 1893, 37, 97, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[119866, 3395, 452, 14, 28, "Input"],
+Cell[120321, 3411, 1710, 33, 374, "Output"]
+}, Open  ]],
+Cell[122046, 3447, 112, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[122183, 3454, 632, 15, 46, "Input"],
+Cell[122818, 3471, 1893, 37, 97, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[124748, 3513, 941, 29, 46, "Input"],
+Cell[125692, 3544, 2018, 40, 320, "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

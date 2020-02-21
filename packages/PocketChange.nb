@@ -1,0 +1,1077 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     38278,       1069]
+NotebookOptionsPosition[     25184,        747]
+NotebookOutlinePosition[     29237,        840]
+CellTagsIndexPosition[     28937,        830]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["PocketChange 1.02", "Title"],
+
+Cell["documentation notebook", "Subtitle"],
+
+Cell[TextData[{
+ "Eric Rowland\n",
+ ButtonBox["http://people.hofstra.edu/Eric_Rowland/packages.html",
+  BaseStyle->"Hyperlink",
+  ButtonData:>{
+    URL["http://people.hofstra.edu/Eric_Rowland/packages.html"], None}]
+}], "Subsubtitle",ExpressionUUID->"f03a100a-b167-4ddf-87bc-4017e378d782"],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section"],
+
+Cell["\<\
+PocketChange is a package for analyzing the long-term behavior of the set of \
+coins in one\[CloseCurlyQuote]s pocket.
+This introduction gets you started with a few features of the package; the \
+next section provides a complete list of package symbols along with their \
+usage messages and further examples.\
+\>", "Text"],
+
+Cell[TextData[{
+ "To use PocketChange, first you will need to load the package by evaluating \
+the following cell.  (If you need help, see ",
+ ButtonBox["loading a package",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.\
+html"], None},
+  ButtonNote->
+   "http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.html"],
+ ".)"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"<<", "PocketChange`"}]], "Code",ExpressionUUID->"57d5d690-20dc-436d-81cb-5477a5d3026d"],
+
+Cell[CellGroupData[{
+
+Cell["Overview", "Subsection",ExpressionUUID->"0f49e9e5-e2fc-45bc-9983-49ac7c9359f0"],
+
+Cell["\<\
+In a cash transaction, the spender hands coins to the cashier to pay for the \
+purchase, and the cashier hands coins back to the spender for the change.\
+\>", "Text"],
+
+Cell[TextData[{
+ "Cashiers use the greedy algorithm to decide what coins to return, and they \
+effectively have an infinite supply.  ",
+ StyleBox["GreedyPartition", "Input"],
+ " gives the greedy partition of an integer in a given currency."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"GreedyPartition", "[", 
+  RowBox[{"30", ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "5", ",", "10", ",", "25"}], "}"}]}], "]"}]], "Input",Ex\
+pressionUUID->"15605261-89d8-4e87-89e7-e864bea3f191"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"25", ",", "5"}], "}"}]], "Output",ExpressionUUID->"9ff0cca6-a180-4e22-a8ee-9039b1b1a934"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Spenders, on the other hand, are assumed to\n\[Bullet] spend no coins if \
+they do not have sufficient change,\n\[Bullet] overpay as little as possible \
+if they do have sufficient change, and\n\[Bullet] break ties among the \
+possible ways to pay by favoring bigger coins to spend over smaller coins.\n\
+Such a spender is called a ",
+ StyleBox["big spender",
+  FontSlant->"Italic"],
+ ", and the set of coins a big spender has after a transaction is computed by \
+",
+ StyleBox["BigSpenderTransaction", "Input"],
+ "."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"BigSpenderTransaction", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25", ",", "5"}], "}"}], ",", "99"}], "]"}]], "Input",E\
+xpressionUUID->"6326954d-80c4-4fd4-a4ce-9776e6daac19"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"25", ",", "25", ",", "5", ",", "1"}], "}"}]], "Output",ExpressionUU\
+ID->"758ae54e-68aa-464d-9f0e-04bd7d204fb4"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"BigSpenderTransaction", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25", ",", "5"}], "}"}], ",", "28"}], "]"}]], "Input",E\
+xpressionUUID->"e9459360-ec46-4951-86ba-438f7758793c"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"25", ",", "1", ",", "1"}], "}"}]], "Output",ExpressionUUID->\
+"f670cf77-54dd-4e86-a568-2d88cc6b881a"]
+}, Open  ]],
+
+Cell[TextData[{
+ "The set of all reasonable pocket partitions for a given currency is given \
+by ",
+ StyleBox["PartitionList", "Input"],
+ "."
+}], "Text",ExpressionUUID->"c50e507d-f2ca-4093-95fa-80780d55b16a"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PartitionList", "[", 
+  RowBox[{"{", 
+   RowBox[{"10", ",", "25"}], "}"}], "]"}]], "Input",ExpressionUUID->\
+"4faa8efc-b76c-4bf6-af22-368d1c6d8c93"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "}"}], ",", 
+   RowBox[{"{", "10", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10", ",", "10", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10", ",", "10", ",", "10", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10", ",", "10", ",", "10", ",", "10", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10", ",", "10", ",", "10", ",", "10", ",", "10", ",", "10"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "10", ",", "10", ",", "10", ",", "10", ",", "10", ",", "10", ",", "10"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "10", ",", "10", ",", "10", ",", "10", ",", "10", ",", "10", ",", "10", 
+     ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "10", ",", "10", ",", "10", ",", "10", ",", "10", ",", "10", ",", "10", 
+     ",", "10", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", "25", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "10", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "10", ",", "10", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "10", ",", "10", ",", "10", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "10", ",", "10", ",", "10", ",", "10", ",", "10"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "25", ",", "10", ",", "10", ",", "10", ",", "10", ",", "10", ",", "10"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "25", ",", "10", ",", "10", ",", "10", ",", "10", ",", "10", ",", "10", 
+     ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25", ",", "10", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25", ",", "10", ",", "10", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25", ",", "10", ",", "10", ",", "10", ",", "10"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25", ",", "25"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25", ",", "25", ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25", ",", "25", ",", "10", ",", "10"}], "}"}]}], 
+  "}"}]], "Output",ExpressionUUID->"208c6d52-4078-4fdb-b5d7-65eea458e7bc"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Many examples of computing limiting distributions of coins appear in the \
+computation notebook accompanying my paper \[OpenCurlyDoubleQuote]What\
+\[CloseCurlyQuote]s in YOUR wallet?\[CloseCurlyDoubleQuote] with Lara \
+Pudwell:\n",
+ ButtonBox["http://people.hofstra.edu/Eric_Rowland/computations/What\
+\[CloseCurlyQuote]s_in_YOUR_wallet.nb",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://people.hofstra.edu/Eric_Rowland/computations/What's_in_YOUR_\
+wallet.nb"], None},
+  ButtonNote->
+   "http://people.hofstra.edu/Eric_Rowland/computations/What's_in_YOUR_wallet.\
+nb"]
+}], "Text",ExpressionUUID->"31aeb126-31f0-4cf3-bac0-68f345bd25bb"]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Package symbols", "Section",ExpressionUUID->"b8a864c0-8227-4d5d-9517-8052cac63cbd"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["BigSpenderBestPartition", "Input"]], "Subsubsection",ExpressionUUID->"8a5c4a17-9f57-42b1-97f8-52563b1baba3"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "BigSpenderBestPartition"}]], "Input",ExpressionUUID->"f984a858-8324-4006-bd89-87149eedf671"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"BigSpenderBestPartition\\\", \\\"[\\\", \
+StyleBox[\\\"partitions\\\", \\\"TI\\\"], \\\"]\\\"]]\) breaks ties among a \
+list of integer partitions by favoring larger parts.\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->
+  "Info63702545259-2497548",ExpressionUUID->"4d6993d3-0b7f-40e0-aa13-\
+c9ed3d137a93"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"BigSpenderBestPartition", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"5", ",", "5", ",", "5"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"10", ",", "5"}], "}"}]}], "}"}], "]"}]], "Input",ExpressionUUID-\
+>"0d9e2015-97e3-41e5-9905-1c1f441429f4"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"10", ",", "5"}], "}"}]], "Output",ExpressionUUID->"eb565205-dd22-425d-9c80-5c46508e11af"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["BigSpenderTransaction", "Input"]], "Subsubsection",ExpressionUUID->"e583c334-da8c-4bca-b80e-d4c3839811fe"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "BigSpenderTransaction"}]], "Input",ExpressionUUID->"a52ce3bb-4419-4aa6-99c1-1c0e150739f5"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"BigSpenderTransaction\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"partition\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"price\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"currency\\\", \\\
+\"TI\\\"]]], \\\"]\\\"]]\) gives the state after a big spender transaction in \
+which the price is \!\(\*StyleBox[\\\"price\\\", \\\"TI\\\"]\) and the \
+previous state was \!\(\*StyleBox[\\\"partition\\\", \
+\\\"TI\\\"]\).\\n\!\(\*RowBox[List[\\\"BigSpenderTransaction\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"partition\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"price\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) uses the U.S. currency \
+\!\(\*RowBox[List[\\\"{\\\", RowBox[List[StyleBox[\\\"1\\\", \\\"TR\\\"], \
+\\\",\\\", StyleBox[\\\"5\\\", \\\"TR\\\"], \\\",\\\", StyleBox[\\\"10\\\", \
+\\\"TR\\\"], \\\",\\\", StyleBox[\\\"25\\\", \\\"TR\\\"]]], \\\"}\\\"]]\).\\n\
+\!\(\*RowBox[List[\\\"BigSpenderTransaction\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"partition\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"price\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"currency\\\", \\\
+\"TI\\\"], \\\",\\\", StyleBox[\\\"modulus\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) \
+uses a modulus different from 100.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info83702545263-2497548",ExpressionUUID->"355869b9-104b-4594-a4ef-\
+8973ef589e1b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"BigSpenderTransaction", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"25", ",", "10", ",", "5", ",", "5", ",", "1", ",", "1"}], "}"}], 
+   ",", "13"}], "]"}]], "Input",ExpressionUUID->"94f89297-68ab-40f4-8222-\
+cc9bd6fae6cd"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"25", ",", "5", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+  "}"}]], "Output",ExpressionUUID->"88650fef-ffbe-4f1b-8a1e-5fe1b3c0c160"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"BigSpenderTransaction", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "25", ",", "10", ",", "5", ",", "5", ",", "5", ",", "1", ",", "1"}], 
+    "}"}], ",", "13"}], "]"}]], "Input",ExpressionUUID->"62d5c459-7b92-48b0-\
+b462-be2b5e58d216"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"25", ",", "5", ",", "5", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+  "}"}]], "Output",ExpressionUUID->"46ea9103-1dfa-4f50-896c-756b1f0846f3"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"BigSpenderTransaction", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"25", ",", "1", ",", "1", ",", "1"}], "}"}], ",", "13"}], 
+  "]"}]], "Input",ExpressionUUID->"1c17ac05-4821-4204-9478-9ad02e4280f9"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"10", ",", "1", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+  "}"}]], "Output",ExpressionUUID->"2878b3a4-e362-4d29-a548-d41ae9df2476"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"BigSpenderTransaction", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1"}], "}"}], ",", "99"}], 
+  "]"}]], "Input",ExpressionUUID->"a40583d0-2b09-4f0e-b625-64e78816f11d"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"1", ",", "1", ",", "1", ",", "1", ",", "1"}], "}"}]], "Output",Expr\
+essionUUID->"e3883741-c717-4952-a1a4-2705927f7571"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["DistinctSubsets", "Input"]], "Subsubsection",ExpressionUUID->"f558327f-e552-47e7-9f3f-65f1ded5e4cd"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "DistinctSubsets"}]], "Input",ExpressionUUID->"ade1d6a9-5871-445a-8d42-e14365cfdcef"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"DistinctSubsets\\\", \\\"[\\\", \
+StyleBox[\\\"list\\\", \\\"TI\\\"], \\\"]\\\"]]\) gives a list of all \
+distinct subsets of \!\(\*StyleBox[\\\"list\\\", \\\"TI\\\"]\).\"\>", 
+  "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info133702545268-2497548",ExpressionUUID->"31fb5550-1dcf-4fc2-84f8-\
+00cd2190eee2"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DistinctSubsets", "[", 
+  RowBox[{"{", 
+   RowBox[{"10", ",", "5", ",", "1", ",", "1"}], "}"}], "]"}]], "Input",Expres\
+sionUUID->"8f376100-e952-439c-8335-608c9bb61d13"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "}"}], ",", 
+   RowBox[{"{", "10", "}"}], ",", 
+   RowBox[{"{", "5", "}"}], ",", 
+   RowBox[{"{", "1", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10", ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10", ",", "1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10", ",", "5", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10", ",", "5", ",", "1", ",", "1"}], "}"}]}], "}"}]], "Output",Ex\
+pressionUUID->"7216d60d-c54b-4d28-8768-97f4fc7815f7"]
+}, Open  ]],
+
+Cell[TextData[{
+ "When there are no repeated elements, the ",
+ StyleBox["DistinctSubsets", "Input"],
+ " are the same as the ",
+ StyleBox["Subsets", "Input"],
+ ":"
+}], "Text",ExpressionUUID->"15815367-5ff1-4bc1-8fe3-ae19911595e9"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"DistinctSubsets", "[", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "3"}], "}"}], "]"}], "\[Equal]", 
+  RowBox[{"Subsets", "[", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2", ",", "3"}], "}"}], "]"}]}]], "Input",ExpressionUUID\
+->"a975c290-f87d-47fd-8047-fffad6b2525f"],
+
+Cell[BoxData["True"], "Output",ExpressionUUID->"38ddf768-e048-405f-9f3f-ae6d3e3e0acc"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Union", "[", 
+   RowBox[{"Sort", "/@", 
+    RowBox[{"Subsets", "[", 
+     RowBox[{"{", 
+      RowBox[{"a", ",", "a", ",", "b", ",", "c", ",", "c", ",", "b"}], "}"}], 
+     "]"}]}], "]"}], "\[Equal]", 
+  RowBox[{"Sort", "[", 
+   RowBox[{"DistinctSubsets", "[", 
+    RowBox[{"{", 
+     RowBox[{"a", ",", "a", ",", "b", ",", "c", ",", "c", ",", "b"}], "}"}], 
+    "]"}], "]"}]}]], "Input",ExpressionUUID->"79f230e9-8eb7-486e-8de4-\
+e4444e2888de"],
+
+Cell[BoxData["True"], "Output",ExpressionUUID->"6d7d4bc9-d752-47df-bdd4-cad736a670f6"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["GreedyPartition", "Input"]], "Subsubsection",ExpressionUUID->"71b54fc3-5b58-4266-9fe1-4648afd3183e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "GreedyPartition"}]], "Input",ExpressionUUID->"9bc2f8bd-86d6-4aa7-9380-bf9dd443dae4"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"GreedyPartition\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"currency\
+\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives the integer partition of \
+\!\(\*StyleBox[\\\"n\\\", \\\"TI\\\"]\) into parts from \
+\!\(\*StyleBox[\\\"currency\\\", \\\"TI\\\"]\) found by the greedy algorithm.\
+\\n\!\(\*RowBox[List[\\\"GreedyPartition\\\", \\\"[\\\", StyleBox[\\\"n\\\", \
+\\\"TI\\\"], \\\"]\\\"]]\) uses the U.S. currency \
+\!\(\*RowBox[List[\\\"{\\\", RowBox[List[StyleBox[\\\"1\\\", \\\"TR\\\"], \
+\\\",\\\", StyleBox[\\\"5\\\", \\\"TR\\\"], \\\",\\\", StyleBox[\\\"10\\\", \
+\\\"TR\\\"], \\\",\\\", StyleBox[\\\"25\\\", \\\"TR\\\"]]], \
+\\\"}\\\"]]\).\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info173702545273-2497548",ExpressionUUID->"cffbfb61-40b6-4df2-9f1e-\
+587ee52c6bb7"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"GreedyPartition", "[", "98", "]"}]], "Input",ExpressionUUID->"789087bf-86c5-41c3-b41d-39cacde0da8b"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "25", ",", "25", ",", "25", ",", "10", ",", "10", ",", "1", ",", "1", ",", 
+   "1"}], "}"}]], "Output",ExpressionUUID->"e206a0f4-e23d-4e72-8dff-\
+14bae09e2934"]
+}, Open  ]],
+
+Cell[TextData[{
+ "If the integer is not representable in the currency, ",
+ StyleBox["GreedyPartition", "Input"],
+ " returns unevaluated:"
+}], "Text",ExpressionUUID->"700303d5-396d-494d-9dd7-5d9ce1d6da12"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"GreedyPartition", "[", 
+  RowBox[{"98", ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "10"}], "}"}]}], "]"}]], "Input",ExpressionUUID->\
+"06464cc0-76c1-4329-bb41-50ba37f62892"],
+
+Cell[BoxData[
+ RowBox[{"GreedyPartition", "[", 
+  RowBox[{"98", ",", 
+   RowBox[{"{", 
+    RowBox[{"5", ",", "10"}], "}"}]}], "]"}]], "Output",ExpressionUUID->\
+"04cf6d76-b730-4506-b821-e39629ce8e8a"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["PartitionList", "Input"]], "Subsubsection",ExpressionUUID->"44020273-34e2-4564-bae0-db1f144255a9"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "PartitionList"}]], "Input",ExpressionUUID->"cbf7e9be-57dc-4c57-8e2e-43d5d0ae96fd"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"PartitionList\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"currency\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"modulus\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) gives a list of all \
+integer partitions using parts from \!\(\*StyleBox[\\\"currency\\\", \\\"TI\\\
+\"]\) such that the sum of the parts of any single type in any partition is \
+less than \!\(\*StyleBox[\\\"modulus\\\", \\\"TI\\\"]\).\\n\!\(\*RowBox[List[\
+\\\"PartitionList\\\", \\\"[\\\", \\\"]\\\"]]\) uses the U.S. currency \
+\!\(\*RowBox[List[\\\"{\\\", RowBox[List[StyleBox[\\\"1\\\", \\\"TR\\\"], \
+\\\",\\\", StyleBox[\\\"5\\\", \\\"TR\\\"], \\\",\\\", StyleBox[\\\"10\\\", \
+\\\"TR\\\"], \\\",\\\", StyleBox[\\\"25\\\", \\\"TR\\\"]]], \\\"}\\\"]]\) and \
+modulus 100.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info203702545279-2497548",ExpressionUUID->"d68ed75e-a009-4e6e-be34-\
+b265559d41fb"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PartitionList", "[", 
+  RowBox[{"{", 
+   RowBox[{"20", ",", "25"}], "}"}], "]"}]], "Input",ExpressionUUID->\
+"02fa003b-dc7a-43ac-8eb3-06e8215f36df"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "}"}], ",", 
+   RowBox[{"{", "20", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"20", ",", "20"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"20", ",", "20", ",", "20"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"20", ",", "20", ",", "20", ",", "20"}], "}"}], ",", 
+   RowBox[{"{", "25", "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "20"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "20", ",", "20"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "20", ",", "20", ",", "20"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25", ",", "20"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25", ",", "20", ",", "20"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25", ",", "25"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"25", ",", "25", ",", "25", ",", "20"}], "}"}]}], "}"}]], "Output",\
+ExpressionUUID->"b0aa4f3e-4e72-4f46-86dc-4015727bea13"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Total", "/@", "%"}]], "Input",ExpressionUUID->"a8399735-5b36-4034-b3cd-e2d5e4106106"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0", ",", "20", ",", "40", ",", "60", ",", "80", ",", "25", ",", "45", ",", 
+   "65", ",", "85", ",", "50", ",", "70", ",", "90", ",", "75", ",", "95"}], 
+  "}"}]], "Output",ExpressionUUID->"50012b86-f22c-4fd4-8b29-f3049d7ffe79"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Short", "[", 
+  RowBox[{"PartitionList", "[", "]"}], "]"}]], "Input",ExpressionUUID->\
+"4092957b-9989-49f3-af65-3b5c9436ebd9"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", "}"}], ",", 
+    RowBox[{"{", "1", "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"1", ",", "1"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"1", ",", "1", ",", "1"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"1", ",", "1", ",", "1", ",", "1"}], "}"}], ",", 
+    RowBox[{"\[LeftSkeleton]", "6711", "\[RightSkeleton]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"25", ",", "25", ",", "25", ",", "10", ",", "10", ",", "1"}], 
+     "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+     "25", ",", "25", ",", "25", ",", "10", ",", "10", ",", "1", ",", "1"}], 
+     "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+     "25", ",", "25", ",", "25", ",", "10", ",", "10", ",", "1", ",", "1", 
+      ",", "1"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+     "25", ",", "25", ",", "25", ",", "10", ",", "10", ",", "1", ",", "1", 
+      ",", "1", ",", "1"}], "}"}]}], "}"}],
+  Short]], "Output",ExpressionUUID->"c91e1dad-6515-4428-884f-0b2e9bc83117"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["PenniesFirstBigSpenderTransaction", "Input"]], \
+"Subsubsection",ExpressionUUID->"fca99aa8-c6e9-4455-b58b-7e5295176b27"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "PenniesFirstBigSpenderTransaction"}]], "Input",ExpressionUUID->"a04a53c6-5af8-4e6e-8903-92b2c98f9039"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"PenniesFirstBigSpenderTransaction\\\", \
+\\\"[\\\", RowBox[List[StyleBox[\\\"partition\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"price\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"currency\\\", \\\
+\"TI\\\"]]], \\\"]\\\"]]\) gives the state after a pennies\[Hyphen]first big \
+spender transaction in which the price is \!\(\*StyleBox[\\\"price\\\", \
+\\\"TI\\\"]\) and the previous state was \!\(\*StyleBox[\\\"partition\\\", \\\
+\"TI\\\"]\).\\n\!\(\*RowBox[List[\\\"PenniesFirstBigSpenderTransaction\\\", \
+\\\"[\\\", RowBox[List[StyleBox[\\\"partition\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"price\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) uses the U.S. currency \
+\!\(\*RowBox[List[\\\"{\\\", RowBox[List[StyleBox[\\\"1\\\", \\\"TR\\\"], \
+\\\",\\\", StyleBox[\\\"5\\\", \\\"TR\\\"], \\\",\\\", StyleBox[\\\"10\\\", \
+\\\"TR\\\"], \\\",\\\", StyleBox[\\\"25\\\", \\\"TR\\\"]]], \\\"}\\\"]]\).\\n\
+\!\(\*RowBox[List[\\\"PenniesFirstBigSpenderTransaction\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"partition\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"price\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"currency\\\", \\\
+\"TI\\\"], \\\",\\\", StyleBox[\\\"modulus\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) \
+uses a modulus different from 100.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info243702545293-2497548",ExpressionUUID->"8612bece-4d8a-46e9-8a6a-\
+90e7391588fc"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PenniesFirstBigSpenderTransaction", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"25", ",", "10", ",", "5", ",", "5", ",", "1", ",", "1"}], "}"}], 
+   ",", "13"}], "]"}]], "Input",ExpressionUUID->"d0ec19c9-f291-4c74-9304-\
+c3e6065273cc"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"25", ",", "5", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+  "}"}]], "Output",ExpressionUUID->"3a183e0d-7805-4230-9a57-b1281d7971a1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PenniesFirstBigSpenderTransaction", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "25", ",", "10", ",", "5", ",", "5", ",", "5", ",", "1", ",", "1"}], 
+    "}"}], ",", "13"}], "]"}]], "Input",ExpressionUUID->"e18bc007-5203-4e9b-\
+9b54-e3cfe9165afa"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"25", ",", "5", ",", "5", ",", "1", ",", "1", ",", "1", ",", "1"}], 
+  "}"}]], "Output",ExpressionUUID->"38d18582-6b75-4c8d-91df-5552c24ca934"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PenniesFirstBigSpenderTransaction", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"25", ",", "1", ",", "1", ",", "1"}], "}"}], ",", "13"}], 
+  "]"}]], "Input",ExpressionUUID->"94ab1f87-6c53-400a-b2c6-2719545ad8c0"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"10", ",", "5"}], "}"}]], "Output",ExpressionUUID->"3b378ea2-300f-4016-b19b-afd3393e036a"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"PenniesFirstBigSpenderTransaction", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1"}], "}"}], ",", "99"}], 
+  "]"}]], "Input",ExpressionUUID->"060f98f8-4d97-4b70-89b3-3d4b0b72151b"],
+
+Cell[BoxData[
+ RowBox[{"{", "5", "}"}]], "Output",ExpressionUUID->"5d252502-2d76-4fda-bb74-0ed5fbf26d05"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1264, 717},
+WindowMargins->{{52, Automatic}, {Automatic, 27}},
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
+ShowSelection->True,
+InputAliases->{"intt" -> RowBox[{"\[Integral]", 
+     RowBox[{"\[SelectionPlaceholder]", 
+       RowBox[{"\[DifferentialD]", "\[Placeholder]"}]}]}], "dintt" -> RowBox[{
+     SubsuperscriptBox[
+     "\[Integral]", "\[SelectionPlaceholder]", "\[Placeholder]"], 
+     RowBox[{"\[Placeholder]", 
+       RowBox[{"\[DifferentialD]", "\[Placeholder]"}]}]}], "sumt" -> RowBox[{
+     UnderoverscriptBox["\[Sum]", 
+      RowBox[{"\[SelectionPlaceholder]", "=", "\[Placeholder]"}], 
+      "\[Placeholder]"], "\[Placeholder]"}], "prodt" -> RowBox[{
+     UnderoverscriptBox["\[Product]", 
+      RowBox[{"\[SelectionPlaceholder]", "=", "\[Placeholder]"}], 
+      "\[Placeholder]"], "\[Placeholder]"}], "dt" -> RowBox[{
+     SubscriptBox["\[PartialD]", "\[Placeholder]"], " ", 
+     "\[SelectionPlaceholder]"}], "notation" -> RowBox[{"Notation", "[", 
+     RowBox[{
+       TemplateBox[{"\[SelectionPlaceholder]"}, "NotationTemplateTag"], " ", 
+       "\[DoubleLongLeftRightArrow]", " ", 
+       TemplateBox[{"\[Placeholder]"}, "NotationTemplateTag"]}], "]"}], 
+  "notation>" -> RowBox[{"Notation", "[", 
+     RowBox[{
+       TemplateBox[{"\[SelectionPlaceholder]"}, "NotationTemplateTag"], " ", 
+       "\[DoubleLongRightArrow]", " ", 
+       TemplateBox[{"\[Placeholder]"}, "NotationTemplateTag"]}], "]"}], 
+  "notation<" -> RowBox[{"Notation", "[", 
+     RowBox[{
+       TemplateBox[{"\[SelectionPlaceholder]"}, "NotationTemplateTag"], " ", 
+       "\[DoubleLongLeftArrow]", " ", 
+       TemplateBox[{"\[Placeholder]"}, "NotationTemplateTag"]}], "]"}], 
+  "symb" -> RowBox[{"Symbolize", "[", 
+     TemplateBox[{"\[SelectionPlaceholder]"}, "NotationTemplateTag"], "]"}], 
+  "infixnotation" -> RowBox[{"InfixNotation", "[", 
+     RowBox[{
+       TemplateBox[{"\[SelectionPlaceholder]"}, "NotationTemplateTag"], ",", 
+       "\[Placeholder]"}], "]"}], "addia" -> RowBox[{"AddInputAlias", "[", 
+     RowBox[{"\"\[SelectionPlaceholder]\"", "\[Rule]", 
+       TemplateBox[{"\[Placeholder]"}, "NotationTemplateTag"]}], "]"}], 
+  "pattwraper" -> 
+  TemplateBox[{"\[SelectionPlaceholder]"}, "NotationPatternTag"], 
+  "madeboxeswraper" -> 
+  TemplateBox[{"\[SelectionPlaceholder]"}, "NotationMadeBoxesTag"], "nct" -> 
+  OverscriptBox["*", "^"], "nc" -> "NonCommutative"},
+TrackCellChangeTimes->False,
+FrontEndVersion->"11.1 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 16, \
+2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "Info63702545259-2497548"->{
+  Cell[8083, 250, 361, 7, 
+  43, "Print", "ExpressionUUID" -> "4d6993d3-0b7f-40e0-aa13-c9ed3d137a93",
+   CellTags->"Info63702545259-2497548"]},
+ "Info83702545263-2497548"->{
+  Cell[9232, 287, 1356, 20, 
+  79, "Print", "ExpressionUUID" -> "355869b9-104b-4594-a4ef-8973ef589e1b",
+   CellTags->"Info83702545263-2497548"]},
+ "Info133702545268-2497548"->{
+  Cell[12715, 383, 360, 7, 
+  43, "Print", "ExpressionUUID" -> "31fb5550-1dcf-4fc2-84f8-00cd2190eee2",
+   CellTags->"Info133702545268-2497548"]},
+ "Info173702545273-2497548"->{
+  Cell[15660, 480, 867, 14, 
+  58, "Print", "ExpressionUUID" -> "cffbfb61-40b6-4df2-9f1e-587ee52c6bb7",
+   CellTags->"Info173702545273-2497548"]},
+ "Info203702545279-2497548"->{
+  Cell[17849, 543, 917, 14, 
+  58, "Print", "ExpressionUUID" -> "d68ed75e-a009-4e6e-be34-b265559d41fb",
+   CellTags->"Info203702545279-2497548"]},
+ "Info243702545293-2497548"->{
+  Cell[21954, 661, 1415, 20, 
+  79, "Print", "ExpressionUUID" -> "8612bece-4d8a-46e9-8a6a-90e7391588fc",
+   CellTags->"Info243702545293-2497548"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"Info63702545259-2497548", 27882, 803},
+ {"Info83702545263-2497548", 28056, 807},
+ {"Info133702545268-2497548", 28233, 811},
+ {"Info173702545273-2497548", 28410, 815},
+ {"Info203702545279-2497548", 28588, 819},
+ {"Info243702545293-2497548", 28766, 823}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 34, 0, 92, "Title", "ExpressionUUID" -> \
+"f8eb58d7-b737-4032-81fe-15c9edd543b4"],
+Cell[604, 24, 42, 0, 51, "Subtitle", "ExpressionUUID" -> \
+"97747209-53b5-4741-bb55-61538e7f5246"],
+Cell[649, 26, 289, 6, 49, "Subsubtitle", "ExpressionUUID" -> \
+"f03a100a-b167-4ddf-87bc-4017e378d782"],
+Cell[CellGroupData[{
+Cell[963, 36, 31, 0, 64, "Section", "ExpressionUUID" -> \
+"c7900426-4929-42eb-b1e9-fa46f10db094"],
+Cell[997, 38, 332, 6, 68, "Text", "ExpressionUUID" -> \
+"ed710569-564a-4eba-a7f2-6ef68144ad22"],
+Cell[1332, 46, 418, 11, 30, "Text", "ExpressionUUID" -> \
+"0909efa7-4a39-4edf-bebf-9ed6bf0abc10"],
+Cell[1753, 59, 111, 1, 52, "Code", "ExpressionUUID" -> \
+"57d5d690-20dc-436d-81cb-5477a5d3026d"],
+Cell[CellGroupData[{
+Cell[1889, 64, 85, 0, 44, "Subsection", "ExpressionUUID" -> \
+"0f49e9e5-e2fc-45bc-9983-49ac7c9359f0"],
+Cell[1977, 66, 176, 3, 30, "Text", "ExpressionUUID" -> \
+"5e4b0f2e-13e9-4778-9087-cd9e5dfea4e9"],
+Cell[2156, 71, 252, 5, 50, "Text", "ExpressionUUID" -> \
+"1e64927e-d9d4-4500-9441-760e79eef49f"],
+Cell[CellGroupData[{
+Cell[2433, 80, 220, 5, 32, "Input", "ExpressionUUID" -> \
+"15605261-89d8-4e87-89e7-e864bea3f191"],
+Cell[2656, 87, 129, 2, 32, "Output", "ExpressionUUID" -> \
+"9ff0cca6-a180-4e22-a8ee-9039b1b1a934"]
+}, Open  ]],
+Cell[2800, 92, 546, 12, 107, "Text", "ExpressionUUID" -> \
+"9bb640bb-f601-4edc-b5db-8f9fc3f028a4"],
+Cell[CellGroupData[{
+Cell[3371, 108, 216, 5, 32, "Input", "ExpressionUUID" -> \
+"6326954d-80c4-4fd4-a4ce-9776e6daac19"],
+Cell[3590, 115, 152, 3, 32, "Output", "ExpressionUUID" -> \
+"758ae54e-68aa-464d-9f0e-04bd7d204fb4"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3779, 123, 216, 5, 32, "Input", "ExpressionUUID" -> \
+"e9459360-ec46-4951-86ba-438f7758793c"],
+Cell[3998, 130, 141, 3, 32, "Output", "ExpressionUUID" -> \
+"f670cf77-54dd-4e86-a568-2d88cc6b881a"]
+}, Open  ]],
+Cell[4154, 136, 208, 5, 31, "Text", "ExpressionUUID" -> \
+"c50e507d-f2ca-4093-95fa-80780d55b16a"],
+Cell[CellGroupData[{
+Cell[4387, 145, 172, 4, 32, "Input", "ExpressionUUID" -> \
+"4faa8efc-b76c-4bf6-af22-368d1c6d8c93"],
+Cell[4562, 151, 2396, 65, 96, "Output", "ExpressionUUID" -> \
+"208c6d52-4078-4fdb-b5d7-65eea458e7bc"]
+}, Open  ]],
+Cell[6973, 219, 666, 14, 49, "Text", "ExpressionUUID" -> \
+"31aeb126-31f0-4cf3-bac0-68f345bd25bb"]
+}, Closed]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7688, 239, 89, 0, 64, "Section", "ExpressionUUID" -> \
+"b8a864c0-8227-4d5d-9517-8052cac63cbd"],
+Cell[CellGroupData[{
+Cell[7802, 243, 132, 0, 29, "Subsubsection", "ExpressionUUID" -> \
+"8a5c4a17-9f57-42b1-97f8-52563b1baba3"],
+Cell[CellGroupData[{
+Cell[7959, 247, 121, 1, 32, "Input", "ExpressionUUID" -> \
+"f984a858-8324-4006-bd89-87149eedf671"],
+Cell[8083, 250, 361, 7, 43, "Print", "ExpressionUUID" -> \
+"4d6993d3-0b7f-40e0-aa13-c9ed3d137a93",
+ CellTags->"Info63702545259-2497548"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8481, 262, 293, 8, 32, "Input", "ExpressionUUID" -> \
+"0d9e2015-97e3-41e5-9905-1c1f441429f4"],
+Cell[8777, 272, 129, 2, 32, "Output", "ExpressionUUID" -> \
+"eb565205-dd22-425d-9c80-5c46508e11af"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[8955, 280, 130, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"e583c334-da8c-4bca-b80e-d4c3839811fe"],
+Cell[CellGroupData[{
+Cell[9110, 284, 119, 1, 32, "Input", "ExpressionUUID" -> \
+"a52ce3bb-4419-4aa6-99c1-1c0e150739f5"],
+Cell[9232, 287, 1356, 20, 79, "Print", "ExpressionUUID" -> \
+"355869b9-104b-4594-a4ef-8973ef589e1b",
+ CellTags->"Info83702545263-2497548"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10625, 312, 250, 6, 32, "Input", "ExpressionUUID" -> \
+"94f89297-68ab-40f4-8222-cc9bd6fae6cd"],
+Cell[10878, 320, 172, 3, 32, "Output", "ExpressionUUID" -> \
+"88650fef-ffbe-4f1b-8a1e-5fe1b3c0c160"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11087, 328, 266, 7, 32, "Input", "ExpressionUUID" -> \
+"62d5c459-7b92-48b0-b462-be2b5e58d216"],
+Cell[11356, 337, 182, 3, 32, "Output", "ExpressionUUID" -> \
+"46ea9103-1dfa-4f50-896c-756b1f0846f3"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11575, 345, 226, 5, 32, "Input", "ExpressionUUID" -> \
+"1c17ac05-4821-4204-9478-9ad02e4280f9"],
+Cell[11804, 352, 172, 3, 32, "Output", "ExpressionUUID" -> \
+"2878b3a4-e362-4d29-a548-d41ae9df2476"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12013, 360, 225, 5, 32, "Input", "ExpressionUUID" -> \
+"a40583d0-2b09-4f0e-b625-64e78816f11d"],
+Cell[12241, 367, 160, 3, 32, "Output", "ExpressionUUID" -> \
+"e3883741-c717-4952-a1a4-2705927f7571"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[12450, 376, 124, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"f558327f-e552-47e7-9f3f-65f1ded5e4cd"],
+Cell[CellGroupData[{
+Cell[12599, 380, 113, 1, 32, "Input", "ExpressionUUID" -> \
+"ade1d6a9-5871-445a-8d42-e14365cfdcef"],
+Cell[12715, 383, 360, 7, 43, "Print", "ExpressionUUID" -> \
+"31fb5550-1dcf-4fc2-84f8-00cd2190eee2",
+ CellTags->"Info133702545268-2497548"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13112, 395, 193, 4, 32, "Input", "ExpressionUUID" -> \
+"8f376100-e952-439c-8335-608c9bb61d13"],
+Cell[13308, 401, 769, 23, 32, "Output", "ExpressionUUID" -> \
+"7216d60d-c54b-4d28-8768-97f4fc7815f7"]
+}, Open  ]],
+Cell[14092, 427, 229, 6, 31, "Text", "ExpressionUUID" -> \
+"15815367-5ff1-4bc1-8fe3-ae19911595e9"],
+Cell[CellGroupData[{
+Cell[14346, 437, 307, 8, 32, "Input", "ExpressionUUID" -> \
+"a975c290-f87d-47fd-8047-fffad6b2525f"],
+Cell[14656, 447, 86, 0, 32, "Output", "ExpressionUUID" -> \
+"38ddf768-e048-405f-9f3f-ae6d3e3e0acc"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14779, 452, 478, 13, 32, "Input", "ExpressionUUID" -> \
+"79f230e9-8eb7-486e-8de4-e4444e2888de"],
+Cell[15260, 467, 86, 0, 32, "Output", "ExpressionUUID" -> \
+"6d7d4bc9-d752-47df-bdd4-cad736a670f6"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[15395, 473, 124, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"71b54fc3-5b58-4266-9fe1-4648afd3183e"],
+Cell[CellGroupData[{
+Cell[15544, 477, 113, 1, 32, "Input", "ExpressionUUID" -> \
+"9bc2f8bd-86d6-4aa7-9380-bf9dd443dae4"],
+Cell[15660, 480, 867, 14, 58, "Print", "ExpressionUUID" -> \
+"cffbfb61-40b6-4df2-9f1e-587ee52c6bb7",
+ CellTags->"Info173702545273-2497548"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16564, 499, 124, 1, 32, "Input", "ExpressionUUID" -> \
+"789087bf-86c5-41c3-b41d-39cacde0da8b"],
+Cell[16691, 502, 202, 5, 32, "Output", "ExpressionUUID" -> \
+"e206a0f4-e23d-4e72-8dff-14bae09e2934"]
+}, Open  ]],
+Cell[16908, 510, 204, 4, 31, "Text", "ExpressionUUID" -> \
+"700303d5-396d-494d-9dd7-5d9ce1d6da12"],
+Cell[CellGroupData[{
+Cell[17137, 518, 199, 5, 32, "Input", "ExpressionUUID" -> \
+"06464cc0-76c1-4329-bb41-50ba37f62892"],
+Cell[17339, 525, 200, 5, 32, "Output", "ExpressionUUID" -> \
+"04cf6d76-b730-4506-b821-e39629ce8e8a"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[17588, 536, 122, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"44020273-34e2-4564-bae0-db1f144255a9"],
+Cell[CellGroupData[{
+Cell[17735, 540, 111, 1, 32, "Input", "ExpressionUUID" -> \
+"cbf7e9be-57dc-4c57-8e2e-43d5d0ae96fd"],
+Cell[17849, 543, 917, 14, 58, "Print", "ExpressionUUID" -> \
+"d68ed75e-a009-4e6e-be34-b265559d41fb",
+ CellTags->"Info203702545279-2497548"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[18803, 562, 172, 4, 32, "Input", "ExpressionUUID" -> \
+"02fa003b-dc7a-43ac-8eb3-06e8215f36df"],
+Cell[18978, 568, 1012, 28, 54, "Output", "ExpressionUUID" -> \
+"b0aa4f3e-4e72-4f46-86dc-4015727bea13"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20027, 601, 109, 1, 32, "Input", "ExpressionUUID" -> \
+"a8399735-5b36-4034-b3cd-e2d5e4106106"],
+Cell[20139, 604, 271, 5, 32, "Output", "ExpressionUUID" -> \
+"50012b86-f22c-4fd4-8b29-f3049d7ffe79"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[20447, 614, 150, 3, 32, "Input", "ExpressionUUID" -> \
+"4092957b-9989-49f3-af65-3b5c9436ebd9"],
+Cell[20600, 619, 1002, 28, 54, "Output", "ExpressionUUID" -> \
+"c91e1dad-6515-4428-884f-0b2e9bc83117"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[21651, 653, 144, 1, 23, "Subsubsection", "ExpressionUUID" -> \
+"fca99aa8-c6e9-4455-b58b-7e5295176b27"],
+Cell[CellGroupData[{
+Cell[21820, 658, 131, 1, 32, "Input", "ExpressionUUID" -> \
+"a04a53c6-5af8-4e6e-8903-92b2c98f9039"],
+Cell[21954, 661, 1415, 20, 79, "Print", "ExpressionUUID" -> \
+"8612bece-4d8a-46e9-8a6a-90e7391588fc",
+ CellTags->"Info243702545293-2497548"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23406, 686, 262, 6, 32, "Input", "ExpressionUUID" -> \
+"d0ec19c9-f291-4c74-9304-c3e6065273cc"],
+Cell[23671, 694, 172, 3, 32, "Output", "ExpressionUUID" -> \
+"3a183e0d-7805-4230-9a57-b1281d7971a1"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[23880, 702, 278, 7, 32, "Input", "ExpressionUUID" -> \
+"e18bc007-5203-4e9b-9b54-e3cfe9165afa"],
+Cell[24161, 711, 182, 3, 32, "Output", "ExpressionUUID" -> \
+"38d18582-6b75-4c8d-91df-5552c24ca934"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24380, 719, 238, 5, 32, "Input", "ExpressionUUID" -> \
+"94ab1f87-6c53-400a-b2c6-2719545ad8c0"],
+Cell[24621, 726, 129, 2, 32, "Output", "ExpressionUUID" -> \
+"3b378ea2-300f-4016-b19b-afd3393e036a"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24787, 733, 237, 5, 32, "Input", "ExpressionUUID" -> \
+"060f98f8-4d97-4b70-89b3-3d4b0b72151b"],
+Cell[25027, 740, 105, 1, 32, "Output", "ExpressionUUID" -> \
+"5d252502-2d76-4fda-bb74-0ed5fbf26d05"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

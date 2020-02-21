@@ -1,0 +1,1688 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     66122,       1680]
+NotebookOptionsPosition[     57190,       1456]
+NotebookOutlinePosition[     58839,       1504]
+CellTagsIndexPosition[     58576,       1495]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["CellularAutomatonBoundaries 1.02", "Title",ExpressionUUID->"5e96e6cb-e44c-45d7-a682-560773ea535c"],
+
+Cell["documentation notebook", "Subtitle"],
+
+Cell[TextData[{
+ "Charles Brummitt and Eric Rowland\n",
+ ButtonBox["http://people.hofstra.edu/Eric_Rowland/packages.html",
+  BaseStyle->"Hyperlink",
+  ButtonData:>{
+    URL["http://people.hofstra.edu/Eric_Rowland/packages.html"], None}]
+}], "Subsubtitle"],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section"],
+
+Cell["\<\
+CellularAutomatonBoundaries is a collection of tools for studying boundaries \
+of one-dimensional cellular automata.
+This introduction gets you started with a few features of the package; the \
+next section provides a complete list of package symbols along with their \
+usage messages and further examples.\
+\>", "Text"],
+
+Cell[TextData[{
+ "To use CellularAutomatonBoundaries, first you will need to load the package \
+by evaluating the following cell.  (If you need help, see ",
+ ButtonBox["loading a package",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.\
+html"], None},
+  ButtonNote->
+   "http://people.hofstra.edu/Eric_Rowland/packages/loading_a_package.html"],
+ ".)"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{"<<", "CellularAutomatonBoundaries`"}]], "Code",ExpressionUUID->"bb845243-2243-4303-854e-abceecaab0d1"],
+
+Cell[CellGroupData[{
+
+Cell["Creating cellular automaton data", "Subsection",ExpressionUUID->"f564ed39-9cdb-443e-9a6f-92f10b83e0fa"],
+
+Cell[TextData[{
+ "The main symbols of the package are ",
+ StyleBox["CreateIrregularBoundaryData", "Input"],
+ " and ",
+ StyleBox["CreateRegularBoundaryData", "Input"],
+ ", which generate data on the boundary of a cellular automaton by running it \
+for a certain number of steps and analyzing the row lengths.\nThe first \
+argument (for each of these functions) is a the number of colors, and the \
+second argument is the number of cells the rules depend on."
+}], "Text",ExpressionUUID->"7a5e6ca5-15f0-44a2-89b4-e2acfc0d0a2a"],
+
+Cell[TextData[{
+ "For example, the following determines the growth rate of the ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]]],
+ "-color rule number ",
+ Cell[BoxData[
+  FormBox["30", TraditionalForm]]],
+ " depending on ",
+ Cell[BoxData[
+  FormBox["3", TraditionalForm]]],
+ " cells, begun from a single black cell on a constant white background.\n\
+This automaton grows linearly at a rate of ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]]],
+ " cells per step:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CreateRegularBoundaryData", "[", 
+  RowBox[{"2", ",", "3", ",", 
+   RowBox[{"\"\<FileName\>\"", "\[Rule]", "None"}], ",", 
+   RowBox[{"\"\<RuleNumbers\>\"", "\[Rule]", 
+    RowBox[{"{", "30", "}"}]}]}], "]"}]], "Input",ExpressionUUID->"89f2b399-\
+ccb6-4418-b09f-5a69741da573"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"30", "\[Rule]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1", "}"}], ",", "0"}], "}"}], "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\<\"BoundaryWordPeriodLength\"\>", "\[Rule]", "1"}], ",", 
+       RowBox[{"\<\"GrowthRate\"\>", "\[Rule]", "2"}]}], "}"}]}], "}"}]}], 
+  "}"}]], "Output",ExpressionUUID->"22036677-38d1-4518-869e-13796510e794"]
+}, Open  ]],
+
+Cell["An explicit initial condition can be specified as follows.", "Text",ExpressionUUID->"b228de22-9f46-4b85-9416-b753ab2f7161"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CreateRegularBoundaryData", "[", 
+  RowBox[{"2", ",", "3", ",", 
+   RowBox[{"\"\<FileName\>\"", "\[Rule]", "None"}], ",", 
+   RowBox[{"\"\<InitialCondition\>\"", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], ",", 
+   RowBox[{"\"\<RuleNumbers\>\"", "\[Rule]", 
+    RowBox[{"{", "30", "}"}]}]}], "]"}]], "Input",ExpressionUUID->"a3688706-\
+d401-4d0f-9f39-34b47f95be07"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"30", "\[Rule]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1", "}"}], ",", "0"}], "}"}], "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\<\"BoundaryWordPeriodLength\"\>", "\[Rule]", "1"}], ",", 
+       RowBox[{"\<\"GrowthRate\"\>", "\[Rule]", "2"}]}], "}"}]}], "}"}]}], 
+  "}"}]], "Output",ExpressionUUID->"52565279-ef77-446d-a637-3ae646f3eb7c"]
+}, Open  ]],
+
+Cell["\<\
+When no initial condition is specified, all single-cell initial conditions \
+for which the background color reoccurs on a later step are considered:\
+\>", "Text",ExpressionUUID->"ff6783af-08c4-4982-8f59-508c2b481ca0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CreateRegularBoundaryData", "[", 
+  RowBox[{"2", ",", "3", ",", 
+   RowBox[{"\"\<FileName\>\"", "\[Rule]", "None"}], ",", 
+   RowBox[{"\"\<RuleNumbers\>\"", "\[Rule]", 
+    RowBox[{"{", "45", "}"}]}]}], "]"}]], "Input",ExpressionUUID->"a8854915-\
+37c7-4a6a-8875-140672d9877f"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"45", "\[Rule]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "1", "}"}], ",", "0"}], "}"}], "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\<\"BoundaryWordPeriodLength\"\>", "\[Rule]", "2"}], ",", 
+        RowBox[{"\<\"GrowthRate\"\>", "\[Rule]", 
+         FractionBox["3", "2"]}]}], "}"}]}], ",", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "0", "}"}], ",", "1"}], "}"}], "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\<\"BoundaryWordPeriodLength\"\>", "\[Rule]", "2"}], ",", 
+        RowBox[{"\<\"GrowthRate\"\>", "\[Rule]", 
+         FractionBox["3", "2"]}]}], "}"}]}]}], "}"}]}], "}"}]], "Output",Expre\
+ssionUUID->"847d4431-c933-4c52-bd05-528bae3630b3"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Whereas all ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]]],
+ "-color rules depending on at most ",
+ Cell[BoxData[
+  FormBox["3", TraditionalForm]]],
+ " cells have simple growth, larger rules do not necessarily.\nFor example, \
+the following automaton has a jagged boundary."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ArrayPlot", "[", 
+  RowBox[{
+   RowBox[{"CellularAutomaton", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"7403", ",", "2", ",", 
+       RowBox[{"List", "/@", 
+        RowBox[{"Range", "[", 
+         RowBox[{"0", ",", "3"}], "]"}]}]}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1", "}"}], ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"200", ",", "All"}], "}"}]}], "]"}], ",", 
+   RowBox[{"Frame", "\[Rule]", "None"}], ",", 
+   RowBox[{"PixelConstrained", "\[Rule]", "1"}]}], "]"}]], "Input",ExpressionU\
+UID->"960954dd-0d4a-4cf6-8117-deaf01c1524c"],
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1:eJzt3EGS2zgMhWFybjJXmt1sc4Gcc241adsSSeBRAtm0Ver6v6qoOp0sXyAY
+QOfvX7//+fVXSum/P7/+/fNFBoxnKh7Pr8fj19fz65HS85mrX/IBOCJAj4CJ
+wKX6O3mLX6ZgQdjiYcITqFjP71GyoJV4mPDkbsUqaXxmEHCazqp+v6WUuhWr
+pJGChY62s6oikw8rVt3nA47rrCI9lk0j4NjOqnx1XrHosdDjBwnhHqv8FnDU
+6LPfY7XjCXos9IjR52GPZccTlCxoqmI9HrlXsVyfDzid0edJxXomb/8e4HRH
+n/mwYjHHwiHRlgd6rPJnlCxooi2P9FjMsXCo05aHK9YH/wngVrpteT6uWMyx
+cOSgLU/HFYs5Fo702/JuxbJ9PuC0QQnOsbjHwqk2KKE5lu3zAccHJdBjcY+F
+UyIousdqX5jMsXBIBaXTY9kX5v4XAE8ERfdY5oXJHAtHfHa6PZbtrJhj4YCq
+WI+HTF37wqTHQk8bmcM5lnxhfvCfAG6ljczBHKvzwqRiocM045EeqzwoWeiz
+Q/fn984rFj0WjthmPNhj7Q9AM814qMdijoVTW4kKz7H2P6THwpFXiQrOsWyf
+D3TtkYr0WNxjIe4Rr9Acy/b5QN/rrfZqtCIVK20ZBA48w1IarXxeseixELG9
+2YI91v4XgBN5j1anYpUPhMyxEJf27r1XsarpFXMshG3F6KhilQ+E9FiIKcXo
+uGI9k7d9BZx5fTRMpxWLORYGlNgEKtbjQclCRDVRyOcVix4LMWYGms8r1uez
+jzuyM9DcrVjMsRCntja5U7GYYyFObm3UqTtzLAzob21ScmWLORbCelubXGWN
+eyyM6m5tUpM17rEwqLe1yXXW7PgdONHd2qQma9xjYVBva5Nt1phjYUB3a5N8
+1phjIa63tckqa/RYCOpubZLK2vYVcKa3tcm2YjHHwoDu1qYJHfdYGNXb2tjQ
+McfCiO7WxoeOORYG9LY2LnTMsTBGb2186JhjYZA8SJbFih4LcXJrk5IuVhQs
+hKmtTbYVizkWBsmtTQncnj3mWBijtjZZVix6LMTJrU0bOO6xMEEum90HQuZY
+GNNZNvvpFXMsDNHLZvWBkB4LcXJrsyfMrno+HnvclhyEdj4Q0mMhSm5tTNZK
+/ihZiFJbmywrFj0W4uTWxgQuNQ8gQjbprmIxx8KYTpPuAsccC2N0k14Fznb2
+QITa2rSB4x4LM8TWJtuKxRwLo9TWZktZXbHSnj8gQmxtXoFLbcWix8IAtbUp
+gTMV64Lc467E1qYOHPdYmKK2NiZwbWcPhIitjQsccyyMUlsbFTjmWBgjtjZN
+4GxnD0SorU0bOFO2gBCxtdkC11YseiwMUFubPXC2Yn0+9rgtsbXJ2VYs5lgY
+pLY2qc1a+S0lC2Fia5PrrNnOHgiS91hyDPH52OPW/D1WW7GYY2GG3dqkPWbt
+V/RYGGO2NnvY1NYQiLJbmz1s8vMhEGWXzVXYuMfCNL9srsPGPRZmuWWzWvXQ
+Y2GQ3dq0YTOdPRBmB6HZVCzmWJhitjYlbHbVc0HocWft1uaVNX1GCoSZrc2e
+NXWUBcSZJj3bisUcCzNck55sxWKOhRm2STetFXMsTHGvvGRbK+ZYmGFfee7D
+IHMsTJCvvC1m3GNhmnjl1SfLzLEwRb3y0hYz7rEwTW2c68MG5liYoTfOyZUt
+ShbGyI2zOWygx8IE+cOFpmxRsDDB/3ChKFtULAyyr7wtZdxj4XvMKy/bikWP
+hRn2lVey1j6AMbZTr4sVcyzM8p16U6eYY2GS69RNsaLHwgz7ytsTxj0WvsWm
+qMoacyzMM688k7WU6LEwx95jmYpFj4Up6h6rBK78Fhjj7rHK25E5FqaJe6xq
+esUcC7PcPVb7dqTHwhRxj2XfjtcEHjfn7rH825GKhRl2juXejtckHvfXzLHa
+ikWPhWlmjmUr1kVpx/25ORb3WFhAzrHKV5QsTPJzLO6xsICYY3GPhQXcHIt7
+LCwg5ljcY2EBN8fiHgsL2BS1Wbsu77g7t8ThHgsLiBMH7rGwgDtx4B4La8gf
+1WGOhe/T/+UMPRa+x5w4cI+FRZoTB+6xsIg5ceAeC4s0Jw7cY2EVM8faw0aP
+he+xJw7MsbCCOHFgjoUF3IkDcywsUC8M25hdFnX8CNXCkHssLFPPRFNdsS5L
+On6GeibKPRaWaQZZ3GNhmWqQxT0W1kmpDLK4x8I6uQpUZo6FRV6J4v/HwmJb
+orjHwkpVorjHwkJ1ol5Jo8fCCqmEaU8aJQsLlEEWcyys0wyymGNhmWqQxRwL
+69SDLOZYWKf8ZCFzLCxVRg5b0IAlcrPfoWJhmfKJkB4LK+XmoyGwyBYteiys
+9XoN0mNhNeZYeJNMj4V3eITr6nTjB6LHwlskeiy8BT0W3oGChfd4jkivzjd+
+ID4W4k2ujjZ+rPQ/T/br+w==
+   "], {{0, 0}, Offset[{601, 201}, {0, 0}]}, {0, 1}],
+  Frame->None,
+  FrameLabel->{None, None},
+  FrameTicks->{{None, None}, {None, None}},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  ImageSize->{601, 201},
+  Method->{
+   "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> Automatic},
+  PlotRange->{{0, 601}, {0, 201}},
+  PlotRangeClipping->True]], "Output",ExpressionUUID->"dde46f6b-05e7-44df-\
+99ba-0519510f5400"]
+}, Open  ]],
+
+Cell[TextData[{
+ StyleBox["CreateIrregularBoundaryData", "Input"],
+ " finds best-fit curves to the sequence of row lengths and computes various \
+statistics:"
+}], "Text",ExpressionUUID->"5ff4e058-7c45-435a-8707-89008742fa0e"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CreateIrregularBoundaryData", "[", 
+  RowBox[{"2", ",", " ", "4", ",", 
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{"7403", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], "}"}], ",", 
+   RowBox[{"\"\<FileName\>\"", "\[Rule]", "None"}]}], "]"}]], "Input",Expressi\
+onUUID->"b5247c8f-4f23-42f7-b748-adf654f06734"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"7403", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], "\[Rule]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"\<\"BestFits\"\>", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(2)\"\>"}], ",", 
+          RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+           FractionBox["2.5349098277731663`", 
+            
+            SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+             "0.5529461544543807`"]]}], ",", 
+          
+          RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+           "0.05382218116167832`"}], ",", 
+          RowBox[{"\<\"AIC\"\>", "\[Rule]", "1461.4911137892666`"}], ",", 
+          RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", "1.`"}], ",", 
+          RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+           RowBox[{"-", "0.5529461544543807`"}]}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(3)\"\>"}], ",", 
+          RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+           RowBox[{"47.16264297593502`", "\[VeryThinSpace]", "-", 
+            RowBox[{"45.90760622980825`", " ", 
+             
+             SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+              "0.004535537760272988`"]}]}]}], ",", 
+          
+          RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+           "0.052468334889206235`"}], ",", 
+          RowBox[{"\<\"AIC\"\>", "\[Rule]", "1463.1995661065932`"}], ",", 
+          
+          RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+           "0.4256124201644346`"}], ",", 
+          RowBox[{"\<\"Exponent\"\>", "\[Rule]", "0.004535537760272988`"}]}], 
+         "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Linear\"\>"}], ",", 
+          RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+           RowBox[{"0.4300890938503513`", "\[VeryThinSpace]", "-", 
+            RowBox[{
+            "0.0011031219064635295`", " ", 
+             "CellularAutomatonBoundaries`Private`t"}]}]}], ",", 
+          
+          RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+           "0.020488016535559258`"}], ",", 
+          RowBox[{"\<\"AIC\"\>", "\[Rule]", "1469.3133861649335`"}], ",", 
+          
+          RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+           "0.020017744218673694`"}], ",", 
+          RowBox[{"\<\"Exponent\"\>", "\[Rule]", "1"}]}], "}"}]}], "}"}]}], 
+     ",", 
+     RowBox[{"\<\"Drift\"\>", "\[Rule]", "0.15430861723446893`"}], ",", 
+     RowBox[{"\<\"Diffusivity\"\>", "\[Rule]", "3.7082131342270492`"}], ",", 
+     RowBox[{"\<\"PecletNumber\"\>", "\[Rule]", "0.0416126613139332`"}], ",", 
+     RowBox[{"\<\"Randomness\"\>", "\[Rule]", "24.031147454276596`"}]}], 
+    "}"}]}], "}"}]], "Output",ExpressionUUID->"a6a63728-f6df-4fa7-a2ae-\
+53380c5b08a8"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Storing data to files", "Subsection",ExpressionUUID->"b4eef92b-9ebb-42ab-a1cc-ea46f4da2fd4"],
+
+Cell[TextData[{
+ "When studying an entire rule space, or even several automata at once, it\
+\[CloseCurlyQuote]s convenient to output data to a file rather than have it \
+appear in your ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " session.\nSetting ",
+ StyleBox["$CellularAutomatonDataDirectory", "Input"],
+ " to a directory will tell the other symbols to write and read data files in \
+this directory.\nFor example, we can set it to the current temporary \
+directory:"
+}], "Text"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"$CellularAutomatonDataDirectory", "=", "$TemporaryDirectory"}], 
+  ";"}]], "Input",ExpressionUUID->"fc4bda33-ca1c-4df1-947d-6d9b3552a5c4"],
+
+Cell[TextData[{
+ "Now data generated by ",
+ StyleBox["CreateIrregularBoundaryData", "Input"],
+ " and ",
+ StyleBox["CreateRegularBoundaryData", "Input"],
+ " without ",
+ StyleBox["\[OpenCurlyDoubleQuote]FileName\[CloseCurlyDoubleQuote]->None", 
+  "Input"],
+ " will be stored in that directory with an automatic file name."
+}], "Text",ExpressionUUID->"77bfc247-71f2-4d92-92b4-e580c2391db2"],
+
+Cell[BoxData[
+ RowBox[{"CreateRegularBoundaryData", "[", 
+  RowBox[{"2", ",", "3"}], "]"}]], "Input"],
+
+Cell["Or you can specify a file name:", "Text"],
+
+Cell[BoxData[
+ RowBox[{"CreateIrregularBoundaryData", "[", 
+  RowBox[{"2", ",", " ", "4", ",", 
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{"7403", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], "}"}], ",", 
+   RowBox[{"\"\<FileName\>\"", "\[Rule]", "\"\<rule_7403.m\>\""}]}], 
+  "]"}]], "Input"],
+
+Cell[TextData[{
+ "The symbols ",
+ StyleBox["IrregularBoundaryData", "Input"],
+ " and ",
+ StyleBox["RegularBoundaryData", "Input"],
+ " retrieve data stored to ",
+ StyleBox["$CellularAutomatonDataDirectory", "Input"],
+ " for automatically-generated file names."
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RegularBoundaryData", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"30", ",", "2", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], ",", 
+   "\"\<GrowthRate\>\""}], "]"}]], "Input"],
+
+Cell[BoxData["2"], "Output"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Package symbols", "Section",ExpressionUUID->"5ce936fa-a530-499b-ad39-9d01608dfca2"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["CreateIrregularBoundaryData", "Input"]], \
+"Subsubsection",ExpressionUUID->"61139bd6-e4b5-415b-878e-4298f65401ca"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "CreateIrregularBoundaryData"}]], "Input",ExpressionUUID->"b8e79668-4318-4cef-b3eb-c791ed02d5e3"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"CreateIrregularBoundaryData\\\", \\\"[\\\
+\", RowBox[List[StyleBox[\\\"k\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"d\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"automata\\\", \\\"TI\
+\\\"]]], \\\"]\\\"]]\) creates irregluar boundary CellularAutomatonData for \
+\!\(\*StyleBox[\\\"k\\\", \\\"TI\\\"]\)\[Hyphen]color rules depending on \!\(\
+\*StyleBox[\\\"d\\\", \\\"TI\\\"]\) cells listed in \
+\!\(\*StyleBox[\\\"automata\\\", \\\"TI\\\"]\).\"\>", "MSG"]], "Print", \
+"PrintUsage",
+ CellTags->
+  "Info73702544002-4513068",ExpressionUUID->"24d52e7d-5c05-4005-b596-\
+03abec074c03"]
+}, Open  ]],
+
+Cell[TextData[{
+ "For the first five hundred ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]]],
+ "-color rules depending on ",
+ Cell[BoxData[
+  FormBox["4", TraditionalForm]]],
+ " cells, determine which have row lengths that are not periodic in the range \
+",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"20", "\[LessEqual]", "t", "\[LessEqual]", "100"}], 
+   TraditionalForm]]],
+ ", and find the best-fit curves to their sequences of row lengths:"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"Cases", "[", 
+  RowBox[{
+   RowBox[{"Join", "@@", 
+    RowBox[{"Thread", "/@", 
+     RowBox[{"CreateRegularBoundaryData", "[", 
+      RowBox[{"2", ",", "4", ",", 
+       RowBox[{"\"\<FileName\>\"", "\[Rule]", "None"}], ",", 
+       RowBox[{"\"\<RuleNumbers\>\"", "\[Rule]", 
+        RowBox[{"Range", "[", 
+         RowBox[{"0", ",", "500"}], "]"}]}], ",", 
+       RowBox[{"\"\<TimeSpecs\>\"", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"{", 
+          RowBox[{"20", ",", "100"}], "}"}], "}"}]}]}], "]"}]}]}], ",", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"n_", "\[Rule]", 
+      RowBox[{"initialcondition_", "\[Rule]", "_Missing"}]}], ")"}], 
+    "\[RuleDelayed]", 
+    RowBox[{"{", 
+     RowBox[{"n", ",", "initialcondition"}], "}"}]}]}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"CreateIrregularBoundaryData", "[", 
+  RowBox[{"2", ",", "4", ",", "%", ",", 
+   RowBox[{"\"\<FileName\>\"", "\[Rule]", "None"}]}], "]"}]}], "Input",Express\
+ionUUID->"06cd2c97-43bf-4fa9-b926-04ded345ec5e"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"356", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"457", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"457", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "0", "}"}], ",", "1"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"473", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"473", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "0", "}"}], ",", "1"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"484", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"485", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"485", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "0", "}"}], ",", "1"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"489", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"489", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "0", "}"}], ",", "1"}], "}"}]}], "}"}]}], "}"}]], "Output",\
+ExpressionUUID->"dc12f499-c1b3-434b-a869-f6fb45fc007d"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"356", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\<\"BestFits\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(2)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            FractionBox["1.7920296389171393`", 
+             
+             SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+              "0.0011221377595299145`"]]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.9487529679904116`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "539.9984877580619`"}], ",", 
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", "1.`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            RowBox[{"-", "0.0011221377595299145`"}]}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(3)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"3.64565093743086`", "\[VeryThinSpace]", "-", 
+             RowBox[{"1.8537041277607411`", " ", 
+              
+              SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+               "0.0010688350955995612`"]}]}]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.9486496424565273`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "541.9985354210543`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.36787067415840113`"}], ",", 
+           
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            "0.0010688350955995612`"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Linear\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"1.7833981215442931`", "\[VeryThinSpace]", "-", 
+             RowBox[{
+             "7.339981167152947`*^-6", " ", 
+              "CellularAutomatonBoundaries`Private`t"}]}]}], ",", 
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            RowBox[{"-", "0.0020055111189362165`"}]}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "540.0063211005859`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.9960909888908527`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "1"}]}], "}"}]}], "}"}]}], 
+      ",", 
+      RowBox[{"\<\"Drift\"\>", "\[Rule]", "1.781563126252505`"}], ",", 
+      RowBox[{"\<\"Diffusivity\"\>", "\[Rule]", "0.4386317907444668`"}], ",", 
+      RowBox[{"\<\"PecletNumber\"\>", "\[Rule]", "4.0616370355389675`"}], ",", 
+      RowBox[{"\<\"Randomness\"\>", "\[Rule]", "0.24620614576095495`"}]}], 
+     "}"}]}], ",", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"457", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\<\"BestFits\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(2)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            FractionBox["1.3540158780407243`", 
+             
+             SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+              "0.012809108440569376`"]]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.7060420923864671`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1217.910055778544`"}], ",", 
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", "1.`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            RowBox[{"-", "0.012809108440569376`"}]}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(3)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"13.95106884260616`", "\[VeryThinSpace]", "-", 
+             RowBox[{"12.601430220514114`", " ", 
+              
+              SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+               "0.0012578242722619385`"]}]}]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.7054463652304361`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1219.9152568008146`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.36692400943207915`"}], ",", 
+           
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            "0.0012578242722619385`"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Linear\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"1.2772050124345078`", "\[VeryThinSpace]", "-", 
+             RowBox[{
+             "0.00004268778520897286`", " ", 
+              "CellularAutomatonBoundaries`Private`t"}]}]}], ",", 
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            RowBox[{"-", "0.0019550496567565232`"}]}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1218.069010473187`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.9235989417214494`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "1"}]}], "}"}]}], "}"}]}], 
+      ",", 
+      RowBox[{"\<\"Drift\"\>", "\[Rule]", "1.2665330661322645`"}], ",", 
+      RowBox[{"\<\"Diffusivity\"\>", "\[Rule]", "2.414486921529175`"}], ",", 
+      RowBox[{"\<\"PecletNumber\"\>", "\[Rule]", "0.5245557782231128`"}], ",", 
+      RowBox[{"\<\"Randomness\"\>", "\[Rule]", "1.906374958612434`"}]}], 
+     "}"}]}], ",", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"457", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "0", "}"}], ",", "1"}], "}"}]}], "}"}], "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\<\"BestFits\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(2)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            FractionBox["1.2743956740734679`", 
+             
+             SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+              "0.0017928452110926557`"]]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.7039493015033192`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1219.683654448231`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.9949172309903431`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            RowBox[{"-", "0.0017928452110926557`"}]}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(3)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"1.2754041278798078`", "\[VeryThinSpace]", "-", 
+             RowBox[{"0.0006674468303577664`", " ", 
+              
+              SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+               "0.5463519802733654`"]}]}]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.7033606545149387`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1221.6698112961951`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.36855174587960254`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "0.5463519802733654`"}]}], 
+          "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Linear\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"1.2700098993167057`", "\[VeryThinSpace]", "-", 
+             RowBox[{
+             "0.00002993939686602142`", " ", 
+              "CellularAutomatonBoundaries`Private`t"}]}]}], ",", 
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            RowBox[{"-", "0.0019841120324727715`"}]}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1219.6734629877951`"}], ",", 
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", "1.`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "1"}]}], "}"}]}], "}"}]}], 
+      ",", 
+      RowBox[{"\<\"Drift\"\>", "\[Rule]", "1.2625250501002003`"}], ",", 
+      RowBox[{"\<\"Diffusivity\"\>", "\[Rule]", "2.4205190985269045`"}], ",", 
+      RowBox[{"\<\"PecletNumber\"\>", "\[Rule]", "0.5215926826888316`"}], ",", 
+      RowBox[{"\<\"Randomness\"\>", "\[Rule]", "1.917204809785596`"}]}], 
+     "}"}]}], ",", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"473", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\<\"BestFits\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(2)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            FractionBox["0.5985455034718627`", 
+             
+             SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+              "0.0229654334252785`"]]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.1284656615189339`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1730.7242084064624`"}], ",", 
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", "1.`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            RowBox[{"-", "0.0229654334252785`"}]}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(3)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"14.636593340017045`", "\[VeryThinSpace]", "-", 
+             RowBox[{"14.045157314382715`", " ", 
+              
+              SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+               "0.0008213142739049251`"]}]}]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.12670401843038184`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1732.7267896521532`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.367404953818274`"}], ",", 
+           
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            "0.0008213142739049251`"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Linear\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"0.533162710964097`", "\[VeryThinSpace]", "-", 
+             RowBox[{
+             "8.402346862399816`*^-6", " ", 
+              "CellularAutomatonBoundaries`Private`t"}]}]}], ",", 
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            RowBox[{"-", "0.002011281654201217`"}]}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1730.760751084378`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.9818945699598498`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "1"}]}], "}"}]}], "}"}]}], 
+      ",", 
+      RowBox[{"\<\"Drift\"\>", "\[Rule]", "0.531062124248497`"}], ",", 
+      RowBox[{"\<\"Diffusivity\"\>", "\[Rule]", "5.611665979814631`"}], ",", 
+      RowBox[{"\<\"PecletNumber\"\>", "\[Rule]", "0.09463537675954824`"}], 
+      ",", 
+      RowBox[{"\<\"Randomness\"\>", "\[Rule]", "10.566872920481135`"}]}], 
+     "}"}]}], ",", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"473", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "0", "}"}], ",", "1"}], "}"}]}], "}"}], "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\<\"BestFits\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(2)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            FractionBox["0.5689320317480099`", 
+             
+             SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+              "0.014665064891805874`"]]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.12692792088426572`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1729.7296907053487`"}], ",", 
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", "1.`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            RowBox[{"-", "0.014665064891805874`"}]}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(3)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"3.357759742681705`", "\[VeryThinSpace]", "-", 
+             RowBox[{"2.7903393066615`", " ", 
+              
+              SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+               "0.002748552910624359`"]}]}]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.12516747060720096`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1731.7298186512724`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.3678559075867656`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "0.002748552910624359`"}]}],
+           "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Linear\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"0.5348286935316416`", "\[VeryThinSpace]", "-", 
+             RowBox[{
+             "0.00003109834126083519`", " ", 
+              "CellularAutomatonBoundaries`Private`t"}]}]}], ",", 
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            RowBox[{"-", "0.002001217848467941`"}]}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1729.739881471745`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.9949175762463317`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "1"}]}], "}"}]}], "}"}]}], 
+      ",", 
+      RowBox[{"\<\"Drift\"\>", "\[Rule]", "0.5270541082164328`"}], ",", 
+      RowBox[{"\<\"Diffusivity\"\>", "\[Rule]", "5.595569400337769`"}], ",", 
+      RowBox[{"\<\"PecletNumber\"\>", "\[Rule]", "0.09419132719265673`"}], 
+      ",", 
+      RowBox[{"\<\"Randomness\"\>", "\[Rule]", "10.616688710146567`"}]}], 
+     "}"}]}], ",", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"484", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\<\"BestFits\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(2)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            FractionBox["1.7920296389171393`", 
+             
+             SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+              "0.0011221377595299145`"]]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.9487529679904116`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "539.9984877580619`"}], ",", 
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", "1.`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            RowBox[{"-", "0.0011221377595299145`"}]}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(3)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"3.64565093743086`", "\[VeryThinSpace]", "-", 
+             RowBox[{"1.8537041277607411`", " ", 
+              
+              SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+               "0.0010688350955995612`"]}]}]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.9486496424565273`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "541.9985354210543`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.36787067415840113`"}], ",", 
+           
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            "0.0010688350955995612`"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Linear\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"1.7833981215442931`", "\[VeryThinSpace]", "-", 
+             RowBox[{
+             "7.339981167152947`*^-6", " ", 
+              "CellularAutomatonBoundaries`Private`t"}]}]}], ",", 
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            RowBox[{"-", "0.0020055111189362165`"}]}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "540.0063211005859`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.9960909888908527`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "1"}]}], "}"}]}], "}"}]}], 
+      ",", 
+      RowBox[{"\<\"Drift\"\>", "\[Rule]", "1.781563126252505`"}], ",", 
+      RowBox[{"\<\"Diffusivity\"\>", "\[Rule]", "0.4386317907444668`"}], ",", 
+      RowBox[{"\<\"PecletNumber\"\>", "\[Rule]", "4.0616370355389675`"}], ",", 
+      RowBox[{"\<\"Randomness\"\>", "\[Rule]", "0.24620614576095495`"}]}], 
+     "}"}]}], ",", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"485", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\<\"BestFits\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(2)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            FractionBox["0.8983129666332553`", 
+             
+             SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+              "0.027231918677745274`"]]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.23952607851277635`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1742.0908362109467`"}], ",", 
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", "1.`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            RowBox[{"-", "0.027231918677745274`"}]}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(3)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"18.308610267897077`", "\[VeryThinSpace]", "-", 
+             RowBox[{"17.42242025567748`", " ", 
+              
+              SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+               "0.001168301431066827`"]}]}]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.23798279493278982`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1744.0974305206826`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.36666848313631023`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "0.001168301431066827`"}]}],
+           "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Linear\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"0.792162638530072`", "\[VeryThinSpace]", "-", 
+             RowBox[{
+             "0.00005041408117439615`", " ", 
+              "CellularAutomatonBoundaries`Private`t"}]}]}], ",", 
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            RowBox[{"-", "0.0019842496347598376`"}]}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1742.188436258559`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.9523715622970211`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "1"}]}], "}"}]}], "}"}]}], 
+      ",", 
+      RowBox[{"\<\"Drift\"\>", "\[Rule]", "0.7795591182364728`"}], ",", 
+      RowBox[{"\<\"Diffusivity\"\>", "\[Rule]", "6.804828973843058`"}], ",", 
+      RowBox[{"\<\"PecletNumber\"\>", "\[Rule]", "0.11455969301109609`"}], 
+      ",", 
+      RowBox[{"\<\"Randomness\"\>", "\[Rule]", "8.729073670816675`"}]}], 
+     "}"}]}], ",", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"485", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "0", "}"}], ",", "1"}], "}"}]}], "}"}], "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\<\"BestFits\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(2)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            FractionBox["0.8431742074189076`", 
+             
+             SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+              "0.016036741791878174`"]]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.23769369574795823`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1741.6936643340925`"}], ",", 
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", "1.`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            RowBox[{"-", "0.016036741791878174`"}]}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(3)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"1.0022582647210334`", "\[VeryThinSpace]", "-", 
+             RowBox[{"0.1664920671819891`", " ", 
+              
+              SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+               "0.058827892076470496`"]}]}]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.23615733754443757`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1743.6933052493957`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.36794549703997576`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "0.058827892076470496`"}]}],
+           "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Linear\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"0.7908346814110147`", "\[VeryThinSpace]", "-", 
+             RowBox[{
+             "0.00006113431682642351`", " ", 
+              "CellularAutomatonBoundaries`Private`t"}]}]}], ",", 
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            RowBox[{"-", "0.001971120429879553`"}]}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1741.71320043682`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.9902795010924378`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "1"}]}], "}"}]}], "}"}]}], 
+      ",", 
+      RowBox[{"\<\"Drift\"\>", "\[Rule]", "0.7755511022044087`"}], ",", 
+      RowBox[{"\<\"Diffusivity\"\>", "\[Rule]", "6.804828973843058`"}], ",", 
+      RowBox[{"\<\"PecletNumber\"\>", "\[Rule]", "0.1139706971601393`"}], ",", 
+      RowBox[{"\<\"Randomness\"\>", "\[Rule]", "8.77418516265552`"}]}], 
+     "}"}]}], ",", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"489", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "1", "}"}], ",", "0"}], "}"}]}], "}"}], "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\<\"BestFits\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(2)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            FractionBox["1.1362070885635265`", 
+             
+             SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+              "0.010412156201252128`"]]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.4643186273835645`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1562.430417910638`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.9891453986645706`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            RowBox[{"-", "0.010412156201252128`"}]}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(3)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"28.666617023040004`", "\[VeryThinSpace]", "-", 
+             RowBox[{"27.53501496795849`", " ", 
+              
+              SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+               "0.00038494584046297063`"]}]}]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.46323582534963664`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1564.4330202408971`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.3634130882916814`"}], ",", 
+           
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            "0.00038494584046297063`"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Linear\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"1.0533597315112146`", "\[VeryThinSpace]", "+", 
+             RowBox[{
+             "0.00009117029239201457`", " ", 
+              "CellularAutomatonBoundaries`Private`t"}]}]}], ",", 
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            RowBox[{"-", "0.0018816275485659174`"}]}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1562.4085900259852`"}], ",", 
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", "1.`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "1"}]}], "}"}]}], "}"}]}], 
+      ",", 
+      RowBox[{"\<\"Drift\"\>", "\[Rule]", "1.0761523046092183`"}], ",", 
+      RowBox[{"\<\"Diffusivity\"\>", "\[Rule]", "4.374245472837022`"}], ",", 
+      RowBox[{"\<\"PecletNumber\"\>", "\[Rule]", "0.24602009907579644`"}], 
+      ",", 
+      RowBox[{"\<\"Randomness\"\>", "\[Rule]", "4.064708549247065`"}]}], 
+     "}"}]}], ",", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"489", ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "0", "}"}], ",", "1"}], "}"}]}], "}"}], "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\<\"BestFits\"\>", "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(2)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"1.0690732132653613`", " ", 
+             
+             SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+              "0.0005494289671855054`"]}]}], ",", 
+           
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.46229617582513893`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1562.6972497184215`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.965603470620678`"}], ",", 
+           
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", 
+            "0.0005494289671855054`"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Power(3)\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"1.0529591046876459`", "\[VeryThinSpace]", "+", 
+             RowBox[{"2.1480296811369947`*^-10", " ", 
+              
+              SuperscriptBox["CellularAutomatonBoundaries`Private`t", 
+               "3.1762711338469583`"]}]}]}], ",", 
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            "0.4614169031575393`"}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1564.507530475892`"}], ",", 
+           
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", 
+            "0.39057221638461437`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "3.1762711338469583`"}]}], 
+          "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"\<\"FitName\"\>", "\[Rule]", "\<\"Linear\"\>"}], ",", 
+           RowBox[{"\<\"Fit\"\>", "\[Rule]", 
+            RowBox[{"1.048458362508149`", "\[VeryThinSpace]", "+", 
+             RowBox[{
+             "0.0000947437042760214`", " ", 
+              "CellularAutomatonBoundaries`Private`t"}]}]}], ",", 
+           RowBox[{"\<\"AdjustedRSquared\"\>", "\[Rule]", 
+            RowBox[{"-", "0.0018712647720036959`"}]}], ",", 
+           RowBox[{"\<\"AIC\"\>", "\[Rule]", "1562.6272456885376`"}], ",", 
+           RowBox[{"\<\"ProbMinInfoLoss\"\>", "\[Rule]", "1.`"}], ",", 
+           RowBox[{"\<\"Exponent\"\>", "\[Rule]", "1"}]}], "}"}]}], "}"}]}], 
+      ",", 
+      RowBox[{"\<\"Drift\"\>", "\[Rule]", "1.0721442885771542`"}], ",", 
+      RowBox[{"\<\"Diffusivity\"\>", "\[Rule]", "4.380277649834752`"}], ",", 
+      RowBox[{"\<\"PecletNumber\"\>", "\[Rule]", "0.24476628521883798`"}], 
+      ",", 
+      RowBox[{"\<\"Randomness\"\>", "\[Rule]", "4.0855299948926005`"}]}], 
+     "}"}]}]}], "}"}]], "Output",ExpressionUUID->"1c7dd063-e384-4717-add3-\
+e845411b9b0e"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Here are the options and default values for ",
+ StyleBox["CreateIrregularBoundaryData", "Input"],
+ ":"
+}], "Text"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Options", "[", "CreateIrregularBoundaryData", "]"}]], "Input",Expres\
+sionUUID->"c8db3a2f-dca0-4b2f-a17b-5f4cd7e1635b"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"FileName\"\>", "\[Rule]", "Automatic"}], ",", 
+   RowBox[{"\<\"TimeSpec\"\>", "\[Rule]", "500"}]}], "}"}]], "Output",Expressi\
+onUUID->"728c15d1-86e4-452b-a9ec-ab17962fd9d6"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["CreateRegularBoundaryData", "Input"]], "Subsubsection",ExpressionUUID->"a0b35128-72c9-431a-ab2c-9875c5f93a8a"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "CreateRegularBoundaryData"}]], "Input",ExpressionUUID->"f32bd26e-4817-4bf9-9dca-c3a7a63177bd"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"CreateRegularBoundaryData\\\", \
+\\\"[\\\", RowBox[List[StyleBox[\\\"k\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"d\\\", \\\"TI\\\"]]], \\\"]\\\"]]\) creates regular boundary \
+CellularAutomatonData for \!\(\*StyleBox[\\\"k\\\", \
+\\\"TI\\\"]\)\[Hyphen]color rules depending on \!\(\*StyleBox[\\\"d\\\", \
+\\\"TI\\\"]\) cells.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info113702544062-4513068",ExpressionUUID->"f12fad37-7441-4744-9841-\
+0450aa3ab47c"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Survey all ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],ExpressionUUID->
+  "6fafbfda-0d30-4dde-8d3f-1841dc47fe6b"],
+ "-color rules depending on ",
+ Cell[BoxData[
+  FormBox["3", TraditionalForm]],ExpressionUUID->
+  "d1ecfae5-9766-4a6c-97ab-79e784c8ad28"],
+ " cells, begun from single-cell initial conditions, for rational growth \
+rates:"
+}], "Text",ExpressionUUID->"21a50eb2-7b93-4aa2-af7e-950ff2f71d13"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"CreateRegularBoundaryData", "[", 
+   RowBox[{"2", ",", "3", ",", 
+    RowBox[{"\"\<FileName\>\"", "\[Rule]", "None"}]}], "]"}], "//", 
+  "Short"}]], "Input",ExpressionUUID->"5df08f4e-68b3-4bfa-80ab-235b72070491"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"0", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", "1", "}"}], ",", "0"}], "}"}], "\[Rule]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"\<\"BoundaryWordPeriodLength\"\>", "\[Rule]", "1"}], ",", 
+         RowBox[{"\<\"GrowthRate\"\>", "\[Rule]", "0"}]}], "}"}]}], "}"}]}], 
+    ",", 
+    RowBox[{"\[LeftSkeleton]", "86", "\[RightSkeleton]"}], ",", 
+    RowBox[{"232", "\[Rule]", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", "1", "}"}], ",", "0"}], "}"}], "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"\<\"BoundaryWordPeriodLength\"\>", "\[Rule]", "1"}], ",", 
+          RowBox[{"\<\"GrowthRate\"\>", "\[Rule]", "0"}]}], "}"}]}], ",", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", "0", "}"}], ",", "1"}], "}"}], "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{"\[LeftSkeleton]", "1", "\[RightSkeleton]"}], "}"}]}]}], 
+      "}"}]}]}], "}"}],
+  Short]], "Output",ExpressionUUID->"65f8fb5b-9ba5-4d92-a143-cca5da75612e"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Here are the options and default values for ",
+ StyleBox["CreateRegularBoundaryData", "Input"],
+ ":"
+}], "Text",ExpressionUUID->"10e15497-5448-4492-8aa2-81532e32afb5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Options", "[", "CreateRegularBoundaryData", "]"}]], "Input",Expressi\
+onUUID->"a5c723b0-9f3e-45cd-b198-48882c1a1d93"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"FileName\"\>", "\[Rule]", "Automatic"}], ",", 
+   RowBox[{"\<\"InitialCondition\"\>", "\[Rule]", "\<\"SingleCell\"\>"}], ",", 
+   RowBox[{"\<\"RuleNumbers\"\>", "\[Rule]", "All"}], ",", 
+   RowBox[{"\<\"TimeSpecs\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"20", ",", "100"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"50", ",", "300"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"200", ",", "600"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"400", ",", "1000"}], "}"}]}], "}"}]}]}], "}"}]], "Output",Expr\
+essionUUID->"b9c318d2-290e-4227-bada-d70da9d61e5e"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ StyleBox["IrregularBoundaryData", "Input"],
+ StyleBox[" and ", "Text",
+  FontWeight->"Plain"],
+ StyleBox["RegularBoundaryData", "Input"]
+}], "Subsubsection",ExpressionUUID->"a99743d1-3420-43b2-9cf9-f936d3b96f34"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "IrregularBoundaryData"}]], "Input",ExpressionUUID->"7ee694d3-e1d2-4fa8-8c34-cc639e61e177"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"IrregularBoundaryData\\\", \\\"[\\\", \
+RowBox[List[RowBox[List[\\\"{\\\", RowBox[List[RowBox[List[\\\"{\\\", \
+RowBox[List[StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"k\\\", \
+\\\"TI\\\"], \\\",\\\", StyleBox[\\\"r\\\", \\\"TI\\\"]]], \\\"}\\\"]], \\\",\
+\\\", StyleBox[\\\"init\\\", \\\"TI\\\"], \\\",\\\", SubscriptBox[StyleBox[\\\
+\"t\\\", \\\"TI\\\"], StyleBox[\\\"max\\\", \\\"TI\\\"]]]], \\\"}\\\"]], \
+\\\",\\\", \
+StyleBox[\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"property\\\\\\\",\\\\\\\"\
+TI\\\\\\\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True]]], \\\"]\\\"]]\) \
+retrieves the value for the specified irregular boundary property for a \
+cellular automaton.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info143702544069-4513068",ExpressionUUID->"493e3a53-0b30-45e9-b52f-\
+29a7ed0223ef"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "RegularBoundaryData"}]], "Input",ExpressionUUID->"f1fb31e4-98f4-48db-a90f-18d2398a0586"],
+
+Cell[BoxData[
+ StyleBox["\<\"\!\(\*RowBox[List[\\\"RegularBoundaryData\\\", \\\"[\\\", \
+RowBox[List[RowBox[List[\\\"{\\\", RowBox[List[RowBox[List[\\\"{\\\", \
+RowBox[List[StyleBox[\\\"n\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"k\\\", \
+\\\"TI\\\"], \\\",\\\", StyleBox[\\\"r\\\", \\\"TI\\\"]]], \\\"}\\\"]], \\\",\
+\\\", StyleBox[\\\"init\\\", \\\"TI\\\"]]], \\\"}\\\"]], \\\",\\\", StyleBox[\
+\\\"\\\\\\\"\\\\!\\\\(\\\\*StyleBox[\\\\\\\"property\\\\\\\",\\\\\\\"TI\\\\\\\
+\"]\\\\)\\\\\\\"\\\", ShowStringCharacters->True]]], \\\"]\\\"]]\) retrieves \
+the value for the specified regular boundary property for a cellular \
+automaton.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info153702544070-4513068",ExpressionUUID->"898028c7-c9e7-4b68-91f7-\
+1af48bb44696"]
+}, Open  ]],
+
+Cell["[See the Introduction for examples.]", "Text",ExpressionUUID->"007a721f-43b8-4aa0-b15f-91e0fa1571b0"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["$CellularAutomatonDataDirectory", "Input"]], \
+"Subsubsection",ExpressionUUID->"d9c0e446-4040-46c4-86dc-1e9ccb80e6e4"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "$CellularAutomatonDataDirectory"}]], "Input",ExpressionUUID->"6dc58cd8-63d8-45b7-b8e0-ae0fccaa6135"],
+
+Cell[BoxData[
+ StyleBox["\<\"$CellularAutomatonDataDirectory gives the directory where \
+CellularAutomatonData files are stored.\"\>", "MSG"]], "Print", "PrintUsage",
+ CellTags->
+  "Info163702544082-4513068",ExpressionUUID->"819ae142-5603-49c6-8af9-\
+75a63abbc87c"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+},
+AutoGeneratedPackage->None,
+WindowSize->{1264, 717},
+WindowMargins->{{-8, Automatic}, {Automatic, 0}},
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
+ShowSelection->True,
+CellLabelAutoDelete->True,
+TrackCellChangeTimes->False,
+FrontEndVersion->"11.1 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 16, \
+2017)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "Info73702544002-4513068"->{
+  Cell[16662, 466, 630, 11, 
+  43, "Print", "ExpressionUUID" -> "24d52e7d-5c05-4005-b596-03abec074c03",
+   CellTags->"Info73702544002-4513068"]},
+ "Info113702544062-4513068"->{
+  Cell[50726, 1277, 515, 9, 
+  43, "Print", "ExpressionUUID" -> "f12fad37-7441-4744-9841-0450aa3ab47c",
+   CellTags->"Info113702544062-4513068"]},
+ "Info143702544069-4513068"->{
+  Cell[54611, 1395, 874, 14, 
+  43, "Print", "ExpressionUUID" -> "493e3a53-0b30-45e9-b52f-29a7ed0223ef",
+   CellTags->"Info143702544069-4513068"]},
+ "Info153702544070-4513068"->{
+  Cell[55642, 1417, 773, 12, 
+  43, "Print", "ExpressionUUID" -> "898028c7-c9e7-4b68-91f7-1af48bb44696",
+   CellTags->"Info153702544070-4513068"]},
+ "Info163702544082-4513068"->{
+  Cell[56873, 1445, 265, 5, 
+  43, "Print", "ExpressionUUID" -> "819ae142-5603-49c6-8af9-75a63abbc87c",
+   CellTags->"Info163702544082-4513068"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"Info73702544002-4513068", 57693, 1472},
+ {"Info113702544062-4513068", 57870, 1476},
+ {"Info143702544069-4513068", 58048, 1480},
+ {"Info153702544070-4513068", 58227, 1484},
+ {"Info163702544082-4513068", 58406, 1488}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 104, 0, 92, "Title", "ExpressionUUID" -> \
+"5e96e6cb-e44c-45d7-a682-560773ea535c"],
+Cell[674, 24, 42, 0, 51, "Subtitle", "ExpressionUUID" -> \
+"805e8d89-87f7-48fe-a793-751d429911a0"],
+Cell[719, 26, 255, 6, 49, "Subsubtitle", "ExpressionUUID" -> \
+"ea0fa257-46a3-4fe2-921d-a6e3dce094a7"],
+Cell[CellGroupData[{
+Cell[999, 36, 31, 0, 64, "Section", "ExpressionUUID" -> \
+"790f0736-f5c5-4be3-9f7f-401d35542c8f"],
+Cell[1033, 38, 330, 6, 68, "Text", "ExpressionUUID" -> \
+"1654e39f-fb1d-40a8-9039-f2fb637a6a9a"],
+Cell[1366, 46, 433, 11, 30, "Text", "ExpressionUUID" -> \
+"cbac876c-af80-4496-adfe-2c2d416ae56c"],
+Cell[1802, 59, 126, 1, 52, "Code", "ExpressionUUID" -> \
+"bb845243-2243-4303-854e-abceecaab0d1"],
+Cell[CellGroupData[{
+Cell[1953, 64, 109, 0, 44, "Subsection", "ExpressionUUID" -> \
+"f564ed39-9cdb-443e-9a6f-92f10b83e0fa"],
+Cell[2065, 66, 524, 9, 69, "Text", "ExpressionUUID" -> \
+"7a5e6ca5-15f0-44a2-89b4-e2acfc0d0a2a"],
+Cell[2592, 77, 479, 15, 51, "Text", "ExpressionUUID" -> \
+"bf4018ed-61b1-414e-a013-3978a662eb5c"],
+Cell[CellGroupData[{
+Cell[3096, 96, 300, 6, 32, "Input", "ExpressionUUID" -> \
+"89f2b399-ccb6-4418-b09f-5a69741da573"],
+Cell[3399, 104, 443, 12, 32, "Output", "ExpressionUUID" -> \
+"22036677-38d1-4518-869e-13796510e794"]
+}, Open  ]],
+Cell[3857, 119, 129, 0, 30, "Text", "ExpressionUUID" -> \
+"b228de22-9f46-4b85-9416-b753ab2f7161"],
+Cell[CellGroupData[{
+Cell[4011, 123, 441, 10, 32, "Input", "ExpressionUUID" -> \
+"a3688706-d401-4d0f-9f39-34b47f95be07"],
+Cell[4455, 135, 443, 12, 32, "Output", "ExpressionUUID" -> \
+"52565279-ef77-446d-a637-3ae646f3eb7c"]
+}, Open  ]],
+Cell[4913, 150, 227, 3, 30, "Text", "ExpressionUUID" -> \
+"ff6783af-08c4-4982-8f59-508c2b481ca0"],
+Cell[CellGroupData[{
+Cell[5165, 157, 300, 6, 32, "Input", "ExpressionUUID" -> \
+"a8854915-37c7-4a6a-8875-140672d9877f"],
+Cell[5468, 165, 820, 23, 48, "Output", "ExpressionUUID" -> \
+"847d4431-c933-4c52-bd05-528bae3630b3"]
+}, Open  ]],
+Cell[6303, 191, 309, 9, 50, "Text", "ExpressionUUID" -> \
+"8c2ee34d-2f7d-4ff3-8cc9-8e8633d8cdfe"],
+Cell[CellGroupData[{
+Cell[6637, 204, 618, 17, 32, "Input", "ExpressionUUID" -> \
+"960954dd-0d4a-4cf6-8117-deaf01c1524c"],
+Cell[7258, 223, 2958, 54, 216, "Output", "ExpressionUUID" -> \
+"dde46f6b-05e7-44df-99ba-0519510f5400"]
+}, Open  ]],
+Cell[10231, 280, 225, 4, 31, "Text", "ExpressionUUID" -> \
+"5ff4e058-7c45-435a-8707-89008742fa0e"],
+Cell[CellGroupData[{
+Cell[10481, 288, 395, 10, 32, "Input", "ExpressionUUID" -> \
+"b5247c8f-4f23-42f7-b748-adf654f06734"],
+Cell[10879, 300, 2958, 68, 181, "Output", "ExpressionUUID" -> \
+"a6a63728-f6df-4fa7-a2ae-53380c5b08a8"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[13886, 374, 98, 0, 36, "Subsection", "ExpressionUUID" -> \
+"b4eef92b-9ebb-42ab-a1cc-ea46f4da2fd4"],
+Cell[13987, 376, 490, 11, 69, "Text", "ExpressionUUID" -> \
+"511f28f3-b250-4b86-8f6a-ee9a650f9119"],
+Cell[14480, 389, 173, 3, 32, "Input", "ExpressionUUID" -> \
+"fc4bda33-ca1c-4df1-947d-6d9b3552a5c4"],
+Cell[14656, 394, 387, 9, 31, "Text", "ExpressionUUID" -> \
+"77bfc247-71f2-4d92-92b4-e580c2391db2"],
+Cell[15046, 405, 101, 2, 32, "Input", "ExpressionUUID" -> \
+"74c06bbf-bef1-4cec-91ce-31e33e3991fb"],
+Cell[15150, 409, 47, 0, 30, "Text", "ExpressionUUID" -> \
+"5e9ad628-a4f5-44d3-8f61-38018c5e43ed"],
+Cell[15200, 411, 356, 10, 32, "Input", "ExpressionUUID" -> \
+"f1744ba1-14b5-478f-87ad-c671b8ca960a"],
+Cell[15559, 423, 271, 8, 31, "Text", "ExpressionUUID" -> \
+"7ca2d0b4-7404-49d4-a5ea-f9682b1531fa"],
+Cell[CellGroupData[{
+Cell[15855, 435, 310, 10, 32, "Input", "ExpressionUUID" -> \
+"ad2b30eb-5351-410f-b8fc-58ce45ce3438"],
+Cell[16168, 447, 28, 0, 32, "Output", "ExpressionUUID" -> \
+"f372a220-5649-49f1-ac5d-02c582834947"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16257, 454, 89, 0, 64, "Section", "ExpressionUUID" -> \
+"5ce936fa-a530-499b-ad39-9d01608dfca2"],
+Cell[CellGroupData[{
+Cell[16371, 458, 138, 1, 29, "Subsubsection", "ExpressionUUID" -> \
+"61139bd6-e4b5-415b-878e-4298f65401ca"],
+Cell[CellGroupData[{
+Cell[16534, 463, 125, 1, 32, "Input", "ExpressionUUID" -> \
+"b8e79668-4318-4cef-b3eb-c791ed02d5e3"],
+Cell[16662, 466, 630, 11, 43, "Print", "ExpressionUUID" -> \
+"24d52e7d-5c05-4005-b596-03abec074c03",
+ CellTags->"Info73702544002-4513068"]
+}, Open  ]],
+Cell[17307, 480, 455, 14, 50, "Text", "ExpressionUUID" -> \
+"65d748fc-2f28-4052-b561-7e92974d71d4"],
+Cell[CellGroupData[{
+Cell[17787, 498, 1025, 26, 75, "Input", "ExpressionUUID" -> \
+"06cd2c97-43bf-4fa9-b926-04ded345ec5e"],
+Cell[18815, 526, 1530, 53, 54, "Output", "ExpressionUUID" -> \
+"dc12f499-c1b3-434b-a869-f6fb45fc007d"],
+Cell[20348, 581, 29496, 663, 1664, "Output", "ExpressionUUID" -> \
+"1c7dd063-e384-4717-add3-e845411b9b0e"]
+}, Open  ]],
+Cell[49859, 1247, 132, 4, 31, "Text", "ExpressionUUID" -> \
+"7085e4fe-aa63-4639-b74c-ac9a1e4a644a"],
+Cell[CellGroupData[{
+Cell[50016, 1255, 143, 2, 32, "Input", "ExpressionUUID" -> \
+"c8db3a2f-dca0-4b2f-a17b-5f4cd7e1635b"],
+Cell[50162, 1259, 230, 5, 32, "Output", "ExpressionUUID" -> \
+"728c15d1-86e4-452b-a9ec-ab17962fd9d6"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[50441, 1270, 134, 0, 23, "Subsubsection", "ExpressionUUID" -> \
+"a0b35128-72c9-431a-ab2c-9875c5f93a8a"],
+Cell[CellGroupData[{
+Cell[50600, 1274, 123, 1, 32, "Input", "ExpressionUUID" -> \
+"f32bd26e-4817-4bf9-9dca-c3a7a63177bd"],
+Cell[50726, 1277, 515, 9, 43, "Print", "ExpressionUUID" -> \
+"f12fad37-7441-4744-9841-0450aa3ab47c",
+ CellTags->"Info113702544062-4513068"]
+}, Open  ]],
+Cell[51256, 1289, 428, 11, 31, "Text", "ExpressionUUID" -> \
+"21a50eb2-7b93-4aa2-af7e-950ff2f71d13"],
+Cell[CellGroupData[{
+Cell[51709, 1304, 247, 5, 32, "Input", "ExpressionUUID" -> \
+"5df08f4e-68b3-4bfa-80ab-235b72070491"],
+Cell[51959, 1311, 1183, 34, 54, "Output", "ExpressionUUID" -> \
+"65f8fb5b-9ba5-4d92-a143-cca5da75612e"]
+}, Open  ]],
+Cell[53157, 1348, 185, 4, 31, "Text", "ExpressionUUID" -> \
+"10e15497-5448-4492-8aa2-81532e32afb5"],
+Cell[CellGroupData[{
+Cell[53367, 1356, 141, 2, 32, "Input", "ExpressionUUID" -> \
+"a5c723b0-9f3e-45cd-b198-48882c1a1d93"],
+Cell[53511, 1360, 675, 17, 32, "Output", "ExpressionUUID" -> \
+"b9c318d2-290e-4227-bada-d70da9d61e5e"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[54235, 1383, 229, 5, 23, "Subsubsection", "ExpressionUUID" -> \
+"a99743d1-3420-43b2-9cf9-f936d3b96f34"],
+Cell[CellGroupData[{
+Cell[54489, 1392, 119, 1, 32, "Input", "ExpressionUUID" -> \
+"7ee694d3-e1d2-4fa8-8c34-cc639e61e177"],
+Cell[54611, 1395, 874, 14, 43, "Print", "ExpressionUUID" -> \
+"493e3a53-0b30-45e9-b52f-29a7ed0223ef",
+ CellTags->"Info143702544069-4513068"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[55522, 1414, 117, 1, 32, "Input", "ExpressionUUID" -> \
+"f1fb31e4-98f4-48db-a90f-18d2398a0586"],
+Cell[55642, 1417, 773, 12, 43, "Print", "ExpressionUUID" -> \
+"898028c7-c9e7-4b68-91f7-1af48bb44696",
+ CellTags->"Info153702544070-4513068"]
+}, Open  ]],
+Cell[56430, 1432, 107, 0, 30, "Text", "ExpressionUUID" -> \
+"007a721f-43b8-4aa0-b15f-91e0fa1571b0"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[56574, 1437, 142, 1, 23, "Subsubsection", "ExpressionUUID" -> \
+"d9c0e446-4040-46c4-86dc-1e9ccb80e6e4"],
+Cell[CellGroupData[{
+Cell[56741, 1442, 129, 1, 32, "Input", "ExpressionUUID" -> \
+"6dc58cd8-63d8-45b7-b8e0-ae0fccaa6135"],
+Cell[56873, 1445, 265, 5, 43, "Print", "ExpressionUUID" -> \
+"819ae142-5603-49c6-8af9-75a63abbc87c",
+ CellTags->"Info163702544082-4513068"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
