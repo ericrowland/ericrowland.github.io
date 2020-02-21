@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>Data</title>
+<meta name=author value="Eric Rowland">
+</head>
+<script language=javascript src=layout.js></script><script language=javascript>header("data");</script>
+
+<p>
+<!--
+This data is generally nontrivial to compute, but it may or may not be of any use to anyone anymore (including me).
+-->
+The following either link to pages with more description or to text files with a ".m" extension.
+<!--
+Lists are in <i>Mathematica</i> notation (with curly braces).
+-->
+
+
+<p><br><h1 id=cellularautomaton style="font-size:120%">cellular automaton data</h1>
+<ul>
+
+<p>
+<a id=CellularAutomatonData><li><a href=packages/CellularAutomatonData.m>CellularAutomatonData</a> is a <i>Mathematica</i> package containing data on boundaries of one-dimensional cellular automata.
+My <a href=packages.html#CellularAutomatonData>packages</a> page contains more information, as does my <a href=papers/Boundary_growth_in_one-dimensional_cellular_automata.pdf>paper</a> with Charles Brummitt.
+
+<p>
+<a id=rule30><li><a href=data/rule30.m>List of the rightmost 121 central cells</a> on row 2<sup>31</sup><i>t</i> &#150; 1 of rule 30, begun from a single black cell on a white background, for each 1 &#8804; <i>t</i> &#8804; 2<sup>11</sup>.
+It was computed by a Java program and is described in my <a href=papers/Local_nested_structure_in_rule_30.pdf>paper</a> on local nested structure.
+(See also sequence <a href=http://oeis.org/A094604><font color=blue>A094604</font></a>.)
+
+</ul>
+
+
+<p><br><h1 id=words style="font-size:120%">combinatorics on words data</h1>
+<ul>
+
+<p>
+<a id=powerfreewords><li><a href=data/avoiding_fractional_powers.html>Extremal words avoiding fractional powers</a>:
+Prefixes of lexicographically least <i>a</i>/<i>b</i>-power-free words on the alphabet on non-negative integers.
+
+</ul>
+
+
+<p><br><h1 id=grouptheory style="font-size:120%">group theoretic data</h1>
+<ul>
+
+<p>
+<a id=equivalenceclasses><li><a href=data/automorphic_conjugacy_classes.html>Automorphic conjugacy classes in <i>F</i><sub>2</sub></a>:
+All equivalence classes of words in the free group on two generators, under its automorphism group, containing words up to length 20.
+<!--
+See my <a href=papers/Growing_words_in_the_free_group_on_two_generators.pdf>paper</a> with Bobbe Cooper for more information.
+-->
+
+</ul>
+
+
+<p><br><h1 id=numbertheory style="font-size:120%">number theoretic data</h1>
+<ul>
+
+<p>
+<a id=Motzkinnumbers><li><a href=data/Motzkin_numbers.html>Large Motzkin numbers</a>:
+Pre-computed values of sequence <a href=http://oeis.org/A001006><font color=blue>A001006</font></a>.
+
+<p>
+<a id=Motzkinnumbersmoduloprimepowers><li><a href=data/automata.html>Motzkin numbers modulo <i>p</i><sup><i>&alpha;</i></sup></a>:
+Finite automata which compute Motzkin numbers modulo various prime powers.
+
+<p>
+<a id=koyama><li><a href=data/koyama.m>Koyama's table</a> of integer solutions of <i>n</i> = <i>x</i><sup>3</sup> + <i>y</i><sup>3</sup> + <i>z</i><sup>3</sup>.
+I didn't compute this data, but it doesn't seem to be available digitally anywhere else.
+(I had to OCR from physical copies.)
+It accompanies my brief <a href=papers/Known_families_of_integer_solutions_of_x^3+y^3+z^3=n.pdf>survey</a> of known integer solutions.
+
+</ul>
+
+
+<p><br><h1 id=other style="font-size:120%">other data</h1>
+<ul>
+
+<p>
+<a id=pocketchange><li><a href=data/pocket_change.html>Long-term pocket change</a>:
+States and transition matrices of Markov chain models for spending coins.
+<!--
+They accompany my <a href=papers/What's_in_YOUR_wallet?!.pdf>paper</a> with Lara Pudwell.
+-->
+
+<p>
+<a id=overlapclusters><li><a href=data/overlapclusters/length3000.m>An overlap cluster of 3000 English words</a>, for which I won $10 in <a href=http://www.math.rutgers.edu/~zeilberg/><font color=blue>Doron Zeilberger</font></a>'s <a href=http://www.math.rutgers.edu/~zeilberg/math640_08.html><font color=blue>experimental mathematics course</font></a>.
+An overlap cluster is a sequence of words in which consecutive words have nontrivial overlap.
+In this case, the length of each overlap is 3, and no word pair is used twice.
+The effect is better seen when <a href=data/overlapclusters/length3000.txt>aligned</a>.
+
+</ul>
+
+
+<p><div style="visibility:hidden">
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=562599; 
+var sc_partition=4; 
+var sc_security="bf96014a"; 
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c5.statcounter.com/counter.php?sc_project=562599&amp;amp;java=0&amp;amp;security="bf96014a"" width=0 height=0 border="0"></a> </noscript>
+<!-- End of StatCounter Code -->
+</div>
+
+<script language=javascript>footer();</script>
+</body>
+</html>
