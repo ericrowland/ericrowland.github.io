@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>Long-term pocket change</title>
+<meta name=author value="Eric Rowland">
+</head>
+<script language=javascript src=../layout.js></script><script language=javascript>header("long-term pocket change", 1);</script>
+
+<p>
+These files contain data on the Markov chain for a "big spender's" wallet state in four currencies considered in my <a href=../papers/What's_in_YOUR_wallet.pdf>paper</a> with Lara Pudwell.
+
+The set of wallet states and the transition matrix are available.
+Each transition matrix is available in two formats &mdash; as a list of the nonzero entries and their positions (which can be passed to <a href=http://reference.wolfram.com/mathematica/ref/SparseArray.html><font color=blue>SparseArray</font></a>) and in its full form as a list of lists.
+This data was computed using the package <a href=../packages.html#PocketChange>PocketChange</a>.
+
+<p>
+<table border=1 cellpadding=10>
+
+<tr>
+<td align=right>U.S. currency:
+<td align=right><a href=pocketchange/US-states.m>6720 states</a>
+<td><a href=pocketchange/US.m>sparse array rules</a> (15 MB)
+<td><a href=pocketchange/US-full.m>transition matrix</a> (144 MB)
+
+<tr>
+<td align=right>pennyless purchaser:
+<td align=right><a href=pocketchange/pennyless_purchaser-states.m>213 states</a>
+<td><a href=pocketchange/pennyless_purchaser.m>sparse array rules</a>
+<td><a href=pocketchange/pennyless_purchaser-full.m>transition matrix</a>
+
+<tr>
+<td align=right>quarter hoarder:
+<td align=right><a href=pocketchange/quarter_hoarder-states.m>4125 states</a>
+<td><a href=pocketchange/quarter_hoarder.m>sparse array rules</a> (8 MB)
+<td><a href=pocketchange/quarter_hoarder-full.m>transition matrix</a> (55 MB)
+
+<tr>
+<td align=right>Shallit currency:
+<td align=right><a href=pocketchange/Shallit-states.m>4238 states</a>
+<td><a href=pocketchange/Shallit.m>sparse array rules</a> (10 MB)
+<td><a href=pocketchange/Shallit-full.m>transition matrix</a> (58 MB)
+
+</table>
+
+
+<p>
+<br>
+The following files contain data on the pennies-first big spender Markov chain.
+
+<p>
+<table border=1 cellpadding=10>
+
+<tr>
+<td align=right>U.S. currency:
+<td align=right><a href=pocketchange/pennies-first_US-states.m>1065 states</a>
+<td><a href=pocketchange/pennies-first_US.m>sparse array rules</a> (2 MB)
+<td><a href=pocketchange/pennies-first_US-full.m>transition matrix</a> (4 MB)
+
+</table>
+
+
+<p><div style="visibility:hidden">
+<!-- Start of StatCounter Code -->
+<script type="text/javascript" language="javascript">
+var sc_project=562599; 
+var sc_partition=4; 
+var sc_security="bf96014a"; 
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c5.statcounter.com/counter.php?sc_project=562599&amp;amp;java=0&amp;amp;security="bf96014a"" width=0 height=0 border="0"></a> </noscript>
+<!-- End of StatCounter Code -->
+</div>
+
+<script language=javascript>footer();</script>
+</body>
+</html>
