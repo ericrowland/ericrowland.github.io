@@ -12,7 +12,7 @@
 
 (* :Discussion:
 	BijectiveRules is a package for studying right bijective and left bijective cellular automaton rules.
-	Documentation can be found at  http://people.hofstra.edu/Eric_Rowland/packages.html .
+	Documentation can be found at  https://ericrowland.github.io/packages.html .
 *)
 
 

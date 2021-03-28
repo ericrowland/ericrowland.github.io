@@ -12,7 +12,7 @@
 
 (* :Discussion:
 	StringTricks is a collection of string manipulation and analysis tools.
-	Documentation can be found at  http://people.hofstra.edu/Eric_Rowland/packages.html .
+	Documentation can be found at  https://ericrowland.github.io/packages.html .
 *)
 
 

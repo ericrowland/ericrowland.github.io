@@ -12,7 +12,7 @@
 
 (* :Discussion:
 	SymbolicWords is a collection of tools for manipulating run-length encodings of words and morphisms with symbolic exponents.
-	Documentation can be found at  http://people.hofstra.edu/Eric_Rowland/packages.html .
+	Documentation can be found at  https://ericrowland.github.io/packages.html .
 *)
 
 

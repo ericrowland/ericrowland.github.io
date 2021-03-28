@@ -12,7 +12,7 @@
 
 (* :Discussion:
 	PocketChange is a package for analyzing the long-term behavior of the set of coins in one's pocket.
-	Documentation can be found at  http://people.hofstra.edu/Eric_Rowland/packages.html .
+	Documentation can be found at  https://ericrowland.github.io/packages.html .
 *)
 
 

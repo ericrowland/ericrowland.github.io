@@ -13,7 +13,7 @@
 (* :Discussion:
 	BinomialCoefficients is a package containing implementations
 	of several theorems on the residues and divisibility properties of binomial coefficients.
-	Documentation can be found at  http://people.hofstra.edu/Eric_Rowland/packages.html .
+	Documentation can be found at  https://ericrowland.github.io/packages.html .
 *)
 
 

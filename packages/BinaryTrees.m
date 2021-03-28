@@ -12,7 +12,7 @@
 
 (* :Discussion:
 	BinaryTrees is a package for generating, visualizing, and manipulating binary trees.
-	Documentation can be found at  http://people.hofstra.edu/Eric_Rowland/packages.html .
+	Documentation can be found at  https://ericrowland.github.io/packages.html .
 *)
 
 

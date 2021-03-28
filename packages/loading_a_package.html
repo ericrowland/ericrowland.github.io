@@ -16,17 +16,17 @@ The drawback of this method is that it makes a big mess in the notebook.
 
 <p><br>
 A slicker way of loading a package is to import it directly from the web.
-For example, the following loads the package <a href="https://people.hofstra.edu/Eric_Rowland/packages.html#IntegerSequences">IntegerSequences</a>.
+For example, the following loads the package <a href="https://ericrowland.github.io/packages.html#IntegerSequences">IntegerSequences</a>.
 
-<pre>Import["https://people.hofstra.edu/Eric_Rowland/packages/IntegerSequences.m"]</pre>
+<pre>Import["https://ericrowland.github.io/packages/IntegerSequences.m"]</pre>
 
 <p><br>
 If you intend to use a package more than once, it's probably better to download it.
-A good place to download packages is the Applications subdirectory of <b>$UserBaseDirectory</b>, which you can open by evaluating the following.
+A good place to download packages is the Applications subdirectory of <a href=https://reference.wolfram.com/language/ref/$UserBaseDirectory.html><font color=blue><b>$UserBaseDirectory</b></font></a>, which you can open by evaluating the following.
 
 <pre>SystemOpen[FileNameJoin[{$UserBaseDirectory, "Applications"}]]</pre>
 
-(Any of the directories listed when you evaluate <b>$Path</b> will work.)
+(Any of the directories listed when you evaluate <a href=https://reference.wolfram.com/language/ref/$Path.html><font color=blue><b>$Path</b></font></a> will work.)
 
 <p>
 Then you can load it by evaluating the following.

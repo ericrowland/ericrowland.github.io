@@ -12,7 +12,7 @@
 
 (* :Discussion:
 	TeXTools automates some common tasks involved in writing papers in LaTeX.
-	Documentation can be found at  http://people.hofstra.edu/Eric_Rowland/packages.html .
+	Documentation can be found at  https://ericrowland.github.io/packages.html .
 *)
 
 

@@ -12,7 +12,7 @@
 
 (* :Discussion:
 	AdditiveRules is a package for studying additive cellular automaton rules over a commutative monoid.
-	Documentation can be found at  http://people.hofstra.edu/Eric_Rowland/packages.html .
+	Documentation can be found at  https://ericrowland.github.io/packages.html .
 *)
 
 

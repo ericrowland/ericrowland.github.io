@@ -13,7 +13,7 @@
 (* :Discussion:
 	ListTricks is a collection of about 50 structure manipulation, classification, and searching tools
 	that can be thought of as extending the core Wolfram Language.
-	Documentation can be found at  http://people.hofstra.edu/Eric_Rowland/packages.html .
+	Documentation can be found at  https://ericrowland.github.io/packages.html .
 *)
 
 

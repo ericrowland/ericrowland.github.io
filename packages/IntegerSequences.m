@@ -12,7 +12,8 @@
 
 (* :Discussion:
 	IntegerSequences is a package for identifying and computing with integer sequences from a variety of classes.
-	Documentation can be found at  http://people.hofstra.edu/Eric_Rowland/packages.html .
+	It is available from  https://github.com/ericrowland/IntegerSequences .
+	Documentation can be found at  https://ericrowland.github.io/packages.html .
 *)
 
 (* :Acknowledgements:

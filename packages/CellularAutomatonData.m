@@ -12,7 +12,7 @@
 
 (* :Discussion:
 	CellularAutomatonData is a source of data on boundaries of one-dimensional cellular automata.
-	Documentation can be found at  http://people.hofstra.edu/Eric_Rowland/packages.html .
+	Documentation can be found at  https://ericrowland.github.io/packages.html .
 *)
 
 

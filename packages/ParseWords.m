@@ -13,7 +13,7 @@
 (* :Discussion:
 	ParseWords is a package for studying parse words of pairs of binary trees
 	under a certain grammar related to the four color theorem.
-	Documentation can be found at  http://people.hofstra.edu/Eric_Rowland/packages.html .
+	Documentation can be found at  https://ericrowland.github.io/packages.html .
 *)
 
 

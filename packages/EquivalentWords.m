@@ -13,7 +13,7 @@
 
 (* :Discussion:
 	EquivalentWords is a package for studying automorphic conjugacy in the free group F_2.
-	Documentation can be found at  http://people.hofstra.edu/Eric_Rowland/packages.html .
+	Documentation can be found at  https://ericrowland.github.io/packages.html .
 *)
 
 (* :Acknowledgement:
