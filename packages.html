@@ -46,7 +46,53 @@ I used this package to establish the structure of many <a href="data/avoiding_fr
 </ul>
 
 
-<p>Smaller packages:<ul>
+<p>Packages related to binary trees:<ul>
+
+
+<p><table border=1 cellpadding=2>
+<tr>
+<td align=center width=200><b>package</b>
+<td align=center width=650><b>description</b>
+<td align=center width=100><b>documentation</b>
+
+<tr><a id=BinaryTrees>
+<td align=center><a href="packages/BinaryTrees.m">BinaryTrees</a>
+<td>BinaryTrees is a package for generating, visualizing, and manipulating binary trees.
+<p style="font-size:80%">
+papers:
+<br>
+<a href="papers/Pattern_avoidance_in_binary_trees.pdf">Pattern avoidance in binary trees</a><br>
+<a href="papers/Toward_a_language_theoretic_proof_of_the_four_color_theorem.pdf">Toward a language theoretic proof of the four color theorem</a>
+</p>
+<td align=center><a href="packages/BinaryTrees.nb">notebook</a><br><a href=https://www.wolframcloud.com/objects/c11c03e3-b6f7-4c6f-8dcb-04140ef1ae24><font color=blue>cloud</font></a>
+
+<tr><a id=ParseWords>
+<td align=center><a href="packages/ParseWords.m">ParseWords</a>
+<p style="font-size:80%">(requires <a href="packages/BinaryTrees.m">BinaryTrees</a>)</p>
+<td>ParseWords is a package for studying parse words of pairs of binary trees under a certain grammar related to the four color theorem.
+<p style="font-size:80%">
+paper:
+<a href="papers/Toward_a_language_theoretic_proof_of_the_four_color_theorem.pdf">Toward a language theoretic proof of the four color theorem</a>
+</p>
+<td align=center><a href="packages/ParseWords.nb">notebook</a><br><a href=https://www.wolframcloud.com/objects/a5a57644-157a-4902-8dbe-5a9689725cee><font color=blue>cloud</font></a>
+
+<tr><a id=TreePatterns>
+<td align=center><a href="packages/TreePatterns.m">TreePatterns</a>
+<p style="font-size:80%">(requires <a href="packages/BinaryTrees.m">BinaryTrees</a>)</p>
+<td>TreePatterns is a package for studying trees that avoid a given tree pattern.
+<p style="font-size:80%">
+If <a href=http://www.singular.uni-kl.de><font color=blue>Singular</font></a> and the <a href=http://www.risc.jku.at/research/combinat/software/Singular/><font color=blue>interface package</font></a> by Manuel Kauers and Viktor Levandovskyy are suitably installed, TreePatterns uses Singular to compute Gr&#246;bner bases, which is faster than in <i>Mathematica</i>.
+<br>
+<br>paper:
+<a href="papers/Pattern_avoidance_in_binary_trees.pdf">Pattern avoidance in binary trees</a>
+</p>
+<td align=center><a href="packages/TreePatterns.nb">notebook</a><br><a href=https://www.wolframcloud.com/objects/e51b201d-0e30-4873-89e2-a41c28692363><font color=blue>cloud</font></a>
+
+</table>
+</ul>
+
+
+<p>Packages related to cellular automata:<ul>
 
 
 <p><table border=1 cellpadding=2>
@@ -69,26 +115,6 @@ paper:
 </p>
 <td align=center><a href="packages/BijectiveRules.nb">notebook</a><br><a href=https://www.wolframcloud.com/objects/f6d6824d-8920-4c15-bc80-951f70bfd811><font color=blue>cloud</font></a>
 
-<tr><a id=BinaryTrees>
-<td align=center><a href="packages/BinaryTrees.m">BinaryTrees</a>
-<td>BinaryTrees is a package for generating, visualizing, and manipulating binary trees.
-<p style="font-size:80%">
-papers:
-<br>
-<a href="papers/Pattern_avoidance_in_binary_trees.pdf">Pattern avoidance in binary trees</a><br>
-<a href="papers/Toward_a_language_theoretic_proof_of_the_four_color_theorem.pdf">Toward a language theoretic proof of the four color theorem</a>
-</p>
-<td align=center><a href="packages/BinaryTrees.nb">notebook</a><br><a href=https://www.wolframcloud.com/objects/c11c03e3-b6f7-4c6f-8dcb-04140ef1ae24><font color=blue>cloud</font></a>
-
-<tr><a id=BinomialCoefficients>
-<td align=center><a href="packages/BinomialCoefficients.m">BinomialCoefficients</a>
-<td>BinomialCoefficients is a package containing implementations of several theorems on the residues and divisibility properties of binomial coefficients.
-<p style="font-size:80%">
-paper:
-<a href="papers/The_number_of_nonzero_binomial_coefficients_modulo_p^alpha.pdf">The number of nonzero binomial coefficients modulo <i>p</i><sup><i>&alpha;</i></sup></a>
-</p>
-<td align=center><a href="packages/BinomialCoefficients.nb">notebook</a><br><a href=https://www.wolframcloud.com/objects/3a86dad5-2d79-4c1a-b475-825d10c26e80><font color=blue>cloud</font></a>
-
 <tr><a id=CellularAutomatonBoundaries>
 <td align=center><a href="packages/CellularAutomatonBoundaries.m">CellularAutomatonBoundaries</a>
 <td>CellularAutomatonBoundaries is a collection of tools for studying boundaries of one-dimensional cellular automata.
@@ -107,6 +133,28 @@ paper:
 </p>
 <td align=center><a href="packages/CellularAutomatonData.nb">notebook</a><br><a href=https://www.wolframcloud.com/objects/09776a5b-cdb4-4793-85a4-15beceddcbc4><font color=blue>cloud</font></a>
 
+</table>
+</ul>
+
+
+<p>Other packages:<ul>
+
+
+<p><table border=1 cellpadding=2>
+<tr>
+<td align=center width=200><b>package</b>
+<td align=center width=650><b>description</b>
+<td align=center width=100><b>documentation</b>
+
+<tr><a id=BinomialCoefficients>
+<td align=center><a href="packages/BinomialCoefficients.m">BinomialCoefficients</a>
+<td>BinomialCoefficients is a package containing implementations of several theorems on the residues and divisibility properties of binomial coefficients.
+<p style="font-size:80%">
+paper:
+<a href="papers/The_number_of_nonzero_binomial_coefficients_modulo_p^alpha.pdf">The number of nonzero binomial coefficients modulo <i>p</i><sup><i>&alpha;</i></sup></a>
+</p>
+<td align=center><a href="packages/BinomialCoefficients.nb">notebook</a><br><a href=https://www.wolframcloud.com/objects/3a86dad5-2d79-4c1a-b475-825d10c26e80><font color=blue>cloud</font></a>
+
 <tr><a id=EquivalentWords>
 <td align=center><a href="packages/EquivalentWords.m">EquivalentWords</a>
 <td>EquivalentWords is a package for studying automorphic conjugacy in the free group <i>F</i><sub>2</sub>.
@@ -119,16 +167,6 @@ I used this package to compute <a href="data/automorphic_conjugacy_classes.html"
 <a href="papers/Classification_of_automorphic_conjugacy_classes_in_the_free_group_on_two_generators.pdf">Classification of automorphic conjugacy classes in the free group on two generators</a>
 </p>
 <td align=center><a href="packages/EquivalentWords.nb">notebook</a><br><a href=https://www.wolframcloud.com/objects/4ab75a9d-6d3c-46a9-a109-1be7da579ace><font color=blue>cloud</font></a>
-
-<tr><a id=ParseWords>
-<td align=center><a href="packages/ParseWords.m">ParseWords</a>
-<p style="font-size:80%">(requires <a href="packages/BinaryTrees.m">BinaryTrees</a>)</p>
-<td>ParseWords is a package for studying parse words of pairs of binary trees under a certain grammar related to the four color theorem.
-<p style="font-size:80%">
-paper:
-<a href="papers/Toward_a_language_theoretic_proof_of_the_four_color_theorem.pdf">Toward a language theoretic proof of the four color theorem</a>
-</p>
-<td align=center><a href="packages/ParseWords.nb">notebook</a><br><a href=https://www.wolframcloud.com/objects/a5a57644-157a-4902-8dbe-5a9689725cee><font color=blue>cloud</font></a>
 
 <tr><a id=PocketChange>
 <td align=center><a href="packages/PocketChange.m">PocketChange</a>
@@ -148,18 +186,6 @@ paper:
 <td align=center><a href="packages/TeXTools.m">TeXTools</a>
 <td>TeXTools automates some common tasks involved in writing papers in LaTeX.
 <td align=center><a href="packages/TeXTools.nb">notebook</a><br><a href=https://www.wolframcloud.com/objects/f05ddf36-b7a2-4607-9119-5a12b47a37c0><font color=blue>cloud</font></a>
-
-<tr><a id=TreePatterns>
-<td align=center><a href="packages/TreePatterns.m">TreePatterns</a>
-<p style="font-size:80%">(requires <a href="packages/BinaryTrees.m">BinaryTrees</a>)</p>
-<td>TreePatterns is a package for studying trees that avoid a given tree pattern.
-<p style="font-size:80%">
-If <a href=http://www.singular.uni-kl.de><font color=blue>Singular</font></a> and the <a href=http://www.risc.jku.at/research/combinat/software/Singular/><font color=blue>interface package</font></a> by Manuel Kauers and Viktor Levandovskyy are suitably installed, TreePatterns uses Singular to compute Gr&#246;bner bases, which is faster than in <i>Mathematica</i>.
-<br>
-<br>paper:
-<a href="papers/Pattern_avoidance_in_binary_trees.pdf">Pattern avoidance in binary trees</a>
-</p>
-<td align=center><a href="packages/TreePatterns.nb">notebook</a><br><a href=https://www.wolframcloud.com/objects/e51b201d-0e30-4873-89e2-a41c28692363><font color=blue>cloud</font></a>
 
 </table>
 </ul>
