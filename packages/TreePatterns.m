@@ -4,9 +4,9 @@
 
 (* :Author: Eric Rowland *)
 
-(* :Date: {2014, 6, 1} *)
+(* :Date: {2021, 4, 9} *)
 
-(* :Package Version: 1.08 *)
+(* :Package Version: 1.09 *)
 
 (* :Mathematica Version: 9 *)
 
@@ -156,7 +156,7 @@ BottomUpReplaceAll::usage =
 box[BottomUpReplaceAll["expr", "rules"]] <> " applies a rule or list of rules in an attempt to transform each subpart of " <> box["expr"] <> " up from the bottom."
 
 FindOverlaps::usage =
-box[FindOverlaps[SubscriptSequence["p", {1, 2}]]] <> " gives the positions of all sub(tree patterns) in " <> box[Subscript["p", 1]] <> " that have a non\[Hyphen]full intersection with tree pattern " <> box[Subscript["p", 2]] <> ".
+box[FindOverlaps[SubscriptSequence["p", {1, 2}]]] <> " gives the positions of all sub\[Hyphen]patterns in " <> box[Subscript["p", 1]] <> " that have a non\[Hyphen]full intersection with tree pattern " <> box[Subscript["p", 2]] <> ".
 In other words, it finds the places in " <> box[Subscript["p", 1]] <> " where " <> box[Subscript["p", 2]] <> " can be hung."
 
 FromTreePattern::usage =
@@ -198,7 +198,7 @@ box[WeightEquation["t", "f", "x"]] <> " gives an equation satisfied by the weigh
 box[WeightEquation[Subscript["t", 1], Subscript["t", 2], "\[Ellipsis]", Subscript["t", "k"], "f", "x"]] <> " uses the weight function " <> box["x"[{}]^"number of vertices" Product["x"[Subscript["t", "i"]]^("number of occurrences of" Subscript["t", "i"]), {"i", 1, "k"}]] <> "."
 
 
-(* loads the Singular interface by Manuel Kauers and Viktor Levandovskyy, if available *)
+(* This loads the Singular interface by Manuel Kauers and Viktor Levandovskyy, if available. *)
 $Singular =
 	Quiet[Check[
 		Block[{CellPrint = List, Print = List}, Needs["Singular`"]]; True,
@@ -535,15 +535,15 @@ BinaryTreeClassData[4] := Thread[{4, Range[2]}]
 BinaryTreeClassData[5] := Thread[{5, Range[3]}]
 BinaryTreeClassData[6] := Thread[{6, Range[7]}]
 BinaryTreeClassData[7] := Thread[{7, Range[15]}]
-BinaryTreeClassData[8] := Thread[{8, Range[44]}]
-$BinaryTreeClasses = Join @@ Table[BinaryTreeClassData[n], {n, 8}]
+BinaryTreeClassData[8] := Thread[{8, Range[43]}]
+$BinaryTreeClasses = Join @@ BinaryTreeClassData /@ Range[1, 8]
 classQ[class_] := MemberQ[$BinaryTreeClasses, class]
 BinaryTreeClassData[All] := $BinaryTreeClasses
 BinaryTreeClassData[] := BinaryTreeClassData[All]
 BinaryTreeClassData[class : (_?classQ) : {1, 1}, "Properties"] := {
 	"AvoidingSequenceNumber",
 	"AvoidingWeightEquation",
-	"EquivalenceGraphImage",
+	"EquivalenceGraph",
 	"Indices",
 	"Members",
 	"ProbableAvoidingBijections",
@@ -610,7 +610,9 @@ BinaryTreeClassData[{8, 27}, "Indices"] := {134, 296}
 BinaryTreeClassData[{8, 28}, "Indices"] := {136, 137, 176, 190, 252, 253, 293, 294}
 BinaryTreeClassData[{8, 29}, "Indices"] := {139, 148, 282, 291}
 BinaryTreeClassData[{8, 30}, "Indices"] := {142, 204, 218, 222, 224, 288}
-BinaryTreeClassData[{8, 31}, "Indices"] := {143, 198, 207, 209, 221, 236, 287}
+(* Originally, binary tree 219 was incorrectly reported to be in its own class;
+   in fact the polynomial I computed for its avoiding generating function factors. *)
+BinaryTreeClassData[{8, 31}, "Indices"] := {143, 198, 207, 209, 219, 221, 236, 287}
 BinaryTreeClassData[{8, 32}, "Indices"] := {144, 214, 220, 286}
 BinaryTreeClassData[{8, 33}, "Indices"] := {145, 146, 284, 285}
 BinaryTreeClassData[{8, 34}, "Indices"] := {161, 188, 229, 269}
@@ -623,7 +625,6 @@ BinaryTreeClassData[{8, 40}, "Indices"] := {171, 259}
 BinaryTreeClassData[{8, 41}, "Indices"] := {178, 193, 246, 249}
 BinaryTreeClassData[{8, 42}, "Indices"] := {179, 192, 247, 248}
 BinaryTreeClassData[{8, 43}, "Indices"] := {201, 230}
-BinaryTreeClassData[{8, 44}, "Indices"] := {219}
 BinaryTreeClassData[class : {n_, _}?classQ, "Members"] := BinaryTrees[n][[BinaryTreeClassData[class, "Indices"]]]
 BinaryTreeClassData[{1, 1}, "AvoidingSequenceNumber"] := "A000004"
 BinaryTreeClassData[{2, 1}, "AvoidingSequenceNumber"] := "A000007"
@@ -1004,140 +1005,673 @@ BinaryTreeClassData[{7, 15}, "ProbableAvoidingBijections"] := {
 	{81 -> 61, {{1, 6, 7, 2, 3, 4, 5}}}
 }
 BinaryTreeClassData[_?classQ, "ProbableAvoidingBijections"] := Missing["NotAvailable"]
-BinaryTreeClassData[class_?classQ, "EquivalenceGraphImage", opts : OptionsPattern[]] /;
+BinaryTreeClassData[class_?classQ, "EquivalenceGraph", options : OptionsPattern[]] /;
 	MatchQ[BinaryTreeClassData[class, "ProbableAvoidingBijections"], _List] :=
-Module[{rules},
-	rules = Join[
-		({# -> RankBinaryTree[ReverseAll[BinaryTrees[First[class]][[#]]]], "LR"} &) /@
-			BinaryTreeClassData[class, "Indices"],
-		BinaryTreeClassData[class, "ProbableAvoidingBijections"]
-	];
-	If[Union @@ Apply[List, First /@ rules, {1}] != BinaryTreeClassData[class, "Indices"],
+With[
+	{
+		edges = Join[
+			Style[# -> RankBinaryTree[ReverseAll[BinaryTrees[First[class]][[#]]]], Directive[Gray, Dashed]] & /@
+				BinaryTreeClassData[class, "Indices"],
+			First /@ BinaryTreeClassData[class, "ProbableAvoidingBijections"]
+		]
+	},
+	If[Union @@ List @@@ Replace[edges, Style[edge_, _] :> edge, {1}] != BinaryTreeClassData[class, "Indices"],
 		Print["Warning: Some trees are not represented in these equivalences."]
 	];
-	GraphPlot[
-		rules,
-		opts,
-		EdgeRenderingFunction -> (If[#3 === "LR",
-			{Gray, Dashed, Arrow[#1, 0.1]},
-			Tooltip[{RGBColor[1/2, 0, 0], Arrow[#1, 0.1]}, Column[Row /@ #3]]
-		] &),
-		VertexLabeling -> True
+	Graph[
+		edges,
+		options,
+		VertexLabels -> "Name"
 	]
 ]
-BinaryTreeClassData[_?classQ, "EquivalenceGraphImage", opts : OptionsPattern[]] := Missing["NotAvailable"]
-BinaryTreeClassData[class : {Except[8], _}?classQ, "AvoidingWeightEquation"] := Evaluate[BinaryTreeClassData[class, "WeightEquation"][#1, #2, 0]] &
-BinaryTreeClassData[{1, 1}, "WeightEquation"] := -#1 + #2 + #1^2 #2 == 0 &	(* a peculiar case because #3 == #2; so I'm not counting {} twice *)
-BinaryTreeClassData[{2, 1}, "WeightEquation"] := -#1 + #2 + #1^2 #2 #3 == 0 &
-BinaryTreeClassData[{3, 1}, "WeightEquation"] := #2 + #1^2 #2 #3 + #1 (-1 + #2^2 - #2^2 #3) == 0 &
-BinaryTreeClassData[{4, 1}, "WeightEquation"] := #2 + #1 (-1 + #2^2 - #2^2 #3) - #1^2 #2 (-#2^2 - #3 + #2^2 #3) == 0 &
-BinaryTreeClassData[{4, 2}, "WeightEquation"] := #1^2 #2 #3 + #1 (-1 + 2 #2^2 - 2 #2^2 #3) + #2 (1 - #2^2 + #2^2 #3) == 0 &
-BinaryTreeClassData[{5, 1}, "WeightEquation"] := #2 - #1^3 #2^4 (-1 + #3) + #1 (-1 + #2^2 - #2^2 #3) - #1^2 #2 (-#2^2 - #3 + #2^2 #3) == 0 &
-BinaryTreeClassData[{5, 2}, "WeightEquation"] := #2 (1 - #2^2 + #2^2 #3) - #1^2 #2 (-#2^2 - #3 + #2^2 #3) + #1 (-1 + 2 #2^2 - #2^4 - 2 #2^2 #3 + #2^4 #3) == 0 &
-BinaryTreeClassData[{5, 3}, "WeightEquation"] := -#2^4 (-1 + #3) + #1^3 #2 #3 + #1^2 (-1 + 3 #2^2 - 3 #2^2 #3) + #1 #2 (1 - 3 #2^2 + 3 #2^2 #3) == 0 &
+BinaryTreeClassData[_?classQ, "EquivalenceGraph", options : OptionsPattern[]] := Missing["NotAvailable"]
+(* for backward compatibility: *)
+BinaryTreeClassData[class_?classQ, "EquivalenceGraphImage", options : OptionsPattern[]] :=
+	BinaryTreeClassData[class, "EquivalenceGraph", options]
+BinaryTreeClassData[class : {Except[8], _}?classQ, "AvoidingWeightEquation"] :=
+	Function @@ {
+		{\[FormalF], \[FormalX]},
+		BinaryTreeClassData[class, "WeightEquation"][\[FormalF], \[FormalX], 0]
+	}
+BinaryTreeClassData[{1, 1}, "WeightEquation"] :=
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		(* a peculiar case because \[FormalY] == \[FormalX]; so I'm not counting {} twice *)
+		\[FormalX]
+		- \[FormalF]
+		+ \[FormalX] \[FormalF]^2
+		== 0
+	]
+BinaryTreeClassData[{2, 1}, "WeightEquation"] :=
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX]
+		- \[FormalF]
+		+ \[FormalX] \[FormalY] \[FormalF]^2
+		== 0
+	]
+BinaryTreeClassData[{3, 1}, "WeightEquation"] :=
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX]
+		+ (-1 + \[FormalX]^2 - \[FormalX]^2 \[FormalY]) \[FormalF]
+		+ \[FormalX] \[FormalY] \[FormalF]^2
+		== 0
+	]
+BinaryTreeClassData[{4, 1}, "WeightEquation"] :=
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX]
+		+ (-1 + \[FormalX]^2 - \[FormalX]^2 \[FormalY]) \[FormalF]
+		- \[FormalX] (-\[FormalX]^2 - \[FormalY] + \[FormalX]^2 \[FormalY]) \[FormalF]^2
+		== 0
+	]
+BinaryTreeClassData[{4, 2}, "WeightEquation"] :=
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^2 \[FormalY])
+		+ (-1 + 2 \[FormalX]^2 - 2 \[FormalX]^2 \[FormalY]) \[FormalF]
+		+ \[FormalX] \[FormalY] \[FormalF]^2
+		== 0
+	]
+BinaryTreeClassData[{5, 1}, "WeightEquation"] :=
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX]
+		+ (-1 + \[FormalX]^2 - \[FormalX]^2 \[FormalY]) \[FormalF]
+		- \[FormalX] (-\[FormalX]^2 - \[FormalY] + \[FormalX]^2 \[FormalY]) \[FormalF]^2
+		- \[FormalX]^4 (-1 + \[FormalY]) \[FormalF]^3
+		== 0
+	]
+BinaryTreeClassData[{5, 2}, "WeightEquation"] :=
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^2 \[FormalY])
+		+ (-1 + 2 \[FormalX]^2 - \[FormalX]^4 - 2 \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY]) \[FormalF]
+		- \[FormalX] (-\[FormalX]^2 - \[FormalY] + \[FormalX]^2 \[FormalY]) \[FormalF]^2
+		== 0
+	]
+BinaryTreeClassData[{5, 3}, "WeightEquation"] :=
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		-\[FormalX]^4 (-1 + \[FormalY])
+		+ \[FormalX] (1 - 3 \[FormalX]^2 + 3 \[FormalX]^2 \[FormalY]) \[FormalF]
+		+ (-1 + 3 \[FormalX]^2 - 3 \[FormalX]^2 \[FormalY]) \[FormalF]^2
+		+ \[FormalX] \[FormalY] \[FormalF]^3
+		== 0
+	]
 BinaryTreeClassData[{6, 1}, "WeightEquation"] :=
-   #2 + #1*(-1 + #2^2 - #2^2*#3) + #1^2*(#2^3 + #2*#3 - #2^3*#3) + #1^3*(#2^4 - #2^4*#3) + 
-     #1^4*(#2^5 - #2^5*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX]
+		+ (-1 + \[FormalX]^2 - \[FormalX]^2 \[FormalY]) \[FormalF]
+		- \[FormalX] (-\[FormalX]^2 - \[FormalY] + \[FormalX]^2 \[FormalY]) \[FormalF]^2
+		- \[FormalX]^4 (-1 + \[FormalY]) \[FormalF]^3
+		- \[FormalX]^5 (-1 + \[FormalY]) \[FormalF]^4
+		== 0
+	]
 BinaryTreeClassData[{6, 2}, "WeightEquation"] :=
-   #2 - #2^3 + #2^3*#3 + #1^3*(#2^4 - #2^4*#3) + #1*(-1 + 2*#2^2 - #2^4 - 2*#2^2*#3 + 
-       #2^4*#3) + #1^2*(#2^3 - #2^5 + #2*#3 - #2^3*#3 + #2^5*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^2 \[FormalY])
+		+ (-1 + 2 \[FormalX]^2 - \[FormalX]^4 - 2 \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY]) \[FormalF]
+		+ \[FormalX] (\[FormalX]^2 - \[FormalX]^4 + \[FormalY] - \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY]) \[FormalF]^2
+		- \[FormalX]^4 (-1 + \[FormalY]) \[FormalF]^3
+		== 0
+	]
 BinaryTreeClassData[{6, 3}, "WeightEquation"] :=
-   #2 - #2^3 + #2^3*#3 + #1*(-1 + 2*#2^2 - 2*#2^4 - 2*#2^2*#3 + 2*#2^4*#3) + 
-     #1^2*(2*#2^3 - #2^5 + #2*#3 - 2*#2^3*#3 + #2^5*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^2 \[FormalY])
+		+ (-1 + 2 \[FormalX]^2 - 2 \[FormalX]^4 - 2 \[FormalX]^2 \[FormalY] + 2 \[FormalX]^4 \[FormalY]) \[FormalF]
+		+ \[FormalX] (2 \[FormalX]^2 - \[FormalX]^4 + \[FormalY] - 2 \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY]) \[FormalF]^2
+		== 0
+	]
 BinaryTreeClassData[{6, 4}, "WeightEquation"] :=
-   #2^4 - #2^4*#3 + #1^3*(#2^3 + #2*#3 - #2^3*#3) + 
-     #1^2*(-1 + 3*#2^2 - 2*#2^4 - 3*#2^2*#3 + 2*#2^4*#3) + 
-     #1*(#2 - 3*#2^3 + #2^5 + 3*#2^3*#3 - #2^5*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		-\[FormalX]^4 (-1 + \[FormalY])
+		- \[FormalX] (-1 + 3 \[FormalX]^2 - \[FormalX]^4 - 3 \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY]) \[FormalF]
+		+ (-1 + 3 \[FormalX]^2 - 2 \[FormalX]^4 - 3 \[FormalX]^2 \[FormalY] + 2 \[FormalX]^4 \[FormalY]) \[FormalF]^2
+		- \[FormalX] (-\[FormalX]^2 - \[FormalY] + \[FormalX]^2 \[FormalY]) \[FormalF]^3
+		== 0
+	]
 BinaryTreeClassData[{6, 5}, "WeightEquation"] :=
-   #2 - #2^3 + #2^5 + #2^3*#3 - #2^5*#3 + #1^2*(2*#2^3 + #2*#3 - 2*#2^3*#3) + 
-     #1*(-1 + 2*#2^2 - 3*#2^4 - 2*#2^2*#3 + 3*#2^4*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		-\[FormalX] (-1 + \[FormalX]^2 - \[FormalX]^4 - \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY])
+		+ (-1 + 2 \[FormalX]^2 - 3 \[FormalX]^4 - 2 \[FormalX]^2 \[FormalY] + 3 \[FormalX]^4 \[FormalY]) \[FormalF]
+		- \[FormalX] (-2 \[FormalX]^2 - \[FormalY] + 2 \[FormalX]^2 \[FormalY]) \[FormalF]^2
+		== 0
+	]
 BinaryTreeClassData[{6, 6}, "WeightEquation"] :=
-   #2^5 - #1^4*#2*#3 - #2^5*#3 + #1^3*(1 - 4*#2^2 + 4*#2^2*#3) + 
-     #1^2*(-#2 + 6*#2^3 - 6*#2^3*#3) + #1*(-4*#2^4 + 4*#2^4*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		-\[FormalX]^5 (-1 + \[FormalY])
+		+ 4 \[FormalX]^4 (-1 + \[FormalY]) \[FormalF]
+		- \[FormalX] (1 - 6 \[FormalX]^2 + 6 \[FormalX]^2 \[FormalY]) \[FormalF]^2
+		+ (1 - 4 \[FormalX]^2 + 4 \[FormalX]^2 \[FormalY]) \[FormalF]^3
+		- \[FormalX] \[FormalY] \[FormalF]^4
+		== 0
+	]
 BinaryTreeClassData[{6, 7}, "WeightEquation"] :=
-   #2 - #2^3 + #2^7 + #2^3*#3 - 2*#2^7*#3 + #2^7*#3^2 + 
-     #1^3*(#2^6 + #2^4*#3 - 2*#2^6*#3 - #2^4*#3^2 + #2^6*#3^2) + 
-     #1^2*(#2^3 + 2*#2^5 - 2*#2^7 + #2*#3 - #2^3*#3 - 5*#2^5*#3 + 4*#2^7*#3 + 3*#2^5*#3^2 - 
-       2*#2^7*#3^2) + #1*(-1 + 2*#2^2 - #2^4 - 3*#2^6 + #2^8 - 2*#2^2*#3 + #2^4*#3 + 
-       6*#2^6*#3 - 2*#2^8*#3 - 3*#2^6*#3^2 + #2^8*#3^2) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^6 + \[FormalX]^2 \[FormalY] - 2 \[FormalX]^6 \[FormalY] + \[FormalX]^6 \[FormalY]^2)
+		+ (-1 + 2 \[FormalX]^2 - \[FormalX]^4 - 3 \[FormalX]^6 + \[FormalX]^8 - 2 \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY] + 6 \[FormalX]^6 \[FormalY] - 2 \[FormalX]^8 \[FormalY] - 3 \[FormalX]^6 \[FormalY]^2 + \[FormalX]^8 \[FormalY]^2) \[FormalF]
+		- \[FormalX] (-\[FormalX]^2 - 2 \[FormalX]^4 + 2 \[FormalX]^6 - \[FormalY] + \[FormalX]^2 \[FormalY] + 5 \[FormalX]^4 \[FormalY] - 4 \[FormalX]^6 \[FormalY] - 3 \[FormalX]^4 \[FormalY]^2 + 2 \[FormalX]^6 \[FormalY]^2) \[FormalF]^2
+		+ \[FormalX]^4 (-1 + \[FormalY]) (-\[FormalX]^2 - \[FormalY] + \[FormalX]^2 \[FormalY]) \[FormalF]^3
+		== 0
+	]
 BinaryTreeClassData[{7, 1}, "WeightEquation"] :=
-   #2 - #1^3*#2^4*(-1 + #3) - #1^4*#2^5*(-1 + #3) - #1^5*#2^6*(-1 + #3) + 
-     #1*(-1 + #2^2 - #2^2*#3) - #1^2*#2*(-#2^2 - #3 + #2^2*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX]
+		+ (-1 + \[FormalX]^2 - \[FormalX]^2 \[FormalY]) \[FormalF]
+		- \[FormalX] (-\[FormalX]^2 - \[FormalY] + \[FormalX]^2 \[FormalY]) \[FormalF]^2
+		- \[FormalX]^4 (-1 + \[FormalY]) \[FormalF]^3
+		- \[FormalX]^5 (-1 + \[FormalY]) \[FormalF]^4
+		- \[FormalX]^6 (-1 + \[FormalY]) \[FormalF]^5
+		== 0
+	]
 BinaryTreeClassData[{7, 2}, "WeightEquation"] :=
-   -(#1^4*#2^5*(-1 + #3)) + #1^3*(-1 + #2)*#2^4*(1 + #2)*(-1 + #3) + 
-     #2*(1 - #2^2 + #2^2*#3) + #1*(-1 + 2*#2^2 - #2^4 - 2*#2^2*#3 + #2^4*#3) + 
-     #1^2*#2*(#2^2 - #2^4 + #3 - #2^2*#3 + #2^4*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^2 \[FormalY])
+		+ (-1 + 2 \[FormalX]^2 - \[FormalX]^4 - 2 \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY]) \[FormalF]
+		+ \[FormalX] (\[FormalX]^2 - \[FormalX]^4 + \[FormalY] - \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY]) \[FormalF]^2
+		+ (-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) (-1 + \[FormalY]) \[FormalF]^3
+		- \[FormalX]^5 (-1 + \[FormalY]) \[FormalF]^4
+		== 0
+	]
 BinaryTreeClassData[{7, 3}, "WeightEquation"] :=
-   #1^3*(-1 + #2)*#2^4*(1 + #2)*(-1 + #3) + #2*(1 - #2^2 + #2^2*#3) + 
-     #1*(-1 + 2*#2^2 - 2*#2^4 - 2*#2^2*#3 + 2*#2^4*#3) + 
-     #1^2*#2*(2*#2^2 - 2*#2^4 + #3 - 2*#2^2*#3 + 2*#2^4*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^2 \[FormalY])
+		+ (-1 + 2 \[FormalX]^2 - 2 \[FormalX]^4 - 2 \[FormalX]^2 \[FormalY] + 2 \[FormalX]^4 \[FormalY]) \[FormalF]
+		+ \[FormalX] (2 \[FormalX]^2 - 2 \[FormalX]^4 + \[FormalY] - 2 \[FormalX]^2 \[FormalY] + 2 \[FormalX]^4 \[FormalY]) \[FormalF]^2
+		+ (-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) (-1 + \[FormalY]) \[FormalF]^3
+		== 0
+	]
 BinaryTreeClassData[{7, 4}, "WeightEquation"] :=
-   -(#2^4*(-1 + #3)) - #1^4*#2^4*(-1 + #3) - #1*#2*(-1 + 3*#2^2 - #2^4 - 3*#2^2*#3 + 
-       #2^4*#3) + #1^3*#2*(#2^2 - 2*#2^4 + #3 - #2^2*#3 + 2*#2^4*#3) + 
-     #1^2*(-1 + 3*#2^2 - 2*#2^4 + #2^6 - 3*#2^2*#3 + 2*#2^4*#3 - #2^6*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		-\[FormalX]^4 (-1 + \[FormalY])
+		- \[FormalX] (-1 + 3 \[FormalX]^2 - \[FormalX]^4 - 3 \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY]) \[FormalF]
+		+ (-1 + 3 \[FormalX]^2 - 2 \[FormalX]^4 + \[FormalX]^6 - 3 \[FormalX]^2 \[FormalY] + 2 \[FormalX]^4 \[FormalY] - \[FormalX]^6 \[FormalY]) \[FormalF]^2
+		+ \[FormalX] (\[FormalX]^2 - 2 \[FormalX]^4 + \[FormalY] - \[FormalX]^2 \[FormalY] + 2 \[FormalX]^4 \[FormalY]) \[FormalF]^3
+		- \[FormalX]^4 (-1 + \[FormalY]) \[FormalF]^4
+		== 0
+	]
 BinaryTreeClassData[{7, 5}, "WeightEquation"] :=
-   -(#1^3*#2^4*(-1 + #3)) - #2*(-1 + #2^2 - #2^4 - #2^2*#3 + #2^4*#3) + 
-     #1^2*#2*(2*#2^2 - 2*#2^4 + #3 - 2*#2^2*#3 + 2*#2^4*#3) + 
-     #1*(-1 + 2*#2^2 - 3*#2^4 + #2^6 - 2*#2^2*#3 + 3*#2^4*#3 - #2^6*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		-\[FormalX] (-1 + \[FormalX]^2 - \[FormalX]^4 - \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY])
+		+ (-1 + 2 \[FormalX]^2 - 3 \[FormalX]^4 + \[FormalX]^6 - 2 \[FormalX]^2 \[FormalY] + 3 \[FormalX]^4 \[FormalY] - \[FormalX]^6 \[FormalY]) \[FormalF]
+		+ \[FormalX] (2 \[FormalX]^2 - 2 \[FormalX]^4 + \[FormalY] - 2 \[FormalX]^2 \[FormalY] + 2 \[FormalX]^4 \[FormalY]) \[FormalF]^2
+		- \[FormalX]^4 (-1 + \[FormalY]) \[FormalF]^3
+		== 0
+	]
 BinaryTreeClassData[{7, 6}, "WeightEquation"] :=
-   -(#2^4*(-1 + #3)) + #1^3*#2*(2*#2^2 - #2^4 + #3 - 2*#2^2*#3 + #2^4*#3) - 
-     #1*#2*(-1 + 3*#2^2 - 2*#2^4 - 3*#2^2*#3 + 2*#2^4*#3) + 
-     #1^2*(-1 + 3*#2^2 - 4*#2^4 + #2^6 - 3*#2^2*#3 + 4*#2^4*#3 - #2^6*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		-\[FormalX]^4 (-1 + \[FormalY])
+		- \[FormalX] (-1 + 3 \[FormalX]^2 - 2 \[FormalX]^4 - 3 \[FormalX]^2 \[FormalY] + 2 \[FormalX]^4 \[FormalY]) \[FormalF]
+		+ (-1 + 3 \[FormalX]^2 - 4 \[FormalX]^4 + \[FormalX]^6 - 3 \[FormalX]^2 \[FormalY] + 4 \[FormalX]^4 \[FormalY] - \[FormalX]^6 \[FormalY]) \[FormalF]^2
+		+ \[FormalX] (2 \[FormalX]^2 - \[FormalX]^4 + \[FormalY] - 2 \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY]) \[FormalF]^3
+		== 0
+	]
 BinaryTreeClassData[{7, 7}, "WeightEquation"] :=
-   -(#2^5*(-1 + #3)) - #1*(-2 + #2)*#2^4*(2 + #2)*(-1 + #3) + 
-     #1^4*#2*(-#2^2 - #3 + #2^2*#3) + #1^3*(1 - 4*#2^2 + 3*#2^4 + 4*#2^2*#3 - 3*#2^4*#3) + 
-     #1^2*#2*(-1 + 6*#2^2 - 3*#2^4 - 6*#2^2*#3 + 3*#2^4*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		-\[FormalX]^5 (-1 + \[FormalY])
+		- (-2 + \[FormalX]) \[FormalX]^4 (2 + \[FormalX]) (-1 + \[FormalY]) \[FormalF]
+		+ \[FormalX] (-1 + 6 \[FormalX]^2 - 3 \[FormalX]^4 - 6 \[FormalX]^2 \[FormalY] + 3 \[FormalX]^4 \[FormalY]) \[FormalF]^2
+		+ (1 - 4 \[FormalX]^2 + 3 \[FormalX]^4 + 4 \[FormalX]^2 \[FormalY] - 3 \[FormalX]^4 \[FormalY]) \[FormalF]^3
+		+ \[FormalX] (-\[FormalX]^2 - \[FormalY] + \[FormalX]^2 \[FormalY]) \[FormalF]^4
+		== 0
+	]
 BinaryTreeClassData[{7, 8}, "WeightEquation"] :=
-   #1^3*#2^4*(-1 + #3)*(-1 - 2*#2^2 - #3 + 2*#2^2*#3) - #2*(1 - #2^4 + #2^4*#3)*
-      (-1 + #2^2 - #2^4 - #2^2*#3 + #2^4*#3) - #1^2*#2*(-#2^2 + 5*#2^6 - #3 + #2^2*#3 + 
-       3*#2^4*#3 - 10*#2^6*#3 - 3*#2^4*#3^2 + 5*#2^6*#3^2) + 
-     #1*(-1 + 2*#2^2 - #2^4 - 2*#2^6 + 4*#2^8 - 2*#2^2*#3 + #2^4*#3 + 5*#2^6*#3 - 
-       8*#2^8*#3 - 3*#2^6*#3^2 + 4*#2^8*#3^2) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		-\[FormalX] (1 - \[FormalX]^4 + \[FormalX]^4 \[FormalY]) (-1 + \[FormalX]^2 - \[FormalX]^4 - \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY])
+		+ (-1 + 2 \[FormalX]^2 - \[FormalX]^4 - 2 \[FormalX]^6 + 4 \[FormalX]^8 - 2 \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY] + 5 \[FormalX]^6 \[FormalY] - 8 \[FormalX]^8 \[FormalY] - 3 \[FormalX]^6 \[FormalY]^2 + 4 \[FormalX]^8 \[FormalY]^2) \[FormalF]
+		- \[FormalX] (-\[FormalX]^2 + 5 \[FormalX]^6 - \[FormalY] + \[FormalX]^2 \[FormalY] + 3 \[FormalX]^4 \[FormalY] - 10 \[FormalX]^6 \[FormalY] - 3 \[FormalX]^4 \[FormalY]^2 + 5 \[FormalX]^6 \[FormalY]^2) \[FormalF]^2
+		+ \[FormalX]^4 (-1 + \[FormalY]) (-1 - 2 \[FormalX]^2 - \[FormalY] + 2 \[FormalX]^2 \[FormalY]) \[FormalF]^3
+		== 0
+	]
 BinaryTreeClassData[{7, 9}, "WeightEquation"] :=
-   -(#2*(-1 + #2^2 - #2^4 - #2^2*#3 + #2^4*#3)) + 
-     #1^2*#2*(3*#2^2 - 2*#2^4 + #3 - 3*#2^2*#3 + 2*#2^4*#3) + 
-     #1*(-1 + 2*#2^2 - 4*#2^4 + #2^6 - 2*#2^2*#3 + 4*#2^4*#3 - #2^6*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		-\[FormalX] (-1 + \[FormalX]^2 - \[FormalX]^4 - \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY])
+		+ (-1 + 2 \[FormalX]^2 - 4 \[FormalX]^4 + \[FormalX]^6 - 2 \[FormalX]^2 \[FormalY] + 4 \[FormalX]^4 \[FormalY] - \[FormalX]^6 \[FormalY]) \[FormalF]
+		+ \[FormalX] (3 \[FormalX]^2 - 2 \[FormalX]^4 + \[FormalY] - 3 \[FormalX]^2 \[FormalY] + 2 \[FormalX]^4 \[FormalY]) \[FormalF]^2
+		== 0
+	]
 BinaryTreeClassData[{7, 10}, "WeightEquation"] :=
-   (-1 + #2)*#2^4*(1 + #2)*(-1 + #3) - #1^3*#2*(-2*#2^2 - #3 + 2*#2^2*#3) - 
-     #1*#2*(-1 + 3*#2^2 - 4*#2^4 - 3*#2^2*#3 + 4*#2^4*#3) + 
-     #1^2*(-1 + 3*#2^2 - 5*#2^4 - 3*#2^2*#3 + 5*#2^4*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		(-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) (-1 + \[FormalY])
+		- \[FormalX] (-1 + 3 \[FormalX]^2 - 4 \[FormalX]^4 - 3 \[FormalX]^2 \[FormalY] + 4 \[FormalX]^4 \[FormalY]) \[FormalF]
+		+ (-1 + 3 \[FormalX]^2 - 5 \[FormalX]^4 - 3 \[FormalX]^2 \[FormalY] + 5 \[FormalX]^4 \[FormalY]) \[FormalF]^2
+		- \[FormalX] (-2 \[FormalX]^2 - \[FormalY] + 2 \[FormalX]^2 \[FormalY]) \[FormalF]^3
+		== 0
+	]
 BinaryTreeClassData[{7, 11}, "WeightEquation"] :=
-   #2^2*(1 - #2^2 + #2^2*#3) + #1*#2*(-2 + 3*#2^2 - 3*#2^4 - 3*#2^2*#3 + 3*#2^4*#3) + 
-     #1^3*#2*(-3*#2^2 + 3*#2^4 - #2^6 - #3 + 3*#2^2*#3 - 3*#2^4*#3 + #2^6*#3) + 
-     #1^2*(1 - 2*#2^2 + 6*#2^4 - 3*#2^6 + 3*#2^2*#3 - 6*#2^4*#3 + 3*#2^6*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX]^2 (1 - \[FormalX]^2 + \[FormalX]^2 \[FormalY])
+		+ \[FormalX] (-2 + 3 \[FormalX]^2 - 3 \[FormalX]^4 - 3 \[FormalX]^2 \[FormalY] + 3 \[FormalX]^4 \[FormalY]) \[FormalF]
+		+ (1 - 2 \[FormalX]^2 + 6 \[FormalX]^4 - 3 \[FormalX]^6 + 3 \[FormalX]^2 \[FormalY] - 6 \[FormalX]^4 \[FormalY] + 3 \[FormalX]^6 \[FormalY]) \[FormalF]^2
+		+ \[FormalX] (-3 \[FormalX]^2 + 3 \[FormalX]^4 - \[FormalX]^6 - \[FormalY] + 3 \[FormalX]^2 \[FormalY] - 3 \[FormalX]^4 \[FormalY] + \[FormalX]^6 \[FormalY]) \[FormalF]^3
+		== 0
+	]
 BinaryTreeClassData[{7, 12}, "WeightEquation"] :=
-   -10*#1^2*#2^4*(-1 + #3) + 5*#1*#2^5*(-1 + #3) - #2^6*(-1 + #3) + #1^5*#2*#3 + 
-     #1^4*(-1 + 5*#2^2 - 5*#2^2*#3) + #1^3*#2*(1 - 10*#2^2 + 10*#2^2*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		-\[FormalX]^6 (-1 + \[FormalY])
+		+ 5 \[FormalX]^5 (-1 + \[FormalY]) \[FormalF]
+		- 10 \[FormalX]^4 (-1 + \[FormalY]) \[FormalF]^2
+		+ \[FormalX] (1 - 10 \[FormalX]^2 + 10 \[FormalX]^2 \[FormalY]) \[FormalF]^3
+		+ (-1 + 5 \[FormalX]^2 - 5 \[FormalX]^2 \[FormalY]) \[FormalF]^4
+		+ \[FormalX] \[FormalY] \[FormalF]^5
+		== 0
+	]
 BinaryTreeClassData[{7, 13}, "WeightEquation"] :=
-   -(#1^5*#2^10*(-1 + #3)^3*(-#2^2 - #3 + #2^2*#3)) + #1^4*#2^5*(-1 + #3)*
-      (#2^2 + 2*#2^6 - 4*#2^8 - 3*#2^2*#3 - 9*#2^6*#3 + 12*#2^8*#3 - #3^2 + 2*#2^2*#3^2 + 
-       12*#2^6*#3^2 - 12*#2^8*#3^2 - 5*#2^6*#3^3 + 4*#2^8*#3^3) - 
-     #1^3*#2^4*(-1 + #3)*(1 + 5*#2^4 + 7*#2^8 - 6*#2^10 - #3 + 3*#2^2*#3 - 12*#2^4*#3 - 
-       24*#2^8*#3 + 18*#2^10*#3 - 4*#2^2*#3^2 + 7*#2^4*#3^2 + 27*#2^8*#3^2 - 
-       18*#2^10*#3^2 - 10*#2^8*#3^3 + 6*#2^10*#3^3) - 
-     #2*(-1 + #2^2 - #2^4 + #2^6 - #2^8 + #2^10 + #2^14 - #2^2*#3 + #2^4*#3 - 2*#2^6*#3 + 
-       3*#2^8*#3 - 3*#2^10*#3 - 4*#2^14*#3 + #2^6*#3^2 - 3*#2^8*#3^2 + 3*#2^10*#3^2 + 
-       6*#2^14*#3^2 + #2^8*#3^3 - #2^10*#3^3 - 4*#2^14*#3^3 + #2^14*#3^4) + 
-     #1^2*#2*(2*#2^2 - 3*#2^4 + 2*#2^6 - 8*#2^8 - 9*#2^12 + 4*#2^14 + #3 - 2*#2^2*#3 + 
-       6*#2^4*#3 - 10*#2^6*#3 + 25*#2^8*#3 + 37*#2^12*#3 - 16*#2^14*#3 - 3*#2^4*#3^2 + 
-       14*#2^6*#3^2 - 26*#2^8*#3^2 - 57*#2^12*#3^2 + 24*#2^14*#3^2 - 6*#2^6*#3^3 + 
-       9*#2^8*#3^3 + 39*#2^12*#3^3 - 16*#2^14*#3^3 - 10*#2^12*#3^4 + 4*#2^14*#3^4) + 
-     #1*(-1 + 2*#2^2 - 3*#2^4 + 3*#2^6 - 3*#2^8 + 5*#2^10 + 5*#2^14 - #2^16 - 
-       2*#2^2*#3 + 3*#2^4*#3 - 6*#2^6*#3 + 10*#2^8*#3 - 15*#2^10*#3 - 20*#2^14*#3 + 
-       4*#2^16*#3 + 3*#2^6*#3^2 - 11*#2^8*#3^2 + 15*#2^10*#3^2 + 30*#2^14*#3^2 - 
-       6*#2^16*#3^2 + 4*#2^8*#3^3 - 5*#2^10*#3^3 - 20*#2^14*#3^3 + 4*#2^16*#3^3 + 
-       5*#2^14*#3^4 - #2^16*#3^4) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		-\[FormalX] (-1 + \[FormalX]^2 - \[FormalX]^4 + \[FormalX]^6 - \[FormalX]^8 + \[FormalX]^10 + \[FormalX]^14 - \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY] - 2 \[FormalX]^6 \[FormalY] + 3 \[FormalX]^8 \[FormalY] - 3 \[FormalX]^10 \[FormalY] - 4 \[FormalX]^14 \[FormalY] + \[FormalX]^6 \[FormalY]^2 - 3 \[FormalX]^8 \[FormalY]^2 + 3 \[FormalX]^10 \[FormalY]^2 + 6 \[FormalX]^14 \[FormalY]^2 + \[FormalX]^8 \[FormalY]^3 - \[FormalX]^10 \[FormalY]^3 - 4 \[FormalX]^14 \[FormalY]^3 + \[FormalX]^14 \[FormalY]^4)
+		+ (-1 + 2 \[FormalX]^2 - 3 \[FormalX]^4 + 3 \[FormalX]^6 - 3 \[FormalX]^8 + 5 \[FormalX]^10 + 5 \[FormalX]^14 - \[FormalX]^16 - 2 \[FormalX]^2 \[FormalY] + 3 \[FormalX]^4 \[FormalY] - 6 \[FormalX]^6 \[FormalY] + 10 \[FormalX]^8 \[FormalY] - 15 \[FormalX]^10 \[FormalY] - 20 \[FormalX]^14 \[FormalY] + 4 \[FormalX]^16 \[FormalY] + 3 \[FormalX]^6 \[FormalY]^2 - 11 \[FormalX]^8 \[FormalY]^2 + 15 \[FormalX]^10 \[FormalY]^2 + 30 \[FormalX]^14 \[FormalY]^2 - 6 \[FormalX]^16 \[FormalY]^2 + 4 \[FormalX]^8 \[FormalY]^3 - 5 \[FormalX]^10 \[FormalY]^3 - 20 \[FormalX]^14 \[FormalY]^3 + 4 \[FormalX]^16 \[FormalY]^3 + 5 \[FormalX]^14 \[FormalY]^4 - \[FormalX]^16 \[FormalY]^4) \[FormalF]
+		+ \[FormalX] (2 \[FormalX]^2 - 3 \[FormalX]^4 + 2 \[FormalX]^6 - 8 \[FormalX]^8 - 9 \[FormalX]^12 + 4 \[FormalX]^14 + \[FormalY] - 2 \[FormalX]^2 \[FormalY] + 6 \[FormalX]^4 \[FormalY] - 10 \[FormalX]^6 \[FormalY] + 25 \[FormalX]^8 \[FormalY] + 37 \[FormalX]^12 \[FormalY] - 16 \[FormalX]^14 \[FormalY] - 3 \[FormalX]^4 \[FormalY]^2 + 14 \[FormalX]^6 \[FormalY]^2 - 26 \[FormalX]^8 \[FormalY]^2 - 57 \[FormalX]^12 \[FormalY]^2 + 24 \[FormalX]^14 \[FormalY]^2 - 6 \[FormalX]^6 \[FormalY]^3 + 9 \[FormalX]^8 \[FormalY]^3 + 39 \[FormalX]^12 \[FormalY]^3 - 16 \[FormalX]^14 \[FormalY]^3 - 10 \[FormalX]^12 \[FormalY]^4 + 4 \[FormalX]^14 \[FormalY]^4) \[FormalF]^2
+		- \[FormalX]^4 (-1 + \[FormalY]) (1 + 5 \[FormalX]^4 + 7 \[FormalX]^8 - 6 \[FormalX]^10 - \[FormalY] + 3 \[FormalX]^2 \[FormalY] - 12 \[FormalX]^4 \[FormalY] - 24 \[FormalX]^8 \[FormalY] + 18 \[FormalX]^10 \[FormalY] - 4 \[FormalX]^2 \[FormalY]^2 + 7 \[FormalX]^4 \[FormalY]^2 + 27 \[FormalX]^8 \[FormalY]^2 - 18 \[FormalX]^10 \[FormalY]^2 - 10 \[FormalX]^8 \[FormalY]^3 + 6 \[FormalX]^10 \[FormalY]^3) \[FormalF]^3
+		+ \[FormalX]^5 (-1 + \[FormalY]) (\[FormalX]^2 + 2 \[FormalX]^6 - 4 \[FormalX]^8 - 3 \[FormalX]^2 \[FormalY] - 9 \[FormalX]^6 \[FormalY] + 12 \[FormalX]^8 \[FormalY] - \[FormalY]^2 + 2 \[FormalX]^2 \[FormalY]^2 + 12 \[FormalX]^6 \[FormalY]^2 - 12 \[FormalX]^8 \[FormalY]^2 - 5 \[FormalX]^6 \[FormalY]^3 + 4 \[FormalX]^8 \[FormalY]^3) \[FormalF]^4
+		- \[FormalX]^10 (-1 + \[FormalY])^3 (-\[FormalX]^2 - \[FormalY] + \[FormalX]^2 \[FormalY]) \[FormalF]^5
+		== 0
+	]
 BinaryTreeClassData[{7, 14}, "WeightEquation"] :=
-   #1^3*(-1 + #2)*#2^4*(1 + #2)*(-1 + #3)*(2*#2^2 - #2^4 + #3 - 2*#2^2*#3 + #2^4*#3) + 
-     #2*(1 - #2^2 + #2^6 + #2^2*#3 - 2*#2^6*#3 + #2^6*#3^2) + 
-     #1^2*#2*(2*#2^2 + #2^4 - 6*#2^6 + 3*#2^8 + #3 - 2*#2^2*#3 - 4*#2^4*#3 + 12*#2^6*#3 - 
-       6*#2^8*#3 + 3*#2^4*#3^2 - 6*#2^6*#3^2 + 3*#2^8*#3^2) + 
-     #1*(-1 + 2*#2^2 - 2*#2^4 - 3*#2^6 + 3*#2^8 - 2*#2^2*#3 + 2*#2^4*#3 + 6*#2^6*#3 - 
-       6*#2^8*#3 - 3*#2^6*#3^2 + 3*#2^8*#3^2) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^6 + \[FormalX]^2 \[FormalY] - 2 \[FormalX]^6 \[FormalY] + \[FormalX]^6 \[FormalY]^2)
+		+ (-1 + 2 \[FormalX]^2 - 2 \[FormalX]^4 - 3 \[FormalX]^6 + 3 \[FormalX]^8 - 2 \[FormalX]^2 \[FormalY] + 2 \[FormalX]^4 \[FormalY] + 6 \[FormalX]^6 \[FormalY] - 6 \[FormalX]^8 \[FormalY] - 3 \[FormalX]^6 \[FormalY]^2 + 3 \[FormalX]^8 \[FormalY]^2) \[FormalF]
+		+ \[FormalX] (2 \[FormalX]^2 + \[FormalX]^4 - 6 \[FormalX]^6 + 3 \[FormalX]^8 + \[FormalY] - 2 \[FormalX]^2 \[FormalY] - 4 \[FormalX]^4 \[FormalY] + 12 \[FormalX]^6 \[FormalY] - 6 \[FormalX]^8 \[FormalY] + 3 \[FormalX]^4 \[FormalY]^2 - 6 \[FormalX]^6 \[FormalY]^2 + 3 \[FormalX]^8 \[FormalY]^2) \[FormalF]^2
+		+ (-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) (-1 + \[FormalY]) (2 \[FormalX]^2 - \[FormalX]^4 + \[FormalY] - 2 \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY]) \[FormalF]^3
+		== 0
+	]
 BinaryTreeClassData[{7, 15}, "WeightEquation"] :=
-   #1^3*#2^6*(-1 + #3) + #1^2*#2*(3*#2^2 - #2^4 + #3 - 3*#2^2*#3 + #2^4*#3) - 
-     #2*(-1 + #2^2 - #2^4 - #2^2*#3 + #2^4*#3) + 
-     #1*(-1 + 2*#2^2 - 4*#2^4 - 2*#2^2*#3 + 4*#2^4*#3) == 0 &
+	Function[{\[FormalF], \[FormalX], \[FormalY]},
+		-\[FormalX] (-1 + \[FormalX]^2 - \[FormalX]^4 - \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY])
+		+ (-1 + 2 \[FormalX]^2 - 4 \[FormalX]^4 - 2 \[FormalX]^2 \[FormalY] + 4 \[FormalX]^4 \[FormalY]) \[FormalF]
+		+ \[FormalX] (3 \[FormalX]^2 - \[FormalX]^4 + \[FormalY] - 3 \[FormalX]^2 \[FormalY] + \[FormalX]^4 \[FormalY]) \[FormalF]^2
+		+ \[FormalX]^6 (-1 + \[FormalY]) \[FormalF]^3
+		== 0
+	]
+BinaryTreeClassData[{8, 1}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]
+		+ (-1 + \[FormalX]) (1 + \[FormalX]) \[FormalF]
+		+ \[FormalX]^3 \[FormalF]^2
+		+ \[FormalX]^4 \[FormalF]^3
+		+ \[FormalX]^5 \[FormalF]^4
+		+ \[FormalX]^6 \[FormalF]^5
+		+ \[FormalX]^7 \[FormalF]^6
+		== 0
+	]
+BinaryTreeClassData[{8, 2}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX] (1 + \[FormalX])
+		- (-1 + \[FormalX])^2 (1 + \[FormalX])^2 \[FormalF]
+		- (-1 + \[FormalX]) \[FormalX]^3 (1 + \[FormalX]) \[FormalF]^2
+		- (-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) \[FormalF]^3
+		- (-1 + \[FormalX]) \[FormalX]^5 (1 + \[FormalX]) \[FormalF]^4
+		+ \[FormalX]^6 \[FormalF]^5
+		== 0
+	]
+BinaryTreeClassData[{8, 3}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX] (1 + \[FormalX])
+		+ (-1 + 2 \[FormalX]^2 - 2 \[FormalX]^4) \[FormalF]
+		- 2 (-1 + \[FormalX]) \[FormalX]^3 (1 + \[FormalX]) \[FormalF]^2
+		- \[FormalX]^4 (-1 + 2 \[FormalX]^2) \[FormalF]^3
+		- (-1 + \[FormalX]) \[FormalX]^5 (1 + \[FormalX]) \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 4}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^4
+		+ \[FormalX] (-1 - \[FormalX] + \[FormalX]^2) (-1 + \[FormalX] + \[FormalX]^2) \[FormalF]
+		+ (-1 + 3 \[FormalX]^2 - 2 \[FormalX]^4 + \[FormalX]^6) \[FormalF]^2
+		+ (-1 + \[FormalX])^2 \[FormalX]^3 (1 + \[FormalX])^2 \[FormalF]^3
+		- \[FormalX]^4 (-1 + 2 \[FormalX]^2) \[FormalF]^4
+		+ \[FormalX]^5 \[FormalF]^5
+		== 0
+	]
+BinaryTreeClassData[{8, 5}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^4)
+		+ (-1 + 2 \[FormalX]^2 - 3 \[FormalX]^4 + \[FormalX]^6) \[FormalF]
+		+ \[FormalX]^3 (2 - 2 \[FormalX]^2 + \[FormalX]^4) \[FormalF]^2
+		- \[FormalX]^4 (-1 + 2 \[FormalX]^2) \[FormalF]^3
+		+ \[FormalX]^5 \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 6}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX] (1 + \[FormalX])
+		+ (-1 + 2 \[FormalX]^2 - 2 \[FormalX]^4) \[FormalF]
+		- \[FormalX]^3 (-2 + 3 \[FormalX]^2) \[FormalF]^2
+		- 2 (-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) \[FormalF]^3
+		- \[FormalX]^7 \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 7}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^4
+		+ (-1 + \[FormalX]) \[FormalX] (1 + \[FormalX]) (-1 + 2 \[FormalX]^2) \[FormalF]
+		+ (-1 + \[FormalX]) (1 + \[FormalX]) (1 - 2 \[FormalX]^2 + 2 \[FormalX]^4) \[FormalF]^2
+		+ (-1 + \[FormalX]) \[FormalX]^3 (1 + \[FormalX]) (-2 + \[FormalX]^2) \[FormalF]^3
+		- (-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 8}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^5
+		+ (-2 + \[FormalX]) \[FormalX]^4 (2 + \[FormalX]) \[FormalF]
+		+ \[FormalX] (-1 + 6 \[FormalX]^2 - 3 \[FormalX]^4 + \[FormalX]^6) \[FormalF]^2
+		+ (1 - 4 \[FormalX]^2 + 3 \[FormalX]^4 - 3 \[FormalX]^6) \[FormalF]^3
+		+ \[FormalX]^3 (-1 + 3 \[FormalX]^2) \[FormalF]^4
+		- \[FormalX]^4 \[FormalF]^5
+		== 0
+	]
+BinaryTreeClassData[{8, 9}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX] (1 + \[FormalX]) (1 + \[FormalX]^2) (1 - \[FormalX]^2 + \[FormalX]^4)
+		+ (-1 + 2 \[FormalX]^2 - \[FormalX]^4 - 2 \[FormalX]^6 + 4 \[FormalX]^8 - \[FormalX]^10) \[FormalF]
+		+ (-1 + \[FormalX]) \[FormalX]^3 (1 + \[FormalX]) (-1 - \[FormalX]^2 + 3 \[FormalX]^4) \[FormalF]^2
+		- \[FormalX]^4 (-1 + 3 \[FormalX]^4) \[FormalF]^3
+		+ \[FormalX]^5 (1 + \[FormalX]^2) \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 10}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^4)
+		+ (-1 + 2 \[FormalX]^2 - 4 \[FormalX]^4 + 2 \[FormalX]^6) \[FormalF]
+		+ (-1 + \[FormalX]) \[FormalX]^3 (1 + \[FormalX]) (-3 + \[FormalX]^2) \[FormalF]^2
+		- (-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) \[FormalF]^3
+		== 0
+	]
+BinaryTreeClassData[{8, 11}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX])
+		- \[FormalX] (-1 + 3 \[FormalX]^2 - 4 \[FormalX]^4 + \[FormalX]^6) \[FormalF]
+		+ (-1 + \[FormalX]) (1 + \[FormalX]) (1 - 2 \[FormalX]^2 + 3 \[FormalX]^4) \[FormalF]^2
+		- \[FormalX]^3 (-2 + 3 \[FormalX]^2) \[FormalF]^3
+		+ \[FormalX]^4 \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 12}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^4
+		+ \[FormalX] (1 - 3 \[FormalX]^2 + 3 \[FormalX]^4) \[FormalF]
+		+ (-1 + 3 \[FormalX]^2 - 6 \[FormalX]^4 + 3 \[FormalX]^6) \[FormalF]^2
+		+ \[FormalX]^3 (3 - 3 \[FormalX]^2 + \[FormalX]^4) \[FormalF]^3
+		== 0
+	]
+BinaryTreeClassData[{8, 13}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^5
+		+ 2 \[FormalX]^4 (-2 + \[FormalX]^2) \[FormalF]
+		+ (-1 + \[FormalX]) \[FormalX] (1 + \[FormalX]) (1 - 5 \[FormalX]^2 + \[FormalX]^4) \[FormalF]^2
+		+ (1 - 4 \[FormalX]^2 + 6 \[FormalX]^4 - 2 \[FormalX]^6) \[FormalF]^3
+		+ \[FormalX]^3 (-2 + \[FormalX]^2) \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 14}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^6
+		+ \[FormalX]^5 (-5 + \[FormalX]^2) \[FormalF]
+		- 2 \[FormalX]^4 (-5 + 2 \[FormalX]^2) \[FormalF]^2
+		+ \[FormalX] (1 - 10 \[FormalX]^2 + 6 \[FormalX]^4) \[FormalF]^3
+		- (-1 + \[FormalX]) (1 + \[FormalX]) (-1 + 2 \[FormalX]) (1 + 2 \[FormalX]) \[FormalF]^4
+		+ \[FormalX]^3 \[FormalF]^5
+		== 0
+	]
+BinaryTreeClassData[{8, 15}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^4) (1 - \[FormalX]^6 + \[FormalX]^12)
+		+ (-1 + 2 \[FormalX]^2 - 3 \[FormalX]^4 + 3 \[FormalX]^6 - 3 \[FormalX]^8 + 4 \[FormalX]^10 - 5 \[FormalX]^12 + 4 \[FormalX]^14 - 6 \[FormalX]^16) \[FormalF]
+		+ \[FormalX]^3 (2 - 3 \[FormalX]^2 + 3 \[FormalX]^4 - 5 \[FormalX]^6 + 10 \[FormalX]^8 - 5 \[FormalX]^10 + 14 \[FormalX]^12) \[FormalF]^2
+		- \[FormalX]^4 (-1 + 2 \[FormalX]^2 - 2 \[FormalX]^4 + 10 \[FormalX]^6 - \[FormalX]^8 + 16 \[FormalX]^10) \[FormalF]^3
+		+ \[FormalX]^5 (1 + 5 \[FormalX]^4 + 2 \[FormalX]^6 + 9 \[FormalX]^8) \[FormalF]^4
+		- \[FormalX]^8 (1 + \[FormalX]^2 + 2 \[FormalX]^4) \[FormalF]^5
+		== 0
+	]
+BinaryTreeClassData[{8, 16}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX] (1 + \[FormalX]) (1 + \[FormalX]^2) (1 - \[FormalX]^2 + \[FormalX]^4)
+		+ (-1 + 2 \[FormalX]^2 - 2 \[FormalX]^4 - 2 \[FormalX]^6 + 6 \[FormalX]^8 - 2 \[FormalX]^10) \[FormalF]
+		- \[FormalX]^3 (-2 + \[FormalX]^2 + 8 \[FormalX]^4 - 7 \[FormalX]^6 + \[FormalX]^8) \[FormalF]^2
+		+ (-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) (-1 - 3 \[FormalX]^2 + 2 \[FormalX]^4) \[FormalF]^3
+		== 0
+	]
+BinaryTreeClassData[{8, 17}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX]^9 (1 + \[FormalX])
+		+ \[FormalX]^4 (1 - 5 \[FormalX]^4 + 6 \[FormalX]^6) \[FormalF]
+		- \[FormalX] (-1 + 2 \[FormalX]^2) (1 - \[FormalX]^2 - \[FormalX]^4 + 7 \[FormalX]^6) \[FormalF]^2
+		+ (-1 + 3 \[FormalX]^2 - 2 \[FormalX]^4 - 6 \[FormalX]^6 + 16 \[FormalX]^8) \[FormalF]^3
+		- \[FormalX]^3 (-1 + 3 \[FormalX]^2) (1 + 3 \[FormalX]^2) \[FormalF]^4
+		+ \[FormalX]^4 (1 + 2 \[FormalX]^2) \[FormalF]^5
+		== 0
+	]
+BinaryTreeClassData[{8, 18}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX] (1 + \[FormalX]) (1 + \[FormalX]^4)
+		+ (-1 + 2 \[FormalX]^2 - 3 \[FormalX]^4 + 4 \[FormalX]^6) \[FormalF]
+		- \[FormalX]^3 (-2 + 5 \[FormalX]^2) \[FormalF]^2
+		+ 2 \[FormalX]^4 \[FormalF]^3
+		== 0
+	]
+BinaryTreeClassData[{8, 19}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^4)
+		+ (-1 + 2 \[FormalX]^2 - 4 \[FormalX]^4 + \[FormalX]^6) \[FormalF]
+		+ \[FormalX]^3 (3 - 3 \[FormalX]^2 + \[FormalX]^4) \[FormalF]^2
+		- \[FormalX]^4 (-1 + 2 \[FormalX]^2) \[FormalF]^3
+		== 0
+	]
+BinaryTreeClassData[{8, 20}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-\[FormalX] (-1 - \[FormalX] + \[FormalX]^3) (1 - \[FormalX] + \[FormalX]^3)
+		+ (-1 + 2 \[FormalX]^2 - 6 \[FormalX]^4 + 4 \[FormalX]^6) \[FormalF]
+		- 4 (-1 + \[FormalX]) \[FormalX]^3 (1 + \[FormalX]) \[FormalF]^2
+		== 0
+	]
+BinaryTreeClassData[{8, 21}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX])
+		- \[FormalX] (-1 + 3 \[FormalX]^2 - 5 \[FormalX]^4 + \[FormalX]^6) \[FormalF]
+		+ (-1 + 3 \[FormalX]^2 - 7 \[FormalX]^4 + 3 \[FormalX]^6) \[FormalF]^2
+		- \[FormalX]^3 (-3 + 2 \[FormalX]^2) \[FormalF]^3
+		== 0
+	]
+BinaryTreeClassData[{8, 22}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX]^5 (1 + \[FormalX])
+		+ \[FormalX]^4 (-4 + 5 \[FormalX]^2) \[FormalF]
+		- \[FormalX] (-1 + 3 \[FormalX]^2)^2 \[FormalF]^2
+		+ (1 - 4 \[FormalX]^2 + 7 \[FormalX]^4) \[FormalF]^3
+		- 2 \[FormalX]^3 \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 23}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^7
+		- \[FormalX]^4 (-1 + 5 \[FormalX]^2) \[FormalF]
+		+ \[FormalX] (1 - 3 \[FormalX]^2 + 10 \[FormalX]^4) \[FormalF]^2
+		- (1 - 3 \[FormalX] + 3 \[FormalX]^2) (1 + 3 \[FormalX] + 3 \[FormalX]^2) \[FormalF]^3
+		+ 3 \[FormalX]^3 \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 24}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX]^3 (1 + \[FormalX])
+		- \[FormalX]^2 (3 - 4 \[FormalX]^2 + 4 \[FormalX]^4) \[FormalF]
+		- \[FormalX] (-3 + 5 \[FormalX]^2 - 12 \[FormalX]^4 + 6 \[FormalX]^6) \[FormalF]^2
+		+ (-1 + 2 \[FormalX]^2 - 12 \[FormalX]^4 + 12 \[FormalX]^6 - 4 \[FormalX]^8) \[FormalF]^3
+		- \[FormalX]^3 (-2 + \[FormalX]^2) (2 - 2 \[FormalX]^2 + \[FormalX]^4) \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 25}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^2 (1 - \[FormalX]^2 + \[FormalX]^4)
+		+ \[FormalX] (-2 + 3 \[FormalX]^2 - 6 \[FormalX]^4 + 2 \[FormalX]^6) \[FormalF]
+		+ (1 - 2 \[FormalX]^2 + 9 \[FormalX]^4 - 7 \[FormalX]^6 + \[FormalX]^8) \[FormalF]^2
+		- \[FormalX]^3 (4 - 5 \[FormalX]^2 + 2 \[FormalX]^4) \[FormalF]^3
+		== 0
+	]
+BinaryTreeClassData[{8, 26}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^7
+		- 6 \[FormalX]^6 \[FormalF]
+		+ 15 \[FormalX]^5 \[FormalF]^2
+		- 20 \[FormalX]^4 \[FormalF]^3
+		+ \[FormalX] (-1 + 15 \[FormalX]^2) \[FormalF]^4
+		+ (1 - 6 \[FormalX]^2) \[FormalF]^5
+		== 0
+	]
+BinaryTreeClassData[{8, 27}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^4) (1 + \[FormalX]^16 + \[FormalX]^18 + \[FormalX]^20 + \[FormalX]^22)
+		+ (-1 + 2 \[FormalX]^2 - 3 \[FormalX]^4 + \[FormalX]^6 - \[FormalX]^8 + \[FormalX]^10 - \[FormalX]^12 - \[FormalX]^14 - 6 \[FormalX]^16 - \[FormalX]^18 - 7 \[FormalX]^20 - 7 \[FormalX]^22 - 8 \[FormalX]^26 + \[FormalX]^28) \[FormalF]
+		- \[FormalX]^3 (-2 + 2 \[FormalX]^2 - 3 \[FormalX]^4 + 3 \[FormalX]^6 - 5 \[FormalX]^8 - 4 \[FormalX]^10 - 15 \[FormalX]^12 - 5 \[FormalX]^14 - 20 \[FormalX]^16 - 21 \[FormalX]^18 - 27 \[FormalX]^22 + 7 \[FormalX]^24) \[FormalF]^2
+		+ \[FormalX]^4 (1 - 3 \[FormalX]^2 + 2 \[FormalX]^4 - 8 \[FormalX]^6 - 6 \[FormalX]^8 - 20 \[FormalX]^10 - 9 \[FormalX]^12 - 31 \[FormalX]^14 - 35 \[FormalX]^16 - 50 \[FormalX]^20 + 21 \[FormalX]^22) \[FormalF]^3
+		- \[FormalX]^5 (-1 - 5 \[FormalX]^4 - 4 \[FormalX]^6 - 15 \[FormalX]^8 - 7 \[FormalX]^10 - 29 \[FormalX]^12 - 35 \[FormalX]^14 - 55 \[FormalX]^18 + 35 \[FormalX]^20) \[FormalF]^4
+		+ \[FormalX]^8 (-1 - \[FormalX]^2 - 6 \[FormalX]^4 - 2 \[FormalX]^6 - 17 \[FormalX]^8 - 21 \[FormalX]^10 - 36 \[FormalX]^14 + 35 \[FormalX]^16) \[FormalF]^5
+		- \[FormalX]^11 (-1 - 6 \[FormalX]^4 - 7 \[FormalX]^6 - 13 \[FormalX]^10 + 21 \[FormalX]^12) \[FormalF]^6
+		+ \[FormalX]^14 (-1 - \[FormalX]^2 - 2 \[FormalX]^6 + 7 \[FormalX]^8) \[FormalF]^7
+		- \[FormalX]^21 \[FormalF]^8
+		== 0
+	]
+BinaryTreeClassData[{8, 28}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-\[FormalX] (-1 + \[FormalX]^2 - \[FormalX]^4 + \[FormalX]^6 - \[FormalX]^8 + \[FormalX]^10 + \[FormalX]^14)
+		+ (-1 + 2 \[FormalX]^2 - 4 \[FormalX]^4 + 4 \[FormalX]^6 - 5 \[FormalX]^8 + 8 \[FormalX]^10 - 3 \[FormalX]^12 + 5 \[FormalX]^14 - 5 \[FormalX]^16) \[FormalF]
+		- \[FormalX]^3 (-1 + 2 \[FormalX]^6) (3 - 5 \[FormalX]^2 + 6 \[FormalX]^4 - 10 \[FormalX]^6 + 5 \[FormalX]^8) \[FormalF]^2
+		- \[FormalX]^4 (-1 + 2 \[FormalX]^2 - 9 \[FormalX]^4 + 18 \[FormalX]^6 - 17 \[FormalX]^8 + 28 \[FormalX]^10 - 30 \[FormalX]^12 + 10 \[FormalX]^14) \[FormalF]^3
+		- (-1 + \[FormalX]) \[FormalX]^7 (1 + \[FormalX]) (-1 + 4 \[FormalX]^2 - 4 \[FormalX]^4 + 12 \[FormalX]^6 - 15 \[FormalX]^8 + 5 \[FormalX]^10) \[FormalF]^4
+		- (-1 + \[FormalX])^3 \[FormalX]^12 (1 + \[FormalX])^3 (-2 + \[FormalX]^2) \[FormalF]^5
+		== 0
+	]
+BinaryTreeClassData[{8, 29}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX] (1 + \[FormalX]) (1 + \[FormalX]^4 + \[FormalX]^6)
+		+ (-1 + 2 \[FormalX]^2 - 3 \[FormalX]^4 + \[FormalX]^6 + 4 \[FormalX]^8 - \[FormalX]^10) \[FormalF]
+		+ \[FormalX]^3 (2 - 2 \[FormalX]^2 - 5 \[FormalX]^4 + 3 \[FormalX]^6) \[FormalF]^2
+		- (-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) (1 + 3 \[FormalX]^2) \[FormalF]^3
+		+ \[FormalX]^7 \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 30}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^6)
+		+ (-1 + 2 \[FormalX]^2 - 2 \[FormalX]^4 - 3 \[FormalX]^6 + 3 \[FormalX]^8) \[FormalF]
+		+ \[FormalX]^3 (2 - 6 \[FormalX]^4 + 5 \[FormalX]^6) \[FormalF]^2
+		+ (-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) (-1 - 2 \[FormalX]^2 + 5 \[FormalX]^4) \[FormalF]^3
+		+ (-1 + \[FormalX]) \[FormalX]^7 (1 + \[FormalX]) (-1 + 3 \[FormalX]^2) \[FormalF]^4
+		+ (-1 + \[FormalX]) \[FormalX]^10 (1 + \[FormalX]) \[FormalF]^5
+		== 0
+	]
+BinaryTreeClassData[{8, 31}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX] (1 - \[FormalX] + \[FormalX]^4) (1 + \[FormalX] + \[FormalX]^4)
+		+ (-1 + 2 \[FormalX]^2 - 6 \[FormalX]^4 + 2 \[FormalX]^6 - 3 \[FormalX]^8 + 2 \[FormalX]^10) \[FormalF]
+		+ \[FormalX]^3 (4 - 3 \[FormalX]^2 + 3 \[FormalX]^4 - 3 \[FormalX]^6 + \[FormalX]^8) \[FormalF]^2
+		+ (-1 + \[FormalX]) \[FormalX]^6 (1 + \[FormalX]) (1 + \[FormalX]^2) \[FormalF]^3
+		+ \[FormalX]^9 (-2 + \[FormalX]^2) \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 32}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^4 + \[FormalX]^6 - 2 \[FormalX]^8 + \[FormalX]^10)
+		+ (-1 + 2 \[FormalX]^2 - 4 \[FormalX]^4 - 2 \[FormalX]^6 + 9 \[FormalX]^8 - 7 \[FormalX]^10 + \[FormalX]^12) \[FormalF]
+		- \[FormalX]^3 (-1 - 2 \[FormalX]^2 + \[FormalX]^4) (3 - 6 \[FormalX]^2 + 4 \[FormalX]^4) \[FormalF]^2
+		+ \[FormalX]^6 (-3 + 2 \[FormalX]^2) (-1 + 2 \[FormalX]^2) \[FormalF]^3
+		== 0
+	]
+BinaryTreeClassData[{8, 33}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^3 (1 - \[FormalX]^2 + \[FormalX]^6)
+		+ \[FormalX]^2 (1 + \[FormalX]^2) (-3 + 7 \[FormalX]^2 - 10 \[FormalX]^4 + 5 \[FormalX]^6) \[FormalF]
+		+ \[FormalX] (3 - 5 \[FormalX]^2 + 9 \[FormalX]^4 + 6 \[FormalX]^6 - 20 \[FormalX]^8 + 10 \[FormalX]^10) \[FormalF]^2
+		+ (-1 + 2 \[FormalX]^2 - 9 \[FormalX]^4 - \[FormalX]^6 + 27 \[FormalX]^8 - 30 \[FormalX]^10 + 10 \[FormalX]^12) \[FormalF]^3
+		+ \[FormalX]^3 (3 - \[FormalX]^2 - 15 \[FormalX]^4 + 29 \[FormalX]^6 - 20 \[FormalX]^8 + 5 \[FormalX]^10) \[FormalF]^4
+		+ (-1 + \[FormalX])^2 \[FormalX]^6 (1 + \[FormalX])^2 (3 - 3 \[FormalX]^2 + \[FormalX]^4) \[FormalF]^5
+		== 0
+	]
+BinaryTreeClassData[{8, 34}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^2 (1 - \[FormalX]^2 + 2 \[FormalX]^4)
+		+ \[FormalX] (-2 + 4 \[FormalX]^2 - 9 \[FormalX]^4 + 3 \[FormalX]^6) \[FormalF]
+		+ (1 - 3 \[FormalX]^2 + 12 \[FormalX]^4 - 9 \[FormalX]^6 + 2 \[FormalX]^8) \[FormalF]^2
+		- \[FormalX]^3 (4 - 6 \[FormalX]^2 + 5 \[FormalX]^4) \[FormalF]^3
+		- \[FormalX]^6 (-2 + \[FormalX]^2) \[FormalF]^4
+		- \[FormalX]^9 \[FormalF]^5
+		== 0
+	]
+BinaryTreeClassData[{8, 35}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^4)
+		+ (-1 + 2 \[FormalX]^2 - 4 \[FormalX]^4 + \[FormalX]^6) \[FormalF]
+		- 3 (-1 + \[FormalX]) \[FormalX]^3 (1 + \[FormalX]) \[FormalF]^2
+		- (-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) \[FormalF]^3
+		- \[FormalX]^7 \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 36}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX]^2 (1 + \[FormalX])
+		- \[FormalX] (2 - 3 \[FormalX]^2 + 2 \[FormalX]^4) \[FormalF]
+		- (-1 + \[FormalX]) (1 + \[FormalX]) (1 - \[FormalX]^2 + 3 \[FormalX]^4) \[FormalF]^2
+		- (-1 + \[FormalX]) \[FormalX]^3 (1 + \[FormalX]) (-2 + 3 \[FormalX]^2) \[FormalF]^3
+		- (-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) (-2 + \[FormalX]^2) \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 37}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^2 (1 - \[FormalX]^2 + \[FormalX]^6)
+		+ \[FormalX] (-2 + 3 \[FormalX]^2 - 2 \[FormalX]^4 - 4 \[FormalX]^6 + 4 \[FormalX]^8) \[FormalF]
+		+ (-1 + \[FormalX]) (1 + \[FormalX]) (-1 + \[FormalX]^2 - 3 \[FormalX]^4 - 6 \[FormalX]^6 + 6 \[FormalX]^8) \[FormalF]^2
+		+ (-1 + \[FormalX]) \[FormalX]^3 (1 + \[FormalX]) (2 + \[FormalX]^2 - 8 \[FormalX]^4 + 4 \[FormalX]^6) \[FormalF]^3
+		+ (-1 + \[FormalX]) \[FormalX]^4 (1 + \[FormalX]) (1 + 2 \[FormalX]^2 - 3 \[FormalX]^4 + \[FormalX]^6) \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 38}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX] (1 - \[FormalX]^2 + 2 \[FormalX]^4)
+		+ (-1 + 2 \[FormalX]^2 - 6 \[FormalX]^4 + 2 \[FormalX]^6) \[FormalF]
+		+ \[FormalX]^3 (4 - 3 \[FormalX]^2 + \[FormalX]^4) \[FormalF]^2
+		- \[FormalX]^6 \[FormalF]^3
+		== 0
+	]
+BinaryTreeClassData[{8, 39}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^2 (1 - \[FormalX]^2 + \[FormalX]^4)
+		+ \[FormalX] (-2 + 3 \[FormalX]^2 - 6 \[FormalX]^4 + \[FormalX]^6) \[FormalF]
+		+ (1 - 2 \[FormalX]^2 + 9 \[FormalX]^4 - 5 \[FormalX]^6) \[FormalF]^2
+		- 2 \[FormalX]^3 (2 - 2 \[FormalX]^2 + \[FormalX]^4) \[FormalF]^3
+		- (-1 + \[FormalX]) \[FormalX]^6 (1 + \[FormalX]) \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 40}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-(-1 + \[FormalX]) \[FormalX]^2 (1 + \[FormalX])
+		- \[FormalX] (2 - 3 \[FormalX]^2 + 3 \[FormalX]^4) \[FormalF]
+		+ (1 - 2 \[FormalX]^2 + 6 \[FormalX]^4 - 4 \[FormalX]^6) \[FormalF]^2
+		- \[FormalX]^3 (3 - 5 \[FormalX]^2 + 3 \[FormalX]^4) \[FormalF]^3
+		- (-1 + \[FormalX])^2 \[FormalX]^4 (1 + \[FormalX])^2 \[FormalF]^4
+		== 0
+	]
+BinaryTreeClassData[{8, 41}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX] (1 - \[FormalX]^2 + \[FormalX]^6)
+		+ (-1 + \[FormalX]) (1 + \[FormalX]) (1 - \[FormalX]^2 + \[FormalX]^4 + 4 \[FormalX]^6) \[FormalF]
+		+ \[FormalX]^3 (2 + \[FormalX]^2 - 9 \[FormalX]^4 + 7 \[FormalX]^6) \[FormalF]^2
+		+ (-1 + \[FormalX]) \[FormalX]^6 (1 + \[FormalX]) (-4 + 7 \[FormalX]^2) \[FormalF]^3
+		+ (-1 + \[FormalX]) \[FormalX]^7 (1 + \[FormalX]) (-3 + 4 \[FormalX]^2) \[FormalF]^4
+		+ (-1 + \[FormalX])^2 \[FormalX]^8 (1 + \[FormalX])^2 \[FormalF]^5
+		== 0
+	]
+BinaryTreeClassData[{8, 42}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		-\[FormalX] (-1 + \[FormalX]^2 - \[FormalX]^4 - \[FormalX]^6 + \[FormalX]^8)
+		- (-1 + \[FormalX]) (1 + \[FormalX]) (-1 + \[FormalX]^2 - 3 \[FormalX]^4 - 5 \[FormalX]^6 + \[FormalX]^8) \[FormalF]
+		- \[FormalX]^3 (-3 + 9 \[FormalX]^4 - 6 \[FormalX]^6 + \[FormalX]^8) \[FormalF]^2
+		+ 3 \[FormalX]^6 (1 - 2 \[FormalX]^2 + 2 \[FormalX]^4) \[FormalF]^3
+		+ 2 \[FormalX]^9 (-2 + \[FormalX]^2) \[FormalF]^4
+		+ \[FormalX]^12 \[FormalF]^5
+		== 0
+	]
+BinaryTreeClassData[{8, 43}, "AvoidingWeightEquation"] :=
+	Function[{\[FormalF], \[FormalX]},
+		\[FormalX]^2 (1 - \[FormalX]^2 + \[FormalX]^4)
+		+ \[FormalX] (-2 + 4 \[FormalX]^2 - 6 \[FormalX]^4 + \[FormalX]^6) \[FormalF]
+		+ (1 - 3 \[FormalX]^2 + 9 \[FormalX]^4 - 6 \[FormalX]^6 + \[FormalX]^8) \[FormalF]^2
+		- 3 \[FormalX]^3 (1 - 2 \[FormalX]^2 + 2 \[FormalX]^4) \[FormalF]^3
+		- \[FormalX]^4 (1 - 4 \[FormalX]^2 + 2 \[FormalX]^4) \[FormalF]^4
+		- \[FormalX]^9 \[FormalF]^5
+		== 0
+	]
 BinaryTreeClassData[_?classQ, "AvoidingWeightEquation" | "WeightEquation"] := Missing["NotAvailable"]
 SyntaxInformation[BinaryTreeClassData] = {"ArgumentsPattern" -> {_., _.}}
 
