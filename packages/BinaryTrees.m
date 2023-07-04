@@ -4,9 +4,9 @@
 
 (* :Author: Eric Rowland *)
 
-(* :Date: {2016, 5, 12} *)
+(* :Date: {2023, 6, 27} *)
 
-(* :Package Version: 1.04 *)
+(* :Package Version: 1.05 *)
 
 (* :Mathematica Version: 7 *)
 
@@ -236,7 +236,7 @@ Module[{a},
 	a[expr] //. {a[h_[body___]] :> a /@ Replace[h[body], rules], a[atom_?AtomQ] :> atom}
 ]
 
-TreeQ[t_] := MatchQ[t, {___}] && And @@ TreeQ /@ t
+TreeListQ[t_] := MatchQ[t, {___}] && And @@ TreeListQ /@ t
 
 
 BareTreeForm[tree_, opts : OptionsPattern[]] :=
@@ -261,7 +261,7 @@ Options[BareTreeForm] = {ImageSize -> Automatic, LevelHeight -> 10}
 SyntaxInformation[BareTreeForm] = {"ArgumentsPattern" -> {_, OptionsPattern[]}}
 
 (* Can this be written in terms of BottomUpRelaceAll ? *)
-BinaryTree[tree_?TreeQ] :=
+BinaryTree[tree_?TreeListQ] :=
 Module[{a},
 	(Map[a, tree /.{} -> {{}, {}}, {-2}] //.
 		{body__a} :> a[{Fold[ReplacePart[#2, 2 -> #1] &, {}, Reverse[Identity @@@ {body}]], {}}]
@@ -307,7 +307,7 @@ DyckWordQ[s_] := StringQ[s] && StringMatchQ[s, ("0" | "1") ...] &&
 	MatchQ[Accumulate[Characters[s] /. {"0" -> 1, "1" -> -1}], {} | {_?NonNegative ..., 0}]
 SyntaxInformation[DyckWordQ] = {"ArgumentsPattern" -> {_}}
 
-DyckWord[tree_?TreeQ] :=
+DyckWord[tree_?TreeListQ] :=
 StringTake[
 	StringReplace[
 		ToString[tree],
@@ -410,13 +410,13 @@ SyntaxInformation[RandomPathTree] = {"ArgumentsPattern" -> {_}}
 RankBinaryTree[binarytree_?BinaryTreeQ] := Occurrence[BinaryTrees[Count[binarytree, {}, {0, Infinity}]], binarytree]
 SyntaxInformation[RankBinaryTree] = {"ArgumentsPattern" -> {_}}
 
-RankTree[tree_?TreeQ] := Occurrence[Trees[Count[tree, _List, {0, Infinity}]], tree]
+RankTree[tree_?TreeListQ] := Occurrence[Trees[Count[tree, _List, {0, Infinity}]], tree]
 SyntaxInformation[RankTree] = {"ArgumentsPattern" -> {_}}
 
 TreeChop[tree_, depth_Integer?NonNegative] := Map[{} &, tree, {depth}]
 SyntaxInformation[TreeChop] = {"ArgumentsPattern" -> {_, _}}
 
-TreeEdgeRules[tree_?TreeQ] :=
+TreeEdgeRules[tree_?TreeListQ] :=
 Module[{i = 0, labeledtree},
 	labeledtree = Fold[
 		Replace[#1, List :> ++i, {#2}, Heads -> True] &,
