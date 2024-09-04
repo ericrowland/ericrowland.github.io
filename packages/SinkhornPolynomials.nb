@@ -1,0 +1,4535 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[    185617,       4527]
+NotebookOptionsPosition[    170171,       4275]
+NotebookOutlinePosition[    170719,       4295]
+CellTagsIndexPosition[    170676,       4292]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["SinkhornPolynomials 1.00", "Title",ExpressionUUID->"c13c670a-bcfd-4fdd-8d55-95de2da33324"],
+
+Cell["documentation notebook", "Subtitle",ExpressionUUID->"9f4b6a7c-33a1-42b2-ac1b-a27463933387"],
+
+Cell[TextData[{
+ "Eric Rowland and Jason Wu\n",
+ ButtonBox["https://ericrowland.github.io/packages.html",
+  BaseStyle->"Hyperlink",
+  ButtonData:>{
+    URL["https://ericrowland.github.io/packages.html"], None}]
+}], "Subsubtitle",ExpressionUUID->"5a1feb81-52d9-4c90-bc04-4436f82219dd"],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",ExpressionUUID->"5f1b1dff-da3e-44b3-885c-2b8bac1dada3"],
+
+Cell["\<\
+SinkhornPolynomials is a package for computing the polynomial equation \
+satisfied by an entry of the Sinkhorn limit of a matrix.
+This introduction gets you started with a few features of the package; the \
+next section provides a complete list of package symbols along with their \
+usage messages and further examples.\
+\>", "Text",ExpressionUUID->"297a4b06-4e3a-42eb-b16d-8548dd3d73bc"],
+
+Cell[TextData[{
+ "To use SinkhornPolynomials, first you will need to load the package by \
+evaluating the following cell. (If you need help, see ",
+ ButtonBox["loading a package",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["https://ericrowland.github.io/packages/loading_a_package.html"], 
+    None},
+  ButtonNote->"https://ericrowland.github.io/packages/loading_a_package.html"],
+ ".)"
+}], "Text",ExpressionUUID->"7b773f83-91a3-475d-860d-88bd90479076"],
+
+Cell[BoxData[
+ RowBox[{"<<", "SinkhornPolynomials`"}]], "Input",
+ InitializationCell->True,
+ CellLabel->"In[1]:=",ExpressionUUID->"68e6d7b0-6a07-4cec-89bc-b154dd07cc99"],
+
+Cell[CellGroupData[{
+
+Cell["Square matrices", "Subsection",ExpressionUUID->"6e77a20f-8322-4acf-a091-22f32d7d0475"],
+
+Cell[TextData[{
+ "The function ",
+ StyleBox["SinkhornFixedPoint", "Input"],
+ " computes an approximation to the Sinkhorn limit of a matrix:"
+}], "Text",ExpressionUUID->"2b670fd8-2db2-4084-ba29-26b2f800211f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SinkhornFixedPoint", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"5", ",", "5", ",", "4"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"3", ",", "8", ",", "5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"9", ",", "3", ",", "2"}], "}"}]}], "}"}], "]"}], "//", 
+  "MatrixForm"}]], "Input",
+ CellLabel->"In[2]:=",ExpressionUUID->"09fd031f-9caa-490f-b503-d7fdad7b31ac"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0.2858887755035409407`8.729869874255455", 
+      "0.3312404545842770876`8.729869874255455", 
+      "0.3828707699171891034`8.729869874255455"},
+     {"0.1453540607069457601564060930601527613`8.729869874255455", 
+      "0.4490990834640677417`8.729869874255455", 
+      "0.4055468558491966099`8.729869874255455"},
+     {"0.5687571637895132991`8.729869874255455", 
+      "0.21966046195165517068400380663617024564`8.729869874255455", 
+      "0.2115823742336142867342236032724906194`8.729869874255455"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellLabel->
+  "Out[2]//MatrixForm=",ExpressionUUID->"cde123f6-f117-40c0-aac5-\
+5018f7f1b6b8"]
+}, Open  ]],
+
+Cell[TextData[{
+ "The function ",
+ StyleBox["SinkhornPolynomial", "Input"],
+ " gives a polynomial whose roots include the top left entry of the Sinkhorn \
+limit:"
+}], "Text",ExpressionUUID->"20238967-98df-416c-b609-adc5be731ede"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"SinkhornPolynomial", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"5", ",", "5", ",", "4"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"3", ",", "8", ",", "5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"9", ",", "3", ",", "2"}], "}"}]}], "}"}], ",", "x"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Factor", "[", "%", "]"}]}], "Input",
+ CellLabel->"In[19]:=",ExpressionUUID->"32150770-bb06-452d-becc-bff54442daef"],
+
+Cell[BoxData[
+ RowBox[{"3750000", "-", 
+  RowBox[{"37293750", " ", "x"}], "+", 
+  RowBox[{"55181250", " ", 
+   SuperscriptBox["x", "2"]}], "+", 
+  RowBox[{"53655000", " ", 
+   SuperscriptBox["x", "3"]}], "+", 
+  RowBox[{"151807500", " ", 
+   SuperscriptBox["x", "4"]}], "+", 
+  RowBox[{"88978500", " ", 
+   SuperscriptBox["x", "5"]}], "-", 
+  RowBox[{"65910000", " ", 
+   SuperscriptBox["x", "6"]}]}]], "Output",
+ CellLabel->"Out[19]=",ExpressionUUID->"8293109e-a6fb-4a31-aa3a-6771eb78ec19"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "750"}], " ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"-", "5000"}], "+", 
+    RowBox[{"49725", " ", "x"}], "-", 
+    RowBox[{"73575", " ", 
+     SuperscriptBox["x", "2"]}], "-", 
+    RowBox[{"71540", " ", 
+     SuperscriptBox["x", "3"]}], "-", 
+    RowBox[{"202410", " ", 
+     SuperscriptBox["x", "4"]}], "-", 
+    RowBox[{"118638", " ", 
+     SuperscriptBox["x", "5"]}], "+", 
+    RowBox[{"87880", " ", 
+     SuperscriptBox["x", "6"]}]}], ")"}]}]], "Output",
+ CellLabel->"Out[20]=",ExpressionUUID->"abc7c0b8-5e1a-4920-aa28-9b57bff8718e"]
+}, Open  ]],
+
+Cell["\<\
+The top left entry of the Sinkhorn limit is one of these two numbers:\
+\>", "Text",ExpressionUUID->"474280c3-0273-48cf-a68b-9d186efa3cd7"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"NSolveValues", "[", 
+    RowBox[{
+     RowBox[{"%", "==", "0"}], ",", "x"}], "]"}], ",", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"#", "\[Element]", "Reals"}], "&&", 
+     RowBox[{"0", "<", "#", "<", "1"}]}], "&"}]}], "]"}]], "Input",
+ CellLabel->"In[21]:=",ExpressionUUID->"27e4ca4d-e9db-4d14-ab37-873abe933de3"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0.12992542499519466`", ",", "0.28588877549856334`"}], 
+  "}"}]], "Output",
+ CellLabel->"Out[21]=",ExpressionUUID->"a4b6485b-0eda-4106-a04f-411351ea4e69"]
+}, Open  ]],
+
+Cell[TextData[{
+ "For ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"4", "\[Times]", "4"}], TraditionalForm]],ExpressionUUID->
+  "87bee3f3-3184-405b-99e8-d4dee464da83"],
+ " matrices, unpacking the coefficient data takes several seconds the first \
+time:"
+}], "Text",ExpressionUUID->"373e66f3-149d-40d4-8050-e75b89513ec0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"EchoTiming", "@", 
+  RowBox[{"SinkhornPolynomial", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"3", ",", "1", ",", "2", ",", "2"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "2", ",", "2", ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "2", ",", "3", ",", "2"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "4", ",", "2", ",", "3"}], "}"}]}], "}"}], ",", 
+    "x"}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Factor", "[", "%", "]"}]}], "Input",
+ CellLabel->"In[3]:=",ExpressionUUID->"b104d87e-246e-4bed-9ac7-dc1399b24948"],
+
+Cell[BoxData["22.565905`"], "EchoTiming",ExpressionUUID->"5f86bf8e-6f55-4bed-a967-460277b70b28"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "246790694704250880"}], "+", 
+  RowBox[{"2975198930601246720", " ", "x"}], "-", 
+  RowBox[{"16383341182381572096", " ", 
+   SuperscriptBox["x", "2"]}], "+", 
+  RowBox[{"53612068706701295616", " ", 
+   SuperscriptBox["x", "3"]}], "-", 
+  RowBox[{"110123924197151416320", " ", 
+   SuperscriptBox["x", "4"]}], "+", 
+  RowBox[{"122853118332060905472", " ", 
+   SuperscriptBox["x", "5"]}], "+", 
+  RowBox[{"31060141423020794880", " ", 
+   SuperscriptBox["x", "6"]}], "-", 
+  RowBox[{"435645828109071673344", " ", 
+   SuperscriptBox["x", "7"]}], "+", 
+  RowBox[{"999710159534823121920", " ", 
+   SuperscriptBox["x", "8"]}], "-", 
+  RowBox[{"1456458194243244008448", " ", 
+   SuperscriptBox["x", "9"]}], "+", 
+  RowBox[{"1558933050581256001536", " ", 
+   SuperscriptBox["x", "10"]}], "-", 
+  RowBox[{"1284220190788992755712", " ", 
+   SuperscriptBox["x", "11"]}], "+", 
+  RowBox[{"828111699533723747328", " ", 
+   SuperscriptBox["x", "12"]}], "-", 
+  RowBox[{"419342005165888558080", " ", 
+   SuperscriptBox["x", "13"]}], "+", 
+  RowBox[{"165827284134596798976", " ", 
+   SuperscriptBox["x", "14"]}], "-", 
+  RowBox[{"50547801347982259200", " ", 
+   SuperscriptBox["x", "15"]}], "+", 
+  RowBox[{"11625683820163305984", " ", 
+   SuperscriptBox["x", "16"]}], "-", 
+  RowBox[{"1949693785825830912", " ", 
+   SuperscriptBox["x", "17"]}], "+", 
+  RowBox[{"224644720812019200", " ", 
+   SuperscriptBox["x", "18"]}], "-", 
+  RowBox[{"15753370260418560", " ", 
+   SuperscriptBox["x", "19"]}], "+", 
+  RowBox[{"382625520076800", " ", 
+   SuperscriptBox["x", "20"]}]}]], "Output",
+ CellLabel->"Out[3]=",ExpressionUUID->"1b93727f-0c0d-4f28-8306-4cb4715f154f"],
+
+Cell[BoxData[
+ RowBox[{"41472", " ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"-", "5950778711040"}], "+", 
+    RowBox[{"71739943349760", " ", "x"}], "-", 
+    RowBox[{"395045842553568", " ", 
+     SuperscriptBox["x", "2"]}], "+", 
+    RowBox[{"1292729280157728", " ", 
+     SuperscriptBox["x", "3"]}], "-", 
+    RowBox[{"2655380116636560", " ", 
+     SuperscriptBox["x", "4"]}], "+", 
+    RowBox[{"2962314774596376", " ", 
+     SuperscriptBox["x", "5"]}], "+", 
+    RowBox[{"748942453294290", " ", 
+     SuperscriptBox["x", "6"]}], "-", 
+    RowBox[{"10504577259574452", " ", 
+     SuperscriptBox["x", "7"]}], "+", 
+    RowBox[{"24105665498042610", " ", 
+     SuperscriptBox["x", "8"]}], "-", 
+    RowBox[{"35119072970757234", " ", 
+     SuperscriptBox["x", "9"]}], "+", 
+    RowBox[{"37590013758228588", " ", 
+     SuperscriptBox["x", "10"]}], "-", 
+    RowBox[{"30965957532527796", " ", 
+     SuperscriptBox["x", "11"]}], "+", 
+    RowBox[{"19967971150022274", " ", 
+     SuperscriptBox["x", "12"]}], "-", 
+    RowBox[{"10111448812834890", " ", 
+     SuperscriptBox["x", "13"]}], "+", 
+    RowBox[{"3998535979325733", " ", 
+     SuperscriptBox["x", "14"]}], "-", 
+    RowBox[{"1218841660589850", " ", 
+     SuperscriptBox["x", "15"]}], "+", 
+    RowBox[{"280326095200697", " ", 
+     SuperscriptBox["x", "16"]}], "-", 
+    RowBox[{"47012292289396", " ", 
+     SuperscriptBox["x", "17"]}], "+", 
+    RowBox[{"5416780497975", " ", 
+     SuperscriptBox["x", "18"]}], "-", 
+    RowBox[{"379855571480", " ", 
+     SuperscriptBox["x", "19"]}], "+", 
+    RowBox[{"9226116900", " ", 
+     SuperscriptBox["x", "20"]}]}], ")"}]}]], "Output",
+ CellLabel->"Out[4]=",ExpressionUUID->"c150c527-a456-4114-9a4f-7c100f4180d1"]
+}, Open  ]],
+
+Cell["Subsequent uses are faster:", "Text",ExpressionUUID->"eb157911-b734-4402-ab24-95fc44e00755"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EchoTiming", "@", 
+  RowBox[{"SinkhornPolynomial", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"3", ",", "1", ",", "2", ",", "2"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "2", ",", "2", ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "2", ",", "3", ",", "2"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "4", ",", "2", ",", "3"}], "}"}]}], "}"}], ",", 
+    "x"}], "]"}]}]], "Input",
+ CellLabel->"In[8]:=",ExpressionUUID->"711a530f-96df-48d7-a70b-f41139d99c27"],
+
+Cell[BoxData["4.813384`"], "EchoTiming",ExpressionUUID->"951eae9c-e131-4fa6-b3f9-50ccdd41ec70"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "246790694704250880"}], "+", 
+  RowBox[{"2975198930601246720", " ", "x"}], "-", 
+  RowBox[{"16383341182381572096", " ", 
+   SuperscriptBox["x", "2"]}], "+", 
+  RowBox[{"53612068706701295616", " ", 
+   SuperscriptBox["x", "3"]}], "-", 
+  RowBox[{"110123924197151416320", " ", 
+   SuperscriptBox["x", "4"]}], "+", 
+  RowBox[{"122853118332060905472", " ", 
+   SuperscriptBox["x", "5"]}], "+", 
+  RowBox[{"31060141423020794880", " ", 
+   SuperscriptBox["x", "6"]}], "-", 
+  RowBox[{"435645828109071673344", " ", 
+   SuperscriptBox["x", "7"]}], "+", 
+  RowBox[{"999710159534823121920", " ", 
+   SuperscriptBox["x", "8"]}], "-", 
+  RowBox[{"1456458194243244008448", " ", 
+   SuperscriptBox["x", "9"]}], "+", 
+  RowBox[{"1558933050581256001536", " ", 
+   SuperscriptBox["x", "10"]}], "-", 
+  RowBox[{"1284220190788992755712", " ", 
+   SuperscriptBox["x", "11"]}], "+", 
+  RowBox[{"828111699533723747328", " ", 
+   SuperscriptBox["x", "12"]}], "-", 
+  RowBox[{"419342005165888558080", " ", 
+   SuperscriptBox["x", "13"]}], "+", 
+  RowBox[{"165827284134596798976", " ", 
+   SuperscriptBox["x", "14"]}], "-", 
+  RowBox[{"50547801347982259200", " ", 
+   SuperscriptBox["x", "15"]}], "+", 
+  RowBox[{"11625683820163305984", " ", 
+   SuperscriptBox["x", "16"]}], "-", 
+  RowBox[{"1949693785825830912", " ", 
+   SuperscriptBox["x", "17"]}], "+", 
+  RowBox[{"224644720812019200", " ", 
+   SuperscriptBox["x", "18"]}], "-", 
+  RowBox[{"15753370260418560", " ", 
+   SuperscriptBox["x", "19"]}], "+", 
+  RowBox[{"382625520076800", " ", 
+   SuperscriptBox["x", "20"]}]}]], "Output",
+ CellLabel->"Out[8]=",ExpressionUUID->"9a89af78-9374-43da-8576-9d8f1649dd31"]
+}, Open  ]],
+
+Cell[TextData[{
+ "The coefficients can be computed one at a time with ",
+ StyleBox["SinkhornPolynomialCoefficient", "Input"],
+ ":"
+}], "Text",ExpressionUUID->"c6547503-f580-43a6-aaf6-39719b868754"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EchoTiming", "@", 
+  RowBox[{"SinkhornPolynomialCoefficient", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"3", ",", "1", ",", "2", ",", "2"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "2", ",", "2", ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "2", ",", "3", ",", "2"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "4", ",", "2", ",", "3"}], "}"}]}], "}"}], ",", 
+    "3"}], "]"}]}]], "Input",
+ CellLabel->"In[9]:=",ExpressionUUID->"55d12608-a303-4d0e-87a1-a98c8aec3f33"],
+
+Cell[BoxData["0.004588`"], "EchoTiming",ExpressionUUID->"c2aaeef6-bea6-4fb6-a9d5-e0f401eeaf2f"],
+
+Cell[BoxData["53612068706701295616"], "Output",
+ CellLabel->"Out[9]=",ExpressionUUID->"45e60e37-6466-47c0-af54-6fcec12f4344"]
+}, Open  ]],
+
+Cell["\<\
+The Sinkhorn polynomial and its coefficients can be computed for matrices \
+with symbolic entries:\
+\>", "Text",ExpressionUUID->"0624c283-a98b-4d78-a46e-1df527da0c6b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SinkhornPolynomialCoefficient", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a11", ",", "a12", ",", "a13"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"a21", ",", "a22", ",", "a23"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"a31", ",", "a32", ",", "a33"}], "}"}]}], "}"}], ",", "2"}], 
+  "]"}]], "Input",
+ CellLabel->"In[7]:=",ExpressionUUID->"a9f40731-689f-4454-96f6-972aa733f271"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   SuperscriptBox["a11", "4"], " ", "a22", " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "a13"}], " ", "a21"}], "+", 
+     RowBox[{"a11", " ", "a23"}]}], ")"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "a12"}], " ", "a31"}], "+", 
+     RowBox[{"a11", " ", "a32"}]}], ")"}], " ", "a33", " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "a23"}], " ", "a32"}], "+", 
+     RowBox[{"a22", " ", "a33"}]}], ")"}]}], "+", 
+  RowBox[{
+   SuperscriptBox["a11", "4"], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "a12"}], " ", "a21"}], "+", 
+     RowBox[{"a11", " ", "a22"}]}], ")"}], " ", "a23", " ", "a32", " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "a13"}], " ", "a31"}], "+", 
+     RowBox[{"a11", " ", "a33"}]}], ")"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "a23"}], " ", "a32"}], "+", 
+     RowBox[{"a22", " ", "a33"}]}], ")"}]}], "-", 
+  RowBox[{"3", " ", 
+   SuperscriptBox["a11", "5"], " ", "a22", " ", "a23", " ", "a32", " ", "a33",
+    " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "a13"}], " ", "a22", " ", "a31"}], "+", 
+     RowBox[{"a12", " ", "a23", " ", "a31"}], "+", 
+     RowBox[{"a13", " ", "a21", " ", "a32"}], "-", 
+     RowBox[{"a11", " ", "a23", " ", "a32"}], "-", 
+     RowBox[{"a12", " ", "a21", " ", "a33"}], "+", 
+     RowBox[{"a11", " ", "a22", " ", "a33"}]}], ")"}]}], "+", 
+  RowBox[{"4", " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      SuperscriptBox["a11", "5"], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", "a12"}], " ", "a21"}], "+", 
+        RowBox[{"a11", " ", "a22"}]}], ")"}], " ", "a23", " ", "a32", " ", 
+      "a33", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", "a23"}], " ", "a32"}], "+", 
+        RowBox[{"a22", " ", "a33"}]}], ")"}]}], "+", 
+     RowBox[{
+      SuperscriptBox["a11", "5"], " ", "a22", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", "a13"}], " ", "a21"}], "+", 
+        RowBox[{"a11", " ", "a23"}]}], ")"}], " ", "a32", " ", "a33", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", "a23"}], " ", "a32"}], "+", 
+        RowBox[{"a22", " ", "a33"}]}], ")"}]}], "+", 
+     RowBox[{
+      SuperscriptBox["a11", "5"], " ", "a22", " ", "a23", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", "a12"}], " ", "a31"}], "+", 
+        RowBox[{"a11", " ", "a32"}]}], ")"}], " ", "a33", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", "a23"}], " ", "a32"}], "+", 
+        RowBox[{"a22", " ", "a33"}]}], ")"}]}], "+", 
+     RowBox[{
+      SuperscriptBox["a11", "5"], " ", "a22", " ", "a23", " ", "a32", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", "a13"}], " ", "a31"}], "+", 
+        RowBox[{"a11", " ", "a33"}]}], ")"}], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", "a23"}], " ", "a32"}], "+", 
+        RowBox[{"a22", " ", "a33"}]}], ")"}]}]}], ")"}]}]}]], "Output",
+ CellLabel->"Out[7]=",ExpressionUUID->"6f456c82-f864-4a16-a34e-0ec37f922753"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Row and column scaling", "Subsection",ExpressionUUID->"57110f81-08d7-483f-8b85-512fc46cb4e9"],
+
+Cell[TextData[{
+ "By default, rows are scaled so the row sums are ",
+ Cell[BoxData[
+  FormBox["1", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "c72af536-3b01-489d-b0f0-2dd7a8981df3"],
+ ".\nA different row sum can be specified as an additional argument:"
+}], "Text",ExpressionUUID->"d0623313-973c-4057-bfaa-2e869c99b0d8"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SinkhornFixedPoint", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"3", ",", "9", ",", "1"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"3", ",", "2", ",", "9"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"5", ",", "3", ",", "4"}], "}"}]}], "}"}], ",", 
+    FractionBox["1", "3"]}], "]"}], "//", 
+  "MatrixForm"}], "\[IndentingNewLine]", 
+ RowBox[{"Total", "/@", "%"}]}], "Input",
+ CellLabel->"In[10]:=",ExpressionUUID->"29237a60-b666-485d-93d2-dedfdbfce775"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0.0922257052865228535`7.5257498915995305", 
+      "0.2160154062890269313`7.5257498915995305", 
+      "0.0250922214590242476`7.5257498915995305"},
+     {"0.0839807012983081958`7.5257498915995305", 
+      "0.04371190404871129`7.5257498915995305", 
+      "0.2056407282376541483`7.5257498915995305"},
+     {"0.1571269267485022841`7.5257498915995305", 
+      "0.0736060229955951121`7.5257498915995305", 
+      "0.1026003836366549375`7.5257498915995305"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellLabel->
+  "Out[10]//MatrixForm=",ExpressionUUID->"68559242-cc98-4310-b518-\
+63875440a722"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.3333333330345740323`7.5257498915995305", ",", 
+   "0.3333333335846736342`7.5257498915995305", ",", 
+   "0.3333333333807523336`7.5257498915995305"}], "}"}]], "Output",
+ CellLabel->"Out[11]=",ExpressionUUID->"b6d9bc0b-e40f-414a-bc4a-4e2f84e0cf44"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"SinkhornPolynomial", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"3", ",", "9", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"3", ",", "2", ",", "9"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"5", ",", "3", ",", "4"}], "}"}]}], "}"}], ",", "x", ",", 
+   FractionBox["1", "3"]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Select", "[", 
+  RowBox[{
+   RowBox[{"NSolveValues", "[", 
+    RowBox[{
+     RowBox[{"%", "==", "0"}], ",", "x"}], "]"}], ",", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"#", "\[Element]", "Reals"}], "&&", 
+     RowBox[{"0", "<", "#", "<", 
+      FractionBox["1", "3"]}]}], "&"}]}], "]"}]}], "Input",
+ CellLabel->"In[12]:=",ExpressionUUID->"b4bd5ba0-b14c-4133-b03d-381206d75626"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "2991816"}], "+", 
+  RowBox[{"10458234", " ", "x"}], "+", 
+  RowBox[{"461231739", " ", 
+   SuperscriptBox["x", "2"]}], "-", 
+  RowBox[{"825347556", " ", 
+   SuperscriptBox["x", "3"]}], "-", 
+  RowBox[{"16619518197", " ", 
+   SuperscriptBox["x", "4"]}], "-", 
+  RowBox[{"13013691012", " ", 
+   SuperscriptBox["x", "5"]}], "+", 
+  RowBox[{"66386192544", " ", 
+   SuperscriptBox["x", "6"]}]}]], "Output",
+ CellLabel->"Out[12]=",ExpressionUUID->"e6265ca1-17b9-4756-8125-865c556c0c48"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0.09222570540344269`", ",", "0.11677647636078467`"}], 
+  "}"}]], "Output",
+ CellLabel->"Out[13]=",ExpressionUUID->"1bcb9d48-4457-4d1a-a2d8-3e5643351b69"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Rectangular matrices", "Subsection",ExpressionUUID->"fcb89371-2747-43b9-ba9c-15927f4e9d2f"],
+
+Cell[TextData[{
+ "A ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"3", "\[Times]", "4"}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "6079b424-a091-482e-83a1-c95906911090"],
+ " matrix:"
+}], "Text",ExpressionUUID->"6d052a96-2419-4052-bab2-117b754d5317"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"SinkhornPolynomial", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"9", ",", "5", ",", "4", ",", "8"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"9", ",", "6", ",", "1", ",", "5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"5", ",", "1", ",", "2", ",", "6"}], "}"}]}], "}"}], ",", "x"}],
+   "]"}], "\[IndentingNewLine]", 
+ RowBox[{"NSolveValues", "[", 
+  RowBox[{
+   RowBox[{"%", "==", "0"}], ",", "x"}], "]"}]}], "Input",
+ CellLabel->"In[14]:=",ExpressionUUID->"37d93877-724e-432b-9fd3-47ab34953b8e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "1712150612267040"}], "-", 
+  RowBox[{"8405319961148400", " ", "x"}], "+", 
+  RowBox[{"39818497933994688", " ", 
+   SuperscriptBox["x", "2"]}], "+", 
+  RowBox[{"159991914243469248", " ", 
+   SuperscriptBox["x", "3"]}], "+", 
+  RowBox[{"55780550680449024", " ", 
+   SuperscriptBox["x", "4"]}], "-", 
+  RowBox[{"17243624709582336", " ", 
+   SuperscriptBox["x", "5"]}], "+", 
+  RowBox[{"16144291061360640", " ", 
+   SuperscriptBox["x", "6"]}], "+", 
+  RowBox[{"2459456185835520", " ", 
+   SuperscriptBox["x", "7"]}], "-", 
+  RowBox[{"638038934323200", " ", 
+   SuperscriptBox["x", "8"]}], "-", 
+  RowBox[{"283003250540544", " ", 
+   SuperscriptBox["x", "9"]}], "-", 
+  RowBox[{"12128668876800", " ", 
+   SuperscriptBox["x", "10"]}]}]], "Output",
+ CellLabel->"Out[14]=",ExpressionUUID->"327210fa-7b0c-455a-8131-4ffa6e565061"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"-", "20.439421559664467`"}], ",", 
+   RowBox[{
+    RowBox[{"-", "3.718081271687089`"}], "-", 
+    RowBox[{"2.976144624209381`", " ", "\[ImaginaryI]"}]}], ",", 
+   RowBox[{
+    RowBox[{"-", "3.718081271687089`"}], "+", 
+    RowBox[{"2.976144624209381`", " ", "\[ImaginaryI]"}]}], ",", 
+   RowBox[{"-", "1.2693797879854531`"}], ",", 
+   RowBox[{"-", "0.36634421810685736`"}], ",", 
+   RowBox[{"-", "0.156441888216219`"}], ",", "0.21426106647330848`", ",", 
+   RowBox[{"1.1446135697348512`", "\[VeryThinSpace]", "-", 
+    RowBox[{"1.9465899895183194`", " ", "\[ImaginaryI]"}]}], ",", 
+   RowBox[{"1.1446135697348512`", "\[VeryThinSpace]", "+", 
+    RowBox[{"1.9465899895183194`", " ", "\[ImaginaryI]"}]}], ",", 
+   "3.8308479258579444`"}], "}"}]], "Output",
+ CellLabel->"Out[15]=",ExpressionUUID->"683ac13e-d3c4-44ff-afae-190258558844"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SinkhornFixedPoint", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"9", ",", "5", ",", "4", ",", "8"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"9", ",", "6", ",", "1", ",", "5"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"5", ",", "1", ",", "2", ",", "6"}], "}"}]}], "}"}], 
+  "]"}]], "Input",
+ CellLabel->"In[16]:=",ExpressionUUID->"a5225b24-8db0-4397-b30e-cdea906b874c"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+    "0.21426106647360413444563576965960770875`9.331929865583417", ",", 
+     "0.2454706230891097043392694730978722575`9.331929865583417", ",", 
+     "0.31827544026184770307298664935644189339`9.331929865583417", ",", 
+     "0.22199287017628248974350466923838023826`9.331929865583417"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0.29466265396595407352200840555279703533`9.331929865583417", ",", 
+     "0.4051003374186468780244272776996193448`9.331929865583415", ",", 
+     "0.10942712022215689277585826312862590764`9.331929865583417", ",", 
+     "0.19080988838831295792554390609329545528`9.331929865583417"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+    "0.24107627956044179203475530380882679752`9.331929865583417", ",", 
+     "0.09942903949224341764089361187588809118`9.331929865583417", ",", 
+     "0.32229743951599540414991755952987811006`9.331929865583417", ",", 
+     "0.33719724143540455233498876540905236871`9.331929865583417"}], "}"}]}], 
+  "}"}]], "Output",
+ CellLabel->"Out[16]=",ExpressionUUID->"df03b97d-4833-4db6-ae6a-7249b71aa01e"]
+}, Open  ]],
+
+Cell[TextData[{
+ "The polynomials computed by ",
+ StyleBox["SinkhornPolynomial", "Input"],
+ " have been proven to be correct for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"2", "\[Times]", "n"}], TraditionalForm]],ExpressionUUID->
+  "2ae873ef-1f98-4108-83e8-a300fa86e996"],
+ " matrices where ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "<=", "12"}], TraditionalForm]],ExpressionUUID->
+  "d02a0c02-ea50-4763-82a8-4b9423d4deda"],
+ " (and their transposes) and for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"3", "\[Times]", "3"}], TraditionalForm]],ExpressionUUID->
+  "1bb7a237-9de3-4fc0-9182-2046bc9e0ec6"],
+ " matrices.\nFor ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"2", "\[Times]", "n"}], TraditionalForm]],ExpressionUUID->
+  "36cd6722-6f43-4263-9fe1-158eb708ac92"],
+ " (where ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", ">=", "13"}], TraditionalForm]],ExpressionUUID->
+  "9fe4f9ac-afdd-4901-bf84-8e3c75bc062b"],
+ "), ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"3", "\[Times]", "4"}], TraditionalForm]],ExpressionUUID->
+  "6874637a-176e-4934-9c27-3d44c65253dd"],
+ ", ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"3", "\[Times]", "5"}], TraditionalForm]],ExpressionUUID->
+  "5ee25c98-4251-4c2c-8e94-7a6679704273"],
+ ", and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"4", "\[Times]", "4"}], TraditionalForm]],ExpressionUUID->
+  "1b925ebd-4697-48bb-b8c3-0b08275e5eba"],
+ " matrices (and their transposes), the polynomials computed by ",
+ StyleBox["SinkhornPolynomial", "Input"],
+ " are conjecturally correct.\nLarger matrices are not supported because the \
+coefficients for the corresponding general matrix have never been computed."
+}], "Text",ExpressionUUID->"af6dbb0f-5236-4521-8954-6598783044bd"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SinkhornPolynomial", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"6", ",", "2", ",", "9", ",", "8", ",", "2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"7", ",", "2", ",", "4", ",", "5", ",", "9"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"4", ",", "7", ",", "5", ",", "6", ",", "9"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"6", ",", "9", ",", "6", ",", "7", ",", "7"}], "}"}]}], "}"}], 
+   ",", "x"}], "]"}]], "Input",
+ CellLabel->"In[17]:=",ExpressionUUID->"af5b0976-9def-4f30-a365-99da2ae33264"],
+
+Cell[BoxData[
+ RowBox[{"SinkhornPolynomial", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"6", ",", "2", ",", "9", ",", "8", ",", "2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"7", ",", "2", ",", "4", ",", "5", ",", "9"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"4", ",", "7", ",", "5", ",", "6", ",", "9"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"6", ",", "9", ",", "6", ",", "7", ",", "7"}], "}"}]}], "}"}], 
+   ",", "x"}], "]"}]], "Output",
+ CellLabel->"Out[17]=",ExpressionUUID->"d5ba2ec1-b425-4cb8-bbaf-11165f38a0a3"]
+}, Open  ]],
+
+Cell[TextData[{
+ "With sufficiently high precision, an entry of a Sinkhorn limit can be \
+recognized by ",
+ StyleBox["RootApproximant", "Input"],
+ ":"
+}], "Text",ExpressionUUID->"a9cc21a7-dca8-4514-a2c9-76d4dc65c8f0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"EchoTiming", "@", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"matrix", "=", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"6", ",", "2", ",", "9", ",", "8", ",", "2"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"7", ",", "2", ",", "4", ",", "5", ",", "9"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"4", ",", "7", ",", "5", ",", "6", ",", "9"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"6", ",", "9", ",", "6", ",", "7", ",", "7"}], "}"}]}], 
+        "}"}]}], ",", 
+      RowBox[{"precision", "=", 
+       SuperscriptBox["2", "13"]}], ",", "rowcount", ",", "columncount"}], 
+     "}"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"rowcount", ",", "columncount"}], "}"}], "=", 
+      RowBox[{"Dimensions", "[", "matrix", "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"MinimalPolynomial", "[", 
+      RowBox[{
+       RowBox[{"RootApproximant", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"SinkhornFixedPoint", "[", 
+           RowBox[{"N", "[", 
+            RowBox[{"matrix", ",", "precision"}], "]"}], "]"}], "[", 
+          RowBox[{"[", 
+           RowBox[{"1", ",", "1"}], "]"}], "]"}], ",", 
+         RowBox[{"Binomial", "[", 
+          RowBox[{
+           RowBox[{"rowcount", "+", "columncount", "-", "2"}], ",", 
+           RowBox[{"rowcount", "-", "1"}]}], "]"}]}], "]"}], ",", "x"}], 
+      "]"}]}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellLabel->"In[18]:=",ExpressionUUID->"43afaad6-3ab7-4dd6-9fef-108f35cc3a95"],
+
+Cell[BoxData["32.656152`"], "EchoTiming",ExpressionUUID->"5d859fc7-a5b4-49d7-98b4-6282d264915e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "295924605463175322701701796673353995406545917050880000"}], 
+  "+", 
+  RowBox[{
+  "5400660452321307529200377278560425921520270072348672000", " ", "x"}], "+", 
+  RowBox[{"14646507580797757747132989868434901121515238839025664000", " ", 
+   SuperscriptBox["x", "2"]}], "-", 
+  RowBox[{"159916479271383939486678979826527592323732381255996538880", " ", 
+   SuperscriptBox["x", "3"]}], "-", 
+  RowBox[{"6146044304092603964137020496692956623545910952820360609792", " ", 
+   SuperscriptBox["x", "4"]}], "+", 
+  RowBox[{"2567696595575796744606870775180414789956960219733161934848", " ", 
+   SuperscriptBox["x", "5"]}], "+", 
+  RowBox[{"813798252473304434869573662704009967183570320044727249928192", " ", 
+   SuperscriptBox["x", "6"]}], "-", 
+  RowBox[{
+  "6115609266494301466260601557476578280391969931533754816266240", " ", 
+   SuperscriptBox["x", "7"]}], "+", 
+  RowBox[{
+  "14789121635830443037261908363692837745238925024447156012974080", " ", 
+   SuperscriptBox["x", "8"]}], "+", 
+  RowBox[{
+  "13457000257750507406243551527789522934047745245331680990855168", " ", 
+   SuperscriptBox["x", "9"]}], "-", 
+  RowBox[{
+  "149433903550283806354765499459414560478505906585002869876850688", " ", 
+   SuperscriptBox["x", "10"]}], "+", 
+  RowBox[{
+  "320673925022378473920477701691045937491332083375137611932237824", " ", 
+   SuperscriptBox["x", "11"]}], "-", 
+  RowBox[{
+  "101475625681933010798344017508026391433855503706440367067463680", " ", 
+   SuperscriptBox["x", "12"]}], "-", 
+  RowBox[{
+  "783451213682723129415265452706370389721709595809030349939556352", " ", 
+   SuperscriptBox["x", "13"]}], "+", 
+  RowBox[{
+  "151486414656797463077748980658065373005618454771404075299282944", " ", 
+   SuperscriptBox["x", "14"]}], "+", 
+  RowBox[{
+  "4565520596399531125458054320567905699029738976588349825910497280", " ", 
+   SuperscriptBox["x", "15"]}], "-", 
+  RowBox[{
+  "5961613182456905602726478816261390570795230957107272707446326400", " ", 
+   SuperscriptBox["x", "16"]}], "-", 
+  RowBox[{
+  "7857164866477435682379423332559813930432060058374940382579592000", " ", 
+   SuperscriptBox["x", "17"]}], "+", 
+  RowBox[{
+  "35603341990325068459312428949105378589378007904009834827516420000", " ", 
+   SuperscriptBox["x", "18"]}], "-", 
+  RowBox[{
+  "60761943162683023474172554439696186089510558236184578453413250000", " ", 
+   SuperscriptBox["x", "19"]}], "+", 
+  RowBox[{
+  "62306408782863969584781838478368781929297421791306556573125500000", " ", 
+   SuperscriptBox["x", "20"]}], "-", 
+  RowBox[{
+  "38594645638303872801632176551413815563620492777030409542109375000", " ", 
+   SuperscriptBox["x", "21"]}], "+", 
+  RowBox[{
+  "11218970078184345172177050091313075748962292709093617102377343750", " ", 
+   SuperscriptBox["x", "22"]}], "+", 
+  RowBox[{
+  "12184166729942584670716489627661942848526608279149314807050781250", " ", 
+   SuperscriptBox["x", "23"]}], "-", 
+  RowBox[{
+  "20949021447255373560485542816075527613461465802618867644111328125", " ", 
+   SuperscriptBox["x", "24"]}], "+", 
+  RowBox[{
+  "7803350311759035388557113974204389478217537841605772678808593750", " ", 
+   SuperscriptBox["x", "25"]}], "+", 
+  RowBox[{
+  "1960232222867610368796945748281302632397037416656270049072265625", " ", 
+   SuperscriptBox["x", "26"]}], "-", 
+  RowBox[{
+  "1658461806937479479569289430820620043270763784077450646972656250", " ", 
+   SuperscriptBox["x", "27"]}], "+", 
+  RowBox[{
+  "800395610046627028145159634770041310077676257467676593017578125", " ", 
+   SuperscriptBox["x", "28"]}], "-", 
+  RowBox[{
+  "45170226512049216946650849301310796940518644364456237792968750", " ", 
+   SuperscriptBox["x", "29"]}], "-", 
+  RowBox[{
+  "66519826055681850446881893426295964939334127683101654052734375", " ", 
+   SuperscriptBox["x", "30"]}], "+", 
+  RowBox[{
+  "19811330156399387472457092437482925036630779976409912109375000", " ", 
+   SuperscriptBox["x", "31"]}], "-", 
+  RowBox[{
+  "4954526739833820160532976049505246652766776358795166015625000", " ", 
+   SuperscriptBox["x", "32"]}], "+", 
+  RowBox[{"421748565097845983014256633227994019337297782897949218750000", " ", 
+   SuperscriptBox["x", "33"]}], "-", 
+  RowBox[{"21607517299451846624970441290943081458476066589355468750000", " ", 
+   SuperscriptBox["x", "34"]}], "+", 
+  RowBox[{"8964572756582948551126812918827634588718414306640625000000", " ", 
+   SuperscriptBox["x", "35"]}]}]], "Output",
+ CellLabel->"Out[18]=",ExpressionUUID->"445f289e-d3b7-4c50-be27-a3111364de1d"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Package symbols", "Section",ExpressionUUID->"177a3f49-e4dc-43f2-ad88-dc243f47aafb"],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SinkhornFixedPoint", "Input"]], "Subsubsection",ExpressionUUID->"6c1bbce4-f194-4d0f-9831-90b2be994505"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SinkhornFixedPoint"}]], "Input",
+ CellLabel->"In[2]:=",ExpressionUUID->"a6794f0b-c0f3-42ea-8172-e8e814982e51"],
+
+Cell[BoxData[
+ InterpretationBox[
+  StyleBox[
+   FrameBox[
+    DynamicModuleBox[{System`InformationDump`open$$ = False, 
+     System`InformationDump`mouseOver$$ = False}, 
+     PaneSelectorBox[{True->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox["\<\" Symbol\"\>", "InformationTitleText",
+             StripOnInput->False,
+             BaseStyle -> None],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"\\!\\(\\*RowBox[List[\\\"SinkhornFixedPoint\\\", \\\
+\"[\\\", StyleBox[\\\"m\\\", \\\"TI\\\"], \\\"]\\\"]]\\) iteratively scales \
+the rows and columns of the matrix \\!\\(\\*StyleBox[\\\"m\\\", \
+\\\"TI\\\"]\\) until the result no longer changes. At each step, the rows are \
+scaled so that each row sum is \\!\\(\\*StyleBox[\\\"1\\\", \\\"TR\\\"]\\), \
+and then the columns are scaled so that each column sum is \
+\\!\\(\\*RowBox[List[\\\"Divide\\\", \\\"@@\\\", RowBox[List[\\\"Dimensions\\\
+\", \\\"[\\\", StyleBox[\\\"m\\\", \\\"TI\\\"], \
+\\\"]\\\"]]]]\\).\\n\\!\\(\\*RowBox[List[\\\"SinkhornFixedPoint\\\", \
+\\\"[\\\", RowBox[List[StyleBox[\\\"m\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"r\\\", \\\"TI\\\"]]], \\\"]\\\"]]\\) scales the rows so that \
+each row sum is \\!\\(\\*StyleBox[\\\"r\\\", \\\"TI\\\"]\\) and scales the \
+columns accordingly.\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          PaneBox[
+           TagBox[GridBox[{
+              {
+               StyleBox[
+                TagBox[
+                 TooltipBox[
+                  StyleBox["\<\" Definitions\"\>", "InformationRowLabel",
+                   StripOnInput->False],
+                  "\"Definitions\"",
+                  TooltipStyle->"TextStyling"],
+                 Annotation[#, "Definitions", "Tooltip"]& ], "DialogStyle",
+                StripOnInput->False]},
+              {
+               TemplateBox[{"\"\[ThinSpace]\"", 
+                 GridBox[{{
+                    RowBox[{
+                    RowBox[{"SinkhornFixedPoint", "[", 
+                    RowBox[{
+                    RowBox[{"SinkhornPolynomials`Private`matrix_", "/;", 
+                    RowBox[{"MatrixQ", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`matrix", ",", 
+                    "NumericQ"}], "]"}]}], ",", 
+                    RowBox[{"SinkhornPolynomials`Private`rowtotal", ":", 
+                    RowBox[{"Except", "[", 
+                    RowBox[{"0", "|", "0.`", "|", "_DirectedInfinity"}], 
+                    "]"}], ":", "1"}]}], "]"}], ":=", 
+                    RowBox[{"With", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"SinkhornPolynomials`Private`columntotal", "=", 
+                    RowBox[{"SinkhornPolynomials`Private`rowtotal", " ", 
+                    RowBox[{"Divide", "@@", 
+                    
+                    RowBox[{"Dimensions", "[", 
+                    "SinkhornPolynomials`Private`matrix", "]"}]}]}]}], "}"}], 
+                    ",", 
+                    RowBox[{"FixedPoint", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"SinkhornPolynomials`Private`MatrixScale", "[", 
+                    
+                    RowBox[{"#1", ",", "SinkhornPolynomials`Private`rowtotal",
+                     ",", "SinkhornPolynomials`Private`columntotal"}], "]"}], 
+                    "&"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"AllTrue", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`matrix", ",", 
+                    "ExactNumberQ", ",", "2"}], "]"}], ",", 
+                    RowBox[{"N", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`matrix", ",", 
+                    "$MachinePrecision"}], "]"}], ",", 
+                    "SinkhornPolynomials`Private`matrix"}], "]"}]}], "]"}]}], 
+                    "]"}]}]}, {" "}}, 
+                  GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"],
+           FrameMargins->{{6, 0}, {3, 6}}], "\<\"\"\>"},
+         {
+          PaneBox[GridBox[{
+             {
+              
+              DynamicModuleBox[{System`InformationDump`open$$ = {
+               False, False, False, False, False, False}}, 
+               StyleBox[GridBox[{
+                  {
+                   TagBox[
+                    TooltipBox[
+                    
+                    StyleBox["\<\" Default Definitions\"\>", 
+                    "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"DefaultValues\"",
+                    TooltipStyle->"TextStyling"],
+                    Annotation[#, "DefaultValues", "Tooltip"]& ], 
+                   InterpretationBox[GridBox[{
+                    {
+                    RowBox[{
+                    RowBox[{
+                    "SyntaxInformation", "[", "SinkhornFixedPoint", "]"}], 
+                    "=", 
+                    RowBox[{"{", 
+                    RowBox[{"\<\"ArgumentsPattern\"\>", "\[Rule]", 
+                    RowBox[{"{", 
+                    RowBox[{"_", ",", "_."}], "}"}]}], "}"}]}]},
+                    {" "}
+                    },
+                    BaselinePosition->{Baseline, {1, 1}},
+                    
+                    GridBoxAlignment->{
+                    "Columns" -> {{Left}}, "Rows" -> {{Baseline}}}],
+                    
+                    ColumnForm[{
+                    SyntaxInformation[
+                    SinkhornPolynomials`SinkhornFixedPoint] = {
+                    "ArgumentsPattern" -> {
+                    Blank[], 
+                    Optional[
+                    Blank[]]}}, 
+                    SpaceForm[1]}],
+                    Editable->False]},
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Attributes\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"Attributes\"",
+                    TooltipStyle->"TextStyling"],
+                    Annotation[#, "Attributes", "Tooltip"]& ], 
+                   RowBox[{"{", "Protected", "}"}]},
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Full Name\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"FullName\"",
+                    TooltipStyle->"TextStyling"],
+                    
+                    Annotation[#, "FullName", 
+                    "Tooltip"]& ], \
+"\<\"SinkhornPolynomials`SinkhornFixedPoint\"\>"}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Columns" -> {Right, Left}},
+                 GridBoxDividers->None,
+                 GridBoxItemSize->{"Columns" -> {Automatic, Automatic}},
+                 GridBoxSpacings->{"Columns" -> {
+                    Offset[0.27999999999999997`], {
+                    Offset[0.5599999999999999]}, 
+                    Offset[0.27999999999999997`]}, "Rows" -> {
+                    Offset[0.2], {
+                    Offset[0.8]}, 
+                    Offset[0.2]}}], "DialogStyle",
+                StripOnInput->False],
+               DynamicModuleValues:>{}]}
+            },
+            DefaultBaseStyle->"Column",
+            GridBoxAlignment->{"Columns" -> {{Left}}},
+            GridBoxDividers->{"Columns" -> {{False}}, "Rows" -> {{False}}},
+            
+            GridBoxItemSize->{
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+            GridBoxSpacings->{"Columns" -> {
+                Offset[0.27999999999999997`], {
+                 Offset[0.5599999999999999]}, 
+                Offset[0.27999999999999997`]}, "Rows" -> {
+                Offset[0.2], {
+                 Offset[3.6]}, 
+                Offset[0.2]}}],
+           FrameMargins->{{6, 6}, {6, 3}}], ""},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpener"]], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpenerHot"]]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, False],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"], False->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox["\<\" Symbol\"\>", "InformationTitleText",
+             StripOnInput->False],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"\\!\\(\\*RowBox[List[\\\"SinkhornFixedPoint\\\", \\\
+\"[\\\", StyleBox[\\\"m\\\", \\\"TI\\\"], \\\"]\\\"]]\\) iteratively scales \
+the rows and columns of the matrix \\!\\(\\*StyleBox[\\\"m\\\", \
+\\\"TI\\\"]\\) until the result no longer changes. At each step, the rows are \
+scaled so that each row sum is \\!\\(\\*StyleBox[\\\"1\\\", \\\"TR\\\"]\\), \
+and then the columns are scaled so that each column sum is \
+\\!\\(\\*RowBox[List[\\\"Divide\\\", \\\"@@\\\", RowBox[List[\\\"Dimensions\\\
+\", \\\"[\\\", StyleBox[\\\"m\\\", \\\"TI\\\"], \
+\\\"]\\\"]]]]\\).\\n\\!\\(\\*RowBox[List[\\\"SinkhornFixedPoint\\\", \
+\\\"[\\\", RowBox[List[StyleBox[\\\"m\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"r\\\", \\\"TI\\\"]]], \\\"]\\\"]]\\) scales the rows so that \
+each row sum is \\!\\(\\*StyleBox[\\\"r\\\", \\\"TI\\\"]\\) and scales the \
+columns accordingly.\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpener"],
+               ImageSizeCache->{10., {2., 8.}}], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpenerHot"],
+               ImageSizeCache->{10., {2., 8.}}]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, True],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"]}, Dynamic[System`InformationDump`open$$],
+      BaselinePosition->Baseline,
+      FrameMargins->0,
+      ImageSize->Automatic],
+     DynamicModuleValues:>{}],
+    BaseStyle->"InformationGridFrame",
+    StripOnInput->False], "InformationGridPlain",
+   StripOnInput->False],
+  InformationData[<|
+   "ObjectType" -> "Symbol", "Usage" -> 
+    "\!\(\*RowBox[List[\"SinkhornFixedPoint\", \"[\", StyleBox[\"m\", \
+\"TI\"], \"]\"]]\) iteratively scales the rows and columns of the matrix \!\(\
+\*StyleBox[\"m\", \"TI\"]\) until the result no longer changes. At each step, \
+the rows are scaled so that each row sum is \!\(\*StyleBox[\"1\", \"TR\"]\), \
+and then the columns are scaled so that each column sum is \!\(\*RowBox[List[\
+\"Divide\", \"@@\", RowBox[List[\"Dimensions\", \"[\", StyleBox[\"m\", \
+\"TI\"], \"]\"]]]]\).\n\!\(\*RowBox[List[\"SinkhornFixedPoint\", \"[\", \
+RowBox[List[StyleBox[\"m\", \"TI\"], \",\", StyleBox[\"r\", \"TI\"]]], \
+\"]\"]]\) scales the rows so that each row sum is \!\(\*StyleBox[\"r\", \
+\"TI\"]\) and scales the columns accordingly.", "Documentation" -> None, 
+    "OwnValues" -> None, "UpValues" -> None, "DownValues" -> 
+    Information`InformationValueForm[
+     DownValues, SinkhornPolynomials`SinkhornFixedPoint, {
+      SinkhornPolynomials`SinkhornFixedPoint[
+         Condition[
+          Pattern[SinkhornPolynomials`Private`matrix, 
+           Blank[]], 
+          MatrixQ[SinkhornPolynomials`Private`matrix, NumericQ]], 
+         Optional[
+          Pattern[SinkhornPolynomials`Private`rowtotal, 
+           Except[
+            Alternatives[0, 0., 
+             Blank[DirectedInfinity]]]], 1]] :> 
+       With[{SinkhornPolynomials`Private`columntotal = 
+          SinkhornPolynomials`Private`rowtotal Apply[Divide, 
+             Dimensions[SinkhornPolynomials`Private`matrix]]}, 
+         FixedPoint[
+         SinkhornPolynomials`Private`MatrixScale[#, 
+           SinkhornPolynomials`Private`rowtotal, 
+           SinkhornPolynomials`Private`columntotal]& , 
+          If[
+           AllTrue[SinkhornPolynomials`Private`matrix, ExactNumberQ, 2], 
+           N[SinkhornPolynomials`Private`matrix, $MachinePrecision], 
+           SinkhornPolynomials`Private`matrix]]]}], "SubValues" -> None, 
+    "DefaultValues" -> 
+    Information`InformationValueForm[
+     DefaultValues, SinkhornPolynomials`SinkhornFixedPoint, {
+      SyntaxInformation[SinkhornPolynomials`SinkhornFixedPoint] -> {
+        "ArgumentsPattern" -> {
+           Blank[], 
+           Optional[
+            Blank[]]}}}], "NValues" -> None, "FormatValues" -> None, 
+    "Options" -> None, "Attributes" -> {Protected}, "FullName" -> 
+    "SinkhornPolynomials`SinkhornFixedPoint"|>, False]]], "Output",
+ CellLabel->"Out[2]=",ExpressionUUID->"d0917b4d-c7c7-40bb-8eb6-a9ca61c103d0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SinkhornFixedPoint", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "4", ",", "9"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"16", ",", "25", ",", "36"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"49", ",", "64", ",", "81"}], "}"}]}], "}"}], "]"}], "//", 
+  "MatrixForm"}]], "Input",
+ CellLabel->"In[20]:=",ExpressionUUID->"3780f43b-f493-46a1-9ec9-5108c918c111"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0.16474461509777642133379911204154514285`9.331929865583417", 
+      "0.35627788011126418005040375443717720872`9.331929865583415", 
+      "0.47897750478980742765765764766695761486`9.331929865583415"},
+     {"0.38886040749197183175239117748041872681`9.331929865583414", 
+      "0.32849698901344014059793476072706749264`9.331929865583414", 
+      "0.28264260349497505127160708773175982155`9.331929865583414"},
+     {"0.44639497741025174691380971047803613034`9.331929865583414", 
+      "0.31522513087529567932654273071039763435`9.331929865583414", 
+      "0.23837989171521752107935646856726126742`9.331929865583414"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellLabel->
+  "Out[20]//MatrixForm=",ExpressionUUID->"c059163d-fe03-461b-81c0-\
+550f2cee0976"]
+}, Open  ]],
+
+Cell["\<\
+To get a fixed point with higher precision, numericize the entries with \
+higher precision:\
+\>", "Text",ExpressionUUID->"1c3838e3-99e4-4a12-8d11-e4415d8b7d1f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SinkhornFixedPoint", "[", 
+   RowBox[{"N", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"1", ",", "4", ",", "9"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"16", ",", "25", ",", "36"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"49", ",", "64", ",", "81"}], "}"}]}], "}"}], ",", "50"}], 
+    "]"}], "]"}], "//", "MatrixForm"}]], "Input",
+ CellLabel->"In[21]:=",ExpressionUUID->"e897ce47-908f-4c24-9bcd-3b4a9307cf1b"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0.1647446150980362356894544629205895989383648137281149192465`31.\
+938200260161082", 
+      "0.3562778801116930054522757948138170096605576151874522572102`31.\
+938200260161082", 
+      "0.4789775047902707588582697422655923801457945216550114309689`31.\
+938200260161082"},
+     {"0.3888604074919360531009939131933502498122754981359519345357`31.\
+938200260161086", 
+      "0.3284969890132872396419373049180934854345901828270330070699`31.\
+938200260161086", 
+      "0.2826426034947767072570687818885566045010134624721819409928`31.\
+938200260161086"},
+     {"0.4463949774100277112095516238860601512493596881359331462178`31.\
+938200260161086", 
+      "0.3152251308750197549057869002680895049048522019855147357199`31.\
+938200260161086", 
+      "0.2383798917149525338846614758458510153531920158728066280383`31.\
+938200260161086"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellLabel->
+  "Out[21]//MatrixForm=",ExpressionUUID->"c22d4c08-169c-40d9-b26b-\
+a1f487247706"]
+}, Open  ]],
+
+Cell[TextData[{
+ "By default, the row sums are ",
+ Cell[BoxData[
+  FormBox["1", TraditionalForm]],ExpressionUUID->
+  "3f470141-783b-41fe-9670-b9c5cd581b0c"],
+ ", so for non-square ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"m", "\[Times]", "n"}], TraditionalForm]],ExpressionUUID->
+  "807c1024-33a9-49a4-98e9-75815a00a052"],
+ " matrices the column sums are ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"m", "/", "n"}], TraditionalForm]],ExpressionUUID->
+  "cfda979f-d5aa-48fc-ac59-8d53c0744061"],
+ ":"
+}], "Text",ExpressionUUID->"266f0085-094d-41b2-b657-a4a3c5716402"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SeedRandom", "[", "1234", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"MatrixForm", "[", 
+  RowBox[{"matrix", "=", 
+   RowBox[{"RandomInteger", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "9"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"5", ",", "8"}], "}"}]}], "]"}]}], "]"}]}], "Input",
+ CellLabel->"In[22]:=",ExpressionUUID->"5ddff060-6abd-45f0-8173-019a935c0599"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"1", "7", "7", "1", "8", "1", "1", "9"},
+     {"5", "5", "9", "6", "8", "3", "9", "5"},
+     {"6", "9", "7", "2", "7", "2", "3", "1"},
+     {"4", "7", "7", "1", "8", "5", "4", "8"},
+     {"7", "7", "1", "3", "3", "4", "9", "5"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellLabel->
+  "Out[23]//MatrixForm=",ExpressionUUID->"5eea4384-25eb-4af8-81cf-\
+63f737c42bf6"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"MatrixForm", "[", 
+  RowBox[{"fixedpoint", "=", 
+   RowBox[{"SinkhornFixedPoint", "[", "matrix", "]"}]}], "]"}]], "Input",
+ CellLabel->"In[24]:=",ExpressionUUID->"599256d6-d1e6-43ce-8867-b688c0eba031"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0.03776448197862291477419635511658036164`8.729869874255453", 
+      "0.16087702878045689837463685410796818725`8.729869874255455", 
+      "0.1858502710794279905615575725302532457`8.729869874255455", 
+      "0.07082636808052871637804150864555618871`8.729869874255453", 
+      "0.19171046204360008683253193105437291078`8.729869874255453", 
+      "0.05863161751778853694970885200562512784`8.729869874255455", 
+      "0.03545195347417997493186355947374927721`8.729869874255453", 
+      "0.2588878170145813264`8.729869874255453"},
+     {"0.10500969768479322061144375203343587356`8.729869874255453", 
+      "0.06390603502679895426352856510484280446`8.729869874255453", 
+      "0.1328873192280925624055786053124982437`8.729869874255453", 
+      "0.2363317628810567243356718770144312999`8.729869874255453", 
+      "0.10661582845810594670434339887000679797`8.729869874255453", 
+      "0.09782030269286239081408348208320061726`8.729869874255453", 
+      "0.1774428695666843872806784873714380202`8.729869874255453", 
+      "0.07998618447403713892246210848558954051`8.729869874255453"},
+     {"0.19184998556194450341874443862208927211`8.729869874255453", 
+      "0.17513199496128005946404636084084658012`8.729869874255455", 
+      "0.15735849293283447118537864587604347545`8.729869874255455", 
+      "0.11993666166131172303876387365201753139`8.729869874255453", 
+      "0.1420302513415614740139203610069383553`8.729869874255455", 
+      "0.0992861933127934998660437386826113647`8.729869874255455", 
+      "0.09005097390206770419614308293457646736`8.729869874255455", 
+      "0.02435544632992066678084486904028879784`8.729869874255455"},
+     {"0.10597503792229510218635724261086181651`8.729869874255453", 
+      "0.11286365079418978862438359421016980627`8.729869874255455", 
+      "0.13038368655937144003257185650237651711`8.729869874255455", 
+      "0.04968840197173388277098715761409441173`8.729869874255453", 
+      "0.13449491705375220169283997666053524721`8.729869874255455", 
+      "0.20566573286409598941778054903667071339`8.729869874255455", 
+      "0.09948559908679209662286917503550332845`8.729869874255455", 
+      "0.16144297374019183301411893574732304511`8.729869874255455"},
+     {"0.184400796852344259`8.729869874255451", 
+      "0.11222129043727429924585192681963186461`8.729869874255453", 
+      "0.01852023020027353588250911649792288861`8.729869874255453", 
+      "0.1482168054053689535`8.729869874255451", 
+      "0.0501485411029802908157104190967910951`8.729869874255453", 
+      "0.1635961536124595829517829981815766691`8.729869874255453", 
+      "0.22256860397027583696937451552724077044`8.729869874255453", 
+      "0.10032757844126903488174404686799219553`8.729869874255453"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellLabel->
+  "Out[24]//MatrixForm=",ExpressionUUID->"eacb94f6-13b0-4348-8ef0-\
+c03ecef161ba"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"Total", "/@", "fixedpoint"}], "\[IndentingNewLine]", 
+ RowBox[{"Total", "/@", 
+  RowBox[{"Transpose", "[", "fixedpoint", "]"}]}]}], "Input",
+ CellLabel->"In[25]:=",ExpressionUUID->"93b2fb4f-859f-4b60-b878-6dd133b86732"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.9999999999691864452`8.729869874255453", ",", 
+   "1.0000000000124313253`8.729869874255453", ",", 
+   "1.0000000000037141019`8.729869874255453", ",", 
+   "0.9999999999924223343`8.729869874255455", ",", 
+   "1.0000000000222457932`8.729869874255453"}], "}"}]], "Output",
+ CellLabel->"Out[25]=",ExpressionUUID->"453d4b70-63b1-41de-b74f-63638613bec2"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.6249999999999999999`8.729869874255453", ",", 
+   "0.6249999999999999999`8.729869874255455", ",", 
+   "0.6250000000000000001`8.729869874255455", ",", 
+   "0.6249999999999999999`8.729869874255451", ",", "0.625`8.729869874255453", 
+   ",", "0.6249999999999999999`8.729869874255455", ",", 
+   "0.6249999999999999999`8.729869874255453", ",", 
+   "0.625`8.729869874255453"}], "}"}]], "Output",
+ CellLabel->"Out[26]=",ExpressionUUID->"ded91f8c-1c9f-41f4-8194-e97a115df2b7"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Scale so that the row sums are ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", "/", "m"}], TraditionalForm]],ExpressionUUID->
+  "165cde5c-e098-4a22-b4bd-c1ac6cbff8aa"],
+ " and the column sums are ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", "/", "n"}], TraditionalForm]],ExpressionUUID->
+  "74cdd6a2-4a33-48b0-abbd-a0ed695c7443"],
+ ":"
+}], "Text",ExpressionUUID->"9a824772-c52f-45da-aa59-ffa8401f7ac6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"MatrixForm", "[", 
+  RowBox[{"scaledfixedpoint", "=", 
+   RowBox[{"SinkhornFixedPoint", "[", 
+    RowBox[{"matrix", ",", 
+     FractionBox["1", "5"]}], "]"}]}], "]"}]], "Input",
+ CellLabel->"In[27]:=",ExpressionUUID->"028e8a20-c0b8-4373-84ad-1e5ff323a6e0"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0.00755289639572458295489117599858408118`8.729869874255453", 
+      "0.03217540575609137967667468968848444407`8.729869874255455", 
+      "0.03717005421588559810828509492111012297`8.729869874255455", 
+      "0.01416527361610574327560966062102738965`8.729869874255453", 
+      "0.03834209240872001736235300642549103161`8.729869874255453", 
+      "0.0117263235035577073899428953215922906`8.729869874255453", 
+      "0.00709039069483599498637339208454771551`8.729869874255451", 
+      "0.05177756340291626528215978358626749735`8.729869874255455"},
+     {"0.0210019395369586441221655061665517065`8.729869874255451", 
+      "0.01278120700535979085323697173389108037`8.729869874255453", 
+      "0.02657746384561851247789812805140357416`8.729869874255453", 
+      "0.04726635257621134486653671624728686961`8.729869874255451", 
+      "0.02132316569162118933828719685665989984`8.729869874255451", 
+      "0.01956406053857247816256931875231272274`8.729869874255451", 
+      "0.03548857391333687745568696238129999164`8.729869874255451", 
+      "0.01599723689480742778353133426023668236`8.729869874255453"},
+     {"0.03836999711238890068311833782798059223`8.729869874255453", 
+      "0.03502639899225601189389510577316303193`8.729869874255453", 
+      "0.03147169858656689423293311292424823431`8.729869874255453", 
+      "0.02398733233226234460719603657565456419`8.729869874255453", 
+      "0.02840605026831229479904498690405921952`8.729869874255453", 
+      "0.0198572386625586999727478677079192919`8.729869874255453", 
+      "0.01801019478041354083881060584400202435`8.729869874255451", 
+      "0.00487108926598413335582486292250857554`8.729869874255453"},
+     {"0.02119500758445902043745779218286310088`8.729869874255453", 
+      "0.02257273015883795772614588663931170773`8.729869874255453", 
+      "0.02607673731187428800373968610358871474`8.729869874255453", 
+      "0.00993768039434677655421746193276741335`8.729869874255453", 
+      "0.02689898341075044033570581935555102201`8.729869874255453", 
+      "0.04113314657281919788363901786591844561`8.729869874255453", 
+      "0.01989711981735841932461393968454264198`8.729869874255451", 
+      "0.0322885947480383666013572959103456007`8.729869874255453"},
+     {"0.03688015937046885180024866128076727752`8.729869874255451", 
+      "0.02244425808745485984905262467770093545`8.729869874255453", 
+      "0.00370404604005470717587999867102331596`8.729869874255453", 
+      "0.02964336108107379069496566005966697423`8.729869874255451", 
+      "0.01002970822059605816145832516155475035`8.729869874255451", 
+      "0.03271923072249191658841121510206577062`8.729869874255451", 
+      "0.04451372079405516739122825457238438891`8.729869874255451", 
+      "0.02006551568825380697420399114217600156`8.729869874255453"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellLabel->
+  "Out[27]//MatrixForm=",ExpressionUUID->"221978f0-6531-49bf-8d4e-\
+071f0ef7228e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"Total", "/@", "scaledfixedpoint"}], "\[IndentingNewLine]", 
+ RowBox[{"Total", "/@", 
+  RowBox[{"Transpose", "[", "scaledfixedpoint", "]"}]}]}], "Input",
+ CellLabel->"In[28]:=",ExpressionUUID->"b7a7f1e3-c1c9-42d3-90a0-a18ace621020"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.199999999993837289`8.729869874255453", ",", 
+   "0.200000000002486265`8.729869874255451", ",", 
+   "0.2000000000007428203`8.729869874255451", ",", 
+   "0.1999999999984844668`8.729869874255453", ",", 
+   "0.2000000000044491586`8.729869874255451"}], "}"}]], "Output",
+ CellLabel->"Out[28]=",ExpressionUUID->"061222ae-f67c-40f7-b143-a7e79ad73479"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.12499999999999999999788147345674675831`8.729869874255453", ",", 
+   "0.125`8.729869874255451", ",", 
+   "0.12499999999999999999873602067137396214`8.729869874255453", ",", 
+   "0.125`8.729869874255451", ",", 
+   "0.12499999999999999999684933470331592334`8.729869874255453", ",", 
+   "0.12499999999999999999731031474980852147`8.729869874255453", ",", 
+   "0.125`8.729869874255451", ",", 
+   "0.12499999999999999999707726782153435752`8.729869874255455"}], 
+  "}"}]], "Output",
+ CellLabel->"Out[29]=",ExpressionUUID->"c687aff5-c4b6-4d86-970f-952549434b33"]
+}, Open  ]],
+
+Cell["The two fixed points differ by a scalar multiple:", "Text",ExpressionUUID->"71702b0c-6f58-4b20-8178-806b2af4adcf"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"MatrixForm", "[", 
+  RowBox[{"fixedpoint", "/", "scaledfixedpoint"}], "]"}]], "Input",
+ CellLabel->"In[30]:=",ExpressionUUID->"c4f1fe95-1a92-47b3-b82d-94c61b6e3c0e"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"4.9999999999999999999`8.428839878591472", 
+      "4.9999999999999999997`8.428839878591473", 
+      "5.0000000000000000005`8.428839878591473", "5.`8.428839878591472", 
+      "5.0000000000000000005`8.428839878591472", "5.`8.428839878591473", 
+      "5.`8.428839878591472", "5.0000000000000000005`8.428839878591473"},
+     {"5.0000000000000000001`8.428839878591472", 
+      "4.9999999999999999998`8.428839878591472", 
+      "5.0000000000000000006`8.428839878591472", 
+      "5.0000000000000000001`8.428839878591472", 
+      "5.0000000000000000006`8.428839878591472", 
+      "5.0000000000000000001`8.428839878591472", 
+      "5.0000000000000000001`8.428839878591472", 
+      "5.0000000000000000003`8.428839878591472"},
+     {"5.0000000000000000001`8.428839878591472", 
+      "4.9999999999999999998`8.428839878591473", 
+      "5.0000000000000000007`8.428839878591473", 
+      "5.0000000000000000001`8.428839878591472", 
+      "5.0000000000000000007`8.428839878591472", 
+      "5.0000000000000000001`8.428839878591473", 
+      "5.0000000000000000001`8.428839878591472", 
+      "5.0000000000000000004`8.428839878591472"},
+     {"4.9999999999999999999`8.428839878591472", 
+      "4.9999999999999999997`8.428839878591473", 
+      "5.0000000000000000005`8.428839878591473", "5.`8.428839878591472", 
+      "5.0000000000000000005`8.428839878591472", "5.`8.428839878591473", 
+      "5.`8.428839878591472", "5.0000000000000000002`8.428839878591472"},
+     {"4.9999999999999999996`8.428839878591472", "5.`8.428839878591472", 
+      "5.0000000000000000008`8.428839878591472", 
+      "5.0000000000000000006`8.42883987859147", 
+      "5.0000000000000000008`8.428839878591472", 
+      "5.0000000000000000003`8.428839878591472", 
+      "5.0000000000000000003`8.428839878591472", 
+      "5.0000000000000000005`8.428839878591472"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellLabel->
+  "Out[30]//MatrixForm=",ExpressionUUID->"48ca160e-7686-46c5-901f-\
+5e3649508266"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Clear", "[", 
+  RowBox[{"matrix", ",", "fixedpoint", ",", "scaledfixedpoint"}], 
+  "]"}]], "Input",
+ CellLabel->"In[31]:=",ExpressionUUID->"ec4d7e42-e46e-4ebf-8c3b-347b1f43be48"],
+
+Cell["The matrix entries are allowed to be negative:", "Text",ExpressionUUID->"af3535ad-b374-4d1b-9a8a-ea4dc0381af3"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SinkhornFixedPoint", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "7"}], ",", "9"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"6", ",", 
+       RowBox[{"-", "5"}]}], "}"}]}], "}"}], "]"}], "//", 
+  "MatrixForm"}]], "Input",
+ CellLabel->"In[32]:=",ExpressionUUID->"77084370-6d46-4155-9b90-4c833ae15fff"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0.44600685466139958089087842727947263595`9.541125739958675", 
+      "0.55399314533841897866393184773420255681`9.5372623803634"},
+     {"0.55399314533860041910912157272052736404`9.542315838182857", 
+      "0.44600685466158102133606815226579744319`9.538441924436922"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellLabel->
+  "Out[32]//MatrixForm=",ExpressionUUID->"9ee79901-0daf-4746-ba7a-\
+eca33e4b636c"]
+}, Open  ]],
+
+Cell[TextData[{
+ "However, negative entries can result in division by ",
+ Cell[BoxData[
+  FormBox["0", TraditionalForm]],ExpressionUUID->
+  "761d1bd1-9817-43d7-81cc-689fb28eeacb"],
+ ":"
+}], "Text",ExpressionUUID->"71ee4b1f-de6e-4d5c-a690-0dc144fe539b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SinkhornFixedPoint", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "6"}], ",", "8"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"3", ",", "1"}], "}"}]}], "}"}], "]"}], "//", 
+  "MatrixForm"}]], "Input",
+ CellLabel->"In[33]:=",ExpressionUUID->"d4dac925-dc76-4766-8820-6cf788ea58df"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Power", "infy", 
+   "\"Infinite expression \\!\\(\\*FractionBox[\\\"1\\\", \
+\\\"0``-0.5157142302706429\\\"]\\) encountered.\"", 2, 33, 1, 
+   23635033101147293565, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellLabel->
+  "During evaluation of \
+In[33]:=",ExpressionUUID->"001daa19-d345-4b50-8af9-beaf5c2eadb7"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Infinity", "indet", 
+   "\"Indeterminate expression \\!\\(\\*RowBox[{\\\"0``-0.35078322250958655\\\
+\", \\\" \\\", \\\"ComplexInfinity\\\"}]\\) encountered.\"", 2, 33, 2, 
+   23635033101147293565, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellLabel->
+  "During evaluation of \
+In[33]:=",ExpressionUUID->"71236e37-8e69-40c0-8a5a-9882b5061607"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Infinity", "indet", 
+   "\"Indeterminate expression \\!\\(\\*RowBox[{\\\"0``-0.01537340931629497\\\
+\", \\\" \\\", \\\"ComplexInfinity\\\"}]\\) encountered.\"", 2, 33, 3, 
+   23635033101147293565, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellLabel->
+  "During evaluation of \
+In[33]:=",ExpressionUUID->"92ab7257-e038-4da2-bf35-187c8cf510ee"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Power", "infy", 
+   "\"Infinite expression \\!\\(\\*FractionBox[\\\"1\\\", \
+\\\"0``0.20184902878738295\\\"]\\) encountered.\"", 2, 33, 4, 
+   23635033101147293565, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellLabel->
+  "During evaluation of \
+In[33]:=",ExpressionUUID->"186da09d-f0f1-4462-af18-9d8a2c88458e"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "Infinity", "indet", 
+   "\"Indeterminate expression \
+\\!\\(\\*RowBox[{\\\"0``0.24432208083773083\\\", \\\" \\\", \
+\\\"ComplexInfinity\\\"}]\\) encountered.\"", 2, 33, 5, 23635033101147293565, 
+   "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellLabel->
+  "During evaluation of \
+In[33]:=",ExpressionUUID->"a1a408d8-5cc8-45f0-b6f5-cabc25a0d848"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General", "stop", 
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"Infinity\\\", \
+\\\"::\\\", \\\"indet\\\"}], \\\"MessageName\\\"]\\) will be suppressed \
+during this calculation.\"", 2, 33, 6, 23635033101147293565, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellLabel->
+  "During evaluation of \
+In[33]:=",ExpressionUUID->"04515cf1-29b3-4540-baea-e6930140e951"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"Indeterminate", "Indeterminate"},
+     {"Indeterminate", "Indeterminate"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellLabel->
+  "Out[33]//MatrixForm=",ExpressionUUID->"8ae2e7fe-d634-4102-8e17-\
+1352e2f9f490"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SinkhornPolynomial", "Input"]], "Subsubsection",ExpressionUUID->"b59eaaa0-ab43-4faa-bb66-865eb641d759"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SinkhornPolynomial"}]], "Input",
+ CellLabel->"In[3]:=",ExpressionUUID->"e89fd132-18a1-46d8-ac6c-43bde4f5d27e"],
+
+Cell[BoxData[
+ InterpretationBox[
+  StyleBox[
+   FrameBox[
+    DynamicModuleBox[{System`InformationDump`open$$ = False, 
+     System`InformationDump`mouseOver$$ = False}, 
+     PaneSelectorBox[{True->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox["\<\" Symbol\"\>", "InformationTitleText",
+             StripOnInput->False,
+             BaseStyle -> None],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"\\!\\(\\*RowBox[List[\\\"SinkhornPolynomial\\\", \\\
+\"[\\\", RowBox[List[StyleBox[\\\"m\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"x\\\", \\\"TI\\\"]]], \\\"]\\\"]]\\) gives the Sinkhorn \
+polynomial in \\!\\(\\*StyleBox[\\\"x\\\", \\\"TI\\\"]\\) with coefficients \
+evaluated at the entries of the matrix \\!\\(\\*StyleBox[\\\"m\\\", \
+\\\"TI\\\"]\\).\\n\\!\\(\\*RowBox[List[\\\"SinkhornPolynomial\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"m\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"x\\\", \
+\\\"TI\\\"], \\\",\\\", StyleBox[\\\"r\\\", \\\"TI\\\"]]], \\\"]\\\"]]\\) \
+scales the coefficients of the polynomial to correspond to a limit with row \
+sum \\!\\(\\*StyleBox[\\\"r\\\", \\\"TI\\\"]\\).\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          PaneBox[
+           TagBox[GridBox[{
+              {
+               StyleBox[
+                TagBox[
+                 TooltipBox[
+                  StyleBox["\<\" Definitions\"\>", "InformationRowLabel",
+                   StripOnInput->False],
+                  "\"Definitions\"",
+                  TooltipStyle->"TextStyling"],
+                 Annotation[#, "Definitions", "Tooltip"]& ], "DialogStyle",
+                StripOnInput->False]},
+              {
+               TemplateBox[{"\"\[ThinSpace]\"", 
+                 GridBox[{{
+                    RowBox[{
+                    RowBox[{"SinkhornPolynomial", "[", 
+                    RowBox[{
+                    
+                    RowBox[{
+                    "SinkhornPolynomials`Private`matrix_", "?", "MatrixQ"}], 
+                    ",", "SinkhornPolynomials`Private`x_", ",", 
+                    RowBox[{"SinkhornPolynomials`Private`rowtotal", ":", 
+                    RowBox[{"Except", "[", 
+                    
+                    RowBox[{"0", "|", "0.`", "|", "_DirectedInfinity", "|", 
+                    "_Rule"}], "]"}], ":", "1"}], ",", 
+                    RowBox[{"SinkhornPolynomials`Private`options", ":", 
+                    RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
+                    RowBox[{"Module", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`rowcount", ",", 
+                    "SinkhornPolynomials`Private`columncount", ",", 
+                    "SinkhornPolynomials`Private`degree", ",", 
+                    "SinkhornPolynomials`Private`coefficientlist", ",", 
+                    "SinkhornPolynomials`Private`exponent"}], "}"}], ",", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"{", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`rowcount", ",", 
+                    "SinkhornPolynomials`Private`columncount"}], "}"}], "=", 
+                    
+                    RowBox[{"Dimensions", "[", 
+                    "SinkhornPolynomials`Private`matrix", "]"}]}], ";", 
+                    RowBox[{"SinkhornPolynomials`Private`degree", "=", 
+                    RowBox[{"Binomial", "[", 
+                    RowBox[{
+                    
+                    RowBox[{"SinkhornPolynomials`Private`rowcount", "+", 
+                    "SinkhornPolynomials`Private`columncount", "-", "2"}], 
+                    ",", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`rowcount", "-", 
+                    "1"}]}], "]"}]}], ";", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientlist", 
+                    "=", 
+                    RowBox[{"Table", "[", 
+                    RowBox[{
+                    RowBox[{"SinkhornPolynomialCoefficient", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`matrix", ",", 
+                    "SinkhornPolynomials`Private`exponent", ",", 
+                    "SinkhornPolynomials`Private`rowtotal", ",", 
+                    "SinkhornPolynomials`Private`options"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`exponent", ",", "0", 
+                    ",", "SinkhornPolynomials`Private`degree"}], "}"}]}], 
+                    "]"}]}], ";", 
+                    RowBox[{
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientlist", 
+                    ".", 
+                    RowBox[{"Table", "[", 
+                    RowBox[{
+                    RowBox[{"SinkhornPolynomials`Private`DiscretePower", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`x", ",", 
+                    "SinkhornPolynomials`Private`exponent"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`exponent", ",", "0", 
+                    ",", "SinkhornPolynomials`Private`degree"}], "}"}]}], 
+                    "]"}]}], "/;", 
+                    RowBox[{"!", 
+                    RowBox[{"MemberQ", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientlist", 
+                    ",", "_SinkhornPolynomialCoefficient"}], "]"}]}]}]}]}], 
+                    "]"}]}]}, {" "}}, 
+                  GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"],
+           FrameMargins->{{6, 0}, {3, 6}}], "\<\"\"\>"},
+         {
+          PaneBox[GridBox[{
+             {
+              
+              DynamicModuleBox[{System`InformationDump`open$$ = {
+               False, False, False, False, False, False}}, 
+               StyleBox[GridBox[{
+                  {
+                   TagBox[
+                    TooltipBox[
+                    
+                    StyleBox["\<\" Default Definitions\"\>", 
+                    "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"DefaultValues\"",
+                    TooltipStyle->"TextStyling"],
+                    Annotation[#, "DefaultValues", "Tooltip"]& ], 
+                   InterpretationBox[GridBox[{
+                    {
+                    RowBox[{
+                    RowBox[{
+                    "SyntaxInformation", "[", "SinkhornPolynomial", "]"}], 
+                    "=", 
+                    RowBox[{"{", 
+                    RowBox[{"\<\"ArgumentsPattern\"\>", "\[Rule]", 
+                    RowBox[{"{", 
+                    RowBox[{"_", ",", "_", ",", "_.", ",", 
+                    RowBox[{"OptionsPattern", "[", "]"}]}], "}"}]}], "}"}]}]},
+                    {" "}
+                    },
+                    BaselinePosition->{Baseline, {1, 1}},
+                    
+                    GridBoxAlignment->{
+                    "Columns" -> {{Left}}, "Rows" -> {{Baseline}}}],
+                    
+                    ColumnForm[{
+                    SyntaxInformation[
+                    SinkhornPolynomials`SinkhornPolynomial] = {
+                    "ArgumentsPattern" -> {
+                    Blank[], 
+                    Blank[], 
+                    Optional[
+                    Blank[]], 
+                    OptionsPattern[]}}, 
+                    SpaceForm[1]}],
+                    Editable->False]},
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Options\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"Options\"",
+                    TooltipStyle->"TextStyling"],
+                    Annotation[#, "Options", "Tooltip"]& ], 
+                   RowBox[{"GeneratedParameters", "\[Rule]", 
+                    RowBox[{"(", 
+                    RowBox[{"0", "&"}], ")"}]}]},
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Attributes\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"Attributes\"",
+                    TooltipStyle->"TextStyling"],
+                    Annotation[#, "Attributes", "Tooltip"]& ], 
+                   RowBox[{"{", "Protected", "}"}]},
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Full Name\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"FullName\"",
+                    TooltipStyle->"TextStyling"],
+                    
+                    Annotation[#, "FullName", 
+                    "Tooltip"]& ], \
+"\<\"SinkhornPolynomials`SinkhornPolynomial\"\>"}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Columns" -> {Right, Left}},
+                 GridBoxDividers->None,
+                 GridBoxItemSize->{"Columns" -> {Automatic, Automatic}},
+                 GridBoxSpacings->{"Columns" -> {
+                    Offset[0.27999999999999997`], {
+                    Offset[0.5599999999999999]}, 
+                    Offset[0.27999999999999997`]}, "Rows" -> {
+                    Offset[0.2], {
+                    Offset[0.8]}, 
+                    Offset[0.2]}}], "DialogStyle",
+                StripOnInput->False],
+               DynamicModuleValues:>{}]}
+            },
+            DefaultBaseStyle->"Column",
+            GridBoxAlignment->{"Columns" -> {{Left}}},
+            GridBoxDividers->{"Columns" -> {{False}}, "Rows" -> {{False}}},
+            
+            GridBoxItemSize->{
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+            GridBoxSpacings->{"Columns" -> {
+                Offset[0.27999999999999997`], {
+                 Offset[0.5599999999999999]}, 
+                Offset[0.27999999999999997`]}, "Rows" -> {
+                Offset[0.2], {
+                 Offset[3.6]}, 
+                Offset[0.2]}}],
+           FrameMargins->{{6, 6}, {6, 3}}], ""},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpener"]], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpenerHot"]]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, False],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"], False->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox["\<\" Symbol\"\>", "InformationTitleText",
+             StripOnInput->False],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"\\!\\(\\*RowBox[List[\\\"SinkhornPolynomial\\\", \\\
+\"[\\\", RowBox[List[StyleBox[\\\"m\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"x\\\", \\\"TI\\\"]]], \\\"]\\\"]]\\) gives the Sinkhorn \
+polynomial in \\!\\(\\*StyleBox[\\\"x\\\", \\\"TI\\\"]\\) with coefficients \
+evaluated at the entries of the matrix \\!\\(\\*StyleBox[\\\"m\\\", \
+\\\"TI\\\"]\\).\\n\\!\\(\\*RowBox[List[\\\"SinkhornPolynomial\\\", \\\"[\\\", \
+RowBox[List[StyleBox[\\\"m\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"x\\\", \
+\\\"TI\\\"], \\\",\\\", StyleBox[\\\"r\\\", \\\"TI\\\"]]], \\\"]\\\"]]\\) \
+scales the coefficients of the polynomial to correspond to a limit with row \
+sum \\!\\(\\*StyleBox[\\\"r\\\", \\\"TI\\\"]\\).\"\>", "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpener"],
+               ImageSizeCache->{10., {2., 8.}}], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpenerHot"],
+               ImageSizeCache->{10., {2., 8.}}]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, True],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"]}, Dynamic[System`InformationDump`open$$],
+      BaselinePosition->Baseline,
+      FrameMargins->0,
+      ImageSize->Automatic],
+     DynamicModuleValues:>{}],
+    BaseStyle->"InformationGridFrame",
+    StripOnInput->False], "InformationGridPlain",
+   StripOnInput->False],
+  InformationData[<|
+   "ObjectType" -> "Symbol", "Usage" -> 
+    "\!\(\*RowBox[List[\"SinkhornPolynomial\", \"[\", \
+RowBox[List[StyleBox[\"m\", \"TI\"], \",\", StyleBox[\"x\", \"TI\"]]], \
+\"]\"]]\) gives the Sinkhorn polynomial in \!\(\*StyleBox[\"x\", \"TI\"]\) \
+with coefficients evaluated at the entries of the matrix \
+\!\(\*StyleBox[\"m\", \"TI\"]\).\n\!\(\*RowBox[List[\"SinkhornPolynomial\", \
+\"[\", RowBox[List[StyleBox[\"m\", \"TI\"], \",\", StyleBox[\"x\", \"TI\"], \
+\",\", StyleBox[\"r\", \"TI\"]]], \"]\"]]\) scales the coefficients of the \
+polynomial to correspond to a limit with row sum \!\(\*StyleBox[\"r\", \
+\"TI\"]\).", "Documentation" -> None, "OwnValues" -> None, "UpValues" -> None,
+     "DownValues" -> 
+    Information`InformationValueForm[
+     DownValues, SinkhornPolynomials`SinkhornPolynomial, {
+      SinkhornPolynomials`SinkhornPolynomial[
+         PatternTest[
+          Pattern[SinkhornPolynomials`Private`matrix, 
+           Blank[]], MatrixQ], 
+         Pattern[SinkhornPolynomials`Private`x, 
+          Blank[]], 
+         Optional[
+          Pattern[SinkhornPolynomials`Private`rowtotal, 
+           Except[
+            Alternatives[0, 0., 
+             Blank[DirectedInfinity], 
+             Blank[Rule]]]], 1], 
+         Pattern[SinkhornPolynomials`Private`options, 
+          OptionsPattern[]]] :> 
+       Module[{SinkhornPolynomials`Private`rowcount, 
+          SinkhornPolynomials`Private`columncount, 
+          SinkhornPolynomials`Private`degree, 
+          SinkhornPolynomials`Private`coefficientlist, 
+          SinkhornPolynomials`Private`exponent}, {
+           SinkhornPolynomials`Private`rowcount, 
+            SinkhornPolynomials`Private`columncount} = 
+          Dimensions[SinkhornPolynomials`Private`matrix]; 
+         SinkhornPolynomials`Private`degree = 
+          Binomial[
+           SinkhornPolynomials`Private`rowcount + 
+            SinkhornPolynomials`Private`columncount - 2, 
+            SinkhornPolynomials`Private`rowcount - 1]; 
+         SinkhornPolynomials`Private`coefficientlist = Table[
+            SinkhornPolynomials`SinkhornPolynomialCoefficient[
+            SinkhornPolynomials`Private`matrix, 
+             SinkhornPolynomials`Private`exponent, 
+             SinkhornPolynomials`Private`rowtotal, 
+             SinkhornPolynomials`Private`options], {
+            SinkhornPolynomials`Private`exponent, 0, 
+             SinkhornPolynomials`Private`degree}]; Condition[
+           Dot[SinkhornPolynomials`Private`coefficientlist, 
+            Table[
+             SinkhornPolynomials`Private`DiscretePower[
+             SinkhornPolynomials`Private`x, 
+              SinkhornPolynomials`Private`exponent], {
+             SinkhornPolynomials`Private`exponent, 0, 
+              SinkhornPolynomials`Private`degree}]], 
+           Not[
+            MemberQ[SinkhornPolynomials`Private`coefficientlist, 
+             Blank[SinkhornPolynomials`SinkhornPolynomialCoefficient]]]]]}], 
+    "SubValues" -> None, "DefaultValues" -> 
+    Information`InformationValueForm[
+     DefaultValues, SinkhornPolynomials`SinkhornPolynomial, {
+      SyntaxInformation[SinkhornPolynomials`SinkhornPolynomial] -> {
+        "ArgumentsPattern" -> {
+           Blank[], 
+           Blank[], 
+           Optional[
+            Blank[]], 
+           OptionsPattern[]}}}], "NValues" -> None, "FormatValues" -> None, 
+    "Options" -> {GeneratedParameters -> (0& )}, "Attributes" -> {Protected}, 
+    "FullName" -> "SinkhornPolynomials`SinkhornPolynomial"|>, 
+   False]]], "Output",
+ CellLabel->"Out[3]=",ExpressionUUID->"feb1ff97-922a-49b5-a213-c02553837e92"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Compute the Sinkhorn polynomial for a general ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"2", "\[Times]", "2"}], TraditionalForm]],ExpressionUUID->
+  "f12fa90b-5cbc-4fac-a8f3-d1ef81060b1a"],
+ " matrix:"
+}], "Text",ExpressionUUID->"88168706-8c67-4ce4-a87e-bf1f5efc1e37"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SinkhornPolynomial", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", "b"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"c", ",", "d"}], "}"}]}], "}"}], ",", "x"}], "]"}]], "Input",
+ CellLabel->"In[35]:=",ExpressionUUID->"2adfd32f-948d-4141-aa61-ad12cdaac562"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   SuperscriptBox["a", "2"], " ", "d"}], "-", 
+  RowBox[{"2", " ", 
+   SuperscriptBox["a", "2"], " ", "d", " ", "x"}], "+", 
+  RowBox[{"a", " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "b"}], " ", "c"}], "+", 
+     RowBox[{"a", " ", "d"}]}], ")"}], " ", 
+   SuperscriptBox["x", "2"]}]}]], "Output",
+ CellLabel->"Out[35]=",ExpressionUUID->"8ee8c76b-6447-4bb5-8df3-f005ccdfe171"]
+}, Open  ]],
+
+Cell[TextData[{
+ "Find the roots of the Sinkhorn polynomial for a specific ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"3", "\[Times]", "3"}], TraditionalForm]],ExpressionUUID->
+  "95b8505f-e2b5-4886-95fc-6830487c336e"],
+ " matrix:"
+}], "Text",ExpressionUUID->"29a72c15-37f8-41e7-b708-05c715c08c62"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"SinkhornPolynomial", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "4", ",", "9"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"16", ",", "25", ",", "36"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"49", ",", "64", ",", "81"}], "}"}]}], "}"}], ",", "x"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"NSolveValues", "[", 
+  RowBox[{
+   RowBox[{"%", "==", "0"}], ",", "x"}], "]"}]}], "Input",
+ CellLabel->"In[36]:=",ExpressionUUID->"5696ce7a-3905-4a35-b3a4-3e1bd7c2b7e1"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "1301702400"}], "-", 
+  RowBox[{"11508530544", " ", "x"}], "+", 
+  RowBox[{"43567361136", " ", 
+   SuperscriptBox["x", "2"]}], "+", 
+  RowBox[{"362098055808", " ", 
+   SuperscriptBox["x", "3"]}], "+", 
+  RowBox[{"530511332544", " ", 
+   SuperscriptBox["x", "4"]}], "+", 
+  RowBox[{"51481910016", " ", 
+   SuperscriptBox["x", "5"]}], "-", 
+  RowBox[{"43233315840", " ", 
+   SuperscriptBox["x", "6"]}]}]], "Output",
+ CellLabel->"Out[36]=",ExpressionUUID->"3a684951-c6dd-4c99-becd-ec9b105e372f"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"-", "2.474046590393925`"}], ",", 
+   RowBox[{"-", "0.4244901743765433`"}], ",", 
+   RowBox[{"-", "0.3859605215180201`"}], ",", 
+   RowBox[{"-", "0.10217787272994615`"}], ",", "0.16474461509803623`", ",", 
+   "4.412723084712937`"}], "}"}]], "Output",
+ CellLabel->"Out[37]=",ExpressionUUID->"8313602f-31a6-4677-879a-4135246efc63"]
+}, Open  ]],
+
+Cell["Change the row scaling:", "Text",ExpressionUUID->"3ae46f92-57ec-44ff-bedd-6cf36198abc8"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"SinkhornPolynomial", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "4", ",", "9"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"16", ",", "25", ",", "36"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"49", ",", "64", ",", "81"}], "}"}]}], "}"}], ",", "x", ",", 
+   FractionBox["1", "3"]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"NSolveValues", "[", 
+  RowBox[{
+   RowBox[{"%", "==", "0"}], ",", "x"}], "]"}]}], "Input",
+ CellLabel->"In[38]:=",ExpressionUUID->"d7bc6561-b900-4fcf-93a2-491657576359"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "1301702400"}], "-", 
+  RowBox[{"34525591632", " ", "x"}], "+", 
+  RowBox[{"392106250224", " ", 
+   SuperscriptBox["x", "2"]}], "+", 
+  RowBox[{"9776647506816", " ", 
+   SuperscriptBox["x", "3"]}], "+", 
+  RowBox[{"42971417936064", " ", 
+   SuperscriptBox["x", "4"]}], "+", 
+  RowBox[{"12510104133888", " ", 
+   SuperscriptBox["x", "5"]}], "-", 
+  RowBox[{"31517087247360", " ", 
+   SuperscriptBox["x", "6"]}]}]], "Output",
+ CellLabel->"Out[38]=",ExpressionUUID->"4e638ce6-7f67-4e42-b477-ff023cb77814"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"-", "0.8246821967979752`"}], ",", 
+   RowBox[{"-", "0.14149672479218015`"}], ",", 
+   RowBox[{"-", "0.12865350717267368`"}], ",", 
+   RowBox[{"-", "0.03405929090998205`"}], ",", "0.05491487169934541`", ",", 
+   "1.4709076949043125`"}], "}"}]], "Output",
+ CellLabel->"Out[39]=",ExpressionUUID->"e25466c2-8814-4d1f-9c3f-638dc55c0f99"]
+}, Open  ]],
+
+Cell[TextData[{
+ "This is equivalent to replacing ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "->", 
+    RowBox[{"3", "x"}]}], TraditionalForm]],ExpressionUUID->
+  "7318e821-0350-45b6-a133-6f7541196196"],
+ ":"
+}], "Text",ExpressionUUID->"b77aaadc-dac3-42e7-becf-166b82a2977b"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SinkhornPolynomial", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "4", ",", "9"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"16", ",", "25", ",", "36"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"49", ",", "64", ",", "81"}], "}"}]}], "}"}], ",", 
+   RowBox[{"3", "x"}]}], "]"}]], "Input",
+ CellLabel->"In[40]:=",ExpressionUUID->"ad547da5-52b7-49a2-a1a4-8f041458c69e"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "1301702400"}], "-", 
+  RowBox[{"34525591632", " ", "x"}], "+", 
+  RowBox[{"392106250224", " ", 
+   SuperscriptBox["x", "2"]}], "+", 
+  RowBox[{"9776647506816", " ", 
+   SuperscriptBox["x", "3"]}], "+", 
+  RowBox[{"42971417936064", " ", 
+   SuperscriptBox["x", "4"]}], "+", 
+  RowBox[{"12510104133888", " ", 
+   SuperscriptBox["x", "5"]}], "-", 
+  RowBox[{"31517087247360", " ", 
+   SuperscriptBox["x", "6"]}]}]], "Output",
+ CellLabel->"Out[40]=",ExpressionUUID->"4f3389eb-01d3-4d89-8afb-a2b26dc731aa"]
+}, Open  ]],
+
+Cell[TextData[{
+ "The Sinkhorn polynomial is ",
+ Cell[BoxData[
+  FormBox["0", TraditionalForm]],ExpressionUUID->
+  "d5e68fe6-4431-4284-a2d7-208c400255fc"],
+ " if certain rows or columns are scalar multiples of each other:"
+}], "Text",ExpressionUUID->"16a898c7-0bce-4742-b830-df47113e44a3"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SinkhornPolynomial", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"4", ",", "5", ",", "6"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "2", ",", "3"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", "4", ",", "6"}], "}"}]}], "}"}], ",", "x"}], 
+  "]"}]], "Input",
+ CellLabel->"In[41]:=",ExpressionUUID->"c37877bf-a79e-4c8b-9b24-f728bd089993"],
+
+Cell[BoxData["0"], "Output",
+ CellLabel->"Out[41]=",ExpressionUUID->"c341f63c-3574-4624-a085-bce90828f475"]
+}, Open  ]],
+
+Cell[TextData[{
+ "A nonzero polynomial for the top left entry of the Sinkhorn limit can be \
+obtained by carefully factoring out the determinants that are ",
+ Cell[BoxData[
+  FormBox["0", TraditionalForm]],ExpressionUUID->
+  "11fa0a00-5802-4ecd-89f8-d07e7f0bf671"],
+ ", as follows."
+}], "Text",ExpressionUUID->"f6567c78-b860-476f-ae57-b304cfc3c6e0"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{"With", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"matrix", "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"a11", ",", "a12", ",", "a13"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"a21", ",", "a22", ",", "a23"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"a31", ",", "a32", ",", "a33"}], "}"}]}], "}"}]}], "}"}], ",", 
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"determinant", "=", 
+        RowBox[{"Det", "[", "matrix", "]"}]}], ",", 
+       RowBox[{"minor", "=", 
+        RowBox[{"Det", "[", 
+         RowBox[{"matrix", "[", 
+          RowBox[{"[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"2", ",", "3"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"2", ",", "3"}], "}"}]}], "]"}], "]"}], "]"}]}]}], "}"}],
+      ",", 
+     RowBox[{"Factor", "[", 
+      RowBox[{
+       RowBox[{"Cancel", "[", 
+        RowBox[{
+         FractionBox["1", "minor"], 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"SinkhornPolynomial", "[", 
+            RowBox[{"matrix", ",", "x"}], "]"}], "/.", 
+           RowBox[{"determinant", "->", 
+            RowBox[{"detratio", " ", "minor"}]}]}], ")"}]}], "]"}], "/.", 
+       RowBox[{"Thread", "[", 
+        RowBox[{
+         RowBox[{"matrix", "[", 
+          RowBox[{"[", "3", "]"}], "]"}], "->", 
+         RowBox[{"rowscale", " ", 
+          RowBox[{"matrix", "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}]}], "]"}]}], "]"}]}], "]"}]}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"Collect", "[", 
+  RowBox[{
+   RowBox[{"FactorList", "[", "%", "]"}], ",", "x", ",", "Factor"}], 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"%", "[", 
+  RowBox[{"[", 
+   RowBox[{"4", ",", "1"}], "]"}], "]"}]}], "Input",
+ CellLabel->"In[42]:=",ExpressionUUID->"967b0afd-5769-4424-94ad-25758d2c1550"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "a11"}], " ", 
+  SuperscriptBox["rowscale", "2"], " ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", 
+      SuperscriptBox["a11", "2"]}], " ", "a22", " ", "a23"}], "+", 
+    RowBox[{"3", " ", 
+     SuperscriptBox["a11", "2"], " ", "a22", " ", "a23", " ", "x"}], "+", 
+    RowBox[{"a12", " ", "a13", " ", 
+     SuperscriptBox["a21", "2"], " ", 
+     SuperscriptBox["x", "2"]}], "+", 
+    RowBox[{"a11", " ", "a13", " ", "a21", " ", "a22", " ", 
+     SuperscriptBox["x", "2"]}], "+", 
+    RowBox[{"a11", " ", "a12", " ", "a21", " ", "a23", " ", 
+     SuperscriptBox["x", "2"]}], "-", 
+    RowBox[{"3", " ", 
+     SuperscriptBox["a11", "2"], " ", "a22", " ", "a23", " ", 
+     SuperscriptBox["x", "2"]}], "+", 
+    RowBox[{"a12", " ", "a13", " ", 
+     SuperscriptBox["a21", "2"], " ", 
+     SuperscriptBox["x", "3"]}], "-", 
+    RowBox[{"a11", " ", "a13", " ", "a21", " ", "a22", " ", 
+     SuperscriptBox["x", "3"]}], "-", 
+    RowBox[{"a11", " ", "a12", " ", "a21", " ", "a23", " ", 
+     SuperscriptBox["x", "3"]}], "+", 
+    RowBox[{
+     SuperscriptBox["a11", "2"], " ", "a22", " ", "a23", " ", 
+     SuperscriptBox["x", "3"]}]}], ")"}], " ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{
+     SuperscriptBox["a11", "3"], " ", "a22", " ", "a23"}], "+", 
+    RowBox[{"2", " ", 
+     SuperscriptBox["a11", "2"], " ", "a13", " ", "a21", " ", "a22", " ", 
+     "x"}], "+", 
+    RowBox[{"2", " ", 
+     SuperscriptBox["a11", "2"], " ", "a12", " ", "a21", " ", "a23", " ", 
+     "x"}], "-", 
+    RowBox[{"4", " ", 
+     SuperscriptBox["a11", "3"], " ", "a22", " ", "a23", " ", "x"}], "+", 
+    RowBox[{
+     SuperscriptBox["a11", "2"], " ", "a22", " ", "a23", " ", "detratio", " ",
+      "x"}], "+", 
+    RowBox[{"3", " ", "a11", " ", "a12", " ", "a13", " ", 
+     SuperscriptBox["a21", "2"], " ", 
+     SuperscriptBox["x", "2"]}], "-", 
+    RowBox[{"3", " ", 
+     SuperscriptBox["a11", "2"], " ", "a13", " ", "a21", " ", "a22", " ", 
+     SuperscriptBox["x", "2"]}], "-", 
+    RowBox[{"3", " ", 
+     SuperscriptBox["a11", "2"], " ", "a12", " ", "a21", " ", "a23", " ", 
+     SuperscriptBox["x", "2"]}], "+", 
+    RowBox[{"3", " ", 
+     SuperscriptBox["a11", "3"], " ", "a22", " ", "a23", " ", 
+     SuperscriptBox["x", "2"]}], "-", 
+    RowBox[{"a12", " ", "a13", " ", 
+     SuperscriptBox["a21", "2"], " ", "detratio", " ", 
+     SuperscriptBox["x", "3"]}], "+", 
+    RowBox[{"a11", " ", "a13", " ", "a21", " ", "a22", " ", "detratio", " ", 
+     SuperscriptBox["x", "3"]}], "+", 
+    RowBox[{"a11", " ", "a12", " ", "a21", " ", "a23", " ", "detratio", " ", 
+     SuperscriptBox["x", "3"]}], "-", 
+    RowBox[{
+     SuperscriptBox["a11", "2"], " ", "a22", " ", "a23", " ", "detratio", " ", 
+     SuperscriptBox["x", "3"]}]}], ")"}]}]], "Output",
+ CellLabel->"Out[42]=",ExpressionUUID->"3f83417e-ee60-41c7-8a99-fdcd57aeb602"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"-", "1"}], ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"a11", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"rowscale", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", 
+        SuperscriptBox["a11", "2"]}], " ", "a22", " ", "a23"}], "+", 
+      RowBox[{"3", " ", 
+       SuperscriptBox["a11", "2"], " ", "a22", " ", "a23", " ", "x"}], "+", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a12", " ", "a13", " ", 
+          SuperscriptBox["a21", "2"]}], "+", 
+         RowBox[{"a11", " ", "a13", " ", "a21", " ", "a22"}], "+", 
+         RowBox[{"a11", " ", "a12", " ", "a21", " ", "a23"}], "-", 
+         RowBox[{"3", " ", 
+          SuperscriptBox["a11", "2"], " ", "a22", " ", "a23"}]}], ")"}], " ", 
+       SuperscriptBox["x", "2"]}], "+", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a12", " ", "a21"}], "-", 
+         RowBox[{"a11", " ", "a22"}]}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a13", " ", "a21"}], "-", 
+         RowBox[{"a11", " ", "a23"}]}], ")"}], " ", 
+       SuperscriptBox["x", "3"]}]}], ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{
+       SuperscriptBox["a11", "3"], " ", "a22", " ", "a23"}], "-", 
+      RowBox[{
+       SuperscriptBox["a11", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "2"}], " ", "a13", " ", "a21", " ", "a22"}], "-", 
+         RowBox[{"2", " ", "a12", " ", "a21", " ", "a23"}], "+", 
+         RowBox[{"4", " ", "a11", " ", "a22", " ", "a23"}], "-", 
+         RowBox[{"a22", " ", "a23", " ", "detratio"}]}], ")"}], " ", "x"}], 
+      "+", 
+      RowBox[{"3", " ", "a11", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "a12"}], " ", "a21"}], "+", 
+         RowBox[{"a11", " ", "a22"}]}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "a13"}], " ", "a21"}], "+", 
+         RowBox[{"a11", " ", "a23"}]}], ")"}], " ", 
+       SuperscriptBox["x", "2"]}], "-", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a12", " ", "a21"}], "-", 
+         RowBox[{"a11", " ", "a22"}]}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"a13", " ", "a21"}], "-", 
+         RowBox[{"a11", " ", "a23"}]}], ")"}], " ", "detratio", " ", 
+       SuperscriptBox["x", "3"]}]}], ",", "1"}], "}"}]}], "}"}]], "Output",
+ CellLabel->"Out[43]=",ExpressionUUID->"c5f2ed2c-8bf2-475c-a90a-4dee0d10b3f9"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"-", 
+    SuperscriptBox["a11", "2"]}], " ", "a22", " ", "a23"}], "+", 
+  RowBox[{"3", " ", 
+   SuperscriptBox["a11", "2"], " ", "a22", " ", "a23", " ", "x"}], "+", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"a12", " ", "a13", " ", 
+      SuperscriptBox["a21", "2"]}], "+", 
+     RowBox[{"a11", " ", "a13", " ", "a21", " ", "a22"}], "+", 
+     RowBox[{"a11", " ", "a12", " ", "a21", " ", "a23"}], "-", 
+     RowBox[{"3", " ", 
+      SuperscriptBox["a11", "2"], " ", "a22", " ", "a23"}]}], ")"}], " ", 
+   SuperscriptBox["x", "2"]}], "+", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"a12", " ", "a21"}], "-", 
+     RowBox[{"a11", " ", "a22"}]}], ")"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"a13", " ", "a21"}], "-", 
+     RowBox[{"a11", " ", "a23"}]}], ")"}], " ", 
+   SuperscriptBox["x", "3"]}]}]], "Output",
+ CellLabel->"Out[44]=",ExpressionUUID->"0af11110-0df5-4aed-8606-230e2b0888c4"]
+}, Open  ]],
+
+Cell["Evaluate the polynomial for a particular matrix:", "Text",ExpressionUUID->"c6cd2257-3c95-42c3-a2a2-e6d8bdbe9015"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"-", 
+     SuperscriptBox["a11", "2"]}], " ", "a22", " ", "a23"}], "+", 
+   RowBox[{"3", " ", 
+    SuperscriptBox["a11", "2"], " ", "a22", " ", "a23", " ", "x"}], "+", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"a12", " ", "a13", " ", 
+       SuperscriptBox["a21", "2"]}], "+", 
+      RowBox[{"a11", " ", "a13", " ", "a21", " ", "a22"}], "+", 
+      RowBox[{"a11", " ", "a12", " ", "a21", " ", "a23"}], "-", 
+      RowBox[{"3", " ", 
+       SuperscriptBox["a11", "2"], " ", "a22", " ", "a23"}]}], ")"}], " ", 
+    SuperscriptBox["x", "2"]}], "+", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"a12", " ", "a21"}], "-", 
+      RowBox[{"a11", " ", "a22"}]}], ")"}], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"a13", " ", "a21"}], "-", 
+      RowBox[{"a11", " ", "a23"}]}], ")"}], " ", 
+    SuperscriptBox["x", "3"]}]}], "/.", 
+  RowBox[{"Thread", "[", 
+   RowBox[{
+    RowBox[{"Join", "@@", 
+     RowBox[{"Take", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"a11", ",", "a12", ",", "a13"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"a21", ",", "a22", ",", "a23"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"a31", ",", "a32", ",", "a33"}], "}"}]}], "}"}], ",", "2"}],
+       "]"}]}], "->", 
+    RowBox[{"Join", "@@", 
+     RowBox[{"Take", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"4", ",", "5", ",", "6"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", "2", ",", "3"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"2", ",", "4", ",", "6"}], "}"}]}], "}"}], ",", "2"}], 
+      "]"}]}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"NSolveValues", "[", 
+  RowBox[{
+   RowBox[{"%", "==", "0"}], ",", "x"}], "]"}]}], "Input",
+ CellLabel->"In[45]:=",ExpressionUUID->"b470f94f-2fea-478c-80d4-59d1a5f9fb28"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "96"}], "+", 
+  RowBox[{"288", " ", "x"}], "-", 
+  RowBox[{"150", " ", 
+   SuperscriptBox["x", "2"]}], "+", 
+  RowBox[{"18", " ", 
+   SuperscriptBox["x", "3"]}]}]], "Output",
+ CellLabel->"Out[45]=",ExpressionUUID->"f4bc5fcf-ae18-414c-ae01-a1be960a120e"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0.420970910487474`", ",", "2.229263671159904`", ",", 
+   "5.6830987516859555`"}], "}"}]], "Output",
+ CellLabel->"Out[46]=",ExpressionUUID->"5a699fd9-532a-49c9-8ef6-bfaa93d84340"]
+}, Open  ]],
+
+Cell["\<\
+One of the roots is the top left entry of the Sinkhorn limit:\
+\>", "Text",ExpressionUUID->"15ea71e3-cd07-4ce6-8bca-a3a02141f077"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SinkhornFixedPoint", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"4", ",", "5", ",", "6"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "2", ",", "3"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", "4", ",", "6"}], "}"}]}], "}"}], "]"}], "//", 
+  "MatrixForm"}]], "Input",
+ CellLabel->"In[47]:=",ExpressionUUID->"4d212448-ba93-418e-9dc4-e03c4a21e0b4"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {"0.42097091048749397512905156313875967354`11.138109839567301", 
+      "0.31242797792856706550441405324176324459`11.138109839567301", 
+      "0.26660111158399267412417081461296985423`11.138109839567301"},
+     {"0.28951454475625301243547421843062016323`11.138109839567301", 
+      "0.34378601103571646724779297337911837771`11.138109839567301", 
+      "0.36669944420800366293791459269351507288`11.138109839567301"},
+     {"0.28951454475625301243547421843062016323`11.138109839567301", 
+      "0.34378601103571646724779297337911837771`11.138109839567301", 
+      "0.36669944420800366293791459269351507288`11.138109839567301"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellLabel->
+  "Out[47]//MatrixForm=",ExpressionUUID->"5effe0b4-7522-4a7d-864c-\
+a8c61bbb387d"]
+}, Open  ]],
+
+Cell[TextData[{
+ "By default, free variables that arose when solving for the coefficients are \
+set to ",
+ Cell[BoxData[
+  FormBox["0", TraditionalForm]],ExpressionUUID->
+  "1c6f73fd-9bbc-4ca4-8b00-bde266d8799a"],
+ ".\nThey can be shown by specifying a function for ",
+ StyleBox["GeneratedParameters", "Input"],
+ ":"
+}], "Text",ExpressionUUID->"f0c37c7f-6d63-4fed-b449-dd6f9bf67d05"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SinkhornPolynomial", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"9", ",", "5", ",", "4", ",", "8"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"9", ",", "6", ",", "1", ",", "5"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"5", ",", "1", ",", "2", ",", "6"}], "}"}]}], "}"}], ",", "x", 
+   ",", 
+   RowBox[{"GeneratedParameters", "->", "C"}]}], "]"}]], "Input",
+ CellLabel->"In[11]:=",ExpressionUUID->"e1ee9f8c-4c64-43fa-8f1b-fa45e6f43160"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "1712150612267040"}], "-", 
+  RowBox[{"8405319961148400", " ", "x"}], "+", 
+  RowBox[{"39818497933994688", " ", 
+   SuperscriptBox["x", "2"]}], "+", 
+  RowBox[{"159991914243469248", " ", 
+   SuperscriptBox["x", "3"]}], "+", 
+  RowBox[{"55780550680449024", " ", 
+   SuperscriptBox["x", "4"]}], "+", 
+  RowBox[{"16144291061360640", " ", 
+   SuperscriptBox["x", "6"]}], "+", 
+  RowBox[{"2459456185835520", " ", 
+   SuperscriptBox["x", "7"]}], "-", 
+  RowBox[{"638038934323200", " ", 
+   SuperscriptBox["x", "8"]}], "-", 
+  RowBox[{"283003250540544", " ", 
+   SuperscriptBox["x", "9"]}], "-", 
+  RowBox[{"12128668876800", " ", 
+   SuperscriptBox["x", "10"]}], "+", 
+  RowBox[{
+   SuperscriptBox["x", "5"], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"-", "63086228001948672"}], "+", 
+     RowBox[{"1875713849926848", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", 
+         FractionBox["3272", "243"]}], "-", 
+        RowBox[{"2", " ", 
+         TemplateBox[{"1"},
+          "C"]}]}], ")"}]}], "+", 
+     RowBox[{"1199719435401216", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", 
+         FractionBox["512", "81"]}], "-", 
+        RowBox[{"2", " ", 
+         TemplateBox[{"1"},
+          "C"]}]}], ")"}]}], "+", 
+     RowBox[{"2833158397685760", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        FractionBox["284", "81"], "-", 
+        RowBox[{"2", " ", 
+         TemplateBox[{"1"},
+          "C"]}]}], ")"}]}], "-", 
+     RowBox[{"4901878354045248", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", 
+         FractionBox["464", "27"]}], "-", 
+        TemplateBox[{"1"},
+         "C"]}], ")"}]}], "+", 
+     RowBox[{"1416361554621504", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", 
+         FractionBox["128", "27"]}], "-", 
+        TemplateBox[{"1"},
+         "C"]}], ")"}]}], "+", 
+     RowBox[{"2121067115938944", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"-", 
+         FractionBox["32", "27"]}], "-", 
+        TemplateBox[{"1"},
+         "C"]}], ")"}]}], "+", 
+     RowBox[{"14784755624081280", " ", 
+      TemplateBox[{"1"},
+       "C"]}], "-", 
+     RowBox[{"4605664772825856", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        FractionBox["904", "243"], "+", 
+        TemplateBox[{"1"},
+         "C"]}], ")"}]}], "+", 
+     RowBox[{"4741814345008896", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        FractionBox["572", "81"], "+", 
+        TemplateBox[{"1"},
+         "C"]}], ")"}]}], "-", 
+     RowBox[{"395748552107520", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        FractionBox["608", "81"], "+", 
+        TemplateBox[{"1"},
+         "C"]}], ")"}]}], "-", 
+     RowBox[{"1118716092783936", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        FractionBox["320", "81"], "+", 
+        RowBox[{"2", " ", 
+         TemplateBox[{"1"},
+          "C"]}]}], ")"}]}], "-", 
+     RowBox[{"917495388023040", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        FractionBox["448", "27"], "+", 
+        RowBox[{"2", " ", 
+         TemplateBox[{"1"},
+          "C"]}]}], ")"}]}]}], ")"}]}]}]], "Output",
+ CellLabel->"Out[11]=",ExpressionUUID->"f8206f4b-16c3-45de-8e55-dfeee7788a38"]
+}, Open  ]],
+
+Cell["The free variables cancel each other out when expanded:", "Text",ExpressionUUID->"196e3edb-3723-4ae9-9f2b-d01c263c72d5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Expand", "[", "%", "]"}]], "Input",
+ CellLabel->"In[49]:=",ExpressionUUID->"f37b3270-8dd0-4a38-9224-80d4fba243ec"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "1712150612267040"}], "-", 
+  RowBox[{"8405319961148400", " ", "x"}], "+", 
+  RowBox[{"39818497933994688", " ", 
+   SuperscriptBox["x", "2"]}], "+", 
+  RowBox[{"159991914243469248", " ", 
+   SuperscriptBox["x", "3"]}], "+", 
+  RowBox[{"55780550680449024", " ", 
+   SuperscriptBox["x", "4"]}], "-", 
+  RowBox[{"17243624709582336", " ", 
+   SuperscriptBox["x", "5"]}], "+", 
+  RowBox[{"16144291061360640", " ", 
+   SuperscriptBox["x", "6"]}], "+", 
+  RowBox[{"2459456185835520", " ", 
+   SuperscriptBox["x", "7"]}], "-", 
+  RowBox[{"638038934323200", " ", 
+   SuperscriptBox["x", "8"]}], "-", 
+  RowBox[{"283003250540544", " ", 
+   SuperscriptBox["x", "9"]}], "-", 
+  RowBox[{"12128668876800", " ", 
+   SuperscriptBox["x", "10"]}]}]], "Output",
+ CellLabel->"Out[49]=",ExpressionUUID->"9900b194-5acc-40d9-a3ac-b708b367f0df"]
+}, Open  ]]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[TextData[StyleBox["SinkhornPolynomialCoefficient", "Input"]], \
+"Subsubsection",ExpressionUUID->"b91fd258-aeb9-468d-8883-d0d26d85e2f5"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "SinkhornPolynomialCoefficient"}]], "Input",
+ CellLabel->"In[4]:=",ExpressionUUID->"74e04a24-1523-4358-90fc-d7864bd51a43"],
+
+Cell[BoxData[
+ InterpretationBox[
+  StyleBox[
+   FrameBox[
+    DynamicModuleBox[{System`InformationDump`open$$ = False, 
+     System`InformationDump`mouseOver$$ = False}, 
+     PaneSelectorBox[{True->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox["\<\" Symbol\"\>", "InformationTitleText",
+             StripOnInput->False,
+             BaseStyle -> None],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"\\!\\(\\*RowBox[List[\\\"\
+SinkhornPolynomialCoefficient\\\", \\\"[\\\", RowBox[List[StyleBox[\\\"m\\\", \
+\\\"TI\\\"], \\\",\\\", StyleBox[\\\"i\\\", \\\"TI\\\"]]], \\\"]\\\"]]\\) \
+gives the coefficient of \\!\\(\\*SuperscriptBox[StyleBox[\\\"x\\\", \\\"TI\\\
+\"], StyleBox[\\\"i\\\", \\\"TI\\\"]]\\) in the Sinkhorn polynomial in \\!\\(\
+\\*StyleBox[\\\"x\\\", \\\"TI\\\"]\\) for the matrix \
+\\!\\(\\*StyleBox[\\\"m\\\", \
+\\\"TI\\\"]\\).\\n\\!\\(\\*RowBox[List[\\\"SinkhornPolynomialCoefficient\\\", \
+\\\"[\\\", RowBox[List[StyleBox[\\\"m\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"i\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"r\\\", \
+\\\"TI\\\"]]], \\\"]\\\"]]\\) scales the coefficient to correspond to a limit \
+with row sum \\!\\(\\*StyleBox[\\\"r\\\", \\\"TI\\\"]\\).\"\>", 
+             "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          PaneBox[
+           TagBox[GridBox[{
+              {
+               StyleBox[
+                TagBox[
+                 TooltipBox[
+                  StyleBox["\<\" Definitions\"\>", "InformationRowLabel",
+                   StripOnInput->False],
+                  "\"Definitions\"",
+                  TooltipStyle->"TextStyling"],
+                 Annotation[#, "Definitions", "Tooltip"]& ], "DialogStyle",
+                StripOnInput->False]},
+              {
+               TemplateBox[{"\"\[ThinSpace]\"", 
+                 GridBox[{{
+                    RowBox[{
+                    RowBox[{"SinkhornPolynomialCoefficient", "[", 
+                    RowBox[{
+                    RowBox[{
+                    
+                    RowBox[{"SinkhornPolynomials`Private`matrix_", "?", 
+                    "MatrixQ"}], "/;", 
+                    RowBox[{"LessEqual", "@@", 
+                    
+                    RowBox[{"Dimensions", "[", 
+                    "SinkhornPolynomials`Private`matrix", "]"}]}]}], ",", 
+                    "SinkhornPolynomials`Private`exponent_Integer", ",", 
+                    RowBox[{"SinkhornPolynomials`Private`rowtotal", ":", 
+                    RowBox[{"Except", "[", 
+                    
+                    RowBox[{"0", "|", "0.`", "|", "_DirectedInfinity", "|", 
+                    "_Rule"}], "]"}], ":", "1"}], ",", 
+                    RowBox[{"OptionsPattern", "[", "]"}]}], "]"}], ":=", 
+                    RowBox[{"Module", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`rowcount", ",", 
+                    "SinkhornPolynomials`Private`columncount", ",", 
+                    "SinkhornPolynomials`Private`coefficientdata", ",", 
+                    "SinkhornPolynomials`Private`parameterfunction", ",", 
+                    "SinkhornPolynomials`Private`minorspecs", ",", 
+                    "SinkhornPolynomials`Private`topleftminors", ",", 
+                    "SinkhornPolynomials`Private`minorswithtopleftfactor", 
+                    ",", "SinkhornPolynomials`Private`coefficientrules", ",", 
+                    "SinkhornPolynomials`Private`minorspecratiorules", ",", 
+                    "SinkhornPolynomials`Private`degree", ",", 
+                    "SinkhornPolynomials`Private`submatrixsize", ",", 
+                    "SinkhornPolynomials`Private`coefficientrule", ",", 
+                    "SinkhornPolynomials`Private`topleftminorspecs"}], "}"}], 
+                    ",", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"{", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`rowcount", ",", 
+                    "SinkhornPolynomials`Private`columncount"}], "}"}], "=", 
+                    
+                    RowBox[{"Dimensions", "[", 
+                    "SinkhornPolynomials`Private`matrix", "]"}]}], ";", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientdata", 
+                    "=", 
+                    
+                    RowBox[{
+                    "SinkhornPolynomials`Private`\
+SinkhornPolynomialCoefficientData", "[", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`rowcount", ",", 
+                    "SinkhornPolynomials`Private`columncount"}], "}"}], 
+                    "]"}]}], ";", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    
+                    RowBox[{"SinkhornPolynomials`Private`parameterfunction", 
+                    "=", 
+                    
+                    RowBox[{"OptionValue", "[", "GeneratedParameters", 
+                    "]"}]}], ";", 
+                    RowBox[{"SinkhornPolynomials`Private`minorspecs", "=", 
+                    RowBox[{"Join", "@@", 
+                    RowBox[{"Table", "[", 
+                    RowBox[{
+                    RowBox[{"Tuples", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Subsets", "[", 
+                    RowBox[{
+                    RowBox[{"Range", "[", 
+                    
+                    RowBox[{"2", ",", 
+                    "SinkhornPolynomials`Private`rowcount"}], "]"}], ",", 
+                    
+                    RowBox[{"{", "SinkhornPolynomials`Private`submatrixsize", 
+                    "}"}]}], "]"}], ",", 
+                    RowBox[{"Subsets", "[", 
+                    RowBox[{
+                    RowBox[{"Range", "[", 
+                    
+                    RowBox[{"2", ",", 
+                    "SinkhornPolynomials`Private`columncount"}], "]"}], ",", 
+                    
+                    RowBox[{"{", "SinkhornPolynomials`Private`submatrixsize", 
+                    "}"}]}], "]"}]}], "}"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`submatrixsize", ",", 
+                    "0", ",", 
+                    RowBox[{
+                    RowBox[{"Min", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`rowcount", ",", 
+                    "SinkhornPolynomials`Private`columncount"}], "]"}], "-", 
+                    "1"}]}], "}"}]}], "]"}]}]}], ";", 
+                    RowBox[{"SinkhornPolynomials`Private`topleftminors", "=", 
+                    RowBox[{
+                    RowBox[{"Function", "[", 
+                    RowBox[{"SinkhornPolynomials`Private`minorspec", ",", 
+                    RowBox[{"SinkhornPolynomials`Private`TopLeftMinor", "[", 
+                    RowBox[{"SinkhornPolynomials`Private`matrix", ",", 
+                    
+                    RowBox[{"Sequence", "@@", 
+                    "SinkhornPolynomials`Private`minorspec"}]}], "]"}]}], 
+                    "]"}], "/@", "SinkhornPolynomials`Private`minorspecs"}]}],
+                     ";", 
+                    
+                    RowBox[{
+                    "SinkhornPolynomials`Private`minorswithtopleftfactor", 
+                    "=", 
+                    RowBox[{
+                    RowBox[{"Function", "[", 
+                    RowBox[{"SinkhornPolynomials`Private`minorspec", ",", 
+                    
+                    RowBox[{
+                    "SinkhornPolynomials`Private`MinorWithTopLeftFactor", "[", 
+                    RowBox[{"SinkhornPolynomials`Private`matrix", ",", 
+                    
+                    RowBox[{"Sequence", "@@", 
+                    "SinkhornPolynomials`Private`minorspec"}]}], "]"}]}], 
+                    "]"}], "/@", "SinkhornPolynomials`Private`minorspecs"}]}],
+                     ";", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientrules", 
+                    "=", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientdata", 
+                    "[", "SinkhornPolynomials`Private`exponent", "]"}]}], ";", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"!", 
+                    
+                    RowBox[{"MissingQ", "[", 
+                    "SinkhornPolynomials`Private`coefficientrules", "]"}]}], 
+                    ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"MemberQ", "[", 
+                    
+                    RowBox[{
+                    "SinkhornPolynomials`Private`minorswithtopleftfactor", 
+                    ",", 
+                    RowBox[{"0", "|", "0.`", "|", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"Not", "@*", "NumberQ"}], ")"}]}]}]}], "]"}], ",", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    UnderoverscriptBox[
+                    "\[Sum]", "SinkhornPolynomials`Private`coefficientrule", 
+                    "SinkhornPolynomials`Private`coefficientrules"], 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientrule", 
+                    "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                    "/.", "\[VeryThinSpace]", 
+                    
+                    RowBox[{"C", "\[Rule]", 
+                    "SinkhornPolynomials`Private`parameterfunction"}]}], 
+                    ")"}], " ", 
+                    RowBox[{
+                    UnderoverscriptBox[
+                    "\[Sum]", "SinkhornPolynomials`Private`topleftminorspecs", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientrule", 
+                    "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]], 
+                    
+                    RowBox[{
+                    "SinkhornPolynomials`Private`MinorProductMonomial", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`matrix", ",", 
+                    "SinkhornPolynomials`Private`minorspecs", ",", 
+                    "SinkhornPolynomials`Private`topleftminorspecs"}], 
+                    "]"}]}]}]}], ")"}], " ", 
+                    SuperscriptBox["SinkhornPolynomials`Private`rowtotal", 
+                    RowBox[{"-", "SinkhornPolynomials`Private`exponent"}]]}], 
+                    ",", 
+                    RowBox[{
+                    
+                    RowBox[{"SinkhornPolynomials`Private`minorspecratiorules",
+                     "=", 
+                    RowBox[{"Thread", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`minorspecs", 
+                    "\[Rule]", 
+                    FractionBox[
+                    "SinkhornPolynomials`Private`topleftminors", 
+                    "SinkhornPolynomials`Private`minorswithtopleftfactor"]}], 
+                    "]"}]}], ";", 
+                    RowBox[{
+                    
+                    RowBox[{"Times", "@@", 
+                    "SinkhornPolynomials`Private`minorswithtopleftfactor"}], 
+                    " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    UnderoverscriptBox[
+                    "\[Sum]", "SinkhornPolynomials`Private`coefficientrule", 
+                    "SinkhornPolynomials`Private`coefficientrules"], 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientrule", 
+                    "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                    "/.", "\[VeryThinSpace]", 
+                    
+                    RowBox[{"C", "\[Rule]", 
+                    "SinkhornPolynomials`Private`parameterfunction"}]}], 
+                    ")"}], " ", 
+                    RowBox[{
+                    UnderoverscriptBox[
+                    "\[Sum]", "SinkhornPolynomials`Private`topleftminorspecs", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientrule", 
+                    "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]], 
+                    RowBox[{"Times", "@@", 
+                    RowBox[{"Replace", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`topleftminorspecs", 
+                    ",", "SinkhornPolynomials`Private`minorspecratiorules", 
+                    ",", 
+                    RowBox[{"{", "1", "}"}]}], "]"}]}]}]}]}], ")"}], " ", 
+                    SuperscriptBox["SinkhornPolynomials`Private`rowtotal", 
+                    
+                    RowBox[{"-", 
+                    "SinkhornPolynomials`Private`exponent"}]]}]}]}], "]"}], 
+                    ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"{", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`rowcount", ",", 
+                    "SinkhornPolynomials`Private`columncount"}], "}"}], 
+                    "\[Equal]", 
+                    RowBox[{"{", 
+                    RowBox[{"4", ",", "4"}], "}"}]}], "&&", 
+                    
+                    RowBox[{"0", "\[LessEqual]", 
+                    "SinkhornPolynomials`Private`exponent", "\[LessEqual]", 
+                    RowBox[{"(", 
+                    RowBox[{"SinkhornPolynomials`Private`degree", "=", 
+                    RowBox[{"Binomial", "[", 
+                    RowBox[{
+                    
+                    RowBox[{"SinkhornPolynomials`Private`rowcount", "+", 
+                    "SinkhornPolynomials`Private`columncount", "-", "2"}], 
+                    ",", 
+                    RowBox[{
+                    "SinkhornPolynomials`Private`rowcount", "-", "1"}]}], 
+                    "]"}]}], ")"}]}]}], ",", 
+                    RowBox[{
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientrules", 
+                    "=", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientdata", 
+                    "[", 
+                    RowBox[{
+                    "SinkhornPolynomials`Private`degree", "-", 
+                    "SinkhornPolynomials`Private`exponent"}], "]"}]}], ";", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"MemberQ", "[", 
+                    RowBox[{"SinkhornPolynomials`Private`topleftminors", ",", 
+                    RowBox[{"0", "|", "0.`", "|", 
+                    RowBox[{"_", "?", 
+                    RowBox[{"(", 
+                    RowBox[{"Not", "@*", "NumberQ"}], ")"}]}]}]}], "]"}], ",", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    UnderoverscriptBox[
+                    "\[Sum]", "SinkhornPolynomials`Private`coefficientrule", 
+                    "SinkhornPolynomials`Private`coefficientrules"], 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientrule", 
+                    "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                    "/.", "\[VeryThinSpace]", 
+                    
+                    RowBox[{"C", "\[Rule]", 
+                    "SinkhornPolynomials`Private`parameterfunction"}]}], 
+                    ")"}], " ", 
+                    RowBox[{
+                    UnderoverscriptBox[
+                    "\[Sum]", "SinkhornPolynomials`Private`topleftminorspecs", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientrule", 
+                    "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]], 
+                    
+                    RowBox[{
+                    "SinkhornPolynomials`Private`MinorProductMonomial", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`matrix", ",", 
+                    "SinkhornPolynomials`Private`minorspecs", ",", 
+                    RowBox[{
+                    RowBox[{"Function", "[", 
+                    RowBox[{"SinkhornPolynomials`Private`minorspec", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Complement", "[", 
+                    RowBox[{
+                    RowBox[{"Range", "[", 
+                    
+                    RowBox[{"2", ",", 
+                    "SinkhornPolynomials`Private`rowcount"}], "]"}], ",", 
+                    
+                    RowBox[{"First", "[", 
+                    "SinkhornPolynomials`Private`minorspec", "]"}]}], "]"}], 
+                    ",", 
+                    RowBox[{"Complement", "[", 
+                    RowBox[{
+                    RowBox[{"Range", "[", 
+                    
+                    RowBox[{"2", ",", 
+                    "SinkhornPolynomials`Private`columncount"}], "]"}], ",", 
+                    
+                    RowBox[{"Last", "[", 
+                    "SinkhornPolynomials`Private`minorspec", "]"}]}], "]"}]}],
+                     "}"}]}], "]"}], "/@", 
+                    RowBox[{"DeleteCases", "[", 
+                    RowBox[{"SinkhornPolynomials`Private`minorspecs", ",", 
+                    
+                    RowBox[{"Alternatives", "@@", 
+                    "SinkhornPolynomials`Private`topleftminorspecs"}]}], 
+                    "]"}]}]}], "]"}]}]}]}], ")"}], " ", 
+                    SuperscriptBox["SinkhornPolynomials`Private`rowtotal", 
+                    RowBox[{"-", "SinkhornPolynomials`Private`exponent"}]]}], 
+                    ",", 
+                    RowBox[{
+                    
+                    RowBox[{"SinkhornPolynomials`Private`minorspecratiorules",
+                     "=", 
+                    RowBox[{"Thread", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Function", "[", 
+                    RowBox[{"SinkhornPolynomials`Private`minorspec", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Complement", "[", 
+                    RowBox[{
+                    RowBox[{"Range", "[", 
+                    
+                    RowBox[{"2", ",", 
+                    "SinkhornPolynomials`Private`rowcount"}], "]"}], ",", 
+                    
+                    RowBox[{"First", "[", 
+                    "SinkhornPolynomials`Private`minorspec", "]"}]}], "]"}], 
+                    ",", 
+                    RowBox[{"Complement", "[", 
+                    RowBox[{
+                    RowBox[{"Range", "[", 
+                    
+                    RowBox[{"2", ",", 
+                    "SinkhornPolynomials`Private`columncount"}], "]"}], ",", 
+                    
+                    RowBox[{"Last", "[", 
+                    "SinkhornPolynomials`Private`minorspec", "]"}]}], "]"}]}],
+                     "}"}]}], "]"}], "/@", 
+                    "SinkhornPolynomials`Private`minorspecs"}], "\[Rule]", 
+                    FractionBox[
+                    "SinkhornPolynomials`Private`minorswithtopleftfactor", 
+                    "SinkhornPolynomials`Private`topleftminors"]}], "]"}]}], 
+                    ";", 
+                    RowBox[{
+                    
+                    RowBox[{"Times", "@@", 
+                    "SinkhornPolynomials`Private`topleftminors"}], " ", 
+                    RowBox[{"(", 
+                    RowBox[{
+                    UnderoverscriptBox[
+                    "\[Sum]", "SinkhornPolynomials`Private`coefficientrule", 
+                    "SinkhornPolynomials`Private`coefficientrules"], 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientrule", 
+                    "\[LeftDoubleBracket]", "2", "\[RightDoubleBracket]"}], 
+                    "/.", "\[VeryThinSpace]", 
+                    
+                    RowBox[{"C", "\[Rule]", 
+                    "SinkhornPolynomials`Private`parameterfunction"}]}], 
+                    ")"}], " ", 
+                    RowBox[{
+                    UnderoverscriptBox[
+                    "\[Sum]", "SinkhornPolynomials`Private`topleftminorspecs", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientrule", 
+                    "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}]], 
+                    RowBox[{"Times", "@@", 
+                    RowBox[{"Replace", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`topleftminorspecs", 
+                    ",", "SinkhornPolynomials`Private`minorspecratiorules", 
+                    ",", 
+                    RowBox[{"{", "1", "}"}]}], "]"}]}]}]}]}], ")"}], " ", 
+                    SuperscriptBox["SinkhornPolynomials`Private`rowtotal", 
+                    
+                    RowBox[{"-", 
+                    "SinkhornPolynomials`Private`exponent"}]]}]}]}], "]"}]}], 
+                    ",", "0"}], "]"}]}], "]"}]}], ")"}], "/;", 
+                    RowBox[{"!", 
+                    RowBox[{"MatchQ", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficientdata", 
+                    ",", "_SinkhornPolynomials`Private`\
+SinkhornPolynomialCoefficientData"}], "]"}]}]}]}]}], "]"}]}]}, {" "}, {
+                    RowBox[{
+                    RowBox[{"SinkhornPolynomialCoefficient", "[", 
+                    RowBox[{
+                    RowBox[{
+                    
+                    RowBox[{"SinkhornPolynomials`Private`matrix_", "?", 
+                    "MatrixQ"}], "/;", 
+                    RowBox[{"Greater", "@@", 
+                    
+                    RowBox[{"Dimensions", "[", 
+                    "SinkhornPolynomials`Private`matrix", "]"}]}]}], ",", 
+                    "SinkhornPolynomials`Private`exponent_Integer", ",", 
+                    RowBox[{"SinkhornPolynomials`Private`rowtotal", ":", 
+                    RowBox[{"Except", "[", 
+                    
+                    RowBox[{"0", "|", "0.`", "|", "_DirectedInfinity", "|", 
+                    "_Rule"}], "]"}], ":", "1"}], ",", 
+                    RowBox[{"SinkhornPolynomials`Private`options", ":", 
+                    RowBox[{"OptionsPattern", "[", "]"}]}]}], "]"}], ":=", 
+                    RowBox[{"Module", "[", 
+                    RowBox[{
+                    
+                    RowBox[{
+                    "{", "SinkhornPolynomials`Private`coefficient", "}"}], 
+                    ",", 
+                    RowBox[{
+                    RowBox[{"SinkhornPolynomials`Private`coefficient", "=", 
+                    RowBox[{"SinkhornPolynomialCoefficient", "[", 
+                    RowBox[{
+                    
+                    RowBox[{"Transpose", "[", 
+                    "SinkhornPolynomials`Private`matrix", "]"}], ",", 
+                    "SinkhornPolynomials`Private`exponent", ",", 
+                    RowBox[{"SinkhornPolynomials`Private`rowtotal", " ", 
+                    RowBox[{"Divide", "@@", 
+                    
+                    RowBox[{"Dimensions", "[", 
+                    "SinkhornPolynomials`Private`matrix", "]"}]}]}], ",", 
+                    "SinkhornPolynomials`Private`options"}], "]"}]}], ";", 
+                    RowBox[{"SinkhornPolynomials`Private`coefficient", "/;", 
+                    RowBox[{"!", 
+                    RowBox[{"MatchQ", "[", 
+                    
+                    RowBox[{"SinkhornPolynomials`Private`coefficient", ",", 
+                    "_SinkhornPolynomialCoefficient"}], "]"}]}]}]}]}], 
+                    "]"}]}]}, {" "}}, 
+                  GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}]},
+                "RowDefault"]}
+             },
+             DefaultBaseStyle->"Column",
+             GridBoxAlignment->{"Columns" -> {{Left}}},
+             
+             GridBoxItemSize->{
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+            "Column"],
+           FrameMargins->{{6, 0}, {3, 6}}], "\<\"\"\>"},
+         {
+          PaneBox[GridBox[{
+             {
+              
+              DynamicModuleBox[{System`InformationDump`open$$ = {
+               False, False, False, False, False, False}}, 
+               StyleBox[GridBox[{
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Options\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"Options\"",
+                    TooltipStyle->"TextStyling"],
+                    Annotation[#, "Options", "Tooltip"]& ], 
+                   RowBox[{"GeneratedParameters", "\[Rule]", 
+                    RowBox[{"(", 
+                    RowBox[{"0", "&"}], ")"}]}]},
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Attributes\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"Attributes\"",
+                    TooltipStyle->"TextStyling"],
+                    Annotation[#, "Attributes", "Tooltip"]& ], 
+                   RowBox[{"{", "Protected", "}"}]},
+                  {
+                   TagBox[
+                    TooltipBox[
+                    StyleBox["\<\" Full Name\"\>", "InformationRowLabel",
+                    StripOnInput->False],
+                    "\"FullName\"",
+                    TooltipStyle->"TextStyling"],
+                    
+                    Annotation[#, "FullName", 
+                    "Tooltip"]& ], \
+"\<\"SinkhornPolynomials`SinkhornPolynomialCoefficient\"\>"}
+                 },
+                 AutoDelete->False,
+                 GridBoxAlignment->{"Columns" -> {Right, Left}},
+                 GridBoxDividers->None,
+                 GridBoxItemSize->{"Columns" -> {Automatic, Automatic}},
+                 GridBoxSpacings->{"Columns" -> {
+                    Offset[0.27999999999999997`], {
+                    Offset[0.5599999999999999]}, 
+                    Offset[0.27999999999999997`]}, "Rows" -> {
+                    Offset[0.2], {
+                    Offset[0.8]}, 
+                    Offset[0.2]}}], "DialogStyle",
+                StripOnInput->False],
+               DynamicModuleValues:>{}]}
+            },
+            DefaultBaseStyle->"Column",
+            GridBoxAlignment->{"Columns" -> {{Left}}},
+            GridBoxDividers->{"Columns" -> {{False}}, "Rows" -> {{False}}},
+            
+            GridBoxItemSize->{
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+            GridBoxSpacings->{"Columns" -> {
+                Offset[0.27999999999999997`], {
+                 Offset[0.5599999999999999]}, 
+                Offset[0.27999999999999997`]}, "Rows" -> {
+                Offset[0.2], {
+                 Offset[3.6]}, 
+                Offset[0.2]}}],
+           FrameMargins->{{6, 6}, {6, 3}}], ""},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpener"]], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "UpPointerOpenerHot"]]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, False],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"], False->
+      TagBox[GridBox[{
+         {
+          ItemBox[
+           PaneBox[
+            StyleBox["\<\" Symbol\"\>", "InformationTitleText",
+             StripOnInput->False],
+            FrameMargins->{{4, 0}, {-1, 1}}],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           PaneBox[
+            
+            StyleBox["\<\"\\!\\(\\*RowBox[List[\\\"\
+SinkhornPolynomialCoefficient\\\", \\\"[\\\", RowBox[List[StyleBox[\\\"m\\\", \
+\\\"TI\\\"], \\\",\\\", StyleBox[\\\"i\\\", \\\"TI\\\"]]], \\\"]\\\"]]\\) \
+gives the coefficient of \\!\\(\\*SuperscriptBox[StyleBox[\\\"x\\\", \\\"TI\\\
+\"], StyleBox[\\\"i\\\", \\\"TI\\\"]]\\) in the Sinkhorn polynomial in \\!\\(\
+\\*StyleBox[\\\"x\\\", \\\"TI\\\"]\\) for the matrix \
+\\!\\(\\*StyleBox[\\\"m\\\", \
+\\\"TI\\\"]\\).\\n\\!\\(\\*RowBox[List[\\\"SinkhornPolynomialCoefficient\\\", \
+\\\"[\\\", RowBox[List[StyleBox[\\\"m\\\", \\\"TI\\\"], \\\",\\\", \
+StyleBox[\\\"i\\\", \\\"TI\\\"], \\\",\\\", StyleBox[\\\"r\\\", \
+\\\"TI\\\"]]], \\\"]\\\"]]\\) scales the coefficient to correspond to a limit \
+with row sum \\!\\(\\*StyleBox[\\\"r\\\", \\\"TI\\\"]\\).\"\>", 
+             "InformationUsageText",
+             StripOnInput->False,
+             LineSpacing->{1.5, 1.5, 3.}],
+            FrameMargins->{{10, 10}, {8, 10}}],
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False], 
+          ItemBox["\<\"\"\>",
+           BaseStyle->"InformationUsageSubtitleBackground",
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            ButtonBox[
+             PaneSelectorBox[{False->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpener"],
+               ImageSizeCache->{10., {2., 8.}}], True->
+              
+              DynamicBox[FEPrivate`FrontEndResource[
+               "FEBitmaps", "DownPointerOpenerHot"],
+               ImageSizeCache->{10., {2., 8.}}]}, Dynamic[
+              System`InformationDump`mouseOver$$]],
+             Alignment->Left,
+             Appearance->{"Default" -> None},
+             
+             ButtonFunction:>FEPrivate`Set[
+              System`InformationDump`open$$, True],
+             Evaluator->Automatic,
+             FrameMargins->{{9, 0}, {0, 0}},
+             ImageMargins->0,
+             ImageSize->Full,
+             Method->"Preemptive"],
+            
+            EventHandlerTag[{
+             "MouseEntered" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, True], 
+              "MouseExited" :> 
+              FEPrivate`Set[System`InformationDump`mouseOver$$, False], 
+              Method -> "Preemptive", PassEventsDown -> Automatic, 
+              PassEventsUp -> True}]],
+           BaseStyle->"InformationTitleBackground",
+           StripOnInput->False], "\[SpanFromLeft]"}
+        },
+        AutoDelete->False,
+        FrameStyle->Directive[
+          GrayLevel[0.8], 
+          Thickness[Tiny]],
+        GridBoxAlignment->{"Columns" -> {Left, Right}, "Rows" -> {{Center}}},
+        GridBoxDividers->{
+         "Columns" -> {{None}}, "Rows" -> {False, {True}, False}},
+        GridBoxItemSize->{
+         "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+       "Grid"]}, Dynamic[System`InformationDump`open$$],
+      BaselinePosition->Baseline,
+      FrameMargins->0,
+      ImageSize->Automatic],
+     DynamicModuleValues:>{}],
+    BaseStyle->"InformationGridFrame",
+    StripOnInput->False], "InformationGridPlain",
+   StripOnInput->False],
+  InformationData[<|
+   "ObjectType" -> "Symbol", "Usage" -> 
+    "\!\(\*RowBox[List[\"SinkhornPolynomialCoefficient\", \"[\", \
+RowBox[List[StyleBox[\"m\", \"TI\"], \",\", StyleBox[\"i\", \"TI\"]]], \
+\"]\"]]\) gives the coefficient of \!\(\*SuperscriptBox[StyleBox[\"x\", \
+\"TI\"], StyleBox[\"i\", \"TI\"]]\) in the Sinkhorn polynomial in \
+\!\(\*StyleBox[\"x\", \"TI\"]\) for the matrix \!\(\*StyleBox[\"m\", \
+\"TI\"]\).\n\!\(\*RowBox[List[\"SinkhornPolynomialCoefficient\", \"[\", \
+RowBox[List[StyleBox[\"m\", \"TI\"], \",\", StyleBox[\"i\", \"TI\"], \",\", \
+StyleBox[\"r\", \"TI\"]]], \"]\"]]\) scales the coefficient to correspond to \
+a limit with row sum \!\(\*StyleBox[\"r\", \"TI\"]\).", "Documentation" -> 
+    None, "OwnValues" -> None, "UpValues" -> None, "DownValues" -> 
+    Information`InformationValueForm[
+     DownValues, SinkhornPolynomials`SinkhornPolynomialCoefficient, {
+      SinkhornPolynomials`SinkhornPolynomialCoefficient[
+         Condition[
+          PatternTest[
+           Pattern[SinkhornPolynomials`Private`matrix, 
+            Blank[]], MatrixQ], 
+          Apply[LessEqual, 
+           Dimensions[SinkhornPolynomials`Private`matrix]]], 
+         Pattern[SinkhornPolynomials`Private`exponent, 
+          Blank[Integer]], 
+         Optional[
+          Pattern[SinkhornPolynomials`Private`rowtotal, 
+           Except[
+            Alternatives[0, 0., 
+             Blank[DirectedInfinity], 
+             Blank[Rule]]]], 1], 
+         OptionsPattern[]] :> 
+       Module[{SinkhornPolynomials`Private`rowcount, 
+          SinkhornPolynomials`Private`columncount, 
+          SinkhornPolynomials`Private`coefficientdata, 
+          SinkhornPolynomials`Private`parameterfunction, 
+          SinkhornPolynomials`Private`minorspecs, 
+          SinkhornPolynomials`Private`topleftminors, 
+          SinkhornPolynomials`Private`minorswithtopleftfactor, 
+          SinkhornPolynomials`Private`coefficientrules, 
+          SinkhornPolynomials`Private`minorspecratiorules, 
+          SinkhornPolynomials`Private`degree, 
+          SinkhornPolynomials`Private`submatrixsize, 
+          SinkhornPolynomials`Private`coefficientrule, 
+          SinkhornPolynomials`Private`topleftminorspecs}, {
+           SinkhornPolynomials`Private`rowcount, 
+            SinkhornPolynomials`Private`columncount} = 
+          Dimensions[SinkhornPolynomials`Private`matrix]; 
+         SinkhornPolynomials`Private`coefficientdata = 
+          SinkhornPolynomials`Private`SinkhornPolynomialCoefficientData[{
+            SinkhornPolynomials`Private`rowcount, 
+             SinkhornPolynomials`Private`columncount}]; 
+         Condition[
+          SinkhornPolynomials`Private`parameterfunction = 
+            OptionValue[GeneratedParameters]; 
+           SinkhornPolynomials`Private`minorspecs = Apply[Join, 
+              Table[
+               Tuples[{
+                 Subsets[
+                  Range[2, SinkhornPolynomials`Private`rowcount], {
+                  SinkhornPolynomials`Private`submatrixsize}], 
+                 Subsets[
+                  Range[2, SinkhornPolynomials`Private`columncount], {
+                  SinkhornPolynomials`Private`submatrixsize}]}], {
+               SinkhornPolynomials`Private`submatrixsize, 0, 
+                Min[SinkhornPolynomials`Private`rowcount, 
+                  SinkhornPolynomials`Private`columncount] - 1}]]; 
+           SinkhornPolynomials`Private`topleftminors = Map[
+              Function[SinkhornPolynomials`Private`minorspec, 
+               SinkhornPolynomials`Private`TopLeftMinor[
+               SinkhornPolynomials`Private`matrix, 
+                Apply[Sequence, SinkhornPolynomials`Private`minorspec]]], 
+              SinkhornPolynomials`Private`minorspecs]; 
+           SinkhornPolynomials`Private`minorswithtopleftfactor = Map[
+              Function[SinkhornPolynomials`Private`minorspec, 
+               SinkhornPolynomials`Private`MinorWithTopLeftFactor[
+               SinkhornPolynomials`Private`matrix, 
+                Apply[Sequence, SinkhornPolynomials`Private`minorspec]]], 
+              SinkhornPolynomials`Private`minorspecs]; 
+           SinkhornPolynomials`Private`coefficientrules = 
+            SinkhornPolynomials`Private`coefficientdata[
+             SinkhornPolynomials`Private`exponent]; If[
+             Not[
+              MissingQ[SinkhornPolynomials`Private`coefficientrules]], 
+             If[
+              MemberQ[SinkhornPolynomials`Private`minorswithtopleftfactor, 
+               Alternatives[0, 0., 
+                PatternTest[
+                 Blank[], 
+                 Composition[Not, NumberQ]]]], Sum[ReplaceAll[
+                  Part[SinkhornPolynomials`Private`coefficientrule, 2], C -> 
+                  SinkhornPolynomials`Private`parameterfunction] Sum[
+                  SinkhornPolynomials`Private`MinorProductMonomial[
+                  SinkhornPolynomials`Private`matrix, 
+                   SinkhornPolynomials`Private`minorspecs, 
+                   SinkhornPolynomials`Private`topleftminorspecs], {
+                  SinkhornPolynomials`Private`topleftminorspecs, 
+                   Part[SinkhornPolynomials`Private`coefficientrule, 1]}], {
+                SinkhornPolynomials`Private`coefficientrule, 
+                 SinkhornPolynomials`Private`coefficientrules}] 
+              SinkhornPolynomials`Private`rowtotal^(-
+                SinkhornPolynomials`Private`exponent), 
+              SinkhornPolynomials`Private`minorspecratiorules = 
+               Thread[SinkhornPolynomials`Private`minorspecs -> 
+                 SinkhornPolynomials`Private`topleftminors/
+                  SinkhornPolynomials`Private`minorswithtopleftfactor]; 
+              Apply[Times, 
+                 SinkhornPolynomials`Private`minorswithtopleftfactor] 
+               Sum[ReplaceAll[
+                   Part[SinkhornPolynomials`Private`coefficientrule, 2], C -> 
+                   SinkhornPolynomials`Private`parameterfunction] Sum[
+                   Apply[Times, 
+                    Replace[
+                    SinkhornPolynomials`Private`topleftminorspecs, 
+                    SinkhornPolynomials`Private`minorspecratiorules, {1}]], {
+                   SinkhornPolynomials`Private`topleftminorspecs, 
+                    Part[SinkhornPolynomials`Private`coefficientrule, 1]}], {
+                 SinkhornPolynomials`Private`coefficientrule, 
+                  SinkhornPolynomials`Private`coefficientrules}] 
+               SinkhornPolynomials`Private`rowtotal^(-
+                 SinkhornPolynomials`Private`exponent)], 
+             If[
+              
+              And[{SinkhornPolynomials`Private`rowcount, 
+                 SinkhornPolynomials`Private`columncount} == {4, 4}, 0 <= 
+               SinkhornPolynomials`Private`exponent <= (
+                SinkhornPolynomials`Private`degree = 
+                Binomial[
+                 SinkhornPolynomials`Private`rowcount + 
+                  SinkhornPolynomials`Private`columncount - 2, 
+                  SinkhornPolynomials`Private`rowcount - 1])], 
+              SinkhornPolynomials`Private`coefficientrules = 
+               SinkhornPolynomials`Private`coefficientdata[
+                SinkhornPolynomials`Private`degree - 
+                 SinkhornPolynomials`Private`exponent]; If[
+                MemberQ[SinkhornPolynomials`Private`topleftminors, 
+                 Alternatives[0, 0., 
+                  PatternTest[
+                   Blank[], 
+                   Composition[Not, NumberQ]]]], Sum[ReplaceAll[
+                    Part[SinkhornPolynomials`Private`coefficientrule, 2], C -> 
+                    SinkhornPolynomials`Private`parameterfunction] Sum[
+                    SinkhornPolynomials`Private`MinorProductMonomial[
+                    SinkhornPolynomials`Private`matrix, 
+                    SinkhornPolynomials`Private`minorspecs, 
+                    Map[
+                    Function[SinkhornPolynomials`Private`minorspec, {
+                    Complement[
+                    Range[2, SinkhornPolynomials`Private`rowcount], 
+                    First[SinkhornPolynomials`Private`minorspec]], 
+                    Complement[
+                    Range[2, SinkhornPolynomials`Private`columncount], 
+                    Last[SinkhornPolynomials`Private`minorspec]]}], 
+                    DeleteCases[SinkhornPolynomials`Private`minorspecs, 
+                    Apply[
+                    Alternatives, 
+                    SinkhornPolynomials`Private`topleftminorspecs]]]], {
+                    SinkhornPolynomials`Private`topleftminorspecs, 
+                    Part[SinkhornPolynomials`Private`coefficientrule, 1]}], {
+                  SinkhornPolynomials`Private`coefficientrule, 
+                   SinkhornPolynomials`Private`coefficientrules}] 
+                SinkhornPolynomials`Private`rowtotal^(-
+                  SinkhornPolynomials`Private`exponent), 
+                SinkhornPolynomials`Private`minorspecratiorules = Thread[Map[
+                    Function[SinkhornPolynomials`Private`minorspec, {
+                    Complement[
+                    Range[2, SinkhornPolynomials`Private`rowcount], 
+                    First[SinkhornPolynomials`Private`minorspec]], 
+                    Complement[
+                    Range[2, SinkhornPolynomials`Private`columncount], 
+                    Last[SinkhornPolynomials`Private`minorspec]]}], 
+                    SinkhornPolynomials`Private`minorspecs] -> 
+                   SinkhornPolynomials`Private`minorswithtopleftfactor/
+                    SinkhornPolynomials`Private`topleftminors]; 
+                Apply[Times, SinkhornPolynomials`Private`topleftminors] 
+                 Sum[ReplaceAll[
+                    Part[SinkhornPolynomials`Private`coefficientrule, 2], C -> 
+                    SinkhornPolynomials`Private`parameterfunction] Sum[
+                    Apply[Times, 
+                    Replace[
+                    SinkhornPolynomials`Private`topleftminorspecs, 
+                    SinkhornPolynomials`Private`minorspecratiorules, {1}]], {
+                    SinkhornPolynomials`Private`topleftminorspecs, 
+                    Part[SinkhornPolynomials`Private`coefficientrule, 1]}], {
+                   SinkhornPolynomials`Private`coefficientrule, 
+                    SinkhornPolynomials`Private`coefficientrules}] 
+                 SinkhornPolynomials`Private`rowtotal^(-
+                   SinkhornPolynomials`Private`exponent)], 0]], 
+           Not[
+            MatchQ[SinkhornPolynomials`Private`coefficientdata, 
+             Blank[
+             SinkhornPolynomials`Private`SinkhornPolynomialCoefficientData]]]]\
+], SinkhornPolynomials`SinkhornPolynomialCoefficient[
+         Condition[
+          PatternTest[
+           Pattern[SinkhornPolynomials`Private`matrix, 
+            Blank[]], MatrixQ], 
+          Apply[Greater, 
+           Dimensions[SinkhornPolynomials`Private`matrix]]], 
+         Pattern[SinkhornPolynomials`Private`exponent, 
+          Blank[Integer]], 
+         Optional[
+          Pattern[SinkhornPolynomials`Private`rowtotal, 
+           Except[
+            Alternatives[0, 0., 
+             Blank[DirectedInfinity], 
+             Blank[Rule]]]], 1], 
+         Pattern[SinkhornPolynomials`Private`options, 
+          OptionsPattern[]]] :> 
+       Module[{SinkhornPolynomials`Private`coefficient}, 
+         SinkhornPolynomials`Private`coefficient = 
+          SinkhornPolynomials`SinkhornPolynomialCoefficient[
+            Transpose[SinkhornPolynomials`Private`matrix], 
+            SinkhornPolynomials`Private`exponent, 
+            SinkhornPolynomials`Private`rowtotal Apply[Divide, 
+              Dimensions[SinkhornPolynomials`Private`matrix]], 
+            SinkhornPolynomials`Private`options]; 
+         Condition[SinkhornPolynomials`Private`coefficient, 
+           Not[
+            MatchQ[SinkhornPolynomials`Private`coefficient, 
+             Blank[SinkhornPolynomials`SinkhornPolynomialCoefficient]]]]]}], 
+    "SubValues" -> None, "DefaultValues" -> None, "NValues" -> None, 
+    "FormatValues" -> None, "Options" -> {GeneratedParameters -> (0& )}, 
+    "Attributes" -> {Protected}, "FullName" -> 
+    "SinkhornPolynomials`SinkhornPolynomialCoefficient"|>, False]]], "Output",
+ CellLabel->"Out[4]=",ExpressionUUID->"9ebea67e-fa68-4d74-a22f-3cd11b1aade1"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SinkhornPolynomialCoefficient", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "4", ",", "9"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"16", ",", "25", ",", "36"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"49", ",", "64", ",", "81"}], "}"}]}], "}"}], ",", "4"}], 
+  "]"}]], "Input",
+ CellLabel->"In[51]:=",ExpressionUUID->"81bccaf6-e9a1-4e97-bfe8-e3f6a11a43fb"],
+
+Cell[BoxData["530511332544"], "Output",
+ CellLabel->"Out[51]=",ExpressionUUID->"fe0f7b3c-9e0b-4d96-9550-e1f5afdd5c55"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"SinkhornPolynomialCoefficient", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "4", ",", "9"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"16", ",", "25", ",", "36"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"49", ",", "64", ",", "81"}], "}"}]}], "}"}], ",", "4", ",", 
+   FractionBox["1", "3"]}], "]"}]], "Input",
+ CellLabel->"In[52]:=",ExpressionUUID->"3283a931-676d-43cf-883c-67a4a4c231c4"],
+
+Cell[BoxData["42971417936064"], "Output",
+ CellLabel->"Out[52]=",ExpressionUUID->"40230db6-a8d5-435e-bd16-ced715d48721"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+},
+AutoGeneratedPackage->None,
+WindowSize->{1488, 881},
+WindowMargins->{{1, Automatic}, {Automatic, 0}},
+PrivateNotebookOptions->{"VersionedStylesheet"->{"Default.nb"[8.] -> False}},
+ShowSelection->True,
+TrackCellChangeTimes->False,
+FrontEndVersion->"13.3 for Mac OS X ARM (64-bit) (July 24, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"dabaebe5-aa66-4875-9099-f579428dc88a"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 96, 0, 98, "Title",ExpressionUUID->"c13c670a-bcfd-4fdd-8d55-95de2da33324"],
+Cell[666, 24, 97, 0, 53, "Subtitle",ExpressionUUID->"9f4b6a7c-33a1-42b2-ac1b-a27463933387"],
+Cell[766, 26, 284, 6, 53, "Subsubtitle",ExpressionUUID->"5a1feb81-52d9-4c90-bc04-4436f82219dd"],
+Cell[CellGroupData[{
+Cell[1075, 36, 86, 0, 67, "Section",ExpressionUUID->"5f1b1dff-da3e-44b3-885c-2b8bac1dada3"],
+Cell[1164, 38, 398, 6, 58, "Text",ExpressionUUID->"297a4b06-4e3a-42eb-b16d-8548dd3d73bc"],
+Cell[1565, 46, 460, 10, 35, "Text",ExpressionUUID->"7b773f83-91a3-475d-860d-88bd90479076"],
+Cell[2028, 58, 169, 3, 46, "Input",ExpressionUUID->"68e6d7b0-6a07-4cec-89bc-b154dd07cc99",
+ InitializationCell->True],
+Cell[CellGroupData[{
+Cell[2222, 65, 92, 0, 54, "Subsection",ExpressionUUID->"6e77a20f-8322-4acf-a091-22f32d7d0475"],
+Cell[2317, 67, 207, 4, 35, "Text",ExpressionUUID->"2b670fd8-2db2-4084-ba29-26b2f800211f"],
+Cell[CellGroupData[{
+Cell[2549, 75, 433, 12, 30, "Input",ExpressionUUID->"09fd031f-9caa-490f-b503-d7fdad7b31ac"],
+Cell[2985, 89, 1048, 25, 79, "Output",ExpressionUUID->"cde123f6-f117-40c0-aac5-5018f7f1b6b8"]
+}, Open  ]],
+Cell[4048, 117, 229, 5, 35, "Text",ExpressionUUID->"20238967-98df-416c-b609-adc5be731ede"],
+Cell[CellGroupData[{
+Cell[4302, 126, 486, 13, 52, "Input",ExpressionUUID->"32150770-bb06-452d-becc-bff54442daef"],
+Cell[4791, 141, 491, 13, 34, "Output",ExpressionUUID->"8293109e-a6fb-4a31-aa3a-6771eb78ec19"],
+Cell[5285, 156, 580, 17, 37, "Output",ExpressionUUID->"abc7c0b8-5e1a-4920-aa28-9b57bff8718e"]
+}, Open  ]],
+Cell[5880, 176, 148, 2, 35, "Text",ExpressionUUID->"474280c3-0273-48cf-a68b-9d186efa3cd7"],
+Cell[CellGroupData[{
+Cell[6053, 182, 373, 10, 30, "Input",ExpressionUUID->"27e4ca4d-e9db-4d14-ab37-873abe933de3"],
+Cell[6429, 194, 193, 4, 34, "Output",ExpressionUUID->"a4b6485b-0eda-4106-a04f-411351ea4e69"]
+}, Open  ]],
+Cell[6637, 201, 315, 8, 35, "Text",ExpressionUUID->"373e66f3-149d-40d4-8050-e75b89513ec0"],
+Cell[CellGroupData[{
+Cell[6977, 213, 643, 16, 52, "Input",ExpressionUUID->"b104d87e-246e-4bed-9ac7-dc1399b24948"],
+Cell[7623, 231, 96, 0, 24, "EchoTiming",ExpressionUUID->"5f86bf8e-6f55-4bed-a967-460277b70b28"],
+Cell[7722, 233, 1680, 42, 98, "Output",ExpressionUUID->"1b93727f-0c0d-4f28-8306-4cb4715f154f"],
+Cell[9405, 277, 1712, 44, 81, "Output",ExpressionUUID->"c150c527-a456-4114-9a4f-7c100f4180d1"]
+}, Open  ]],
+Cell[11132, 324, 98, 0, 35, "Text",ExpressionUUID->"eb157911-b734-4402-ab24-95fc44e00755"],
+Cell[CellGroupData[{
+Cell[11255, 328, 581, 15, 30, "Input",ExpressionUUID->"711a530f-96df-48d7-a70b-f41139d99c27"],
+Cell[11839, 345, 95, 0, 24, "EchoTiming",ExpressionUUID->"951eae9c-e131-4fa6-b3f9-50ccdd41ec70"],
+Cell[11937, 347, 1680, 42, 98, "Output",ExpressionUUID->"9a89af78-9374-43da-8576-9d8f1649dd31"]
+}, Open  ]],
+Cell[13632, 392, 197, 4, 35, "Text",ExpressionUUID->"c6547503-f580-43a6-aaf6-39719b868754"],
+Cell[CellGroupData[{
+Cell[13854, 400, 592, 15, 30, "Input",ExpressionUUID->"55d12608-a303-4d0e-87a1-a98c8aec3f33"],
+Cell[14449, 417, 95, 0, 24, "EchoTiming",ExpressionUUID->"c2aaeef6-bea6-4fb6-a9d5-e0f401eeaf2f"],
+Cell[14547, 419, 125, 1, 34, "Output",ExpressionUUID->"45e60e37-6466-47c0-af54-6fcec12f4344"]
+}, Open  ]],
+Cell[14687, 423, 177, 3, 35, "Text",ExpressionUUID->"0624c283-a98b-4d78-a46e-1df527da0c6b"],
+Cell[CellGroupData[{
+Cell[14889, 430, 452, 12, 30, "Input",ExpressionUUID->"a9f40731-689f-4454-96f6-972aa733f271"],
+Cell[15344, 444, 3272, 100, 102, "Output",ExpressionUUID->"6f456c82-f864-4a16-a34e-0ec37f922753"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[18665, 550, 99, 0, 38, "Subsection",ExpressionUUID->"57110f81-08d7-483f-8b85-512fc46cb4e9"],
+Cell[18767, 552, 344, 7, 58, "Text",ExpressionUUID->"d0623313-973c-4057-bfaa-2e869c99b0d8"],
+Cell[CellGroupData[{
+Cell[19136, 563, 546, 15, 69, "Input",ExpressionUUID->"29237a60-b666-485d-93d2-dedfdbfce775"],
+Cell[19685, 580, 1001, 25, 79, "Output",ExpressionUUID->"68559242-cc98-4310-b518-63875440a722"],
+Cell[20689, 607, 290, 6, 34, "Output",ExpressionUUID->"b6d9bc0b-e40f-414a-bc4a-4e2f84e0cf44"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[21016, 618, 775, 22, 85, "Input",ExpressionUUID->"b4bd5ba0-b14c-4133-b03d-381206d75626"],
+Cell[21794, 642, 519, 14, 34, "Output",ExpressionUUID->"e6265ca1-17b9-4756-8125-865c556c0c48"],
+Cell[22316, 658, 193, 4, 34, "Output",ExpressionUUID->"1bcb9d48-4457-4d1a-a2d8-3e5643351b69"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[22558, 668, 97, 0, 38, "Subsection",ExpressionUUID->"fcb89371-2747-43b9-ba9c-15927f4e9d2f"],
+Cell[22658, 670, 271, 8, 35, "Text",ExpressionUUID->"6d052a96-2419-4052-bab2-117b754d5317"],
+Cell[CellGroupData[{
+Cell[22954, 682, 570, 15, 52, "Input",ExpressionUUID->"37d93877-724e-432b-9fd3-47ab34953b8e"],
+Cell[23527, 699, 860, 22, 56, "Output",ExpressionUUID->"327210fa-7b0c-455a-8131-4ffa6e565061"],
+Cell[24390, 723, 885, 18, 34, "Output",ExpressionUUID->"683ac13e-d3c4-44ff-afae-190258558844"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[25312, 746, 423, 11, 30, "Input",ExpressionUUID->"a5225b24-8db0-4397-b30e-cdea906b874c"],
+Cell[25738, 759, 1131, 24, 34, "Output",ExpressionUUID->"df03b97d-4833-4db6-ae6a-7249b71aa01e"]
+}, Open  ]],
+Cell[26884, 786, 1683, 47, 81, "Text",ExpressionUUID->"af6dbb0f-5236-4521-8954-6598783044bd"],
+Cell[CellGroupData[{
+Cell[28592, 837, 578, 14, 30, "Input",ExpressionUUID->"af5b0976-9def-4f30-a365-99da2ae33264"],
+Cell[29173, 853, 579, 14, 34, "Output",ExpressionUUID->"d5ba2ec1-b425-4cb8-bbaf-11165f38a0a3"]
+}, Open  ]],
+Cell[29767, 870, 217, 5, 35, "Text",ExpressionUUID->"a9cc21a7-dca8-4514-a2c9-76d4dc65c8f0"],
+Cell[CellGroupData[{
+Cell[30009, 879, 1641, 42, 98, "Input",ExpressionUUID->"43afaad6-3ab7-4dd6-9fef-108f35cc3a95"],
+Cell[31653, 923, 96, 0, 24, "EchoTiming",ExpressionUUID->"5d859fc7-a5b4-49d7-98b4-6282d264915e"],
+Cell[31752, 925, 4440, 100, 392, "Output",ExpressionUUID->"445f289e-d3b7-4c50-be27-a3111364de1d"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[36253, 1032, 89, 0, 67, "Section",ExpressionUUID->"177a3f49-e4dc-43f2-ad88-dc243f47aafb"],
+Cell[CellGroupData[{
+Cell[36367, 1036, 127, 0, 37, "Subsubsection",ExpressionUUID->"6c1bbce4-f194-4d0f-9831-90b2be994505"],
+Cell[CellGroupData[{
+Cell[36519, 1040, 139, 2, 30, "Input",ExpressionUUID->"a6794f0b-c0f3-42ea-8172-e8e814982e51"],
+Cell[36661, 1044, 16880, 386, 141, "Output",ExpressionUUID->"d0917b4d-c7c7-40bb-8eb6-a9ca61c103d0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[53578, 1435, 440, 12, 30, "Input",ExpressionUUID->"3780f43b-f493-46a1-9ec9-5108c918c111"],
+Cell[54021, 1449, 1165, 25, 79, "Output",ExpressionUUID->"c059163d-fe03-461b-81c0-550f2cee0976"]
+}, Open  ]],
+Cell[55201, 1477, 170, 3, 35, "Text",ExpressionUUID->"1c3838e3-99e4-4a12-8d11-e4415d8b7d1f"],
+Cell[CellGroupData[{
+Cell[55396, 1484, 513, 14, 30, "Input",ExpressionUUID->"e897ce47-908f-4c24-9bcd-3b4a9307cf1b"],
+Cell[55912, 1500, 1372, 34, 79, "Output",ExpressionUUID->"c22d4c08-169c-40d9-b26b-a1f487247706"]
+}, Open  ]],
+Cell[57299, 1537, 560, 16, 35, "Text",ExpressionUUID->"266f0085-094d-41b2-b657-a4a3c5716402"],
+Cell[CellGroupData[{
+Cell[57884, 1557, 429, 11, 52, "Input",ExpressionUUID->"5ddff060-6abd-45f0-8173-019a935c0599"],
+Cell[58316, 1570, 779, 21, 113, "Output",ExpressionUUID->"5eea4384-25eb-4af8-81cf-63f737c42bf6"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[59132, 1596, 225, 4, 30, "Input",ExpressionUUID->"599256d6-d1e6-43ce-8867-b688c0eba031"],
+Cell[59360, 1602, 3238, 56, 113, "Output",ExpressionUUID->"eacb94f6-13b0-4348-8ef0-c03ecef161ba"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[62635, 1663, 244, 4, 52, "Input",ExpressionUUID->"93b2fb4f-859f-4b60-b878-6dd133b86732"],
+Cell[62882, 1669, 391, 8, 34, "Output",ExpressionUUID->"453d4b70-63b1-41de-b74f-63638613bec2"],
+Cell[63276, 1679, 511, 10, 34, "Output",ExpressionUUID->"ded91f8c-1c9f-41f4-8194-e97a115df2b7"]
+}, Open  ]],
+Cell[63802, 1692, 417, 12, 35, "Text",ExpressionUUID->"9a824772-c52f-45da-aa59-ffa8401f7ac6"],
+Cell[CellGroupData[{
+Cell[64244, 1708, 280, 6, 46, "Input",ExpressionUUID->"028e8a20-c0b8-4373-84ad-1e5ff323a6e0"],
+Cell[64527, 1716, 3300, 56, 113, "Output",ExpressionUUID->"221978f0-6531-49bf-8d4e-071f0ef7228e"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[67864, 1777, 256, 4, 52, "Input",ExpressionUUID->"b7a7f1e3-c1c9-42d3-90a0-a18ace621020"],
+Cell[68123, 1783, 389, 8, 34, "Output",ExpressionUUID->"061222ae-f67c-40f7-b143-a7e79ad73479"],
+Cell[68515, 1793, 597, 12, 34, "Output",ExpressionUUID->"c687aff5-c4b6-4d86-970f-952549434b33"]
+}, Open  ]],
+Cell[69127, 1808, 120, 0, 35, "Text",ExpressionUUID->"71702b0c-6f58-4b20-8178-806b2af4adcf"],
+Cell[CellGroupData[{
+Cell[69272, 1812, 189, 3, 30, "Input",ExpressionUUID->"c4f1fe95-1a92-47b3-b82d-94c61b6e3c0e"],
+Cell[69464, 1817, 2361, 49, 113, "Output",ExpressionUUID->"48ca160e-7686-46c5-901f-5e3649508266"]
+}, Open  ]],
+Cell[71840, 1869, 202, 4, 30, "Input",ExpressionUUID->"ec4d7e42-e46e-4ebf-8c3b-347b1f43be48"],
+Cell[72045, 1875, 117, 0, 35, "Text",ExpressionUUID->"af3535ad-b374-4d1b-9a8a-ea4dc0381af3"],
+Cell[CellGroupData[{
+Cell[72187, 1879, 387, 12, 30, "Input",ExpressionUUID->"77084370-6d46-4155-9b90-4c833ae15fff"],
+Cell[72577, 1893, 818, 20, 63, "Output",ExpressionUUID->"9ee79901-0daf-4746-ba7a-eca33e4b636c"]
+}, Open  ]],
+Cell[73410, 1916, 252, 6, 35, "Text",ExpressionUUID->"71ee4b1f-de6e-4d5c-a690-0dc144fe539b"],
+Cell[CellGroupData[{
+Cell[73687, 1926, 364, 11, 30, "Input",ExpressionUUID->"d4dac925-dc76-4766-8820-6cf788ea58df"],
+Cell[74054, 1939, 352, 9, 39, "Message",ExpressionUUID->"001daa19-d345-4b50-8af9-beaf5c2eadb7"],
+Cell[74409, 1950, 384, 9, 28, "Message",ExpressionUUID->"71236e37-8e69-40c0-8a5a-9882b5061607"],
+Cell[74796, 1961, 384, 9, 28, "Message",ExpressionUUID->"92ab7257-e038-4da2-bf35-187c8cf510ee"],
+Cell[75183, 1972, 352, 9, 41, "Message",ExpressionUUID->"186da09d-f0f1-4462-af18-9d8a2c88458e"],
+Cell[75538, 1983, 385, 10, 28, "Message",ExpressionUUID->"a1a408d8-5cc8-45f0-b6f5-cabc25a0d848"],
+Cell[75926, 1995, 411, 9, 28, "Message",ExpressionUUID->"04515cf1-29b3-4540-baea-e6930140e951"],
+Cell[76340, 2006, 626, 18, 65, "Output",ExpressionUUID->"8ae2e7fe-d634-4102-8e17-1352e2f9f490"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[77015, 2030, 127, 0, 29, "Subsubsection",ExpressionUUID->"b59eaaa0-ab43-4faa-bb66-865eb641d759"],
+Cell[CellGroupData[{
+Cell[77167, 2034, 139, 2, 30, "Input",ExpressionUUID->"e89fd132-18a1-46d8-ac6c-43bde4f5d27e"],
+Cell[77309, 2038, 20130, 457, 118, "Output",ExpressionUUID->"feb1ff97-922a-49b5-a213-c02553837e92"]
+}, Open  ]],
+Cell[97454, 2498, 284, 7, 35, "Text",ExpressionUUID->"88168706-8c67-4ce4-a87e-bf1f5efc1e37"],
+Cell[CellGroupData[{
+Cell[97763, 2509, 328, 9, 30, "Input",ExpressionUUID->"2adfd32f-948d-4141-aa61-ad12cdaac562"],
+Cell[98094, 2520, 436, 13, 34, "Output",ExpressionUUID->"8ee8c76b-6447-4bb5-8df3-f005ccdfe171"]
+}, Open  ]],
+Cell[98545, 2536, 295, 7, 35, "Text",ExpressionUUID->"29a72c15-37f8-41e7-b708-05c715c08c62"],
+Cell[CellGroupData[{
+Cell[98865, 2547, 546, 15, 52, "Input",ExpressionUUID->"5696ce7a-3905-4a35-b3a4-3e1bd7c2b7e1"],
+Cell[99414, 2564, 531, 14, 34, "Output",ExpressionUUID->"3a684951-c6dd-4c99-becd-ec9b105e372f"],
+Cell[99948, 2580, 380, 8, 34, "Output",ExpressionUUID->"8313602f-31a6-4677-879a-4135246efc63"]
+}, Open  ]],
+Cell[100343, 2591, 94, 0, 35, "Text",ExpressionUUID->"3ae46f92-57ec-44ff-bedd-6cf36198abc8"],
+Cell[CellGroupData[{
+Cell[100462, 2595, 575, 15, 69, "Input",ExpressionUUID->"d7bc6561-b900-4fcf-93a2-491657576359"],
+Cell[101040, 2612, 541, 14, 34, "Output",ExpressionUUID->"4e638ce6-7f67-4e42-b477-ff023cb77814"],
+Cell[101584, 2628, 384, 8, 34, "Output",ExpressionUUID->"e25466c2-8814-4d1f-9c3f-638dc55c0f99"]
+}, Open  ]],
+Cell[101983, 2639, 277, 8, 35, "Text",ExpressionUUID->"b77aaadc-dac3-42e7-becf-166b82a2977b"],
+Cell[CellGroupData[{
+Cell[102285, 2651, 446, 12, 30, "Input",ExpressionUUID->"ad547da5-52b7-49a2-a1a4-8f041458c69e"],
+Cell[102734, 2665, 541, 14, 34, "Output",ExpressionUUID->"4f3389eb-01d3-4d89-8afb-a2b26dc731aa"]
+}, Open  ]],
+Cell[103290, 2682, 289, 6, 35, "Text",ExpressionUUID->"16a898c7-0bce-4742-b830-df47113e44a3"],
+Cell[CellGroupData[{
+Cell[103604, 2692, 424, 12, 30, "Input",ExpressionUUID->"c37877bf-a79e-4c8b-9b24-f728bd089993"],
+Cell[104031, 2706, 107, 1, 34, "Output",ExpressionUUID->"c341f63c-3574-4624-a085-bce90828f475"]
+}, Open  ]],
+Cell[104153, 2710, 349, 7, 35, "Text",ExpressionUUID->"f6567c78-b860-476f-ae57-b304cfc3c6e0"],
+Cell[CellGroupData[{
+Cell[104527, 2721, 1890, 55, 147, "Input",ExpressionUUID->"967b0afd-5769-4424-94ad-25758d2c1550"],
+Cell[106420, 2778, 2875, 68, 83, "Output",ExpressionUUID->"3f83417e-ee60-41c7-8a99-fdcd57aeb602"],
+Cell[109298, 2848, 2660, 75, 60, "Output",ExpressionUUID->"c5f2ed2c-8bf2-475c-a90a-4dee0d10b3f9"],
+Cell[111961, 2925, 968, 27, 37, "Output",ExpressionUUID->"0af11110-0df5-4aed-8606-230e2b0888c4"]
+}, Open  ]],
+Cell[112944, 2955, 119, 0, 35, "Text",ExpressionUUID->"c6cd2257-3c95-42c3-a2a2-e6d8bdbe9015"],
+Cell[CellGroupData[{
+Cell[113088, 2959, 1962, 57, 75, "Input",ExpressionUUID->"b470f94f-2fea-478c-80d4-59d1a5f9fb28"],
+Cell[115053, 3018, 292, 8, 34, "Output",ExpressionUUID->"f4bc5fcf-ae18-414c-ae01-a1be960a120e"],
+Cell[115348, 3028, 221, 5, 34, "Output",ExpressionUUID->"5a699fd9-532a-49c9-8ef6-bfaa93d84340"]
+}, Open  ]],
+Cell[115584, 3036, 140, 2, 35, "Text",ExpressionUUID->"15ea71e3-cd07-4ce6-8bca-a3a02141f077"],
+Cell[CellGroupData[{
+Cell[115749, 3042, 434, 12, 30, "Input",ExpressionUUID->"4d212448-ba93-418e-9dc4-e03c4a21e0b4"],
+Cell[116186, 3056, 1174, 25, 79, "Output",ExpressionUUID->"5effe0b4-7522-4a7d-864c-a8c61bbb387d"]
+}, Open  ]],
+Cell[117375, 3084, 383, 9, 58, "Text",ExpressionUUID->"f0c37c7f-6d63-4fed-b449-dd6f9bf67d05"],
+Cell[CellGroupData[{
+Cell[117783, 3097, 508, 13, 30, "Input",ExpressionUUID->"e1ee9f8c-4c64-43fa-8f1b-fa45e6f43160"],
+Cell[118294, 3112, 3200, 104, 169, "Output",ExpressionUUID->"f8206f4b-16c3-45de-8e55-dfeee7788a38"]
+}, Open  ]],
+Cell[121509, 3219, 126, 0, 35, "Text",ExpressionUUID->"196e3edb-3723-4ae9-9f2b-d01c263c72d5"],
+Cell[CellGroupData[{
+Cell[121660, 3223, 138, 2, 30, "Input",ExpressionUUID->"f37b3270-8dd0-4a38-9224-80d4fba243ec"],
+Cell[121801, 3227, 860, 22, 56, "Output",ExpressionUUID->"9900b194-5acc-40d9-a3ac-b708b367f0df"]
+}, Open  ]]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[122710, 3255, 140, 1, 29, "Subsubsection",ExpressionUUID->"b91fd258-aeb9-468d-8883-d0d26d85e2f5"],
+Cell[CellGroupData[{
+Cell[122875, 3260, 150, 2, 30, "Input",ExpressionUUID->"74e04a24-1523-4358-90fc-d7864bd51a43"],
+Cell[123028, 3264, 45862, 965, 118, "Output",ExpressionUUID->"9ebea67e-fa68-4d74-a22f-3cd11b1aade1"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[168927, 4234, 441, 12, 30, "Input",ExpressionUUID->"81bccaf6-e9a1-4e97-bfe8-e3f6a11a43fb"],
+Cell[169371, 4248, 118, 1, 34, "Output",ExpressionUUID->"fe0f7b3c-9e0b-4d96-9550-e1f5afdd5c55"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[169526, 4254, 470, 12, 46, "Input",ExpressionUUID->"3283a931-676d-43cf-883c-67a4a4c231c4"],
+Cell[169999, 4268, 120, 1, 34, "Output",ExpressionUUID->"40230db6-a8d5-435e-bd16-ced715d48721"]
+}, Open  ]]
+}, Closed]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
